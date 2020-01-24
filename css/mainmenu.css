@@ -1,0 +1,28 @@
+body {
+    background-color: #E27D60;
+}
+
+h2 {
+    color: #FFFFFF;
+    display: inline;
+    font-size: 35px;
+    margin-left: 2%;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif
+}
+
+nav {
+    /* display: inline; */
+    float: right;
+    margin-top: 2%;
+    margin-right: 2%;
+}
+
+a {
+    padding-left: 12px;
+    color: #FFFFFF;
+}
+
+#map{
+    height: 400px;
+    width:100%;
+}
