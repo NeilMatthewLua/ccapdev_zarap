@@ -22,7 +22,18 @@ a {
     color: #FFFFFF;
 }
 
-#map{
+#rcorners2 {
+    border-radius: 25px;
+    border: 2px solid #85DCB8;
+    margin-top: 50px;
+    padding: 10px;
+    width: 50%;
+    height: 20px;
+    margin-left: auto;
+    margin-right: auto;
+    color: rgba(255, 255, 255, 0.603);
+  }
+/* #map{
     height: 400px;
     width:100%;
-}
+} */
