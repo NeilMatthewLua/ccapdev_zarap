@@ -13,7 +13,7 @@ app.use(express.static(__dirname + '/'));
 app.set('views', path.join(__dirname, 'views/'));
 app.engine('hbs', hbs({
   extname: "hbs",
-  defaultLayout: "login",
+  defaultLayout: "landing",
   layoutsDir: "views"
 }));
 app.set('view engine', 'hbs');
