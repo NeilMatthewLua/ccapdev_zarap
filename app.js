@@ -24,12 +24,8 @@ app.set('view engine', 'hbs');
 
 
 const indexRouter = require('./routes/indexRouter.js');
-// const tuteeRouter = require('./routes/tuteesRouter');
-// const tutorsRouter = require('./routes/tutorsRouter');
 
 // Routes
-// app.use('/tutors', tutorsRouter)
-// app.use('/tutee', tuteeRouter)
 app.use('/', indexRouter);
 
 

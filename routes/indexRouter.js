@@ -9,11 +9,9 @@ const client = new mongoClient(uri, { useNewUrlParser: true, useUnifiedTopology:
 const databaseName = process.env.DB_NAME
 var database, collection;
 
-
-
 router.get('/', (req,res) => {
-    
     res.render('landing');
 })
+
 
 module.exports = router;
