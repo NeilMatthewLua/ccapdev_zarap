@@ -7,14 +7,11 @@ body {
     background-color: #CB202D;
 }
 
-.log_size {
-    font-size:8vw;
+.padinput {
+    padding-left: 10px !important;
+    box-sizing: border-box;
+    border-radius: 4px !important;
 }
-
-.margin_top {
-    margin-top: 6vw;
-}
-
 
 .btncolor {
     background-color: #2D2D2D !important;
@@ -23,4 +20,16 @@ body {
 .hover:hover {
     color:#CB202D !important;
     text-decoration: underline;
+}
+
+.log_size {
+    font-size:5vw;
+}
+
+.padleft {
+    margin-left: 2%;
+}
+
+.margin_top {
+    margin-top: 6vw;
 }
