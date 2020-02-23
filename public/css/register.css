@@ -2,9 +2,18 @@ body {
     background-color: #F4F4F2;
 }
 
+:root {
+    --default-button-color: #CB202D;
+    --default-navbar-color: #CB202D;
+}
+
+.margin-pushdown {
+    margin-bottom: 2vw;
+}
+
 .padnav {
     padding-left: 15px;
-    background-color: #CB202D;
+    background-color: var(--default-navbar-color);
 }
 
 .padinput {
@@ -14,22 +23,14 @@ body {
 }
 
 .btncolor {
-    background-color: #2D2D2D !important;
+    background-color: var(--default-button-color) !important;
 }
 
 .hover:hover {
-    color:#CB202D !important;
+    color: var(--default-navbar-color) !important;
     text-decoration: underline;
 }
 
-.log_size {
+.title-size {
     font-size:5vw;
-}
-
-.padleft {
-    margin-left: 2%;
-}
-
-.margin_top {
-    margin-top: 6vw;
 }

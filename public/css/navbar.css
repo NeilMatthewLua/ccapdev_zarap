@@ -6,7 +6,13 @@
 nav {
     height: 80px;
 }
-  
+
+.padinput {
+    padding-left: 10px !important;
+    box-sizing: border-box;
+    border-radius: 4px !important;
+}
+
 .nav-wrapper{
     background-color: #CB202D; 
     padding: 10px; 

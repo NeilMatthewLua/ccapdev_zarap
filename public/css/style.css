@@ -2,6 +2,23 @@ body {
     margin-bottom: 200px;
 }
 
+.BG-color {
+    background-color: #F4F4F2;
+}
+
+:root {
+    --default-button-color: #2D2D2D;
+    --default-navbar-color: #CB202D;
+}
+
+.black-color {
+    color: var(--default-button-color) !important;
+}
+
+.BG-black-color {
+    background-color: var(--default-button-color) !important;
+}
+
 .title {
     padding: 30px;
     color: white;
@@ -11,8 +28,8 @@ body {
     border-radius: 15px;
 }
 
-.bgred {
-    background: rgb(252, 60, 76);
+.colored-button {
+    background: var(--default-navbar-color) !important;
 }
 
 .pad4 {
@@ -40,9 +57,14 @@ body {
     padding: 5px;
     padding-left: 10px;
     padding-right: 10px;
-    border: 1px solid white;
+    border: 1px solid #2D2D2D;
     border-radius: 2px;
     margin-right: 55px;
+}
+
+.push-padding{
+    padding-right: 2%;
+    padding-top: 2%;
 }
 
 .searchround {
@@ -60,7 +82,7 @@ body {
 }
 
 .square {
-    border: 1px solid black;
+    border: 1px solid #2D2D2D;
     border-radius: 3px;
     width: 250px;
     height: 250px;
@@ -71,23 +93,23 @@ body {
 }
 
 @media(max-width: 640px) {
-    #sampleSearchSmall {
+    #search_small {
         display: flex;
         flex-direction: column;
     }
 
-    #sampleSearchSmall div {
+    #search_small div {
         display: flex;
         margin: 0; padding: 0;
         width: 100%;
     }
 
-    #sampleSearchSmall button {
+    #search_small button {
         display: flex;
         justify-items: center;
     }
 
-    .cardSmall {
+    .card-small {
         margin-left: auto !important;
         margin-right: auto !important;
     }

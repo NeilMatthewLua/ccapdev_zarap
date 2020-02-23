@@ -2,25 +2,33 @@ body {
     background-color: #F4F4F2;
 }
 
-.padnav {
-    padding-left: 15px;
-    background-color: #CB202D;
+:root {
+    --default-button-color: #CB202D;
+    --default-navbar-color: #CB202D;
 }
 
-.log_size {
+.margin-pushdown {
+    margin-bottom: 2vw;
+}
+
+.padnav {
+    padding-left: 15px;
+    background-color: var(--default-navbar-color);
+}
+
+.title-size {
     font-size:8vw;
 }
 
-.margin_top {
+.margin-top {
     margin-top: 6vw;
 }
 
-
-.btncolor {
-    background-color: #2D2D2D !important;
+.colored-button {
+    background-color: var(--default-button-color) !important;
 }
 
-.hover:hover {
-    color:#CB202D !important;
+.hovered-link:hover {
+    color: var(--default-navbar-color) !important;
     text-decoration: underline;
 }
