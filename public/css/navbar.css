@@ -51,6 +51,10 @@ nav {
     padding-right: 10px; 
 }
 
+.search-mobile > .container > .col > .btn{
+    width: 100%; 
+}
+
 .search-box{
     border:5px; 
     border-color: #2D2D2D; 
