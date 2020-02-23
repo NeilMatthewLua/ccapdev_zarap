@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!--Metadata-->
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <!--Import Google Icon Font-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+    <!--Import materialize.css-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" />
+    <!--Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <link rel="stylesheet" href="style.css">
+    <title>Search Result</title>
+</head>
+<body>
+    <!--Header-->
+    <div class="navbar-fixed">
+        <nav>
+            <div class="nav-wrapper row">
+                <a href="#" id = "zarap" class = "hide-on-med-and-down col s2">zarap</a>
+                <!--Navbar for Smaller Screens-->
+                <div class = "hide-on-large-only">
+                    <a href="#" data-target="filter-choice" class="left sidenav-trigger"><i class="material-icons">swap_vert</i></a>                   
+                    <a href="#" id = "zarap" class = "brand-logo center">zarap</a>
+                    <a href="#" data-target="slide-out" class="right sidenav-trigger"><i class="material-icons">menu</i></a>
+                </div>
+                <!--Sidebar Content-->
+                <ul id="slide-out" class="sidenav">
+                    <li><div class="divider"></div></li>
+                    <li><a href="#!">Register</a></li>
+                    <li><div class="divider"></div></li>
+                    <li><a href="#!">Login</a></li>
+                </ul>
+                <ul id="filter-choice" class="sidenav">
+                    <li><a href="#!" class="dropdown-trigger" data-target="sort-by">Sort by
+                        <i class="material-icons right">arrow_drop_down</i></a></li>
+                    <li class="divider"></li>
+                    <li><a href="#!" class="dropdown-trigger" data-target="category">Category
+                        <i class="material-icons right">arrow_drop_down</i></a></li>
+                    <li class="divider"></li>
+                    <li><a href="#!" class="dropdown-trigger" data-target="location">Location
+                        <i class="material-icons right">arrow_drop_down</i></a></li>
+                    <li class="divider"></li>
+                    <li><a href="#!" class="dropdown-trigger" data-target="cuisine">Cuisiine
+                        <i class="material-icons right">arrow_drop_down</i></a></li>
+                    <li class="divider"></li>
+                    <li><a href="#!" class="dropdown-trigger" data-target="establishment-type">Establishment Type
+                        <i class="material-icons right">arrow_drop_down</i></a></li>
+                    <li class="divider"></li>
+                    <li><a href="#!" class="dropdown-trigger" data-target="cost-for-two">Cost for Two
+                        <i class="material-icons right">arrow_drop_down</i></a></li>
+                </ul>
+                <!--Dropdown for Rating, Cost and Newly Added-->
+                <ul id="sort-by" class="dropdown-content">
+                    <li><a href="#">Rating - high to low</a></li>
+                    <li><a href="#">Cost - high to low</a></li>
+                    <li><a href="#">Cost - low to high</a></li>
+                    <li><a href="#">Newly Added</a></li>
+                </ul>
+                <!--Dropdown for Filter Category-->
+                <ul id="category" class="dropdown-content">
+                    <li><a href="#">Dine-out</a></li>
+                    <li><a href="#">Delivery</a></li>
+                    <li><a href="#">Drinks & Nightlife</a></li>
+                    <li><a href="#">Cafés</a></li>
+                </ul>
+                <!--Dropdown for Filter Location-->
+                <ul id="location" class="dropdown-content">
+                    <li><a href="#">Manila</a></li>
+                    <li><a href="#">Quezon City</a></li>
+                    <li><a href="#">Makati City</a></li>
+                    <li><a href="#">Pasig City</a></li>
+                    <li><a href="#">Pasay City</a></li>
+                    <li><a href="#">Parañaque City</a></li>
+                    <li><a href="#">Taguig City</a></li>
+                    <li><a href="#">See all locations</a></li>
+                </ul>
+                <!--Dropdown for Filter Cuisine-->
+                <ul id="cuisine" class="dropdown-content">
+                    <li><a href="#">Filipino</a></li>
+                    <li><a href="#">Beverages</a></li>
+                    <li><a href="#">American</a></li>
+                    <li><a href="#">Fastfood</a></li>
+                    <li><a href="#">Chinese</a></li>
+                    <li><a href="#">Coffee</a></li>
+                    <li><a href="#">Bakery</a></li>
+                    <li><a href="#">Tea</a></li>
+                    <li><a href="#">Street Food</a></li>
+                    <li><a href="#">Japanese</a></li>
+                    <li><a href="#">See all cuisines</a></li>
+                </ul>
+                <!--Dropdown for Filter Establishment Type-->
+                <ul id="establishment-type" class="dropdown-content">
+                    <li><a href="#">Quick Bites</a></li>
+                    <li><a href="#">Casual Dining</a></li>
+                    <li><a href="#">Beverage Shops</a></li>
+                    <li><a href="#">Kiosks</a></li>
+                    <li><a href="#">Cafés</a></li>
+                    <li><a href="#">Food Courts</a></li>
+                    <li><a href="#">Bakeries</a></li>
+                    <li><a href="#">Dessert Parlor</a></li>
+                    <li><a href="#">Bars</a></li>
+                    <li><a href="#">Fine Dining</a></li>
+                </ul>
+                <!--Dropdown for Filter Cost for two-->
+                <ul id="cost-for-two" class="dropdown-content">
+                    <li><a href="#">Less than PHP350</a></li>
+                    <li><a href="#">PHP350 to PHP700</a></li>
+                    <li><a href="#">PHP700 to PHP1400</a></li>
+                    <li><a href="#">PHP1400 +</a></li>
+                </ul>
+                <!--Searchbar-->
+                <div class = "search-section col s8 hide-on-med-and-down">
+                    <form class = "search-bar">
+                        <div class ="input-field">
+                            <input type="text" class ="white search-box" name="searchbar" placeholder="   Search your favorite restaurants here...">
+                        </div>
+                    </form>
+                    <a class ="waves-effect waves-light btn #e53935 red darken-1" >search</a>
+                </div>
+                <ul class="right hide-on-med-and-down col s2">
+                    <li><a href="#">Login</a></li>
+                    <li><a href="#">Register</a></li>
+                </ul>
+            </div>
+        </nav>
+    </div>
+    <!--Search Bar for Smaller Screens-->
+    <div class = "search-section hide-on-large-only valign-wrapper center-align row">
+        <div class="col s10">
+            <form class = "search-bar-small">
+                <div class ="input-field">
+                    <input type="text" class ="white search-box" name="searchbar" placeholder="   Search your favorite restaurants here...">
+                </div>
+            </form>
+        </div>
+        <div class="col s2">
+            <a class ="effect waves-light btn #e53935 red darken-1" >search</a>
+        </div>
+    </div>
+
+    <!--Searched Restaurant Name-->
+    <div class="search-text">
+        <h4 class="hide-on-med-and-down">{{Restaurant Name}} in Metro Manila</h4>
+        <h5 class="hide-on-large-only">{{Restaurant Name}} in Metro Manila</h5>
+    </div>
+    <div class="main-content">
+        <!--Filter Bar in Desktop View-->
+        <div class="hide-on-med-and-down">
+            <div>
+                <ul class="collection with-header">
+                    <li class="collection-item"><h5>Filters</h5></li>
+                    <!--Filtered by Rating, Cost and Newly Added-->
+                    <li class="collection-item"><h6>Sort by</h6></li>
+                    <li class="collection-item"><a href="#" class="left">Rating</a><div class="grey-text">&nbsp; - high to low</div></li>
+                    <li class="collection-item"><a href="#" class="left">Cost</a><div class="grey-text">&nbsp; - high to low</div></li>
+                    <li class="collection-item"><a href="#" class="left">Cost</a><div class="grey-text">&nbsp; - low to high</div></li>
+                    <li class="collection-item"><a href="#" class="left">Newly Added</a><div class="grey-text">&nbsp; - high to low</div></li>
+                    <!--Filtered by Category-->
+                    <li class="collection-item"><h6>Category</h6></li>
+                    <li class="collection-item"><a href="#">Dine-out</a></li>
+                    <li class="collection-item"><a href="#">Delivery</a></li>
+                    <li class="collection-item"><a href="#">Drink & Nightlife</a></li>
+                    <li class="collection-item"><a href="#">Cafés</a></li>
+                    <!--Filtered by Location-->
+                    <li class="collection-item"><h6>Location</h6></li>
+                    <li class="collection-item"><a href="#">Manila</a></li>
+                    <li class="collection-item"><a href="#">Quezon City</a></li>
+                    <li class="collection-item"><a href="#">Makati City</a></li>
+                    <li class="collection-item"><a href="#">Pasig City</a></li>
+                    <li class="collection-item"><a href="#">Pasay City</a></li>
+                    <li class="collection-item"><a href="#">Parañaque City</a></li>
+                    <li class="collection-item"><a href="#">Taguig City</a></li>
+                    <li class="collection-item"><a href="#">See all locations</a></li>
+                    <!--Filtered by Cuisine-->
+                    <li class="collection-item"><h6>Cuisine</h6></li>
+                    <li class="collection-item"><a href="#">Filipino</a></li>
+                    <li class="collection-item"><a href="#">Beverages</a></li>
+                    <li class="collection-item"><a href="#">American</a></li>
+                    <li class="collection-item"><a href="#">Fastfood</a></li>
+                    <li class="collection-item"><a href="#">Chinese</a></li>
+                    <li class="collection-item"><a href="#">Coffee</a></li>
+                    <li class="collection-item"><a href="#">Bakery</a></li>
+                    <li class="collection-item"><a href="#">Tea</a></li>
+                    <li class="collection-item"><a href="#">Street Food</a></li>
+                    <li class="collection-item"><a href="#">Japanese</a></li>
+                    <li class="collection-item"><a href="#">See all cuisines</a></li>
+                    <!--Filtered by  Establishment Type-->
+                    <li class="collection-item"><h6>Establishment Type</h6></li>
+                    <li class="collection-item"><a href="#">Quick Bites</a></li>
+                    <li class="collection-item"><a href="#">Casual Dining</a></li>
+                    <li class="collection-item"><a href="#">Beverage Shops</a></li>
+                    <li class="collection-item"><a href="#">Kiosks</a></li>
+                    <li class="collection-item"><a href="#">Cafés</a></li>
+                    <li class="collection-item"><a href="#">Food Courts</a></li>
+                    <li class="collection-item"><a href="#">Bakeries</a></li>
+                    <li class="collection-item"><a href="#">Dessert Parlor</a></li>
+                    <li class="collection-item"><a href="#">Bars</a></li>
+                    <li class="collection-item"><a href="#">Fine Dining</a></li>
+                    <!--Filtered by Cost for two-->
+                    <li class="collection-item"><h6>Cost for two</h6></li>
+                    <li class="collection-item"><a href="#">Less than PHP350</a></li>
+                    <li class="collection-item"><a href="#">PHP350 to PHP700</a></li>
+                    <li class="collection-item"><a href="#">PHP700 to PHP1400</a></li>
+                    <li class="collection-item"><a href="#">PHP1400 +</a></li>
+                </ul>
+            </div>
+        </div>
+        <!--List of Restaurants from Search Result for Desktop View-->
+        <div class="hide-on-med-and-down">
+            <div class="restaurant-list">
+                <div class="card horizontal">
+                    <div class="card-image">
+                        <img src="Restaurant1.jpg" alt="{{Restaurant1_name}}" class="restaurant-image">
+                    </div>
+                    <div class="restaurant-info">
+                        <div class="card-stacked">
+                            <div class="card-content">
+                                <p class="restaurant-establisment-type">{{Establishment Type}}</p>
+                                <br>
+                                <p class="restaurant-name">{{Restaurant Name}}</p>
+                                <br>
+                                <p class="restaurant-location">{{Restaurant Location}}</p>
+                                <p class="restaurant-address">{{Restaurant Address}}</p>
+                                <br>
+                                <p class="restaurant-other-info">Cuisine:&nbsp;{{Restaurant Cuisine}}</p>
+                                <p class="restaurant-other-info">Cost for two:&nbsp;{{Cost for Two}}</p>
+                                <p class="restaurant-other-info">Hours:&nbsp;{{Hours}}</p>
+                                <p class="restaurant-other-info">Tel no:&nbsp;{{Tel no.}}</p>
+                            </div>
+                        </div>
+                        <div class="card-content">
+                            <button class="btn hoverable green">4</button>
+                        </div>
+                    </div>
+                </div>
+    
+                <div class="card horizontal">
+                    <div class="card-image">
+                        <img src="Restaurant2.jpg" alt="{{Restaurant1_name}}" class="restaurant-image">
+                    </div>
+                    <div class="restaurant-info">
+                        <div class="card-stacked">
+                            <div class="card-content">
+                                <p class="restaurant-establisment-type">{{Establishment Type}}</p>
+                                <br>
+                                <p class="restaurant-name">{{Restaurant Name}}</p>
+                                <br>
+                                <p class="restaurant-location">{{Restaurant Location}}</p>
+                                <p class="restaurant-address">{{Restaurant Address}}</p>
+                                <br>
+                                <p class="restaurant-other-info">Cuisine:&nbsp;{{Restaurant Cuisine}}</p>
+                                <p class="restaurant-other-info">Cost for two:&nbsp;{{Cost for Two}}</p>
+                                <p class="restaurant-other-info">Hours:&nbsp;{{Hours}}</p>
+                                <p class="restaurant-other-info">Tel no:&nbsp;{{Tel no.}}</p>
+                            </div>
+                        </div>
+                        <div class="card-content">
+                            <button class="btn hoverable green">4</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--List of Restaurants from Search Result for Tablet and Mobile-->
+        <div class="hide-on-large-only">
+            <div class="restaurant-list">    
+                <div class="card horizontal">
+                    <div class="card-image">
+                        <img src="Restaurant2.jpg" alt="{{Restaurant1_name}}" class="restaurant-image">
+                    </div>
+                    <div class="restaurant-info">
+                        <div class="card-stacked">
+                            <div class="card-content">
+                                <p class="restaurant-establisment-type">{{Establishment Type}}</p>
+                                <br>
+                                <p class="restaurant-name">{{Restaurant Name}}</p>
+                                <br>
+                                <p class="restaurant-location">{{Restaurant Location}}</p>
+                                <p class="restaurant-address">{{Restaurant Address}}</p>
+                                <br>
+                                <p class="restaurant-other-info">Cuisine:&nbsp;{{Restaurant Cuisine}}</p>
+                                <p class="restaurant-other-info">Cost for two:&nbsp;{{Cost for Two}}</p>
+                                <p class="restaurant-other-info">Hours:&nbsp;{{Hours}}</p>
+                                <p class="restaurant-other-info">Tel no:&nbsp;{{Tel no.}}</p>
+                            </div>
+                        </div>
+                        <div class="card-content">
+                            <button class="btn hoverable green">4</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col s4 m2">
+                  <div class="card">
+                    <div class="card-image center-align">
+                      <img src="Restaurant1.jpg" alt="{{Restaurant1_name}}" class="mobile-restaurant-image"> 
+                    </div>
+                    <div class="mobile-restaurant-info">
+                        <span class="card-title">{{Restaurant1_name}}</span>
+                    </div>
+                    <div class="card-content">
+                      <p>I am a very simple card.</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+        </div>
+        
+
+    </div> <!--End of the body-->
+    
+
+
+
+    
+    <!--Footer-->
+    <footer class="page-footer">
+        <div class="row footer-content">
+            <div class="logo-container col s12">
+                <div class="footer-logo"></div>
+            </div>
+            <div class="col l5 s12">
+                <h5 class="footer-text white-text">Contact Us</h5>
+                <p class="footer-text white-text">zarap@gmail.com <br>+(8) 552 3877</p>
+            </div>
+        </div>
+        <div class="footer-copyright">
+            <p class="copyright-text">© 2020 Tatlong Bading</p>
+        </div>
+    </footer>
+</body>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var elem = document.querySelector('.sidenav');
+        var instance = new M.Sidenav(elem,);
+        var elem_dropdown = document.querySelectorAll('.dropdown-trigger');
+        var instances_dropdown = M.Dropdown.init(elem_dropdown, {});
+    });
+</script>
+</html>
