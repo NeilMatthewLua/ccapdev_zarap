@@ -14,11 +14,16 @@ nav {
 
 .navbar-fixed{
     height: 80px;  
+    z-index: 1 !important; 
 }
 
 .search-section{
     display: inline-block; 
     text-align: center;
+}
+
+.search-mobile{
+    width: 100%;
 }
 
 .search-section.valign-wrapper{
@@ -42,10 +47,21 @@ nav {
     vertical-align: middle; 
 }
 
+.search-bar-small > .input-field > .truncate {
+    padding-right: 10px; 
+}
+
+.search-mobile > .container > .col > .btn{
+    width: 100%; 
+}
+
 .search-box{
     border:5px; 
     border-color: #2D2D2D; 
     border-radius: 10px !important; 
     z-index: 5px; 
 }
-  
+
+.sidenav-overlay{
+    z-index: 9 !important;  
+}
