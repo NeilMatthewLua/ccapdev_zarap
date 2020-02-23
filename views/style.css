@@ -112,15 +112,36 @@ nav {
 
 
 /*Main Content for Tablet and Mobile*/
-.mobile-restaurant-image{
-    padding: 2%;
-    min-width: 200px;
-    min-height: 150px;
-    max-width: 200px;
-    max-height: 150px;
-    margin-left: 13%;
+.mobile-restaurant-list{
+    padding-left: 2%;
+    padding-right: 2%;
 }
 
+.mobile-restaurant-image{
+    padding: 2%;
+    min-width: 150px;
+    min-height: 120px;
+    max-width: 150px;
+    max-height: 120px;
+}
+
+.mobile-restaurant-info > .card-title{
+    font-size: 90%;
+    text-align: center !important;
+}
+
+.mobile-restaurant-info > .card-content{
+    font-size: 70%;
+    color: grey;
+    text-align: left !important;
+    padding: 0px;
+}
+
+.card-image > button{
+    position: absolute;
+    right:0px;
+    top:0px;
+}
 
 /*Footer*/
 footer {

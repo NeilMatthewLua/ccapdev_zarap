@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" />
     <!--Compiled and minified JavaScript -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <link rel="stylesheet" href="../../public/css/font.css">
     <link rel="stylesheet" href="style.css">
     <title>Search Result</title>
 </head>
@@ -208,12 +209,12 @@
                 </ul>
             </div>
         </div>
-        <!--List of Restaurants from Search Result for Desktop View-->
-        <div class="hide-on-med-and-down">
+        <!--List of Restaurants from Search Result for Desktop and Tablet View-->
+        <div class="hide-on-small-only">
             <div class="restaurant-list">
                 <div class="card horizontal">
                     <div class="card-image">
-                        <img src="Restaurant1.jpg" alt="{{Restaurant1_name}}" class="restaurant-image">
+                        <img src="../../public/assets/Restaurant1.jpg" alt="{{Restaurant1_name}}" class="restaurant-image">
                     </div>
                     <div class="restaurant-info">
                         <div class="card-stacked">
@@ -239,7 +240,7 @@
     
                 <div class="card horizontal">
                     <div class="card-image">
-                        <img src="Restaurant2.jpg" alt="{{Restaurant1_name}}" class="restaurant-image">
+                        <img src="../../public/assets/Restaurant2.jpg" alt="{{Restaurant2_name}}" class="restaurant-image">
                     </div>
                     <div class="restaurant-info">
                         <div class="card-stacked">
@@ -266,59 +267,51 @@
         </div>
 
         <!--List of Restaurants from Search Result for Tablet and Mobile-->
-        <div class="hide-on-large-only">
-            <div class="restaurant-list">    
-                <div class="card horizontal">
+        <div class="hide-on-med-and-up">
+            <div class="mobile-restaurant-list">    
+                <div class="card small">
                     <div class="card-image">
-                        <img src="Restaurant2.jpg" alt="{{Restaurant1_name}}" class="restaurant-image">
+                        <img src="../../public/assets/Restaurant1.jpg" alt="{{Restaurant1_name}}" class="mobile-restaurant-image">
+                        <button class="btn-small hoverable green right">4</button>
                     </div>
-                    <div class="restaurant-info">
-                        <div class="card-stacked">
-                            <div class="card-content">
-                                <p class="restaurant-establisment-type">{{Establishment Type}}</p>
-                                <br>
-                                <p class="restaurant-name">{{Restaurant Name}}</p>
-                                <br>
-                                <p class="restaurant-location">{{Restaurant Location}}</p>
-                                <p class="restaurant-address">{{Restaurant Address}}</p>
-                                <br>
-                                <p class="restaurant-other-info">Cuisine:&nbsp;{{Restaurant Cuisine}}</p>
-                                <p class="restaurant-other-info">Cost for two:&nbsp;{{Cost for Two}}</p>
-                                <p class="restaurant-other-info">Hours:&nbsp;{{Hours}}</p>
-                                <p class="restaurant-other-info">Tel no:&nbsp;{{Tel no.}}</p>
-                            </div>
-                        </div>
-                        <div class="card-content">
-                            <button class="btn hoverable green">4</button>
-                        </div>
+                    <div class="mobile-restaurant-info">
+                        <p class="card-title">{{Restaurant1_name}}</p>
+                        <hr>
+                        <p class="card-content">
+                            &nbsp;&nbsp;&nbsp;{{Restaurant Location}}
+                            <br>
+                            &nbsp;&nbsp;&nbsp;Cuisine:&nbsp;{{Restaurant Cuisine}}
+                            <br>
+                            &nbsp;&nbsp;&nbsp;Cost for two:&nbsp;{{Cost for Two}}
+                            <br>
+                            &nbsp;&nbsp;&nbsp;Hours:&nbsp;{{Hours}}
+                            <br>
+                        </p>
+                    </div>
+                </div>
+                <div class="card small">
+                    <div class="card-image">
+                        <img src="../../public/assets/Restaurant2.jpg" alt="{{Restaurant1_name}}" class="mobile-restaurant-image">
+                        <button class="btn-small hoverable green right">4</button>
+                    </div>
+                    <div class="mobile-restaurant-info">
+                        <p class="card-title">{{Restaurant1_name}}</p>
+                        <hr>
+                        <p class="card-content">
+                            &nbsp;&nbsp;&nbsp;{{Restaurant Location}}
+                            <br>
+                            &nbsp;&nbsp;&nbsp;Cuisine:&nbsp;{{Restaurant Cuisine}}
+                            <br>
+                            &nbsp;&nbsp;&nbsp;Cost for two:&nbsp;{{Cost for Two}}
+                            <br>
+                            &nbsp;&nbsp;&nbsp;Hours:&nbsp;{{Hours}}
+                            <br>
+                        </p>
                     </div>
                 </div>
             </div>
-
-            <div class="row">
-                <div class="col s4 m2">
-                  <div class="card">
-                    <div class="card-image center-align">
-                      <img src="Restaurant1.jpg" alt="{{Restaurant1_name}}" class="mobile-restaurant-image"> 
-                    </div>
-                    <div class="mobile-restaurant-info">
-                        <span class="card-title">{{Restaurant1_name}}</span>
-                    </div>
-                    <div class="card-content">
-                      <p>I am a very simple card.</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
         </div>
-        
-
-    </div> <!--End of the body-->
-    
-
-
-
-    
+    </div>    
     <!--Footer-->
     <footer class="page-footer">
         <div class="row footer-content">
