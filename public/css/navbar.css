@@ -71,3 +71,7 @@ nav {
 .sidenav-overlay{
     z-index: 9 !important;  
 }
+
+.search-section > .container > .col > .btn {
+    z-index: 0 !important; 
+}
