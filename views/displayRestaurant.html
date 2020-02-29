@@ -7,8 +7,10 @@
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" />
   <link rel="stylesheet" href="../../public/css/navbar.css">
+  <link rel="stylesheet" href="../../public/css/footer.css">
+  <link rel="stylesheet" href="../../public/css/view-restaurant.css">
   <link rel="stylesheet" href="../../public/css/font.css">
-  <title>Navbar testing</title>
+  <title>View Restaurant</title>
 </head>
 <body>
   <div class="navbar-fixed">
@@ -30,18 +32,10 @@
           <a class="waves-effect waves-light btn #e53935 red darken-1" >search</a>
       </div>
       <ul class="right hide-on-med-and-down col s3">
-<<<<<<< HEAD
-        <div class = "right">
-          <li><a href="#">Login</a></li>
-          <li><a href="#">Register</a></li>
-        </div>
-=======
         <div class="right">
           <li><a href="#">Login</a></li>
           <li><a href="#">Register</a></li>
         </div>
-      </ul>
->>>>>>> mp1
       </div>
     </nav>
   </div>
@@ -69,12 +63,93 @@
       </div>
     </div>
   </div>
+
+  <!--Restaurant Content-->
+  <div class="main-content row">
+    <div class="left-section col s12 xl8">
+      <div class="title-card row">
+          <div class="col s12 m8">
+            <h2><b>Golden Fortune</b></h4>
+            <h5>Chinese Food | Fine Dining</h5>
+          </div>
+          <img class="title-picture col s12 m4" src="../public/assets/Golden Fortune-1.jpg" alt="Golden Fortune">
+      </div>
+      <div class="photos">
+        <div class="carousel-container">
+          <h3>Golden Fortune Photos</h3>
+          <h5 id = "page-count"></h5>
+          <div class="carousel carousel-slider">
+            <a class="carousel-item" href="#one!"><img src="../public/assets/Golden Fortune-1.jpg"></a>
+            <a class="carousel-item" href="#two!"><img src="../public/assets/golden-menu.jpg"></a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="right-section col s12 xl4">
+      <div class="content-selection row">
+        <a href="" class="menu col s4">Menu</a>
+        <a href="" class="photos col s4">Photos</a>
+        <a href="" class="review col s4">Review</a>
+      </div>
+      <div class="content-details">
+          <h4>Telephone Number:</h4>
+          <h5>+552 3877</h5>
+          <br> 
+          <h4>Cuisines:</h4>
+          <h5>Asian</h5>
+          <br> 
+          <h4>Opening Hours:</h4>
+          <h5>6:00AM - 8:00PM</h5>
+          <br> 
+          <h4>Address:</h4>
+          <h5>678 Kalaw Ave.</h5>
+          <br> 
+          <h4>Average Cost:</h4>
+          <h5>P1200</h5>
+          <br> 
+      </div>
+    </div>
+  </div>
+  
+  <footer class="page-footer">
+    <div class="row footer-content">
+      <div class="logo-container col s12">
+        <div class="footer-logo"></div>
+      </div>
+      <div class="col l5 s12">
+        <h5 class="footer-text white-text">Contact Us</h5>
+        <p class="footer-text white-text">zarap@gmail.com <br>+(8) 552 3877</p>
+      </div>
+    </div>
+    <div class="footer-copyright">
+        <p class="copyright-text">© 2020 Tatlong Bading</p>
+    </div>
+</footer>
 </body>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 <script>
   document.addEventListener('DOMContentLoaded', function() {
     var elem = document.querySelector('.sidenav');
     var instance = new M.Sidenav(elem);
   });
+  $(document).ready(function(){
+    $('.carousel').carousel({ 
+      dist: 0,
+      padding: 0,
+      fullWidth: true,
+      indicators: true,
+      duration: 100,
+      onCycleTo: function (ele) {
+        var index = $(ele).index() + 1; 
+        $("#page-count").text(index + " of 2"); 
+      } 
+     });
+  });
+  autoplay()   
+  function autoplay() {
+      $('.carousel').carousel('next');
+      setTimeout(autoplay, 4500);
+  }
 </script>
 </html>
