@@ -1,18 +1,18 @@
-:root{
+:root {
     --default-card-color: #FFFFFF; 
     --default-text-color: #2D2D2D; 
     --default-background-color: #F4F4F2; 
 }
 
-html,body{
+html,body {
     width: 100vw; 
 }
 
-body{
+body {
     background-color: var(--default-background-color);
 }
 
-.main-content{
+.main-content {
     margin-top: 40px; 
     padding: 20px; 
     display: flex; 
@@ -20,13 +20,13 @@ body{
     width: 100%; 
 }
 
-.left-section{
+.left-section {
     display: flex;
     flex-direction: column;
     margin-right: 20px; 
 }
 
-.title-card{
+.title-card {
     width: 100%; 
     margin-top:10px; 
     margin-bottom: 20px; 
@@ -35,47 +35,47 @@ body{
     background-color: var(--default-card-color);
 }
 
-.title-card > .title-picture{
+.title-card > .title-picture {
     padding-top: 10px; 
     padding-bottom: 10px; 
     height: 80%; 
     width: auto; 
 }
 
-.review-section{
+.review-section {
     margin-bottom: 40px; 
 }
 
-.write-review{
+.write-review {
     min-height: 50px;  
     margin-bottom: 40px; 
     padding: 30px; 
     background-color: var(--default-card-color);
 }
 
-.review-btn{
+.review-btn {
     z-index: 0 !important; 
 }
 
-.write-review > .input-field{
+.write-review > .input-field {
     max-height: 200px;
     overflow-y: scroll;  
 }
 
-.view-review{
+.view-review {
     padding: 1px 20px 20px;  
     background-color: var(--default-card-color);
 }
 
-.view-review-subsection{
+.view-review-subsection {
     margin-bottom: 30px !important; 
 }
 
-.review-post{
+.review-post {
     background-color: var(--default-card-color);
 }
 
-.post-author-pic{ 
+.post-author-pic { 
     display: inline-block; 
     margin-right: 20px; 
     height: 50px; 
@@ -95,17 +95,17 @@ body{
     color: var(--default-card-color);   
 }
 
-.post-rating{
+.post-rating {
     margin-left: 20px; 
 }
 
-.right-section{
+.right-section {
     display: flex; 
     flex-direction: column;
     padding: 0px !important;  
 }
 
-.content-selection{
+.content-selection {
     display: flex; 
     align-items: center; 
     margin-top: 10px; 
@@ -117,18 +117,18 @@ body{
     vertical-align: middle;
 }
 
-.content-selection > a{
+.content-selection > a {
     font-size: 1.8rem; 
     color: var(--default-text-color); 
     text-align: center; 
 }
 
-.content-details{
+.content-details {
     padding: 20px; 
     background-color: var(--default-card-color);
 }
 
-.content-details > h4 + h5{
+.content-details > h4 + h5 {
     color: var(--default-text-color); 
 }
 
@@ -140,19 +140,19 @@ body{
     font-size: 1.2rem !important; 
 }
 
-@media screen and (max-width: 1200px){
-    .main-content{
+@media screen and (max-width: 1200px) {
+    .main-content {
         flex-direction: column;
         margin-top: 40px; 
     }
-    .title-card{
+    .title-card {
         margin-bottom: 40px; 
     }
-    .left-section{
+    .left-section {
         margin: 0px; 
         padding: 0px !important; 
     }
-    .content-selection{
+    .content-selection {
         margin-bottom: 40px !important;
     }
 }

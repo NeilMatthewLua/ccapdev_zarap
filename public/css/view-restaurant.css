@@ -1,14 +1,14 @@
-:root{
+:root {
     --default-card-color: #FFFFFF; 
     --default-text-color: #2D2D2D; 
     --default-background-color: #F4F4F2; 
 }
 
-body{
+body {
     background-color: var(--default-background-color);
 }
 
-.main-content{
+.main-content {
     margin-top: 40px; 
     padding: 20px; 
     display: flex; 
@@ -16,13 +16,13 @@ body{
     width: 100%; 
 }
 
-.left-section{
+.left-section {
     display: flex;
     flex-direction: column;
     margin-right: 20px; 
 }
 
-.title-card{
+.title-card {
     width: 100%; 
     margin-top:10px; 
     margin-bottom: 20px; 
@@ -31,19 +31,19 @@ body{
     background-color: var(--default-card-color);
 }
 
-.title-card > .title-picture{
+.title-card > .title-picture {
     padding-top: 10px; 
     padding-bottom: 10px; 
     height: 70%; 
     width: auto; 
 }
 
-.photos{
+.photos {
     text-align: center;
     width: 100%; 
 }
 
-.carousel-container{
+.carousel-container {
     padding: 20px; 
     background-color: var(--default-card-color);
     margin-bottom: 40px; 
@@ -61,13 +61,13 @@ body{
     width: 100%; 
 }
 
-.right-section{
+.right-section {
     display: flex; 
     flex-direction: column;
     padding: 0px !important;  
 }
 
-.content-selection{
+.content-selection {
     display: flex; 
     align-items: center; 
     margin-top: 10px; 
@@ -79,18 +79,18 @@ body{
     vertical-align: middle;
 }
 
-.content-selection > a{
+.content-selection > a {
     font-size: 1.8rem; 
     color: var(--default-text-color); 
     text-align: center; 
 }
 
-.content-details{
+.content-details {
     padding: 20px; 
     background-color: var(--default-card-color);
 }
 
-.content-details > h4 + h5{
+.content-details > h4 + h5 {
     color: var(--default-text-color); 
 }
 
@@ -102,12 +102,12 @@ body{
     font-size: 1.2rem !important; 
 }
 
-@media screen and (max-width: 1200px){
-    .main-content{
+@media screen and (max-width: 1200px) { 
+    .main-content {
         flex-direction: column;
         margin-top: 40px; 
     }
-    .title-card{
+    .title-card {
         margin-bottom: 40px; 
     }
 }
