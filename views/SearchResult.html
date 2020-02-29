@@ -222,7 +222,7 @@
             <div class="hide-on-small-only">
                 <div class="restaurant-list">
                     <!--1st Restaurant: Golden Fortune-->
-                    <div class="card horizontal">
+                    <div class="card horizontal" id="GoldenFortuneCardLarge" onclick="gotoGoldenFortune()">
                         <div class="card-image">
                             <img src="../public/assets/GoldenFortune/GoldenFortuneProfile.jpg" alt="Golden Fortune" class="restaurant-image">
                         </div>
@@ -239,7 +239,7 @@
                                     <p class="restaurant-other-info">Cuisine:&nbsp;Seafood, Chinese</p>
                                     <p class="restaurant-other-info">Cost for two:&nbsp;PHP800</p>
                                     <p class="restaurant-other-info">Hours:&nbsp;11am – 2:30pm, 5:30pm – 12 midnight (Mon-Sun)</p>
-                                    <p class="restaurant-other-info">Tel no:&nbsp;02 85222288;02 85222200</p>
+                                    <p class="restaurant-other-info">Tel no:&nbsp;02 85222288; 02 85222200</p>
                                 </div>
                             </div>
                             <div class="card-content">
@@ -248,7 +248,7 @@
                         </div>
                     </div>
                     <!--2nd Restaurant: Tim Hortons-->
-                    <div class="card horizontal">
+                    <div class="card horizontal" id="TimHortonsCardLarge" onclick="gotoTimHortons()">
                         <div class="card-image">
                             <img src="../public/assets/TimHortons/TimHortonsProfile.jpg" alt="Tim Hortons" class="restaurant-image">
                         </div>
@@ -274,7 +274,7 @@
                         </div>
                     </div>
                     <!--3rd Restaurant: Big Bowl Noodles-->
-                    <div class="card horizontal">
+                    <div class="card horizontal" id="BigBowlNoodlesCardLarge" onclick="gotoBigBowlNoodles()">
                         <div class="card-image">
                             <img src="../public/assets/BigBowlNoodles/BigBowlNoodlesProfile.jpg" alt="Big Bowl Noodles" class="restaurant-image">
                         </div>
@@ -300,7 +300,7 @@
                         </div>
                     </div>
                     <!--4th Restaurant: Tasty Dumplings-->
-                    <div class="card horizontal">
+                    <div class="card horizontal" id="TastyDumplingsCardLarge" onclick="gotoTastyDumplings()">
                         <div class="card-image">
                             <img src="../public/assets/TastyDumplings/TastyDumplingsProfile.jpg" alt="Tasty Dumplings" class="restaurant-image">
                         </div>
@@ -326,7 +326,7 @@
                         </div>
                     </div>
                     <!--5th Restaurant: Yabu-->
-                    <div class="card horizontal">
+                    <div class="card horizontal" id="YabuCardLarge" onclick="gotoYabu()">
                         <div class="card-image">
                             <img src="../public/assets/Yabu/YabuProfile.png" alt="Yabu" class="restaurant-image">
                         </div>
@@ -357,7 +357,7 @@
             <div class="hide-on-med-and-up">
                 <div class="mobile-restaurant-list">
                     <!--1st Restaurant: Golden Fortune-->    
-                    <div class="card">
+                    <div class="card" id="GoldenFortuneCardSmall" onclick="gotoGoldenFortune()">
                         <div class="card-image">
                             <img src="../public/assets/GoldenFortune/GoldenFortuneProfile.jpg" alt="Golden Fortune" class="mobile-restaurant-image">
                             <button class="btn-small hoverable green right">3.9</button>
@@ -378,7 +378,7 @@
                         </div>
                     </div>
                     <!--2nd Restaurant: Tim Hortons-->
-                    <div class="card">
+                    <div class="card" id="TimHortonsCardSmall" onclick="gotoTimHortons()">
                         <div class="card-image">
                             <img src="../public/assets/TimHortons/TimHortonsProfile.jpg" alt="Tim Hortons" class="mobile-restaurant-image">
                             <button class="btn-small hoverable green right">3.1</button>
@@ -399,7 +399,7 @@
                         </div>
                     </div>
                     <!--3rd Restaurant: Big Bowl Noodles-->    
-                    <div class="card">
+                    <div class="card" id="BigBowlNoodlesCardSmall" onclick="gotoBigBowlNoodles()">
                         <div class="card-image">
                             <img src="../public/assets/BigBowlNoodles/BigBowlNoodlesProfile.jpg" alt="Big Bowl Noodles" class="mobile-restaurant-image">
                             <button class="btn-small hoverable green right">3.6</button>
@@ -420,7 +420,7 @@
                         </div>
                     </div>
                     <!--4th Restaurant: Tasty Dumplings-->    
-                    <div class="card">
+                    <div class="card" id="TastyDumplingsCardSmall" onclick="gotoTastyDumplings()">
                         <div class="card-image">
                             <img src="../public/assets/TastyDumplings/TastyDumplingsProfile.jpg" alt="Tasty Dumplings" class="mobile-restaurant-image">
                             <button class="btn-small hoverable green right">3.9</button>
@@ -441,7 +441,7 @@
                         </div>
                     </div>
                     <!--5th Restaurant: Yabu-->    
-                    <div class="card">
+                    <div class="card" id="YabuCardSmall" onclick="gotoYabu()">
                         <div class="card-image">
                             <img src="../public/assets/Yabu/YabuProfile.png" alt="Yabu" class="mobile-restaurant-image">
                             <button class="btn-small hoverable green right">4.8</button>
@@ -491,6 +491,21 @@
             var elem_dropdown = document.querySelectorAll('.dropdown-trigger');
             var instances_dropdown = M.Dropdown.init(elem_dropdown, {});
         });
+        function gotoGoldenFortune() {
+            location.href = "Golden Fortune/GoldenFortune-displayRestaurant.html";
+        }
+        function gotoTimHortons() {
+            location.href = "Tim Hortons/TimHortons-displayRestaurant.html";
+        }
 
+        function gotoBigBowlNoodles() {
+            location.href = "Big Bowl Noodles/BigBowlNoodles-displayRestaurant.html";
+        }
+        function gotoTastyDumplings() {
+            location.href = "Tasty Dumplings/TastyDumplings-displayRestaurant.html";
+        }
+        function gotoYabu() {
+            location.href = "Yabu/Yabu-displayRestaurant.html";
+        }
     </script>
 </html>
