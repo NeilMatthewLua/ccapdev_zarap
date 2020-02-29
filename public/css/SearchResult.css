@@ -86,6 +86,12 @@ main {
     padding-right: 2%;
 }
 
+.card-content > .btn {
+    position: absolute;
+    right:20px;
+    top:10px;
+}
+
 /*Restaurants for Mobile Only*/
 .mobile-restaurant-list {
     padding-left: 2%;
