@@ -92,6 +92,21 @@ body {
     margin-right: 5%;
 }
 
+.navbar-image {
+    height: 40px; 
+    margin-right: 10%; 
+}
+
+.card {
+    position: relative !important; 
+}
+
+.card-action {
+    position: absolute !important; 
+    bottom: 0; 
+    width: 100%; 
+}
+
 @media(max-width: 640px) {
     #search_small {
         display: flex;
