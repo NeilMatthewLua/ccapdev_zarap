@@ -331,7 +331,7 @@
           </div>
         </div>
         <div class="col s12 m11 l9">  
-          <div class="review-section">
+          <div class="review-section relative-position">
             <div class="view-review">
               <div class="review-feed">
                 <div class="review-post padd-top">
@@ -345,6 +345,28 @@
                   </p>
                 </div>
               </div>
+            </div>
+            <a href="#" class="corner-bottom-right-review edit-review">Edit Review</a>
+          </div>
+          <div class="write-review">
+            <div class="show-review">
+              <div class = "input-field">
+                <i class="material-icons prefix">mode_edit</i>
+                <textarea id="textarea1" class="materialize-textarea" data-length = "300" placeholder="Enter Review Details"></textarea>
+              </div>
+              <label for="rating-number">Enter Rating:</label>
+              <input id="rating-number" type="number" min="1" max="5" step="1" placeholder="Enter Rating: (1-Lowest 5-Highest)"/>
+              <form action="#">
+                <div class="file-field input-field">
+                  <div class="red btn">
+                    <span>File</span>
+                    <input type="file" multiple>
+                  </div>
+                  <div class="file-path-wrapper">
+                    <input class="file-path validate" type="text" placeholder="Upload one or more files">
+                  </div>
+                </div>
+              </form>
             </div>
           </div>
         </div>
@@ -401,6 +423,7 @@
         }
         $('.show-edit-profile-small').hide();
         $('.show-edit-profile-large').hide();
+        $('.write-review').hide();
     })
 
     // Switching between user menu
@@ -422,6 +445,8 @@
       $('.onload').text('My Reviews');
       $('.container-review').show();
       $('.hide-on-review').hide();
+      $('.write-review').hide();
+      $('.review-section').show();
     })
 
     // Edit profile presponsiveness
@@ -454,6 +479,12 @@
           $('.show-edit-profile-large').hide();
         }
       }
+    })
+
+    $('.edit-review').on('click', function() {
+      $('.write-review').show();
+      $('.show-review').show();
+      $('.review-section').hide();
     })
 
     function gotoGoldenFortune() {

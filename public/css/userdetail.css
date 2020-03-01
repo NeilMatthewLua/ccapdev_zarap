@@ -94,6 +94,12 @@ body {
     bottom: 20px;
 }
 
+.corner-bottom-right-review {
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+}
+
 .padinput {
     padding-left: 10px !important;
     box-sizing: border-box;
