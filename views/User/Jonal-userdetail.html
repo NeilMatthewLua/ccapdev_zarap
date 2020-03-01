@@ -236,8 +236,8 @@
         </div>  
         <div class="col s12 m11 l9">
           <div class="restaurant-list">
-            <!--1st Restaurant: Yabu-->
-            <div class="card horizontal">
+            <!--1st Restaurant: Big Bowl Noodles-->
+            <div class="card horizontal" id="BigBowlNoodlesCard" onclick="gotoBigBowlNoodles()">
                 <div class="card-image">
                     <img src="../../public/assets/BigBowlNoodles/BigBowlNoodlesProfile.jpg" alt="Big Bowl Noodles" class="restaurant-image">
                 </div>
@@ -285,7 +285,7 @@
                 <div class="review-post padd-top">
                   <div class="post-header valign-wrapper">
                     <img class="post-author-pic" src="../../public/assets/BigBowlNoodles/BigBowlNoodlesProfile.jpg"></img>
-                    <h4 class="post-author"><strong>Big Bowl Noodles</strong></h4>
+                    <h4 class="post-author" id="BigBowlNoodles" onclick="gotoBigBowlNoodles()"><strong>Big Bowl Noodles</strong></h4>
                     <h5 class="post-rating #388e3c green darken-2">5.0</h5>
                   </div>
                   <p class="post-desc">Tried their Beef Wanton Noodle Soup. Generous serving for one person, 
@@ -404,6 +404,10 @@
         }
       }
     })
+
+    function gotoBigBowlNoodles() {
+        location.href = "../Big Bowl Noodles/BigBowlNoodles-displayRestaurant-logged.html";
+      }
 
   </script>     
  </body>

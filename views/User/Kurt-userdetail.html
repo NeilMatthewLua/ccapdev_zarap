@@ -237,7 +237,7 @@
         <div class="col s12 m11 l9">
           <div class="restaurant-list">
             <!--1st Restaurant: Yabu-->
-            <div class="card horizontal">
+            <div class="card horizontal" id="YabuCard" onclick="gotoYabu()">
                 <div class="card-image">
                     <img src="../../public/assets/Yabu/YabuProfile.png" alt="Yabu" class="restaurant-image">
                 </div>
@@ -285,7 +285,7 @@
                 <div class="review-post padd-top">
                   <div class="post-header valign-wrapper">
                     <img class="post-author-pic" src="../../public/assets/Yabu/YabuProfile.png"></img>
-                    <h4 class="post-author"><strong>Yabu</strong></h4>
+                    <h4 class="post-author" id="Yabu" onclick="gotoYabu()"><strong>Yabu</strong></h4>
                     <h5 class="post-rating #388e3c green darken-2">5.0</h5>
                   </div>
                   <p class="post-desc">Went here to celebrate a colleague’s bday. I never really know that 
@@ -405,6 +405,10 @@
         }
       }
     })
+
+    function gotoYabu() {
+        location.href = "../Yabu/Yabu-displayRestaurant-logged.html";
+      }
 
   </script>     
  </body>
