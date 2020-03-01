@@ -20,9 +20,12 @@
   <div class ="BG-color">
     <!--Navbar-->
     <div class = "row">
-      <ul class ="navright right hide-on-med-and-down valign-wrapper col s2"  id="nav-mobile">
-        <img class="circle navbar-image" src="../../public/assets/neil.jpg">
-        <li><a class="dropdown-trigger" href="#!" data-target="dropdown1"><span class="black-text username">Welcome, Neil</span><i class="material-icons black-text right">arrow_drop_down</i></a></li>
+      <ul class ="navright right hide-on-med-and-down col s3"  id="nav-mobile">
+        <div class="navbar-right right valign-wrapper">
+          <img class="circle navbar-image" src="../../public/assets/neil.jpg">
+          <span class="black-text">Welcome, Neil</span>
+          <a class="dropdown-trigger" href="#!" data-target="dropdown1"><i class="material-icons black-text right">arrow_drop_down</i></a>
+        </div>
       </ul>
     </div>
   
@@ -33,6 +36,7 @@
     <li class="divider"></li>
     <li><a href="../userdetail.html#my-reviews" class="black-text">My Reviews</a></li>
   </ul>
+
   <!--Sidebar Content-->
   <ul id="slide-out" class="sidenav">
     <li><div class="user-view">
@@ -53,14 +57,6 @@
   <div class = "hide-on-large-only">
     <a href="#" data-target="slide-out" class="right sidenav-trigger push-padding"><i class="material-icons black-text">menu</i></a>
   </div>
-
-  <!--Sidebar Content-->
-  <ul id="slide-out" class="sidenav">
-    <li><div class="divider"></div></li>
-    <li><a href="register.html">Register</a></li>
-    <li><div class="divider"></div></li>
-    <li><a href="login.html">Login</a></li>
-  </ul>
 
   <div class ="container pad4">
     <div class ="col s12 m2 valign-wrapper center-align">
@@ -201,6 +197,5 @@
       $(window).resize(fluid_box);
       });
   </script>
-
 </body>
 </html>

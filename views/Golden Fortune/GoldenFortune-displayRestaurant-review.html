@@ -78,6 +78,25 @@
       <div class="review-section">
         <div class="write-review">
           <a class="review-btn waves-effect waves-light btn #388e3c green darken-2">Write Review</a>
+          <div class="show-review">
+            <div class = "input-field">
+              <i class="material-icons prefix">mode_edit</i>
+              <textarea id="textarea1" class="materialize-textarea" data-length = "300" placeholder="Enter Review Details"></textarea>
+            </div>
+            <label for="rating-number">Enter Rating:</label>
+            <input id="rating-number" type="number" min="1" max="5" step="1" placeholder="Enter Rating: (1-Lowest 5-Highest)"/>
+            <form action="#">
+              <div class="file-field input-field">
+                <div class="red btn">
+                  <span>File</span>
+                  <input type="file" multiple>
+                </div>
+                <div class="file-path-wrapper">
+                  <input class="file-path validate" type="text" placeholder="Upload one or more files">
+                </div>
+              </div>
+            </form>
+          </div>
         </div>
         <div class="view-review">
           <h3><strong>Reviews</strong></h3>
@@ -166,25 +185,7 @@
      });
      $(document).on("click",".review-btn", function(){
        $(this).hide();  
-       $(".write-review").append(`
-          <div class = "input-field">
-            <i class="material-icons prefix">mode_edit</i>
-            <textarea id="textarea1" class="materialize-textarea" data-length = "300"></textarea>
-            <label for="textarea1">Enter review details...</label>
-          </div>
-          <form action="#">
-            <div class="file-field input-field">
-              <div class="btn">
-                <span>File</span>
-                <input type="file" multiple>
-              </div>
-              <div class="file-path-wrapper">
-                <input class="file-path validate" type="text" placeholder="Upload one or more files">
-              </div>
-            </div>
-          </form>`); 
-     }); 
-      $('#textarea1').val('New Text');
+       $(".show-review").show();  
       M.textareaAutoResize($('#textarea1'));
   });
   autoplay()   

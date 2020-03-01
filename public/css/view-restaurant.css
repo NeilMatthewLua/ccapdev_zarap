@@ -38,6 +38,10 @@ body {
     width: auto; 
 }
 
+.title-card > .col > .btn {
+    z-index: 0 !important
+}
+
 .photos {
     text-align: center;
     width: 100%; 

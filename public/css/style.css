@@ -40,11 +40,6 @@ body {
     text-align: center;
 }
 
-.navright {
-    display: flex;
-    float: right;
-}
-
 .navitem {
     padding-right: 25px;
 }
@@ -92,9 +87,18 @@ body {
     margin-right: 5%;
 }
 
+.navbar-right {
+    display: flex; 
+    flex-direction: row;
+}
+
 .navbar-image {
     height: 40px; 
     margin-right: 10%; 
+}
+
+.dropdown-trigger {
+    display: inline-block; 
 }
 
 .card {

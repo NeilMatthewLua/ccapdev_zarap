@@ -42,6 +42,10 @@ body {
     width: auto; 
 }
 
+.title-card > .col > .btn {
+    z-index: 0 !important
+}
+
 .review-section {
     margin-bottom: 40px; 
 }
@@ -57,7 +61,11 @@ body {
     z-index: 0 !important; 
 }
 
-.write-review > .input-field {
+.show-review {
+    display: none;
+}
+
+.write-review > .show-review > .input-field {
     max-height: 200px;
     overflow-y: scroll;  
 }
