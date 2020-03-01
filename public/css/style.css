@@ -92,6 +92,11 @@ body {
     margin-right: 5%;
 }
 
+.navright {
+    display: flex; 
+    flex-direction: row;
+}
+
 .navbar-right {
     display: flex; 
     flex-direction: row;
