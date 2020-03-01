@@ -28,10 +28,10 @@
     <div class="navbar-fixed">
       <nav>
         <div class="nav-wrapper row">
-          <a href="#" id="zarap" class ="hide-on-med-and-down col s2">zarap</a>
+          <a href="landing.html" id="zarap" class ="hide-on-med-and-down col s2">zarap</a>
           <!--Navbar for Smaller Screens-->
         <div class = "hide-on-large-only">
-          <a href="#" id = "zarap" class="brand-logo center">zarap</a>
+          <a href="landing.html" id = "zarap" class="brand-logo center">zarap</a>
           <a href="#" data-target="slide-out" class="right sidenav-trigger"><i class="material-icons">menu</i></a>
         </div>
         <!--Searchbar-->
@@ -368,11 +368,28 @@
     });
 
     $(document).ready(function() {
-        $('.onload').text('My Profile');
+        var id = location.hash;
+
+        if(id == '#dining-history') {
+          $('.onload').text('Dining History');
+          $('.container-profile').hide();
+          $('.containter-restaurant').show();
+          $('.container-review').hide();
+        }
+        else if(id == '#my-reviews') {
+          $('.onload').text('My reviews');
+          $('.container-profile').hide();
+          $('.containter-restaurant').hide();
+          $('.container-review').show();
+        }
+        else {
+          $('.onload').text('My Profile');
+          $('.container-profile').show();
+          $('.containter-restaurant').hide();
+          $('.container-review').hide();
+        }
         $('.show-edit-profile-small').hide();
         $('.show-edit-profile-large').hide();
-        $('.containter-restaurant').hide();
-        $('.container-review').hide();
     })
 
     // Switching between user menu
