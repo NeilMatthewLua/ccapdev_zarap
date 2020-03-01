@@ -10,6 +10,8 @@
     <link rel="stylesheet" href="../public/css/userdetail.css">
     <link rel="stylesheet" href="../../public/css/footer.css">
     <link rel="stylesheet" href="../../public/css/navbar.css">
+    <link rel="stylesheet" href="../public/css/SearchResult.css">
+    <link rel="stylesheet" href="../../public/css/view-restaurant-review.css">
     
     <script
     src="https://code.jquery.com/jquery-3.4.1.js"
@@ -24,65 +26,73 @@
 
   <body>
     <div class="navbar-fixed">
-        <nav>
-          <div class="nav-wrapper row">
-            <a href="#" id = "zarap" class = "hide-on-med-and-down col s2">zarap</a>
-            <!--Navbar for Smaller Screens-->
-          <div class = "hide-on-large-only">
-            <a href="#" id = "zarap" class = "brand-logo center">zarap</a>
-            <a href="#" data-target="slide-out" class="right sidenav-trigger"><i class="material-icons">menu</i></a>
-          </div>
-          <!--Searchbar-->
-          <div class = "search-section col s7 hide-on-med-and-down">
-              <form class = "search-bar">
-                <div class ="input-field">
-                  <input type="text" class ="white search-box" info-font="searchbar" placeholder="   Search your favorite restaurants here...">
-                </div>
-              </form>
-              <a class ="waves-effect waves-light btn #e53935 red darken-1" >search</a>
-          </div>
-          <ul class="right hide-on-med-and-down col s3">
-            <div class = "right">
-              <li><a href="login.html">Login</a></li>
-              <li><a href="register.html">Register</a></li>
-            </div>
-          </div>
-        </nav>
-    </div>
-      <!--Sidebar Content-->
-      <ul id="slide-out" class="sidenav">
-        <li><div class="divider"></div></li>
-        <li><a href="register.html">Register</a></li>
-        <li><div class="divider"></div></li>
-        <li><a href="login.html">Login</a></li>
-      </ul>
-      <!--Search Bar for Smaller Screens-->
-      <div class = "search-section search-mobile hide-on-large-only">
-        <div class="container row">
-          <div class="col s12">
-            <form class = "search-bar-small"> 
-              <div class ="input-field">
-                <input type="text" class ="white search-box truncate" info-font="searchbar" placeholder="   Search your favorite restaurants here...">
+      <nav>
+        <div class="nav-wrapper row">
+          <a href="#" id="zarap" class ="hide-on-med-and-down col s2">zarap</a>
+          <!--Navbar for Smaller Screens-->
+        <div class = "hide-on-large-only">
+          <a href="#" id = "zarap" class="brand-logo center">zarap</a>
+          <a href="#" data-target="slide-out" class="right sidenav-trigger"><i class="material-icons">menu</i></a>
+        </div>
+        <!--Searchbar-->
+        <div class="search-section col s7 hide-on-med-and-down">
+            <form class="search-bar">
+              <div class="input-field">
+                <input type="text" class="white search-box" name="searchbar" placeholder="   Search your favorite restaurants here...">
               </div>
             </form>
+            <a class="waves-effect waves-light btn #e53935 red darken-1" >search</a>
+        </div>
+        <ul class="right hide-on-med-and-down col s3">
+          <div class="right navbar-right valign-wrapper">
+            <img class="circle navbar-image" src="../../public/assets/neil.jpg">
+            <a href="#name"><span class="white-text username">Welcome, Neil Lua</span></a>
           </div>
         </div>
-        <div class="container row">
-          <div class="col s12">
-            <a class ="waves-effect waves-light btn #e53935 red darken-1" >search</a>
-          </div>
+      </nav>
+    </div>
+    <!--Sidebar Content-->
+    <ul id="slide-out" class="sidenav">
+      <li><div class="user-view">
+        <div class="background">
+        </div>
+        <a href="#user"><img class="circle" src="../../public/assets/neil.jpg"></a>
+        <a href="#name"><span class="username-sidenav">Neil Lua</span></a>
+      </div></li>
+      <li><div class="divider"></div></li>
+      <li><a href="#!" class="waves-effect profile">Profile</a></li>
+      <li><div class="divider"></div></li>
+      <li><a href="#!" class="waves-effect dining-history">Dining History</a></li>
+      <li><div class="divider"></div></li>
+      <li><a href="#!" class="waves-effect my-reviews">Reviews</a></li>
+    </ul>
+    <!--Search Bar for Smaller Screens-->
+    <div class="search-section search-mobile hide-on-large-only">
+      <div class="container row">
+        <div class="col s12">
+          <form class="search-bar-small"> 
+            <div class="input-field">
+              <input type="text" class="white search-box truncate" name="searchbar" placeholder="   Search your favorite restaurants here...">
+            </div>
+          </form>
         </div>
       </div>
+      <div class="container row">
+        <div class="col s12">
+          <a class="waves-effect waves-light btn #e53935 red darken-1" >search</a>
+        </div>
+      </div>
+    </div>
 
     <!-- Container of menu and display info -->
-    <div id = "content" class="containter">
+    <div id="content" class="container-profile  hide-on-restaurant hide-on-review">
         <h3 class="center big-font onload"></h3>
         <div class="row pad-left">
             <div class="col s12 l2 square margin-around hide-on-med-and-down">
               <div class="profile-container">
-                <div class="text menu-font pad-menu"><a href="#" class="white-text hover-underline" id="profile">My Profile</a></div>
-                <div class="text menu-font pad-menu"><a href="#" class="white-text hover-underline" id="dining-history">Dining History</a></div>
-                <div class="text menu-font pad-menu"><a href="#" class="white-text hover-underline" id="my-reviews">My Reviews</a></div>
+                <div class="text menu-font pad-menu"><a href="#" class="white-text hover-underline profile">My Profile</a></div>
+                <div class="text menu-font pad-menu"><a href="#" class="white-text hover-underline dining-history">Dining History</a></div>
+                <div class="text menu-font pad-menu"><a href="#" class="white-text hover-underline my-reviews">My Reviews</a></div>
               </div>
             </div>
             <!-- Display info for large -->
@@ -207,7 +217,132 @@
     </div>
 
     <!-- Container for dining history -->
-    
+    <div id="content" class="containter-restaurant hide-on-review hide-on-profile">
+      <h3 class="center big-font onload"></h3>
+      <div class="row pad-left">
+        <div class="col s12 l2 square margin-around hide-on-med-and-down">
+          <div class="profile-container">
+            <div class="text menu-font pad-menu"><a href="#" class="white-text hover-underline profile">My Profile</a></div>
+            <div class="text menu-font pad-menu"><a href="#" class="white-text hover-underline dining-history">Dining History</a></div>
+            <div class="text menu-font pad-menu"><a href="#" class="white-text hover-underline my-reviews">My Reviews</a></div>
+          </div>
+        </div>  
+        <div class="col s12 m11 l9">
+          <div class="restaurant-list">
+            <!--1st Restaurant: Golden Fortune-->
+            <div class="card horizontal">
+                <div class="card-image">
+                    <img src="../public/assets/GoldenFortune/GoldenFortuneProfile.jpg" alt="Golden Fortune" class="restaurant-image">
+                </div>
+                <div class="restaurant-info">
+                    <div class="card-stacked">
+                        <div class="card-content">
+                            <p class="restaurant-establisment-type">Casual Dining</p>
+                            <br>
+                            <p class="restaurant-name">Golden Fortune</p>
+                            <br>
+                            <p class="restaurant-location">Ermita</p>
+                            <p class="restaurant-address">678 T.M. Kalaw Avenue, Ermita, Manila</p>
+                            <br>
+                            <p class="restaurant-other-info">Cuisine:&nbsp;Seafood, Chinese</p>
+                            <p class="restaurant-other-info">Cost for two:&nbsp;PHP800</p>
+                            <p class="restaurant-other-info">Hours:&nbsp;11am – 2:30pm, 5:30pm – 12 midnight (Mon-Sun)</p>
+                            <p class="restaurant-other-info">Tel no:&nbsp;02 85222288;02 85222200</p>
+                        </div>
+                    </div>
+                    <div class="card-content">
+                        <button class="btn hoverable green">3.9/5</button>
+                    </div>
+                </div>
+            </div>
+            <!--2nd Restaurant: Tim Hortons-->
+            <div class="card horizontal">
+                <div class="card-image">
+                    <img src="../public/assets/TimHortons/TimHortonsProfile.jpg" alt="Tim Hortons" class="restaurant-image">
+                </div>
+                <div class="restaurant-info">
+                    <div class="card-stacked">
+                        <div class="card-content">
+                            <p class="restaurant-establisment-type">Cafés</p>
+                            <br>
+                            <p class="restaurant-name">Tim Hortons</p>
+                            <br>
+                            <p class="restaurant-location">Malate, Manila</p>
+                            <p class="restaurant-address">R Square Mall, Taft Avenue Corner Pablo Ocampo Street, Malate, Manila</p>
+                            <br>
+                            <p class="restaurant-other-info">Cuisine:&nbsp;Coffee, Desserts</p>
+                            <p class="restaurant-other-info">Cost for two:&nbsp;PHP500</p>
+                            <p class="restaurant-other-info">Hours:&nbsp;8am – 11pm (Mon-Sun)</p>
+                            <p class="restaurant-other-info">Tel no:&nbsp;N/A</p>
+                        </div>
+                    </div>
+                    <div class="card-content">
+                        <button class="btn hoverable green">3.1/5</button>
+                    </div>
+                </div>
+            </div>
+            <!--3rd Restaurant: Big Bowl Noodles-->
+            <div class="card horizontal">
+                <div class="card-image">
+                    <img src="../public/assets/BigBowlNoodles/BigBowlNoodlesProfile.jpg" alt="Big Bowl Noodles" class="restaurant-image">
+                </div>
+                <div class="restaurant-info">
+                    <div class="card-stacked">
+                        <div class="card-content">
+                            <p class="restaurant-establisment-type">Quick Bites</p>
+                            <br>
+                            <p class="restaurant-name">Big Bowl Noodles</p>
+                            <br>
+                            <p class="restaurant-location">Binondo, Manila</p>
+                            <p class="restaurant-address">517 E.T. Yuchengco Street, Binondo, Manila</p>
+                            <br>
+                            <p class="restaurant-other-info">Cuisine:&nbsp;Chinese</p>
+                            <p class="restaurant-other-info">Cost for two:&nbsp;PHP500</p>
+                            <p class="restaurant-other-info">Hours:&nbsp;9am – 9pm (Mon-Sun)</p>
+                            <p class="restaurant-other-info">Tel no:&nbsp;02 82448755</p>
+                        </div>
+                    </div>
+                    <div class="card-content">
+                        <button class="btn hoverable green">3.6/5</button>
+                    </div>
+                </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div> 
+
+    <!-- Container for reveiws -->
+    <div id="content" class="container-review hide-on-restaurant hide-on-profile">
+      <h3 class="center big-font onload"></h3>
+      <div class="row pad-left">
+        <div class="col s12 l2 square margin-around hide-on-med-and-down">
+          <div class="profile-container">
+            <div class="text menu-font pad-menu"><a href="#" class="white-text hover-underline profile">My Profile</a></div>
+            <div class="text menu-font pad-menu"><a href="#" class="white-text hover-underline dining-history">Dining History</a></div>
+            <div class="text menu-font pad-menu"><a href="#" class="white-text hover-underline my-reviews">My Reviews</a></div>
+          </div>
+        </div>
+        <div class="col s12 m11 l9">  
+          <div class="review-section">
+            <div class="view-review">
+              <div class="review-feed">
+                <div class="review-post padd-top">
+                  <div class="post-header valign-wrapper">
+                    <img class="post-author-pic" src="../public/assets/Golden Fortune-1.jpg"></img>
+                    <h4 class="post-author"><strong>Golden Fortune</strong></h4>
+                    <h5 class="post-rating #388e3c green darken-2">5.0</h5>
+                  </div>
+                  <p class="post-desc">I had a date with hubby here. I enjoyed so much!! Mwah mwah, labyu hubby. It was more 
+                    than just a restaurant. It was an experience.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
 
     <!-- Footer -->
     <footer class="page-footer">
@@ -236,20 +371,29 @@
         $('.onload').text('My Profile');
         $('.show-edit-profile-small').hide();
         $('.show-edit-profile-large').hide();
+        $('.containter-restaurant').hide();
+        $('.container-review').hide();
     })
 
     // Switching between user menu
-    $('#profile').on('click', function(){
+    $('.profile').on('click', function(){
       $('.onload').text('My Profile');
+      $('.hide-on-profile').hide();
+      $('.container-profile').show();
+      $('.show-edit-profile-small').hide();
+      $('.show-edit-profile-large').hide();
+      $('.hide-on-edit').show();
+      $('#edit-profile').show();
     })
-    $('#dining-history').on('click', function(){
+    $('.dining-history').on('click', function(){
       $('.onload').text('Dining History');
+      $('.containter-restaurant').show();
+      $('.hide-on-restaurant').hide();
     })
-    $('#my-reviews').on('click', function(){
+    $('.my-reviews').on('click', function(){
       $('.onload').text('My Reviews');
-    })
-    $('#dining-history').on('click', function(){
-      $('.onload').text('Dining History');
+      $('.container-review').show();
+      $('.hide-on-review').hide();
     })
 
     // Edit profile presponsiveness
@@ -278,25 +422,12 @@
           $('.show-edit-profile-small').hide();
         }
         else {
-          console.log('WEWE')
           $('.show-edit-profile-small').show();
           $('.show-edit-profile-large').hide();
         }
       }
-      // else if(displaySatus == 'block') {
-      //   if(windowWidth > 1300) {
-      //     $('.hide-on-small').show();
-      //     $('.show-on-small').hide();
-      //   }
-      //   else {
-      //     $('.show-on-small').show();
-      //     $('.hide-on-small').hide();
-      //   }
-      // }
-        
     })
 
   </script>     
-  
  </body>
 </html>

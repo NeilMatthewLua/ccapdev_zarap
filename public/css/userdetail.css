@@ -40,6 +40,10 @@ body {
     font-size: 35px;
 }
 
+.padd-top {
+    padding-top: 3%;
+}
+
 .info-font {
     font-size: 18px !important;
 }
