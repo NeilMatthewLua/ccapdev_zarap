@@ -83,6 +83,11 @@ body {
     height: 250px;
 }
 
+.nav-flex-right {
+    display: flex;
+    float: right;
+}
+
 .margin_right_5 {
     margin-right: 5%;
 }
@@ -95,6 +100,10 @@ body {
 .navbar-right {
     display: flex; 
     flex-direction: row;
+}
+
+.pushdown-logged {
+    padding-top: 30px;
 }
 
 .navbar-image {
