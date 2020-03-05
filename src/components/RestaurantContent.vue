@@ -10,15 +10,11 @@
           </div>
           <img class="title-picture col s12 m4" src="../assets/pictures/Golden Fortune-1.jpg" alt="Golden Fortune">
       </div>
-      <div class="photos">
-        <div class="carousel-container">
-          <h3>Golden Fortune Photos</h3>
-          <h5 id = "page-count"></h5>
-          <div class="carousel carousel-slider">
-            <a class="carousel-item" href="#one!"><img src="../assets/pictures/Golden Fortune-1.jpg"></a>
-            <a class="carousel-item" href="#two!"><img src="../assets/pictures/golden-menu.jpg"></a>
-          </div>
-        </div>
+      <div v-if="section === 'Photos'">
+        <PhotoSection :title="photosTitle"/>  
+      </div>
+      <div v-else>
+        <ReviewSection /> 
       </div>
     </div>
     <div class="right-section col s12 xl4">
@@ -50,8 +46,20 @@
 
 <script>
 import M from 'materialize-css';
+import PhotoSection from './PhotoSection.vue'; 
+import ReviewSection from './ReviewSection.vue'; 
 export default {
     Name: "RestaurantContent",
+    data() {
+        return {
+            photosTitle: "Photos",
+            section: "Review"
+        }
+    },
+    components: {
+        PhotoSection,
+        ReviewSection 
+    },
     mounted() {
         M.AutoInit(); 
     }
