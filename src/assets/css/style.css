@@ -1,0 +1,73 @@
+body {
+    margin-bottom: 200px;
+}
+
+.title {
+    padding: 30px;
+    background: rgb(252, 60, 76);
+    color: white;
+    margin-left: auto;
+    margin-right: auto;
+    font-size: 20px;
+    border-radius: 15px;
+}
+
+.pad4 {
+    padding-top: 4%;
+}
+
+.center {
+    text-align: center;
+}
+
+.navright {
+    display: flex;
+    float: right;
+}
+
+.navitem {
+    padding-right: 25px;
+}
+
+.pushdown {
+    margin-top: 2%;
+}
+
+.boxed {
+    padding: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+    border: 1px solid white;
+    border-radius: 2px;
+    margin-right: 55px;
+}
+
+.searchround {
+    margin-right: 20px;
+}
+
+.padinput {
+    padding-left: 10px !important;
+    box-sizing: border-box;
+    border-radius: 4px !important;
+}
+
+.btn.pushdown {
+    margin-top:17px;
+}
+
+.flexit {
+    display: flex;
+    justify-content: space-around;
+}
+
+.square {
+    border: 1px solid black;
+    border-radius: 3px;
+    width: 250px;
+    height: 250px;
+}
+
+.margin_right_5 {
+    margin-right: 5%;
+}

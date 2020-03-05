@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" />
+  <link rel="stylesheet" href="../public/css/navbar.css">
+  <link rel="stylesheet" href="../public/css/footer.css">
+  <link rel="stylesheet" href="../public/css/view-restaurant.css">
+  <link rel="stylesheet" href="../public/css/font.css">
+  <title>View Restaurant Menu</title>
+</head>
+<body>
+  <div class="navbar-fixed">
+    <nav>
+      <div class="nav-wrapper row">
+        <a href="landing.html" id="zarap" class = "hide-on-med-and-down col s2">zarap</a>
+        <!--Navbar for Smaller Screens-->
+      <div class = "hide-on-large-only">
+        <a href="landing.html" id="zarap" class="brand-logo center">zarap</a>
+        <a href="#" data-target="slide-out" class="right sidenav-trigger"><i class="material-icons">menu</i></a>
+      </div>
+      <!--Searchbar-->
+      <div class="search-section col s7 hide-on-med-and-down">
+          <form class="search-bar">
+            <div class="input-field">
+              <input type="text" class="white search-box" name="searchbar" placeholder="   Search your favorite restaurants here...">
+            </div>
+          </form>
+          <a class="waves-effect waves-light btn #e53935 red darken-1" href="SearchResult.html">search</a>
+      </div>
+      <ul class="right hide-on-med-and-down col s3">
+        <div class="right">
+          <li><a href="login.html">Login</a></li>
+          <li><a href="register.html">Register</a></li>
+        </div>
+      </div>
+    </nav>
+  </div>
+  <!--Sidebar Content-->
+  <ul id="slide-out" class="sidenav">
+    <li><div class="divider"></div></li>
+    <li><a href="register.html">Register</a></li>
+    <li><div class="divider"></div></li>
+    <li><a href="login.html">Login</a></li>
+  </ul>
+  <!--Search Bar for Smaller Screens-->
+  <div class="search-section search-mobile hide-on-large-only">
+    <div class="container row">
+      <div class="col s12">
+        <form class="search-bar-small"> 
+          <div class="input-field">
+            <input type="text" class="white search-box truncate" name="searchbar" placeholder="   Search your favorite restaurants here...">
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="container row">
+      <div class="col s12">
+        <a class="waves-effect waves-light btn #e53935 red darken-1" href="SearchResult.html">search</a>
+      </div>
+    </div>
+  </div>
+
+  <!--Restaurant Content-->
+  <div class="main-content row">
+    <div class="left-section col s12 xl8">
+      <div class="title-card row">
+          <div class="col s12 m8">
+            <h2><b>Golden Fortune</b></h4>
+            <h5>Chinese Food | Fine Dining</h5>
+            <a class="waves-effect waves-light red btn"><i class="material-icons left">bookmark</i>Been Here</a>
+          </div>
+          <img class="title-picture col s12 m4" src="../public/assets/Golden Fortune-1.jpg" alt="Golden Fortune">
+      </div>
+      <div class="photos">
+        <div class="carousel-container">
+          <h3>Golden Fortune Menu</h3>
+          <h5 id="page-count"></h5>
+          <div class="carousel carousel-slider">
+            <a class="carousel-item" href="#one!"><img src="../public/assets/Golden Fortune-1.jpg"></a>
+            <a class="carousel-item" href="#two!"><img src="../public/assets/golden-menu.jpg"></a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="right-section col s12 xl4">
+      <div class="content-selection row">
+        <a href="displayRestaurant-menu.html" class="menu col s4">Menu</a>
+        <a href="displayRestaurant.html" class="photos col s4">Photos</a>
+        <a href="displayRestaurant-review.html" class="review col s4">Review</a>
+      </div>
+      <div class="content-details">
+          <h4>Telephone Number:</h4>
+          <h5>+552 3877</h5>
+          <br> 
+          <h4>Cuisines:</h4>
+          <h5>Asian</h5>
+          <br> 
+          <h4>Opening Hours:</h4>
+          <h5>6:00AM - 8:00PM</h5>
+          <br> 
+          <h4>Address:</h4>
+          <h5>678 Kalaw Ave.</h5>
+          <br> 
+          <h4>Average Cost:</h4>
+          <h5>P1200</h5>
+          <br> 
+      </div>
+    </div>
+  </div>
+  
+  <footer class="page-footer">
+    <div class="row footer-content">
+      <div class="logo-container col s12">
+        <div class="footer-logo"></div>
+      </div>
+      <div class="col l5 s12">
+        <h5 class="footer-text white-text">Contact Us</h5>
+        <p class="footer-text white-text">zarap@gmail.com <br>+(8) 552 3877</p>
+      </div>
+    </div>
+    <div class="footer-copyright">
+        <p class="copyright-text">© 2020 Eksdee Ebiloj</p>
+    </div>
+</footer>
+</body>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    var elem = document.querySelector('.sidenav');
+    var instance = new M.Sidenav(elem);
+  });
+  $(document).ready(function(){
+    $('.carousel').carousel({ 
+      dist: 0,
+      padding: 0,
+      fullWidth: true,
+      indicators: true,
+      duration: 100,
+      onCycleTo: function (ele) {
+        var index = $(ele).index() + 1; 
+        $("#page-count").text(index + " of 2"); 
+      } 
+     });
+  });
+  autoplay()   
+  function autoplay() {
+      $('.carousel').carousel('next');
+      setTimeout(autoplay, 4500);
+  }
+</script>
+</html>
