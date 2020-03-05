@@ -1,29 +1,32 @@
 {
-  "name": "ccapdev_zarap",
-  "version": "0.1.0",
-  "private": true,
+  "name": "CCAPDEV_Zarap",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
   "scripts": {
-    "serve": "vue-cli-service serve --port 9090",
-    "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "serve": "nodemon app.js"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/NeilMatthewLua/CCAPDEV_Zarap.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/NeilMatthewLua/CCAPDEV_Zarap/issues"
+  },
+  "homepage": "https://github.com/NeilMatthewLua/CCAPDEV_Zarap#readme",
   "dependencies": {
-    "core-js": "^3.6.4",
-    "material-design-icons": "^3.0.1",
-    "materialize-css": "^1.0.0-rc.2",
-    "vue": "^2.6.11",
-    "vue-router": "^3.1.5",
-    "vuex": "^3.1.2"
-  },
-  "devDependencies": {
-    "@vue/cli-plugin-babel": "~4.2.0",
-    "@vue/cli-plugin-eslint": "~4.2.0",
-    "@vue/cli-plugin-router": "~4.2.0",
-    "@vue/cli-plugin-vuex": "~4.2.0",
-    "@vue/cli-service": "~4.2.0",
-    "babel-eslint": "^10.0.3",
-    "eslint": "^6.7.2",
-    "eslint-plugin-vue": "^6.1.2",
-    "vue-template-compiler": "^2.6.11"
+    "body-parser": "^1.19.0",
+    "dotenv": "^8.2.0",
+    "ejs": "^3.0.1",
+    "express": "^4.17.1",
+    "express-handlebars": "^3.1.0",
+    "mongodb": "^3.5.2",
+    "mongoose": "^5.8.11",
+    "nodemon": "^2.0.2",
+    "validator": "^12.2.0"
   }
 }
