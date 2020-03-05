@@ -16,19 +16,21 @@ body {
     background-color: var(--default-navbar-color);
 }
 
-.title-size {
-    font-size:8vw;
+.padinput {
+    padding-left: 10px !important;
+    box-sizing: border-box;
+    border-radius: 4px !important;
 }
 
-.margin-top {
-    margin-top: 6vw;
-}
-
-.colored-button {
+.btncolor {
     background-color: var(--default-button-color) !important;
 }
 
-.hovered-link:hover {
+.hover:hover {
     color: var(--default-navbar-color) !important;
     text-decoration: underline;
+}
+
+.title-size {
+    font-size:5vw;
 }
