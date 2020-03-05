@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <!--Metadata-->
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+        <!--Import Google Icon Font-->
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+        <!--Import materialize.css-->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" />
+        <!--Compiled and minified JavaScript -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+        <link rel="stylesheet" href="../public/css/navbar.css">
+        <link rel="stylesheet" href="../public/css/font.css">
+        <link rel="stylesheet" href="../public/css/footer.css">
+        <link rel="stylesheet" href="../public/css/SearchResult.css">
+        <title>Search Result</title>
+    </head>
+
+    <body>
+        <!--Header-->
+        <div class="navbar-fixed">
+            <nav>
+              <div class="nav-wrapper row">
+                <a href="landing-logged.html" id="zarap" class ="hide-on-med-and-down col s2">zarap</a>
+                <!--Navbar for Smaller Screens-->
+              <div class = "hide-on-large-only">
+                <a href="#" data-target="filter-choice" class="left sidenav-trigger"><i class="material-icons">swap_vert</i></a> 
+                <a href="landing-logged.html" id = "zarap" class="brand-logo center">zarap</a>
+                <a href="#" data-target="slide-out" class="right sidenav-trigger"><i class="material-icons">menu</i></a>
+              </div>
+              <!--Searchbar-->
+              <div class="search-section col s7 hide-on-med-and-down">
+                  <form class="search-bar">
+                    <div class="input-field">
+                      <input type="text" class="white search-box" name="searchbar" placeholder="   Search your favorite restaurants here...">
+                    </div>
+                  </form>
+                  <a class="waves-effect waves-light btn #e53935 red darken-1" href="SearchResult-logged.html">search</a>
+              </div>
+              <ul class="right hide-on-med-and-down col s3">
+                <div class="right navbar-right valign-wrapper">
+                  <img class="circle navbar-image" src="../public/assets/jonal.jpg">
+                  <li><a class="dropdown-trigger" href="../User/Jonal-userdetail.html" data-target="dropdown1"><span class="white-text username">Welcome, Jonal</span><i class="material-icons right">arrow_drop_down</i></a></li>
+                </div>
+              </div>
+            </nav>
+            <ul id="dropdown1" class="dropdown-content">
+              <li><a href="User/Jonal-userdetail.html#profile" class="black-text">My Profile</a></li>
+              <li class="divider"></li>
+              <li><a href="User/Jonal-userdetail.html#dining-history" class="black-text">Dining History</a></li>
+              <li class="divider"></li>
+              <li><a href="User/Jonal-userdetail.html#my-reviews" class="black-text">My Reviews</a></li>
+            </ul>
+          </div>
+          <!--Sidebar Content-->
+          <ul id="slide-out" class="sidenav">
+            <li><div class="user-view">
+              <div class="background">
+              </div>
+              <a href="#user"><img class="circle" src="../public/assets/jonal.jpg"></a>
+              <a href="#name"><span class="username-sidenav">Jonal</span></a>
+            </div></li>
+            <li><div class="divider"></div></li>
+            <li><a href="User/Jonal-userdetail.html#profile" class="waves-effect">Profile</a></li>
+            <li><div class="divider"></div></li>
+            <li><a href="User/Jonal-userdetail.html#dining-history" class="waves-effect">Dining History</a></li>
+            <li><div class="divider"></div></li>
+            <li><a href="User/Jonal-userdetail.html#my-reviews" class="waves-effect">Reviews</a></li>
+          </ul>
+          <ul id="filter-choice" class="right sidenav">
+            <li><a href="#!" class="dropdown-trigger" data-target="sort-by">Sort by
+                <i class="material-icons right">arrow_drop_down</i></a></li>
+            <li class="divider"></li>
+            <li><a href="#!" class="dropdown-trigger" data-target="category">Category
+                <i class="material-icons right">arrow_drop_down</i></a></li>
+            <li class="divider"></li>
+            <li><a href="#!" class="dropdown-trigger" data-target="location">Location
+                <i class="material-icons right">arrow_drop_down</i></a></li>
+            <li class="divider"></li>
+            <li><a href="#!" class="dropdown-trigger" data-target="cuisine">Cuisine
+                <i class="material-icons right">arrow_drop_down</i></a></li>
+            <li class="divider"></li>
+            <li><a href="#!" class="dropdown-trigger" data-target="establishment-type">Establishment Type
+                <i class="material-icons right">arrow_drop_down</i></a></li>
+            <li class="divider"></li>
+            <li><a href="#!" class="dropdown-trigger" data-target="cost-for-two">Cost for Two
+                <i class="material-icons right">arrow_drop_down</i></a></li>
+            </ul>
+            <!--Dropdown for Rating, Cost and Newly Added-->
+            <ul id="sort-by" class="dropdown-content">
+                <li><a href="#">Rating - high to low</a></li>
+                <li><a href="#">Cost - high to low</a></li>
+                <li><a href="#">Cost - low to high</a></li>
+                <li><a href="#">Newly Added</a></li>
+            </ul>
+            <!--Dropdown for Filter Category-->
+            <ul id="category" class="dropdown-content">
+                <li><a href="#">Dine-out</a></li>
+                <li><a href="#">Delivery</a></li>
+                <li><a href="#">Drinks & Nightlife</a></li>
+                <li><a href="#">Cafés</a></li>
+            </ul>
+            <!--Dropdown for Filter Location-->
+            <ul id="location" class="dropdown-content">
+                <li><a href="#">Manila</a></li>
+                <li><a href="#">Quezon City</a></li>
+                <li><a href="#">Makati City</a></li>
+                <li><a href="#">Pasig City</a></li>
+                <li><a href="#">Pasay City</a></li>
+                <li><a href="#">Parañaque City</a></li>
+                <li><a href="#">Taguig City</a></li>
+                <li><a href="#">See all locations</a></li>
+            </ul>
+            <!--Dropdown for Filter Cuisine-->
+            <ul id="cuisine" class="dropdown-content">
+                <li><a href="#">Filipino</a></li>
+                <li><a href="#">Beverages</a></li>
+                <li><a href="#">American</a></li>
+                <li><a href="#">Fastfood</a></li>
+                <li><a href="#">Chinese</a></li>
+                <li><a href="#">Coffee</a></li>
+                <li><a href="#">Bakery</a></li>
+                <li><a href="#">Tea</a></li>
+                <li><a href="#">Street Food</a></li>
+                <li><a href="#">Japanese</a></li>
+                <li><a href="#">See all cuisines</a></li>
+            </ul>
+            <!--Dropdown for Filter Establishment Type-->
+            <ul id="establishment-type" class="dropdown-content">
+                <li><a href="#">Quick Bites</a></li>
+                <li><a href="#">Casual Dining</a></li>
+                <li><a href="#">Beverage Shops</a></li>
+                <li><a href="#">Kiosks</a></li>
+                <li><a href="#">Cafés</a></li>
+                <li><a href="#">Food Courts</a></li>
+                <li><a href="#">Bakeries</a></li>
+                <li><a href="#">Dessert Parlor</a></li>
+                <li><a href="#">Bars</a></li>
+                <li><a href="#">Fine Dining</a></li>
+            </ul>
+            <!--Dropdown for Filter Cost for two-->
+            <ul id="cost-for-two" class="dropdown-content">
+                <li><a href="#">Less than PHP350</a></li>
+                <li><a href="#">PHP350 to PHP700</a></li>
+                <li><a href="#">PHP700 to PHP1400</a></li>
+                <li><a href="#">PHP1400 +</a></li>
+            </ul>
+          <!--Search Bar for Smaller Screens-->
+          <div class="search-section search-mobile hide-on-large-only">
+            <div class="container row">
+              <div class="col s12">
+                <form class="search-bar-small"> 
+                  <div class="input-field">
+                    <input type="text" class="white search-box truncate" name="searchbar" placeholder="   Search your favorite restaurants here...">
+                  </div>
+                </form>
+              </div>
+            </div>
+            <div class="container row">
+              <div class="col s12">
+                <a class="waves-effect waves-light btn #e53935 red darken-1" href="SearchResult-logged.html">search</a>
+              </div>
+            </div>
+          </div>
+        
+        <!--Searched Restaurant Name-->
+        <div class="searched-text">
+            <h4 class="hide-on-med-and-down">Restaurants in Metro Manila</h4>
+            <h5 class="hide-on-large-only">Restaurants in Metro Manila</h5>
+        </div>
+        <div class="main-content">
+            <!--Filter Bar in Desktop and Tablet View-->
+            <div class="hide-on-med-and-down">
+                <div>
+                    <ul class="collection with-header">
+                        <li class="collection-item"><h5>Filters</h5></li>
+                        <!--Filtered by Rating, Cost and Newly Added-->
+                        <li class="collection-item"><h6>Sort by</h6></li>
+                        <li class="collection-item"><a href="#" class="left">Rating</a><div class="grey-text">&nbsp; - high to low</div></li>
+                        <li class="collection-item"><a href="#" class="left">Cost</a><div class="grey-text">&nbsp; - high to low</div></li>
+                        <li class="collection-item"><a href="#" class="left">Cost</a><div class="grey-text">&nbsp; - low to high</div></li>
+                        <li class="collection-item"><a href="#" class="left">Newly Added</a><div class="grey-text">&nbsp; - high to low</div></li>
+                        <!--Filtered by Category-->
+                        <li class="collection-item"><h6>Category</h6></li>
+                        <li class="collection-item"><a href="#">Dine-out</a></li>
+                        <li class="collection-item"><a href="#">Delivery</a></li>
+                        <li class="collection-item"><a href="#">Drink & Nightlife</a></li>
+                        <li class="collection-item"><a href="#">Cafés</a></li>
+                        <!--Filtered by Location-->
+                        <li class="collection-item"><h6>Location</h6></li>
+                        <li class="collection-item"><a href="#">Manila</a></li>
+                        <li class="collection-item"><a href="#">Quezon City</a></li>
+                        <li class="collection-item"><a href="#">Makati City</a></li>
+                        <li class="collection-item"><a href="#">Pasig City</a></li>
+                        <li class="collection-item"><a href="#">Pasay City</a></li>
+                        <li class="collection-item"><a href="#">Parañaque City</a></li>
+                        <li class="collection-item"><a href="#">Taguig City</a></li>
+                        <li class="collection-item"><a href="#">See all locations</a></li>
+                        <!--Filtered by Cuisine-->
+                        <li class="collection-item"><h6>Cuisine</h6></li>
+                        <li class="collection-item"><a href="#">Filipino</a></li>
+                        <li class="collection-item"><a href="#">Beverages</a></li>
+                        <li class="collection-item"><a href="#">American</a></li>
+                        <li class="collection-item"><a href="#">Fastfood</a></li>
+                        <li class="collection-item"><a href="#">Chinese</a></li>
+                        <li class="collection-item"><a href="#">Coffee</a></li>
+                        <li class="collection-item"><a href="#">Bakery</a></li>
+                        <li class="collection-item"><a href="#">Tea</a></li>
+                        <li class="collection-item"><a href="#">Street Food</a></li>
+                        <li class="collection-item"><a href="#">Japanese</a></li>
+                        <li class="collection-item"><a href="#">See all cuisines</a></li>
+                        <!--Filtered by  Establishment Type-->
+                        <li class="collection-item"><h6>Establishment Type</h6></li>
+                        <li class="collection-item"><a href="#">Quick Bites</a></li>
+                        <li class="collection-item"><a href="#">Casual Dining</a></li>
+                        <li class="collection-item"><a href="#">Beverage Shops</a></li>
+                        <li class="collection-item"><a href="#">Kiosks</a></li>
+                        <li class="collection-item"><a href="#">Cafés</a></li>
+                        <li class="collection-item"><a href="#">Food Courts</a></li>
+                        <li class="collection-item"><a href="#">Bakeries</a></li>
+                        <li class="collection-item"><a href="#">Dessert Parlor</a></li>
+                        <li class="collection-item"><a href="#">Bars</a></li>
+                        <li class="collection-item"><a href="#">Fine Dining</a></li>
+                        <!--Filtered by Cost for two-->
+                        <li class="collection-item"><h6>Cost for two</h6></li>
+                        <li class="collection-item"><a href="#">Less than PHP350</a></li>
+                        <li class="collection-item"><a href="#">PHP350 to PHP700</a></li>
+                        <li class="collection-item"><a href="#">PHP700 to PHP1400</a></li>
+                        <li class="collection-item"><a href="#">PHP1400 +</a></li>
+                    </ul>
+                </div>
+            </div>
+            <!--List of Restaurants from Search Result for Desktop and Tablet View-->
+            <div class="hide-on-small-only">
+                <div class="restaurant-list">
+                    <!--1st Restaurant: Golden Fortune-->
+                    <div class="card horizontal" id="GoldenFortuneCardLarge" onclick="gotoGoldenFortune()">
+                        <div class="card-image">
+                            <img src="../public/assets/GoldenFortune/GoldenFortuneProfile.jpg" alt="Golden Fortune" class="restaurant-image">
+                        </div>
+                        <div class="restaurant-info">
+                            <div class="card-stacked">
+                                <div class="card-content">
+                                    <p class="restaurant-establisment-type">Casual Dining</p>
+                                    <br>
+                                    <p class="restaurant-name">Golden Fortune</p>
+                                    <br>
+                                    <p class="restaurant-location">Ermita</p>
+                                    <p class="restaurant-address">678 T.M. Kalaw Avenue, Ermita, Manila</p>
+                                    <br>
+                                    <p class="restaurant-other-info">Cuisine:&nbsp;Seafood, Chinese</p>
+                                    <p class="restaurant-other-info">Cost for two:&nbsp;PHP800</p>
+                                    <p class="restaurant-other-info">Hours:&nbsp;11am – 2:30pm, 5:30pm – 12 midnight (Mon-Sun)</p>
+                                    <p class="restaurant-other-info">Tel no:&nbsp;02 85222288; 02 85222200</p>
+                                </div>
+                            </div>
+                            <div class="card-content">
+                                <button class="btn hoverable green">3.9/5</button>
+                            </div>
+                        </div>
+                    </div>
+                    <!--2nd Restaurant: Tim Hortons-->
+                    <div class="card horizontal" id="TimHortonsCardLarge" onclick="gotoTimHortons()">
+                        <div class="card-image">
+                            <img src="../public/assets/TimHortons/TimHortonsProfile.jpg" alt="Tim Hortons" class="restaurant-image">
+                        </div>
+                        <div class="restaurant-info">
+                            <div class="card-stacked">
+                                <div class="card-content">
+                                    <p class="restaurant-establisment-type">Cafés</p>
+                                    <br>
+                                    <p class="restaurant-name">Tim Hortons</p>
+                                    <br>
+                                    <p class="restaurant-location">Malate, Manila</p>
+                                    <p class="restaurant-address">R Square Mall, Taft Avenue Corner Pablo Ocampo Street, Malate, Manila</p>
+                                    <br>
+                                    <p class="restaurant-other-info">Cuisine:&nbsp;Coffee, Desserts</p>
+                                    <p class="restaurant-other-info">Cost for two:&nbsp;PHP500</p>
+                                    <p class="restaurant-other-info">Hours:&nbsp;8am – 11pm (Mon-Sun)</p>
+                                    <p class="restaurant-other-info">Tel no:&nbsp;N/A</p>
+                                </div>
+                            </div>
+                            <div class="card-content">
+                                <button class="btn hoverable green">3.1/5</button>
+                            </div>
+                        </div>
+                    </div>
+                    <!--3rd Restaurant: Big Bowl Noodles-->
+                    <div class="card horizontal" id="BigBowlNoodlesCardLarge" onclick="gotoBigBowlNoodles()">
+                        <div class="card-image">
+                            <img src="../public/assets/BigBowlNoodles/BigBowlNoodlesProfile.jpg" alt="Big Bowl Noodles" class="restaurant-image">
+                        </div>
+                        <div class="restaurant-info">
+                            <div class="card-stacked">
+                                <div class="card-content">
+                                    <p class="restaurant-establisment-type">Quick Bites</p>
+                                    <br>
+                                    <p class="restaurant-name">Big Bowl Noodles</p>
+                                    <br>
+                                    <p class="restaurant-location">Binondo, Manila</p>
+                                    <p class="restaurant-address">517 E.T. Yuchengco Street, Binondo, Manila</p>
+                                    <br>
+                                    <p class="restaurant-other-info">Cuisine:&nbsp;Chinese</p>
+                                    <p class="restaurant-other-info">Cost for two:&nbsp;PHP500</p>
+                                    <p class="restaurant-other-info">Hours:&nbsp;9am – 9pm (Mon-Sun)</p>
+                                    <p class="restaurant-other-info">Tel no:&nbsp;02 82448755</p>
+                                </div>
+                            </div>
+                            <div class="card-content">
+                                <button class="btn hoverable green">3.6/5</button>
+                            </div>
+                        </div>
+                    </div>
+                    <!--4th Restaurant: Tasty Dumplings-->
+                    <div class="card horizontal" id="TastyDumplingsCardLarge" onclick="gotoTastyDumplings()">
+                        <div class="card-image">
+                            <img src="../public/assets/TastyDumplings/TastyDumplingsProfile.jpg" alt="Tasty Dumplings" class="restaurant-image">
+                        </div>
+                        <div class="restaurant-info">
+                            <div class="card-stacked">
+                                <div class="card-content">
+                                    <p class="restaurant-establisment-type">Quick Bites</p>
+                                    <br>
+                                    <p class="restaurant-name">Tasty Dumplings</p>
+                                    <br>
+                                    <p class="restaurant-location">Binondo, Manila</p>
+                                    <p class="restaurant-address">960 Masangkay Street, Binondo, Manila</p>
+                                    <br>
+                                    <p class="restaurant-other-info">Cuisine:&nbsp;Taiwanese, Chinese</p>
+                                    <p class="restaurant-other-info">Cost for two:&nbsp;PHP500</p>
+                                    <p class="restaurant-other-info">Hours:&nbsp;10am – 9pm (Mon-Sat),9am – 9pm (Sun)</p>
+                                    <p class="restaurant-other-info">Tel no:&nbsp;02 82449362; 02 82510860</p>
+                                </div>
+                            </div>
+                            <div class="card-content">
+                                <button class="btn hoverable green">3.9/5</button>
+                            </div>
+                        </div>
+                    </div>
+                    <!--5th Restaurant: Yabu-->
+                    <div class="card horizontal" id="YabuCardLarge" onclick="gotoYabu()">
+                        <div class="card-image">
+                            <img src="../public/assets/Yabu/YabuProfile.png" alt="Yabu" class="restaurant-image">
+                        </div>
+                        <div class="restaurant-info">
+                            <div class="card-stacked">
+                                <div class="card-content">
+                                    <p class="restaurant-establisment-type">Casual Dining</p>
+                                    <br>
+                                    <p class="restaurant-name">Yabu</p>
+                                    <br>
+                                    <p class="restaurant-location">Glorietta, Glorietta Complex</p>
+                                    <p class="restaurant-address">Ground Floor, Glorietta 2, Ayala Center, Glorietta Complex, Makati City</p>
+                                    <br>
+                                    <p class="restaurant-other-info">Cuisine:&nbsp;Japanese</p>
+                                    <p class="restaurant-other-info">Cost for two:&nbsp;PHP1300</p>
+                                    <p class="restaurant-other-info">Hours:&nbsp;11am – 10pm (Mon-Fri),10am – 10pm (Sat-Sun)</p>
+                                    <p class="restaurant-other-info">Tel no:&nbsp;N/A</p>
+                                </div>
+                            </div>
+                            <div class="card-content">
+                                <button class="btn hoverable green">4.8/5</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--List of Restaurants from Search Result for Tablet and Mobile-->
+            <div class="hide-on-med-and-up">
+                <div class="mobile-restaurant-list">
+                    <!--1st Restaurant: Golden Fortune-->    
+                    <div class="card" id="GoldenFortuneCardSmall" onclick="gotoGoldenFortune()">
+                        <div class="card-image">
+                            <img src="../public/assets/GoldenFortune/GoldenFortuneProfile.jpg" alt="Golden Fortune" class="mobile-restaurant-image">
+                            <button class="btn-small hoverable green right">3.9</button>
+                        </div>
+                        <div class="mobile-restaurant-info">
+                            <p class="card-title">Golden Fortune</p>
+                            <hr>
+                            <p class="card-content">
+                                Ermita
+                                <br>
+                                Cuisine:&nbsp;Seafood, Chinese
+                                <br>
+                                Cost for two:&nbsp;PHP800
+                                <br>
+                                Hours:&nbsp;11am – 2:30pm, 5:30pm – 12 midnight (Mon-Sun)
+                                <br>
+                            </p>
+                        </div>
+                    </div>
+                    <!--2nd Restaurant: Tim Hortons-->
+                    <div class="card" id="TimHortonsCardSmall" onclick="gotoTimHortons()">
+                        <div class="card-image">
+                            <img src="../public/assets/TimHortons/TimHortonsProfile.jpg" alt="Tim Hortons" class="mobile-restaurant-image">
+                            <button class="btn-small hoverable green right">3.1</button>
+                        </div>
+                        <div class="mobile-restaurant-info">
+                            <p class="card-title">Tim Hortons</p>
+                            <hr>
+                            <p class="card-content">
+                                Malate, Manila
+                                <br>
+                                Cuisine:&nbsp;Coffee, Desserts
+                                <br>
+                                Cost for two:&nbsp;PHP500
+                                <br>
+                                Hours:&nbsp;8am – 11pm (Mon-Sun)
+                                <br>
+                            </p>
+                        </div>
+                    </div>
+                    <!--3rd Restaurant: Big Bowl Noodles-->    
+                    <div class="card" id="BigBowlNoodlesCardSmall" onclick="gotoBigBowlNoodles()">
+                        <div class="card-image">
+                            <img src="../public/assets/BigBowlNoodles/BigBowlNoodlesProfile.jpg" alt="Big Bowl Noodles" class="mobile-restaurant-image">
+                            <button class="btn-small hoverable green right">3.6</button>
+                        </div>
+                        <div class="mobile-restaurant-info">
+                            <p class="card-title">Big Bowl Noodles</p>
+                            <hr>
+                            <p class="card-content">
+                                Binondo, Manila
+                                <br>
+                                Cuisine:&nbsp;Chinese
+                                <br>
+                                Cost for two:&nbsp;PHP500
+                                <br>
+                                Hours:&nbsp;9am – 9pm (Mon-Sun)
+                                <br>
+                            </p>
+                        </div>
+                    </div>
+                    <!--4th Restaurant: Tasty Dumplings-->    
+                    <div class="card" id="TastyDumplingsCardSmall" onclick="gotoTastyDumplings()">
+                        <div class="card-image">
+                            <img src="../public/assets/TastyDumplings/TastyDumplingsProfile.jpg" alt="Tasty Dumplings" class="mobile-restaurant-image">
+                            <button class="btn-small hoverable green right">3.9</button>
+                        </div>
+                        <div class="mobile-restaurant-info">
+                            <p class="card-title">Tasty Dumplings</p>
+                            <hr>
+                            <p class="card-content">
+                                Binondo, Manila
+                                <br>
+                                Cuisine:&nbsp;Taiwanese, Chinese
+                                <br>
+                                Cost for two:&nbsp;PHP500
+                                <br>
+                                Hours:&nbsp;10am – 9pm (Mon-Sat),9am – 9pm (Sun)
+                                <br>
+                            </p>
+                        </div>
+                    </div>
+                    <!--5th Restaurant: Yabu-->    
+                    <div class="card" id="YabuCardSmall" onclick="gotoYabu()">
+                        <div class="card-image">
+                            <img src="../public/assets/Yabu/YabuProfile.png" alt="Yabu" class="mobile-restaurant-image">
+                            <button class="btn-small hoverable green right">4.8</button>
+                        </div>
+                        <div class="mobile-restaurant-info">
+                            <p class="card-title">Yabu</p>
+                            <hr>
+                            <p class="card-content">
+                                Glorietta, Glorietta Complex
+                                <br>
+                                Cuisine:&nbsp;Japanese
+                                <br>
+                                Cost for two:&nbsp;PHP1300
+                                <br>
+                                Hours:&nbsp;11am – 10pm (Mon-Fri),10am – 10pm (Sat-Sun)
+                                <br>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            
+        </div> <!--END BODY CONTENT VIEW-->
+        
+        <!--Footer-->
+        <footer class="page-footer">
+            <div class="row footer-content">
+              <div class="logo-container col s12">
+                <div class="footer-logo"></div>
+              </div>
+              <div class="col l5 s12">
+                <h5 class="footer-text white-text">Contact Us</h5>
+                <p class="footer-text white-text">zarap@gmail.com <br>+(8) 552 3877</p>
+              </div>
+            </div>
+            <div class="footer-copyright">
+                <p class="copyright-text">© 2020 Eksdee Ebiloj</p>
+            </div>
+        </footer>
+    </body>
+
+    <script type="text/javascript">        
+        document.addEventListener('DOMContentLoaded', function() {
+            var elem = document.querySelectorAll('.sidenav');
+            var instance = M.Sidenav.init(elem, {});
+            var elem_dropdown = document.querySelectorAll('.dropdown-trigger');
+            var instances_dropdown = M.Dropdown.init(elem_dropdown, {});
+        });
+        
+        function gotoGoldenFortune() {
+            location.href = "Golden Fortune/GoldenFortune-displayRestaurant-logged.html";
+        }
+        function gotoTimHortons() {
+            location.href = "Tim Hortons/TimHortons-displayRestaurant-logged.html";
+        }
+        function gotoBigBowlNoodles() {
+            location.href = "Big Bowl Noodles/BigBowlNoodles-displayRestaurant-logged.html";
+        }
+        function gotoTastyDumplings() {
+            location.href = "Tasty Dumplings/TastyDumplings-displayRestaurant-logged.html";
+        }
+        function gotoYabu() {
+            location.href = "Yabu/Yabu-displayRestaurant-logged.html";
+        }
+    </script>
+</html>
