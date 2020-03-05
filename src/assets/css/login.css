@@ -1,11 +1,50 @@
-.padnav {
-    padding-left: 15px;
+body {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
 }
 
-.log_size {
+
+main {
+    flex: 1 0 auto;
+}
+
+:root {
+    --default-button-color: #CB202D;
+    --default-navbar-color: #CB202D;
+    --default-buttontext-color: #FFFFFF;
+}
+
+/* .white-text {
+    color: var(--default-buttontext-color) !important;
+} */
+
+.margin-pushdown {
+    margin-bottom: 200px;
+}
+
+.padnav {
+    padding-left: 15px;
+    background-color: var(--default-navbar-color);
+}
+
+.title-size {
     font-size:8vw;
 }
 
-.margin_top {
+.margin-top {
     margin-top: 6vw;
+}
+
+.colored-button {
+    background-color: var(--default-button-color) !important;
+}
+
+.send-back-button {
+    z-index: 0 !important; 
+}
+
+.hovered-link:hover {
+    color: var(--default-navbar-color) !important;
+    text-decoration: underline;
 }
