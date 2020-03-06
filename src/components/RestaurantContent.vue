@@ -67,5 +67,5 @@ export default {
 </script>
 
 <style scoped>
-@import '../assets/css/view-restaurant.css';
+  @import '../assets/css/view-restaurant.css';
 </style>

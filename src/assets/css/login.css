@@ -1,26 +1,17 @@
 body {
+    background-color: #F4F4F2;
     display: flex;
     min-height: 100vh;
     flex-direction: column;
 }
 
-
-main {
-    flex: 1 0 auto;
-}
-
 :root {
     --default-button-color: #CB202D;
     --default-navbar-color: #CB202D;
-    --default-buttontext-color: #FFFFFF;
 }
 
-/* .white-text {
-    color: var(--default-buttontext-color) !important;
-} */
-
 .margin-pushdown {
-    margin-bottom: 200px;
+    margin-bottom: 2vw;
 }
 
 .padnav {
@@ -38,10 +29,6 @@ main {
 
 .colored-button {
     background-color: var(--default-button-color) !important;
-}
-
-.send-back-button {
-    z-index: 0 !important; 
 }
 
 .hovered-link:hover {

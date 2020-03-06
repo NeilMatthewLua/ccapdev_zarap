@@ -1,6 +1,6 @@
 <template>
     <div>
-        <Navbar :hasSearch="true" :isLogged="false"/>  
+        <Navbar :hasSearch="false" :isLogged="false"/>  
         <div class="container center margin-pushdown">
             <h1 class="black-text title-size">Log-in</h1>
             
@@ -28,13 +28,12 @@
                                     <input id="icon_telephone" type="tel" class="validate" v-model="password">
                                     <label for="icon_telephone"  class="black-text">Password</label>
                                 </div>
-                            <input class=" white-text waves-effect waves-light btn-large colored-button margin-bottom-small send-back-button" type="submit" value="Sign me in!">
+                            <input class="waves-light btn-large margin-bottom-small send-back-button colored-button" type="submit" value="Sign me in!">
                             </div>
                         </form>
                     </div>
                 </div>
             </div>
-            <br>
             <br>
             <a href="register.html" class="href black-text hovered-link">Register me!</a>
         </div>
@@ -72,7 +71,44 @@ export default {
 }
 </script>
 
-<style>
-    @import '../assets/css/login.css';
-    @import '../assets/css/style.css';
+<style scoped>
+    /* body {
+        background-color: #F4F4F2;
+        display: flex;
+        min-height: 100vh;
+        flex-direction: column;
+    }
+
+    :root {
+        --default-button-color: #CB202D;
+        --default-navbar-color: #CB202D;
+    }
+
+    .margin-pushdown {
+        margin-bottom: 2vw;
+    }
+
+    .padnav {
+        padding-left: 15px;
+        background-color: var(--default-navbar-color);
+    }
+
+    .title-size {
+        font-size:8vw;
+    }
+
+    .margin-top {
+        margin-top: 6vw;
+    }
+
+    .colored-button {
+        background-color: var(--default-button-color) !important;
+        color: var(--default-buttontext-color) !important;
+    }
+
+    .hovered-link:hover {
+        color: var(--default-navbar-color) !important;
+        text-decoration: underline;
+    } */
+@import '../assets/css/login.css';
 </style>
