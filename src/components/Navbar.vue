@@ -96,8 +96,8 @@
 <script>
 import M from 'materialize-css';
 export default {
-  Name: "Navbar",
-  props:{
+  name: "Navbar",
+  props: {
     hasSearch: Boolean,
     isLogged: Boolean
   },

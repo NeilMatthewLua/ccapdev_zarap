@@ -4,6 +4,7 @@ import Home from '../views/Home.vue'
 import DisplayRestaurant from '../views/DisplayRestaurant.vue'
 import Login from '../views/Login.vue'
 import Register from '../views/Register.vue'
+import UserDetail from '../views/UserDetail.vue'
 
 Vue.use(VueRouter)
 
@@ -27,6 +28,11 @@ const routes = [
     path: '/register', 
     name: 'Register', 
     component: Register
+  },
+  {
+    path: '/userdetail', 
+    name: 'UserDetail', 
+    component: UserDetail
   }
   // {
   //   path: '/about',

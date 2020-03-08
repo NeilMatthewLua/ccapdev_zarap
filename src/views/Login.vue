@@ -72,43 +72,5 @@ export default {
 </script>
 
 <style scoped>
-    /* body {
-        background-color: #F4F4F2;
-        display: flex;
-        min-height: 100vh;
-        flex-direction: column;
-    }
-
-    :root {
-        --default-button-color: #CB202D;
-        --default-navbar-color: #CB202D;
-    }
-
-    .margin-pushdown {
-        margin-bottom: 2vw;
-    }
-
-    .padnav {
-        padding-left: 15px;
-        background-color: var(--default-navbar-color);
-    }
-
-    .title-size {
-        font-size:8vw;
-    }
-
-    .margin-top {
-        margin-top: 6vw;
-    }
-
-    .colored-button {
-        background-color: var(--default-button-color) !important;
-        color: var(--default-buttontext-color) !important;
-    }
-
-    .hovered-link:hover {
-        color: var(--default-navbar-color) !important;
-        text-decoration: underline;
-    } */
-@import '../assets/css/login.css';
+    @import '../assets/css/login.css';
 </style>
