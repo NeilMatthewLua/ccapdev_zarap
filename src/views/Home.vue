@@ -5,7 +5,7 @@
       <div>
         <ul class ="nav-flex-right hide-on-med-and-down"  id="nav-mobile">
           <li class ="navitem pushdown"><a href="/login" class ="black-color">Login</a></li>
-          <li class ="navitem boxed"><a href="/register"  class ="black-color">Register</a></li>
+          <li class ="navitem boxed"><a href="/register" class ="black-color">Register</a></li>
         </ul>
       </div>
 
@@ -55,7 +55,7 @@
       <div class ="card-row row">
         <div class ="col s11 offset-s1 card_small">
           <div class ="col s12 m3 margin_right_5">
-            <div class ="card BG-black-color">
+            <div class ="card BG-black-color mobile-height">
               <div class ="card-content white-text">
                 <span class ="card-title">Golden Fortune</span>
                 <p>Casual Dining | Seafood | Chinese</p>
@@ -66,7 +66,7 @@
             </div>
           </div>
           <div class ="col s12 m3 margin_right_5" >
-            <div class ="card BG-black-color">
+            <div class ="card BG-black-color mobile-height">
               <div class ="card-content white-text">
                 <span class ="card-title">Tim Hortons</span>
                 <p>Cafés | Coffee | Desserts</p>
@@ -76,8 +76,8 @@
               </div>
             </div>
           </div>
-          <div class ="col s12 m3 margin_right_5" >
-            <div class ="card BG-black-color" style="checkHeight">
+          <div class ="col s12 m3 margin_right_5 mobile-height" >
+            <div class ="card BG-black-color mobile-height">
               <div class ="card-content white-text">
                 <span class ="card-title">Big Bowl Noodles</span>
                 <p>Quick Bites | Chinese</p>
@@ -117,24 +117,25 @@ export default {
 
 <style scoped>
     body {
-        background-color: black;
+        background-color: #FFFFFF;
     }
 
     .BG-color {
-        background-color: black;
+        background-color: #F4F4F2;
     }
 
-    :root {
+    /* :root {
         --default-button-color: blue !important;
         --default-navbar-color: pink !important;
-    }
+        --default-card-color:  #2D2D2D !important;
+    } */
 
     .black-color {
-        color: var(--default-button-color) !important;
+        color: #2D2D2D !important;
     }
 
     .BG-black-color {
-        background-color: var(--default-button-color) !important;
+        background-color: #2D2D2D !important;
     }
 
     .title {
@@ -146,9 +147,9 @@ export default {
         border-radius: 15px;
     }
 
-    .colored-button {
+    /* .colored-button {
         background: var(--default-navbar-color) !important;
-    }
+    } */
 
     .pad4 {
         padding-top: 4%;
@@ -243,6 +244,10 @@ export default {
         width: 100%; 
     }
 
+    .mobile-height {
+        height: 15rem !important;
+    }
+
     @media(max-width: 640px) {
         #search_small {
             display: flex;
@@ -263,6 +268,12 @@ export default {
         .card-small {
             margin-left: auto !important;
             margin-right: auto !important;
+        }
+    }
+
+    @media(max-width:1300px) {     
+        .mobile-height {
+          height: 20rem !important;
         }
     }
 </style>
