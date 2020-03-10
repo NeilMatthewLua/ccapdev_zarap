@@ -5,7 +5,7 @@
                 <div class="container">
                     <h1 class ="black-text title-size">Register</h1>
                     <div class="row">
-                        <form class="col s12" id="login" @submit="validateForm" >
+                        <div class="col s12" id="login">
                             <!-- if wrong details, display error message -->
                             <p v-if="errors.length">
                                 <b class="errormsg">Please correct the following error(s):</b>
@@ -44,10 +44,11 @@
                                 </div>
                             </div>
                             <div class="center margin-pushdown">
-                                <input class="waves-light btn-large btncolor" type="submit" value="Sign me up!">
+                            <div class="waves-effect waves-light btn-large btncolor" @click="validateForm"> Sign me up!
                             </div>
-                        </form>
+                        </div>
                     </div>
+                </div>
                 </div>
             </div>
         <Footer /> 
@@ -79,11 +80,10 @@ export default {
         }
       },
     methods:{
-        print: function (e) {
+        print: function () {
             console.log(this.firstname + " " + this.email + " " + this.lastname + " " + this.homeaddress + " " + this.password);
-            e.preventDefault();
         },
-        validateForm: function (e) {
+        validateForm: function () {
             this.errors = [];
 
             if(!this.firstname) {
@@ -103,13 +103,10 @@ export default {
             if(!this.homeaddress) {
                 this.errors.push('Home Address required');
             }
-            this.print(e);
+            this.print();
             if(!this.errors.length) {
                 return true;
             }
-
-
-            e.preventDefault();
             return false;
         },
         validEmail: function (email) {
@@ -120,6 +117,48 @@ export default {
 }
 </script>
 
-<style scoped>
-    @import '../assets/css/register.css'; 
+<style>
+    body {
+        background-color: #F4F4F2;
+        display: flex;
+        min-height: 100vh;
+        flex-direction: column;
+    }
+    :root {
+        --default-button-color: #CB202D;
+        --default-navbar-color: #CB202D;
+    }
+
+    .margin-pushdown {
+        margin-bottom: 2vw;
+    }
+
+    .padnav {
+        padding-left: 15px;
+        background-color: var(--default-navbar-color);
+    }
+
+    .padinput {
+        padding-left: 10px !important;
+        box-sizing: border-box;
+        border-radius: 4px !important;
+    }
+
+    .btncolor {
+        background-color: var(--default-button-color) !important;
+    }
+
+    .hover:hover {
+        color: var(--default-navbar-color) !important;
+        text-decoration: underline;
+    }
+
+    .title-size {
+        font-size:5vw;
+    }
+
+    .errormsg {
+        color: var(--default-button-color);
+    }
+
 </style>

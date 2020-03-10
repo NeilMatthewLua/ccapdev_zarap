@@ -6,7 +6,7 @@
             <h3 class="center big-font onload">{{Title}}</h3>
             <div class="row pad-left">
                 <!-- User Menu -->
-                <UserMenu />
+                <UserMenu  @userProfile="updateUserPage"/>
                 <!-- Display info for large -->
                 <ProfilePage />
             </div>
@@ -39,6 +39,11 @@ export default {
     },
     mounted() {
         M.AutoInit(); 
+    },
+    methods: {
+        updateUserPage: function(choice) {
+            this.Title = choice;
+        }
     }
 }
 </script>
