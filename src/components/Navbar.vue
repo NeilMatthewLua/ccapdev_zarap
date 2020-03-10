@@ -23,8 +23,8 @@
       <!--Unlogged Login Section-->
       <ul class="right hide-on-med-and-down col s3" v-if="!isLogged">
         <div class="right">
-          <li><a href="../login.html">Login</a></li>
-          <li><a href="../register.html">Register</a></li>
+          <li><a href="/login">Login</a></li>
+          <li><a href="/register">Register</a></li>
         </div>
       </ul>
 
@@ -50,9 +50,9 @@
   <!--Sidebar Content Unlogged-->
   <ul id="slide-out" class="sidenav" v-if="!isLogged">
     <li><div class="divider"></div></li>
-    <li><a href="../register.html">Register</a></li>
+    <li><a href="/register">Register</a></li>
     <li><div class="divider"></div></li>
-    <li><a href="../login.html">Login</a></li>
+    <li><a href="/login">Login</a></li>
   </ul>
 
   <!--Sidebar Logged --> 
@@ -96,8 +96,8 @@
 <script>
 import M from 'materialize-css';
 export default {
-  Name: "Navbar",
-  props:{
+  name: "Navbar",
+  props: {
     hasSearch: Boolean,
     isLogged: Boolean
   },
@@ -108,5 +108,5 @@ export default {
 </script>
 
 <style scoped>
-@import '../assets/css/navbar.css'; 
+  @import '../assets/css/navbar.css'; 
 </style>

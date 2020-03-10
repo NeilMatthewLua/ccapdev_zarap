@@ -31,6 +31,6 @@ export default {
 }
 </script>
 
-<style>
-@import '../assets/css/view-restaurant-review.css';
+<style scoped>
+    @import '../assets/css/view-restaurant-review.css';
 </style>
