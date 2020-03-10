@@ -1,22 +1,22 @@
 <template>
     <div>
         <!-- Display info for large -->
-        <div class="col s12 m10 l7 square margin-around hide-on-small relative-position hide-on-edit" v-bind:class="{'editVisible': visible}">
+        <div class="col s12 m10 l7 squared margin-around hide-on-small relative-position hide-on-edit" v-bind:class="{'editVisible': visible}">
             <div class="profile-container">
             <div class="grouped-info">
                 <div class="info-font white-text pad-right-text"><pre class="remove-margin">Name:       </pre></div>
                 <div class="info-font text menu-font white-text"> Richard Alvin Zapaite</div>
             </div>
             <div class="grouped-info ">
-                <div class="info-font white-text pad-right-text"><pre class="remove-margin">Address:   </pre></div>
+                <div class="info-font white-text pad-right-text"><pre class="remove-margin">Address:    </pre></div>
                 <div class="info-font text menu-font white-text"> 29A Priceview Parksuites, Quintin Paredes, Manila</div>
             </div>
             <div class="grouped-info ">
-                <div class="info-font white-text pad-right-text"><pre class="remove-margin">E-mail:       </pre></div>
+                <div class="info-font white-text pad-right-text"><pre class="remove-margin">E-mail:     </pre></div>
                 <div class="info-font text menu-font white-text">user@user.com</div>
             </div>
             <div class="grouped-info ">
-                <div class="info-font white-text pad-right-text"><pre class="remove-margin">Points:       </pre></div>
+                <div class="info-font white-text pad-right-text"><pre class="remove-margin">Points:     </pre></div>
                 <div class="info-font text menu-font white-text">69</div>
             </div>
             <a href="#" class="white-text hover-underline corner-bottom-right" id="edit-profile" @click="toggleView">Edit Profile</a>
@@ -24,7 +24,7 @@
         </div>
         <div v-bind:class="{'editVisible': editProfileVisible}">
             <!-- Edit Info Large-->
-            <div class="col s12 m10 l7 square margin-around relative-position show-edit-profile-large" v-bind:class="{'editVisible': bigEditProfileVisible}">
+            <div class="col s12 m10 l7 squared margin-around relative-position show-edit-profile-large" v-bind:class="{'editVisible': bigEditProfileVisible}">   
                 <div class="profile-container">
                 <div class="row">
                     <div class="col s2">
@@ -72,7 +72,7 @@
                 </div>
             </div>
             <!-- Edit Info Small-->
-            <div class="col s12 m10 l7 square margin-around relative-position show-edit-profile-small" v-bind:class="{'editVisible': smallEditProfileVisible}">
+            <div class="col s12 m10 l7 squared margin-around relative-position show-edit-profile-small" v-bind:class="{'editVisible': smallEditProfileVisible}">
                 <div class="profile-container">
                 <div class="row">
                     <div class="col s12">
@@ -173,7 +173,7 @@ export default {
         --default-container-color: #2D2D2D;
     }
 
-    .square {
+    .squared {
         border : 1px solid var(--default-container-color);
         background-color: #2D2D2D;
         border-radius: 20px !important;

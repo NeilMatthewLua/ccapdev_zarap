@@ -112,29 +112,157 @@ export default {
   mounted() {
     M.AutoInit();
   } 
-  // },
-  // computed: {
-  //  checkHeight: function() {
-  //       var highest = 0;
-  //       var hi = 0;
-  //       console.log(this.height)
-  //       $(".card").css('height', '').each(function () {
-  //           var h = $(this).height() + $(".card-action").height() + 15; 
-  //           if (h > hi) {
-  //               hi = h;
-  //               highest = h;
-  //           }
-  //       }); 
-  //       $('#output').html(highest);
-  //       $(".card").css('height', highest);
-  //     return {
-  //       'highest': this.height + 'px',
-  //     }
-  //  }
-  // }
 }
 </script>
 
 <style scoped>
-    @import '../assets/css/style.css';
+    body {
+        background-color: black;
+    }
+
+    .BG-color {
+        background-color: black;
+    }
+
+    :root {
+        --default-button-color: blue !important;
+        --default-navbar-color: pink !important;
+    }
+
+    .black-color {
+        color: var(--default-button-color) !important;
+    }
+
+    .BG-black-color {
+        background-color: var(--default-button-color) !important;
+    }
+
+    .title {
+        padding: 30px;
+        color: white;
+        margin-left: auto;
+        margin-right: auto;
+        font-size: 20px;
+        border-radius: 15px;
+    }
+
+    .colored-button {
+        background: var(--default-navbar-color) !important;
+    }
+
+    .pad4 {
+        padding-top: 4%;
+    }
+
+    .center {
+        text-align: center;
+    }
+
+    .navitem {
+        padding-right: 25px;
+    }
+
+    .pushdown {
+        margin-top: 2%;
+    }
+
+    .boxed {
+        padding: 5px;
+        padding-left: 10px;
+        padding-right: 10px;
+        border: 1px solid #2D2D2D;
+        border-radius: 2px;
+        margin-right: 55px;
+    }
+
+    .push-padding {
+        padding-right: 2%;
+        padding-top: 2%;
+    }
+
+    .searchround {
+        margin-right: 20px;
+    }
+
+    .padinput {
+        padding-left: 10px !important;
+        box-sizing: border-box;
+        border-radius: 4px !important;
+    }
+
+    .btn.pushdown {
+        margin-top:17px;
+    }
+
+    .square {
+        border: 1px solid #2D2D2D;
+        border-radius: 3px;
+        width: 250px;
+        height: 250px;
+    }
+
+    .nav-flex-right {
+        display: flex;
+        float: right;
+    }
+
+    .margin_right_5 {
+        margin-right: 5%;
+    }
+
+    .navright {
+        display: flex; 
+        flex-direction: row;
+    }
+
+    .navbar-right {
+        display: flex; 
+        flex-direction: row;
+    }
+
+    .pushdown-logged {
+        padding-top: 30px;
+    }
+
+    .navbar-image {
+        height: 40px; 
+        margin-right: 10%; 
+    }
+
+    .dropdown-trigger {
+        display: inline-block; 
+    }
+
+    .card {
+        position: relative !important; 
+    }
+
+    .card-action {
+        position: absolute !important; 
+        bottom: 0; 
+        width: 100%; 
+    }
+
+    @media(max-width: 640px) {
+        #search_small {
+            display: flex;
+            flex-direction: column;
+        }
+
+        #search_small div {
+            display: flex;
+            margin: 0; padding: 0;
+            width: 100%;
+        }
+
+        #search_small button {
+            display: flex;
+            justify-items: center;
+        }
+
+        .card-small {
+            margin-left: auto !important;
+            margin-right: auto !important;
+        }
+    }
 </style>
