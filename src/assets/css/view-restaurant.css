@@ -38,8 +38,9 @@ body {
     width: auto; 
 }
 
-.title-card > .col > .btn {
-    z-index: 0 !important
+.bookmark-btn {
+    margin: 20px 0px; 
+    z-index: 0 !important;
 }
 
 .photos {
@@ -104,6 +105,17 @@ body {
 
 .content-details > h5 {
     font-size: 1.2rem !important; 
+}
+
+@media screen and (min-width: 1201px) {
+    .title-card {
+        display: -webkit-flex;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-align-items: center;
+            -ms-flex-align: center;
+                align-items: center;
+    }
 }
 
 @media screen and (max-width: 1200px) { 

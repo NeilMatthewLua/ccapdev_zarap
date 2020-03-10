@@ -52,22 +52,44 @@ body {
 
 .write-review {
     min-height: 50px;  
+    max-height: 400px; 
     margin-bottom: 40px; 
-    padding: 30px; 
+    padding: 30px 30px; 
     background-color: var(--default-card-color);
+    clear: both; 
 }
 
 .review-btn {
     z-index: 0 !important; 
 }
 
-.show-review {
-    display: none;
+.submit-btn {
+    border-radius: 15% !important; 
+    margin-right: 20px; 
+    z-index: 0 !important; 
 }
 
-.write-review > .show-review > .input-field {
-    max-height: 200px;
-    overflow-y: scroll;  
+.write-review > .input-field {
+    width: 100%; 
+    resize: vertical;
+    overflow: auto;
+}
+
+.edit-review {
+    width: 100%; 
+}
+
+.review-btn-text { 
+    position: relative; 
+    top: -5px; 
+}
+
+.review-icons {
+    color: white; 
+}
+
+.review-title {
+    margin-top: 0px; 
 }
 
 .view-review {
@@ -81,6 +103,11 @@ body {
 
 .review-post {
     background-color: var(--default-card-color);
+}
+
+#review-area {
+    max-height: 200px; 
+    overflow-y: scroll; 
 }
 
 .post-author-pic { 
@@ -105,6 +132,7 @@ body {
 
 .post-rating {
     margin-left: 20px; 
+    padding: 8px; 
 }
 
 .right-section {
