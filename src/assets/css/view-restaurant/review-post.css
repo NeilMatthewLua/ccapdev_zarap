@@ -1,0 +1,37 @@
+.liked {
+    color: green; 
+}
+
+.pointer {
+    cursor: pointer; 
+}
+
+.post-author-pic { 
+    display: inline-block; 
+    margin-right: 20px; 
+    height: 50px; 
+    width: 50px; 
+    border-radius: 50%; 
+}
+
+.post-rating {
+    margin-left: 20px; 
+    padding: 8px; 
+}
+
+.review-post {
+    background-color: var(--default-card-color);
+}
+
+.review-post > .post-header > h4 {
+    display: inline-block; 
+    margin: 0px!important; 
+    margin-right: 10px; 
+}
+
+.review-post > .post-header > h5 {
+    display: inline-block;
+    padding: 5px; 
+    color: var(--default-card-color);   
+}
+

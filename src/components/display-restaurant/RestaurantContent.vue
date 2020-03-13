@@ -8,13 +8,13 @@
             <h5>Chinese Food | Fine Dining</h5>
             <a class="waves-effect waves-light red btn bookmark-btn"><i class="material-icons left">bookmark</i>Been Here</a>
           </div>
-          <img class="title-picture col s12 m4" src="../assets/pictures/Golden Fortune-1.jpg" alt="Golden Fortune">
+          <img class="title-picture col s12 m4" src="../../assets/pictures/Golden Fortune-1.jpg" alt="Golden Fortune">
       </div>
       <div v-if="section === 'Photos'">
         <PhotoSection :title="photosTitle"/>  
       </div>
       <div v-else>
-        <ReviewSection :hasReview="true"/> 
+        <ReviewSection :hasReview="false"/> 
       </div>
     </div>
     <div class="right-section col s12 xl4">
@@ -80,5 +80,5 @@ export default {
 </script>
 
 <style scoped>
-  @import '../assets/css/view-restaurant.css';
+@import '../../assets/css/view-restaurant/restaurant-content.css';
 </style>
