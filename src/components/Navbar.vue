@@ -6,6 +6,7 @@
       <a href="/" id="zarap" class="hide-on-med-and-down col valign-wrapper" v-bind:class="{s2 : hasSearch, left : hasSearch}">zarap</a>
       <!--Navbar for Smaller Screens-->
       <div class = "hide-on-large-only">
+        <a href="#" data-target="filter-choice" class="left sidenav-trigger" v-if="!hasFilter"><i class="material-icons">swap_vert</i></a>
         <a href="/" id="zarap" class="brand-logo center">zarap</a>
         <a href="#" data-target="slide-out" class="right sidenav-trigger"><i class="material-icons">menu</i></a>
       </div>
@@ -71,6 +72,86 @@
     <li><a href="/" class="waves-effect">My Reviews</a></li>
   </ul>
 
+  <!--Filter -->
+  <ul id="filter-choice" class="right sidenav" v-if="hasFilter">
+    <li><a href="#!" class="dropdown-trigger" data-target="sort-by">Sort by
+        <i class="material-icons right">arrow_drop_down</i></a></li>
+    <li class="divider"></li>
+    <li><a href="#!" class="dropdown-trigger" data-target="category">Category
+        <i class="material-icons right">arrow_drop_down</i></a></li>
+    <li class="divider"></li>
+    <li><a href="#!" class="dropdown-trigger" data-target="location">Location
+        <i class="material-icons right">arrow_drop_down</i></a></li>
+    <li class="divider"></li>
+    <li><a href="#!" class="dropdown-trigger" data-target="cuisine">Cuisine
+        <i class="material-icons right">arrow_drop_down</i></a></li>
+    <li class="divider"></li>
+    <li><a href="#!" class="dropdown-trigger" data-target="establishment-type">Establishment Type
+        <i class="material-icons right">arrow_drop_down</i></a></li>
+    <li class="divider"></li>
+    <li><a href="#!" class="dropdown-trigger" data-target="cost-for-two">Cost for Two
+        <i class="material-icons right">arrow_drop_down</i></a></li>
+  </ul>
+  <!--Dropdown for Rating, Cost and Newly Added-->
+  <ul id="sort-by" class="dropdown-content">
+    <li><a href="#">Rating - high to low</a></li>
+    <li><a href="#">Cost - high to low</a></li>
+    <li><a href="#">Cost - low to high</a></li>
+    <li><a href="#">Newly Added</a></li>
+  </ul>
+  <!--Dropdown for Filter Category-->
+  <ul id="category" class="dropdown-content">
+    <li><a href="#">Dine-out</a></li>
+    <li><a href="#">Delivery</a></li>
+    <li><a href="#">Drinks &amp; Nightlife</a></li>
+    <li><a href="#">Cafés</a></li>
+  </ul>
+  <!--Dropdown for Filter Location-->
+  <ul id="location" class="dropdown-content">
+    <li><a href="#">Manila</a></li>
+    <li><a href="#">Quezon City</a></li>
+    <li><a href="#">Makati City</a></li>
+    <li><a href="#">Pasig City</a></li>
+    <li><a href="#">Pasay City</a></li>
+    <li><a href="#">Parañaque City</a></li>
+    <li><a href="#">Taguig City</a></li>
+    <li><a href="#">See all locations</a></li>
+  </ul>
+  <!--Dropdown for Filter Cuisine-->
+  <ul id="cuisine" class="dropdown-content">
+    <li><a href="#">Filipino</a></li>
+    <li><a href="#">Beverages</a></li>
+    <li><a href="#">American</a></li>
+    <li><a href="#">Fastfood</a></li>
+    <li><a href="#">Chinese</a></li>
+    <li><a href="#">Coffee</a></li>
+    <li><a href="#">Bakery</a></li>
+    <li><a href="#">Tea</a></li>
+    <li><a href="#">Street Food</a></li>
+    <li><a href="#">Japanese</a></li>
+    <li><a href="#">See all cuisines</a></li>
+  </ul>
+  <!--Dropdown for Filter Establishment Type-->
+  <ul id="establishment-type" class="dropdown-content">
+    <li><a href="#">Quick Bites</a></li>
+    <li><a href="#">Casual Dining</a></li>
+    <li><a href="#">Beverage Shops</a></li>
+    <li><a href="#">Kiosks</a></li>
+    <li><a href="#">Cafés</a></li>
+    <li><a href="#">Food Courts</a></li>
+    <li><a href="#">Bakeries</a></li>
+    <li><a href="#">Dessert Parlor</a></li>
+    <li><a href="#">Bars</a></li>
+    <li><a href="#">Fine Dining</a></li>
+  </ul>
+  <!--Dropdown for Filter Cost for two-->
+  <ul id="cost-for-two" class="dropdown-content">
+    <li><a href="#">Less than PHP350</a></li>
+    <li><a href="#">PHP350 to PHP700</a></li>
+    <li><a href="#">PHP700 to PHP1400</a></li>
+    <li><a href="#">PHP1400 +</a></li>
+  </ul>
+
   <!--Search Bar for Smaller Screens-->
   <div v-show="hasSearch">
     <div class="search-section search-mobile hide-on-large-only">
@@ -99,7 +180,8 @@ export default {
   Name: "Navbar",
   props:{
     hasSearch: Boolean,
-    isLogged: Boolean
+    isLogged: Boolean,
+    hasFilter: Boolean,
   },
   mounted() {
     M.AutoInit(); 

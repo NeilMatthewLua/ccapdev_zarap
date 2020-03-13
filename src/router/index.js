@@ -2,6 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import DisplayRestaurant from '../views/DisplayRestaurant.vue'
+import SearchResult from '../views/SearchResult.vue'
 
 Vue.use(VueRouter)
 
@@ -15,6 +16,11 @@ const routes = [
     path: '/restaurant', 
     name: 'Display Restaurant', 
     component: DisplayRestaurant
+  },
+  {
+    path: '/searchresult',
+    name: 'Search Result',
+    component: SearchResult
   }
   // {
   //   path: '/about',
