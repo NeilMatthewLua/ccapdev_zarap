@@ -14,7 +14,7 @@
         <PhotoSection :title="photosTitle"/>  
       </div>
       <div v-else>
-        <ReviewSection :hasReview="true"/> 
+        <ReviewSection :hasReview="false"/> 
       </div>
     </div>
     <div class="right-section col s12 xl4">
@@ -80,5 +80,5 @@ export default {
 </script>
 
 <style scoped>
-@import '../assets/css/view-restaurant.css';
+@import '../assets/css/view-restaurant/restaurant-content.css';
 </style>

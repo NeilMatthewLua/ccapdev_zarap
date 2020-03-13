@@ -1,14 +1,14 @@
 <template>
 <div class="review-section">
     <div class="write-review valign-wrapper">
-        <div v-if="!hasReview">
+        <div class="user-review-container" v-if="!hasReview">
             <a class="review-btn waves-effect waves-light btn #388e3c green darken-2" v-if="!isWriting" @click="isWriting = true">Write Review</a>
-            <div class = "input-field" v-else>
+            <div class = "writing-section" v-else>
                 <i class="material-icons prefix">mode_edit</i>
-                <textarea v-model="reviewData" id="review-area" class="materialize-textarea" data-length = "300"></textarea>
                 <label for="review-area">Enter review details...</label>
+                <textarea v-model="reviewData" id="review-area" class="materialize-textarea" data-length = "300"></textarea>
                 <div class="file-field input-field">
-                <div class="btn">
+                <div class="red btn">
                     <span>File</span>
                     <input type="file" multiple>
                 </div>
@@ -29,7 +29,7 @@
                     <i class="material-icons prefix">mode_edit</i>
                     <textarea v-model="editData" id="review-area" class="materialize-textarea" data-length = "300"></textarea>
                     <div class="file-field input-field">
-                    <div class="btn">
+                    <div class="red btn">
                         <span>File</span>
                         <input type="file" multiple>
                     </div>
@@ -48,7 +48,7 @@
             <a class="col s3 center" href="#">Popular</a>
             <a class="col s3 center" href="#">All Reviews</a>
         </div>
-        <div class="review-feed">
+        <div>
             <ReviewPost :isLiked="false" :isOwn="false"/>
             <ReviewPost :isLiked="false" :isOwn="false"/>            
         </div>
@@ -92,5 +92,5 @@ export default {
 </script>
 
 <style scoped>
-@import '../assets/css/view-restaurant-review.css';
+@import '../assets/css/view-restaurant/review-section.css';
 </style>
