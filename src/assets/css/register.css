@@ -1,7 +1,9 @@
 body {
     background-color: #F4F4F2;
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
 }
-
 :root {
     --default-button-color: #CB202D;
     --default-navbar-color: #CB202D;
@@ -33,4 +35,8 @@ body {
 
 .title-size {
     font-size:5vw;
+}
+
+.errormsg {
+    color: var(--default-button-color);
 }
