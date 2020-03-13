@@ -12,12 +12,18 @@
 </template>
 
 <script>
+import M from 'materialize-css';
 export default {
     name: "PhotoSection",
-    props: ["title"]
+    props: {
+      title: String //Title of Photo section (Menu / Photos)
+    }, 
+    mounted() {
+      M.AutoInit(); 
+    }
 }
 </script>
 
 <style scoped>
-  @import '../assets/css/view-restaurant.css';
+@import '../assets/css/view-restaurant.css';
 </style>
