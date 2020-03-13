@@ -9,7 +9,7 @@
 <script>
 import Navbar from '@/components/Navbar.vue';
 import Footer from '@/components/Footer.vue';
-import RestaurantContent from '@/components/RestaurantContent.vue';
+import RestaurantContent from '@/components/display-restaurant/RestaurantContent.vue';
 
 export default {
     name: "DisplayRestaurant",

@@ -2,7 +2,7 @@
   <div class="review-post">
       <div class="row valign-wrapper">
         <div class="valign-wrapper col s11">
-            <img class="post-author-pic" src = "../assets/pictures/neil.jpg">
+            <img class="post-author-pic" src = "../../assets/pictures/neil.jpg">
             <h4 class="post-author"><a href=""><strong>Neil Lua</strong></a></h4>
             <h5 class="post-rating #388e3c green white-text darken-2">5.0</h5>
         </div>
@@ -52,5 +52,5 @@ export default {
 </script>
 
 <style>
-@import '../assets/css/view-restaurant/review-post.css';
+@import '../../assets/css/view-restaurant/review-post.css';
 </style>

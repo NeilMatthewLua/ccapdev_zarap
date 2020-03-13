@@ -3,8 +3,8 @@
         <div class="carousel-container">
           <h3>Golden Fortune {{title}}</h3>
           <div class="carousel carousel-slider">
-            <a class="carousel-item" href=""><img src="../assets/pictures/Golden Fortune-1.jpg"></a>
-            <a class="carousel-item" href=""><img src="../assets/pictures/golden-menu.jpg"></a>
+            <a class="carousel-item" href=""><img src="../../assets/pictures/golden-menu.jpg"></a>
+            <a class="carousel-item" href=""><img src="../../assets/pictures/Golden Fortune-1.jpg"></a>
           </div>
         </div>
     </div>
@@ -24,5 +24,5 @@ export default {
 </script>
 
 <style scoped>
-@import '../assets/css/view-restaurant/photo-section.css';
+@import '../../assets/css/view-restaurant/photo-section.css';
 </style>
