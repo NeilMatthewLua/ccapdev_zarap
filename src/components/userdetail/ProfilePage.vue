@@ -124,7 +124,6 @@
 </template>
 
 <script>
-import M from 'materialize-css';
 export default {
     name: "ProfilePage",
     data() {
@@ -152,7 +151,6 @@ export default {
         }
     },
     mounted() {
-        M.AutoInit(); 
         window.addEventListener('resize', this.onResize)
     }
 }

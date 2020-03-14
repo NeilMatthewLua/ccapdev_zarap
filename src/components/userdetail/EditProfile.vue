@@ -100,12 +100,8 @@
 </template>
 
 <script>
-import M from 'materialize-css';
 export default {
-    name: "EditProfile",
-    mounted() {
-        M.AutoInit(); 
-    }
+    name: "EditProfile"
 }
 </script>
 

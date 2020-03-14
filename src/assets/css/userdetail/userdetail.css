@@ -92,6 +92,7 @@ body {
     position: absolute;
     right: 20px;
     bottom: 20px;
+    color:pink !important;
 }
 
 .corner-bottom-right-review {

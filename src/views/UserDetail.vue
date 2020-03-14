@@ -18,7 +18,6 @@
 </template>
 
 <script>
-import M from 'materialize-css';
 import Navbar from '@/components/Navbar.vue';
 import Footer from '@/components/Footer.vue';
 import ProfilePage from '@/components/userdetail/ProfilePage.vue';
@@ -50,7 +49,6 @@ export default {
     },
     methods: {
         mounted() {
-            M.AutoInit(); 
             this.updateUserPage();
         },
         updateUserPage: function() {
