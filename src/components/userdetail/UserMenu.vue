@@ -1,9 +1,9 @@
 <template>
     <div class="col s12 l2 squared margin-around hide-on-med-and-down">
         <div class="profile-container">
-            <div class="text menu-font pad-menu"><a href="#" class="white-text hover-underline profile" @click="userMenu('My Profile', 'profile')">My Profile</a></div>
-            <div class="text menu-font pad-menu"><a href="#" class="white-text hover-underline dining-history"  @click="userMenu('Dining History', 'dining')">Dining History</a></div>
-            <div class="text mehttps://www.lucidchart.com/invitations/accept/a3aa1fe7-72e4-4dc6-a7ac-dc0883adf8ffu-font pad-menu"><a href="#myreviews" class="white-text hover-underline my-reviews" @click="userMenu('My Reviews', 'review')">My Reviews</a></div>
+            <div class="text menu-font pad-menu"><a href="/userdetail/profile" class="white-text hover-underline profile">My Profile</a></div>
+            <div class="text menu-font pad-menu"><a href="/userdetail/dining" class="white-text hover-underline dining-history">Dining History</a></div>
+            <div class="text menu-font pad-menu"><a href="/userdetail/review" class="white-text hover-underline my-reviews">My Reviews</a></div>
         </div>
     </div>
 </template>
@@ -14,11 +14,6 @@ export default {
     name: "EditProfile",
     mounted() {
         M.AutoInit(); 
-    },
-    methods: {
-        userMenu(choice, action) {
-            this.$emit('userProfile', choice, action);
-        }
     }
 }
 </script>

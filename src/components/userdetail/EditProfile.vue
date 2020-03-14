@@ -45,7 +45,7 @@
             </div>
             </div>
             <div class="center">
-            <a class="waves-effect waves-light btn-large colored-button show-on-edit padd-bottom" href="userdetail.html">Edit Profile!</a>
+            <a class="waves-effect waves-light btn-large colored-button show-on-edit padd-bottom" href="/userdetail/profile">Edit Profile!</a>
             </div>
         </div>
         <!-- Edit Info Small-->
@@ -93,7 +93,7 @@
             </div>
             </div>
             <div class="center">
-            <a class="waves-effect waves-light btn-large colored-button show-on-edit padd-bottom" href="userdetail.html">Edit Profile!</a>
+            <a class="waves-effect waves-light btn-large colored-button show-on-edit padd-bottom" href="/userdetail/profile">Edit Profile!</a>
             </div>
         </div>
     </div>    

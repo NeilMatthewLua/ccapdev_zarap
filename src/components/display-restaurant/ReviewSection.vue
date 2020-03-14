@@ -92,5 +92,5 @@ export default {
 </script>
 
 <style scoped>
-@import '../../assets/css/view-restaurant/review-section.css';
+    @import '../../assets/css/view-restaurant/review-section.css';
 </style>
