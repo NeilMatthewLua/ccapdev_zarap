@@ -24,6 +24,8 @@ const routes = [
     path: '/searchresult',
     name: 'Search Result',
     component: SearchResult
+  },
+  {
     path: '/login', 
     name: 'Login', 
     component: Login

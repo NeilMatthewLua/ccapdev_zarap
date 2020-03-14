@@ -1,6 +1,6 @@
 <template>
     <div>
-        <!--Restaurant: Golden Fortune-->
+        <!-- Restaurant: Golden Fortune -->
         <div class="card horizontal" id="GoldenFortuneCardLarge">
             <div class="card-image">
                 <img src="../assets/pictures/Golden Fortune-1.jpg" alt="Golden Fortune" class="restaurant-image">
@@ -40,5 +40,70 @@ export default {
 </script>
 
 <style scoped>
-@import '../assets/css/SearchResult.css';
+    .restaurant-list > .card {
+        width: 100%;
+    }
+
+    .restaurant-list > .card-image {
+        width: 95%;
+        height: 440px;
+    }
+
+    .restaurant-image {
+        padding: 2%;
+        min-width: 350px;
+        min-height: 440px;
+        max-width: 350px;
+        max-height: 440px;
+    }
+
+    .card-stacked > .card-content {
+        padding-left: 2%;
+        margin-left: 2%;
+    }
+
+    .restaurant-info {
+        display: flex;
+        margin-left: 5%;
+        margin-right: 0%;
+        padding-right: 0%;
+    }
+
+    .restaurant-establisment-type {
+        font-size: 120%;
+    }
+
+    .restaurant-name {
+        font-size:180%;
+    }
+
+    .restaurant-location {
+        font-size:110%;
+    }
+
+    .restaurant-address {
+        font-size:100%;
+    }
+
+    .restaurant-other-info {
+        font-size:90%;
+    }
+
+    .restaurant-info > .card-content {
+        margin-left: 1%;
+        padding-left: 0%;
+        padding-right: 2%;
+    }
+
+    .card-content > .btn {
+        position: absolute;
+        right:20px;
+        top:10px;
+    }
+
+    .card-image > button {
+        position: absolute;
+        right:0px;
+        top:0px;
+    }
 </style>

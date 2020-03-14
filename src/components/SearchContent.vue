@@ -5,15 +5,15 @@
             <h5 class="hide-on-large-only">Restaurants in Metro Manila</h5>
         </div>
         <div class="main-content">
-            <FilterBar />
+            <FilterBar/>
             <div class="hide-on-small-only">
                 <div class="restaurant-list">
-                    <RestaurantCard />
+                    <RestaurantCard/>
                 </div>
             </div>
             <div class="hide-on-med-and-up">
                 <div class="mobile-restaurant-list">
-                    <MRestaurantCard />
+                    <MRestaurantCard/>
                 </div>
             </div>
         </div>
@@ -39,5 +39,20 @@ export default {
 </script>
 
 <style scoped>
-@import '../assets/css/SearchResult.css';
+    .searched-text {
+        padding-left:3%;
+        padding-right:3%;
+    }
+
+    .main-content {
+        display:flex;
+        padding-left: 3%;
+        padding-right: 3%;
+    }
+
+    .restaurant-list {
+        padding-left: 2%;
+        padding-right: 2%;
+        width: 95%;
+    }
 </style>

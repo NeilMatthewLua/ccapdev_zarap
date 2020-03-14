@@ -1,8 +1,8 @@
 <template>
   <div>
     <Navbar :hasSearch="true" :isLogged="false"/>
-    <SearchContent />
-    <Footer /> 
+    <SearchContent/>
+    <Footer/> 
   </div>
 </template>
 
@@ -21,6 +21,14 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
+  body {
+      display: flex;
+      min-height: 100vh;
+      flex-direction: column;
+  }
 
+  main {
+      flex: 1 0 auto;
+  }
 </style>
