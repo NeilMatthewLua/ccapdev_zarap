@@ -1,7 +1,5 @@
-:root {
-    --default-card-color: #FFFFFF; 
-    --default-text-color: #2D2D2D; 
-    --default-background-color: #F4F4F2; 
+html,body {
+    width: 100vw; 
 }
 
 body {
@@ -34,12 +32,26 @@ body {
 .title-card > .title-picture {
     padding-top: 10px; 
     padding-bottom: 10px; 
-    height: 70%; 
+    height: 80%; 
     width: auto; 
 }
 
 .title-card > .col > .btn {
     z-index: 0 !important
+}
+
+.review-btn-text { 
+    position: relative; 
+    top: -5px; 
+}
+
+.review-icons {
+    color: white; 
+}
+
+.bookmark-btn {
+    margin: 20px 0px; 
+    z-index: 0 !important;
 }
 
 .photos {
@@ -106,12 +118,30 @@ body {
     font-size: 1.2rem !important; 
 }
 
-@media screen and (max-width: 1200px) { 
+@media screen and (min-width: 1201px) {
+    .title-card {
+        display: -webkit-flex;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-align-items: center;
+            -ms-flex-align: center;
+                align-items: center;
+    }
+}
+
+@media screen and (max-width: 1200px) {
     .main-content {
         flex-direction: column;
         margin-top: 40px; 
     }
     .title-card {
         margin-bottom: 40px; 
+    }
+    .left-section {
+        margin: 0px; 
+        padding: 0px !important; 
+    }
+    .content-selection {
+        margin-bottom: 40px !important;
     }
 }

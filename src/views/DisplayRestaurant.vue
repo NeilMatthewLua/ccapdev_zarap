@@ -9,7 +9,7 @@
 <script>
 import Navbar from '@/components/Navbar.vue';
 import Footer from '@/components/Footer.vue';
-import RestaurantContent from '@/components/RestaurantContent.vue';
+import RestaurantContent from '@/components/display-restaurant/RestaurantContent.vue';
 
 export default {
     name: "DisplayRestaurant",
@@ -21,6 +21,10 @@ export default {
 }
 </script>
 
-<style>
-
+<style scoped>
+:root {
+    --default-card-color: #FFFFFF; 
+    --default-text-color: #2D2D2D; 
+    --default-background-color: #F4F4F2; 
+}
 </style>

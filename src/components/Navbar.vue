@@ -24,8 +24,8 @@
       <!--Unlogged Login Section-->
       <ul class="right hide-on-med-and-down col s3" v-if="!isLogged">
         <div class="right">
-          <li><a href="../login.html">Login</a></li>
-          <li><a href="../register.html">Register</a></li>
+          <li><a href="/login">Login</a></li>
+          <li><a href="/register">Register</a></li>
         </div>
       </ul>
 
@@ -45,15 +45,17 @@
       <li><a href="../userdetail.html#dining-history" class="black-text">Dining History</a></li>
       <li class="divider"></li>
       <li><a href="../userdetail.html#my-reviews" class="black-text">My Reviews</a></li>
+      <li class="divider"></li>
+      <li><a href="../userdetail.html#my-reviews" class="black-text">Logout</a></li>
     </ul>
   </div>
   
   <!--Sidebar Content Unlogged-->
   <ul id="slide-out" class="sidenav" v-if="!isLogged">
     <li><div class="divider"></div></li>
-    <li><a href="../register.html">Register</a></li>
+    <li><a href="/register">Register</a></li>
     <li><div class="divider"></div></li>
-    <li><a href="../login.html">Login</a></li>
+    <li><a href="/login">Login</a></li>
   </ul>
 
   <!--Sidebar Logged --> 
@@ -179,8 +181,8 @@ import M from 'materialize-css';
 export default {
   Name: "Navbar",
   props:{
-    hasSearch: Boolean,
-    isLogged: Boolean,
+    hasSearch: Boolean, //If search bar is present 
+    isLogged: Boolean, //If user is logged in 
     hasFilter: Boolean,
   },
   mounted() {
@@ -190,5 +192,5 @@ export default {
 </script>
 
 <style scoped>
-@import '../assets/css/navbar.css'; 
+  @import '../assets/css/navbar.css'; 
 </style>
