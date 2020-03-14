@@ -44,6 +44,8 @@
       <li><a href="../userdetail.html#dining-history" class="black-text">Dining History</a></li>
       <li class="divider"></li>
       <li><a href="../userdetail.html#my-reviews" class="black-text">My Reviews</a></li>
+      <li class="divider"></li>
+      <li><a href="../userdetail.html#my-reviews" class="black-text">Logout</a></li>
     </ul>
   </div>
   
@@ -96,10 +98,10 @@
 <script>
 import M from 'materialize-css';
 export default {
-  name: "Navbar",
-  props: {
-    hasSearch: Boolean,
-    isLogged: Boolean
+  Name: "Navbar",
+  props:{
+    hasSearch: Boolean, //If search bar is present 
+    isLogged: Boolean //If user is logged in 
   },
   mounted() {
     M.AutoInit(); 
