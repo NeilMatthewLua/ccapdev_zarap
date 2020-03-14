@@ -8,21 +8,21 @@
             <div class="restaurant-info">
                 <div class="card-stacked">
                     <div class="card-content">
-                        <p class="restaurant-establisment-type">Casual Dining</p>
+                        <p class="restaurant-establisment-type">{{resto.establishment_type}}</p>
                         <br>
-                        <a href="#" class="restaurant-name">Golden Fortune</a>
+                        <a href="#" class="restaurant-name">{{resto.name}}</a>
                         <br>
-                        <p class="restaurant-location">Ermita</p>
-                        <p class="restaurant-address">678 T.M. Kalaw Avenue, Ermita, Manila</p>
+                        <p class="restaurant-location">{{resto.location}}</p>
+                        <p class="restaurant-address">{{resto.address}}</p>
                         <br>
-                        <p class="restaurant-other-info">Cuisine:&nbsp;Seafood, Chinese</p>
-                        <p class="restaurant-other-info">Cost for two:&nbsp;PHP800</p>
-                        <p class="restaurant-other-info">Hours:&nbsp;11am – 2:30pm, 5:30pm – 12 midnight (Mon-Sun)</p>
-                        <p class="restaurant-other-info">Tel no:&nbsp;02 85222288; 02 85222200</p>
+                        <p class="restaurant-other-info">Cuisine:&nbsp;{{resto.cuisines}}</p>
+                        <p class="restaurant-other-info">Cost for two:&nbsp;{{resto.cost_two}}</p>
+                        <p class="restaurant-other-info">Hours:&nbsp;{{resto.hours}}</p>
+                        <p class="restaurant-other-info">Tel no:&nbsp;{{resto.phone}}</p>
                     </div>
                 </div>
                 <div class="card-content">
-                    <button class="btn hoverable green">3.9/5</button>
+                    <button class="btn hoverable green">{{resto.rate}}/5</button>
                 </div>
             </div>
         </div>
@@ -33,6 +33,21 @@
 import M from 'materialize-css';
 export default {
     Name: "RestaurantName",
+    data () {
+        return {
+            resto: {
+                name: "Golden Fortune",
+                establishment_type: "Casual Dining",
+                location: "Ermita",
+                address: "678 T.M. Kalaw Avenue, Ermita, Manila",
+                cuisines: "Seafood, Chinese",
+                cost_two: "PHP800",
+                hours: "11am – 2:30pm, 5:30pm – 12 midnight (Mon-Sun)",
+                phone: "02 85222288; 02 85222200",
+                rate: "3.9"
+            }
+        }
+    },
     mounted() {
         M.AutoInit(); 
     }

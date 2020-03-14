@@ -179,7 +179,3 @@ export default {
     }
 }
 </script>
-
-<style scoped>
-@import '../assets/css/SearchResult.css';
-</style>

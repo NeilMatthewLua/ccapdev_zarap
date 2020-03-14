@@ -3,19 +3,19 @@
         <div class="card" id="GoldenFortuneCardSmall">
             <div class="card-image">
                 <img src="../assets/pictures/Golden Fortune-1.jpg" alt="Golden Fortune" class="mobile-restaurant-image">
-                <button class="btn-small hoverable green right">3.9</button>
+                <button class="btn-small hoverable green right">{{mresto.rate}}</button>
             </div>
             <div class="mobile-restaurant-info">
-                <a href="#" class="card-title">Golden Fortune</a>
+                <a href="#" class="card-title">{{mresto.name}}</a>
                 <hr>
                 <p class="card-content">
-                    Ermita
+                    {{mresto.location}}
                     <br>
-                    Cuisine:&nbsp;Seafood, Chinese
+                    Cuisine:&nbsp;{{mresto.cuisines}}
                     <br>
-                    Cost for two:&nbsp;PHP800
+                    Cost for two:&nbsp;{{mresto.cost_two}}
                     <br>
-                    Hours:&nbsp;11am – 2:30pm, 5:30pm – 12 midnight (Mon-Sun)
+                    Hours:&nbsp;{{mresto.hours}}
                     <br>
                 </p>
             </div>
@@ -27,6 +27,18 @@
 import M from 'materialize-css';
 export default {
     Name: "MRestaurantCard",
+    data () {
+        return{
+            mresto: {
+                name: "Golden Fortune",
+                location: "Ermita",
+                cuisines: "Seafood, Chinese",
+                cost_two: "PHP800",
+                hours: "11am – 2:30pm, 5:30pm – 12 midnight (Mon-Sun)",
+                rate: "3.9"
+            }
+        }
+    },
     mounted() {
         M.AutoInit(); 
     }
