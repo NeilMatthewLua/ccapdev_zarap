@@ -156,149 +156,44 @@
   </ul>
 
   <!-- Dropdown for Rating, Cost and Newly Added -->
-  <ul id="sort-by" class="dropdown-content">
+  <ul id="sort-by" class="dropdown-content" v-for="sort in nav_sort_by" v-bind:key="sort">
     <li>
-      <a href="#"> Rating - high to low </a>
-    </li>
-    <li>
-      <a href="#"> Cost - high to low </a>
-    </li>
-    <li>
-      <a href="#"> Cost - low to high </a>
-    </li>
-    <li>
-      <a href="#"> Newly Added </a>
+      <a href="#"> {{sort.label}} - {{sort.option}} </a>
     </li>
   </ul>
 
   <!-- Dropdown for Filter Category -->
-  <ul id="category" class="dropdown-content">
+  <ul id="category" class="dropdown-content" v-for="category in nav_categories" v-bind:key="category">
     <li>
-      <a href="#"> Dine-out </a>
-    </li>
-    <li>
-      <a href="#"> Delivery </a>
-    </li>
-    <li>
-      <a href="#"> Drinks &amp; Nightlife </a>
-    </li>
-    <li>
-      <a href="#"> Cafés </a>
+      <a href="#"> {{category.label}} </a>
     </li>
   </ul>
 
   <!--Dropdown for Filter Location-->
-  <ul id="location" class="dropdown-content">
+  <ul id="location" class="dropdown-content" v-for="location in nav_locations" v-bind:key="location">
     <li>
-      <a href="#"> Manila </a>
-    </li>
-    <li>
-      <a href="#"> Quezon City </a>
-    </li>
-    <li>
-      <a href="#"> Makati City </a>
-    </li>
-    <li>
-      <a href="#"> Pasig City </a>
-    </li>
-    <li>
-      <a href="#"> Pasay City </a>
-    </li>
-    <li>
-      <a href="#"> Parañaque City </a>
-    </li>
-    <li>
-      <a href="#"> Taguig City </a>
-    </li>
-    <li>
-      <a href="#"> See all locations </a>
+      <a href="#"> {{location.label}} </a>
     </li>
   </ul>
 
   <!-- Dropdown for Filter Cuisine -->
-  <ul id="cuisine" class="dropdown-content">
+  <ul id="cuisine" class="dropdown-content" v-for="cuisine in nav_cuisines" v-bind:key="cuisine">
     <li>
-      <a href="#"> Filipino </a>
-    </li>
-    <li>
-      <a href="#"> Beverages </a>
-    </li>
-    <li>
-      <a href="#"> American </a>
-    </li>
-    <li>
-      <a href="#"> Fastfood </a>
-    </li>
-    <li>
-      <a href="#"> Chinese </a>
-    </li>
-    <li>
-      <a href="#"> Coffee </a>
-    </li>
-    <li>
-      <a href="#"> Bakery </a>
-    </li>
-    <li>
-      <a href="#"> Tea </a>
-    </li>
-    <li>
-      <a href="#"> Street Food </a>
-    </li>
-    <li>
-      <a href="#"> Japanese </a>
-    </li>
-    <li>
-      <a href="#"> See all cuisines </a>
+      <a href="#"> {{cuisine.label}} </a>
     </li>
   </ul>
 
   <!-- Dropdown for Filter Establishment Type -->
-  <ul id="establishment-type" class="dropdown-content">
+  <ul id="establishment-type" class="dropdown-content" v-for="establishment in nav_establishment_types" v-bind:key="establishment">
     <li>
-      <a href="#"> Quick Bites </a>
-    </li>
-    <li>
-      <a href="#"> Casual Dining </a>
-    </li>
-    <li>
-      <a href="#"> Beverage Shops </a>
-    </li>
-    <li>
-      <a href="#"> Kiosks </a>
-    </li>
-    <li>
-      <a href="#"> Cafés </a>
-    </li>
-    <li>
-      <a href="#"> Food Courts </a>
-    </li>
-    <li>
-      <a href="#"> Bakeries </a>
-    </li>
-    <li>
-      <a href="#"> Dessert Parlor </a>
-    </li>
-    <li>
-      <a href="#"> Bars </a>
-    </li>
-    <li>
-      <a href="#"> Fine Dining </a>
+      <a href="#"> {{establishment.label}} </a>
     </li>
   </ul>
 
   <!-- Dropdown for Filter Cost for two -->
-  <ul id="cost-for-two" class="dropdown-content">
+  <ul id="cost-for-two" class="dropdown-content" v-for="cost in nav_cost_two" v-bind:key="cost">
     <li>
-      <a href="#"> Less than PHP350 </a>
-    </li>
-    <li>
-      <a href="#"> PHP350 to PHP700 </a>
-    </li>
-    <li>
-      <a href="#"> PHP700 to PHP1400 </a>
-    </li>
-    <li>
-      <a href="#"> PHP1400 + </a>
+      <a href="#"> {{cost.label}} </a>
     </li>
   </ul>
 
@@ -332,6 +227,149 @@ export default {
     hasSearch: Boolean, //If search bar is present 
     isLogged: Boolean, //If user is logged in 
     hasFilter: Boolean,
+  },
+  data() {
+    return{
+      nav_sort_by: {
+        ratings:{
+            label: "Rating",
+            option: " - high to low"
+        },
+        costasc:{
+            label: "Cost",
+            option: " - high to low"
+        },
+        costdes:{
+            label: "Cost",
+            option: " - low to high"
+        },
+        newly_added: {
+            label: "Newly Added",
+            option: " - high to low"
+        }
+      },
+      nav_categories: {
+          dine_out: {
+              label: "Dine-out"
+          },
+          delivery: {
+              label: "Delivery"
+          },
+          drink: {
+              label: "Drink & Nightlife"
+          },
+          cafe: {
+              label: "Cafés"
+          }
+      },
+      nav_locations: {
+          manila: {
+              label: "Manila"
+          },
+          quezon: {
+              label: "Quezon City"
+          },
+          makati: {
+              label: "Makati City"
+          },
+          pasig: {
+              label: "Pasig City"
+          },
+          pasay: {
+              label: "Pasay City"
+          },
+          paranaque: {
+              label: "Parañaque City"
+          },
+          taguig: {
+              label: "Taguig City"
+          },
+          others: {
+              label: "See all locations"
+          }
+      },
+      nav_cuisines: {
+          filipino: {
+              label: "Filipino"
+          },
+          beverages: {
+              label: "Beverages"
+          },
+          american: {
+              label: "American"
+          },
+          fastfood: {
+              label: "Fastfood"
+          },
+          chinese: {
+              label: "Chinese"
+          },
+          coffee: {
+              label: "Coffee"
+          },
+          bakery: {
+              label: "Bakery"
+          },
+          tea: {
+              label: "Tea"
+          },
+          street: {
+              label: "Street Food"
+          },
+          japanese: {
+              label: "Japanese"
+          },
+          others: {
+              label: "See all cuisines"
+          }
+      },
+      nav_establishment_types: {
+          quick: {
+              label: "Quick Bites"
+          },
+          casual: {
+              label: "Casual Dining"
+          },
+          beverage: {
+              label: "Beverage Shops"
+          },
+          kiosks: {
+              label: "Kiosks"
+          },
+          cafes: {
+              label: "Cafés"
+          },
+          court: {
+              label: "Food Courts"
+          },
+          bakeries: {
+              label: "Bakeries"
+          },
+          dessert: {
+              label: "Dessert Parlor"
+          },
+          bars: {
+              label: "Bars"
+          },
+          fine: {
+              label: "Fine Dining"
+          }
+      },
+      nav_cost_two: {
+          three: {
+              label: "Less than PHP350"
+          },
+          seven: {
+              label: "PHP350 to PHP700"
+          },
+          fourteen: {
+              label: "PHP700 to PHP1400"
+          },
+          up: {
+              label: "PHP1400 +"
+          }
+      }
+    }
   },
   mounted() {
     M.AutoInit(); 
