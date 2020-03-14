@@ -12,158 +12,50 @@
                     <li class="collection-item">
                         <h6> Sort by </h6>
                     </li>
-                    <li class="collection-item">
-                        <a href="#" class="left"> Rating </a>
-                        <div class="grey-text"> &nbsp; - high to low </div>
-                    </li>
-                    <li class="collection-item">
-                        <a href="#" class="left"> Cost </a>
-                        <div class="grey-text"> &nbsp; - high to low </div>
-                    </li>
-                    <li class="collection-item">
-                        <a href="#" class="left"> Cost </a>
-                        <div class="grey-text"> &nbsp; - low to high </div
-                    ></li>
-                    <li class="collection-item">
-                        <a href="#" class="left"> Newly Added </a>
-                        <div class="grey-text"> &nbsp; - high to low </div>
+                    <li class="collection-item" v-for="sort in sort_by" v-bind:key="sort">
+                        <a href="#" class="left"> {{sort.label}} </a>
+                        <div class="grey-text"> &nbsp; {{sort.option}} </div>
                     </li>
 
                     <!-- Filtered by Category -->
                     <li class="collection-item">
                         <h6> Category </h6>
                     </li>
-                    <li class="collection-item">
-                        <a href="#"> Dine-out </a>
-                    </li>
-                    <li class="collection-item">
-                        <a href="#"> Delivery </a>
-                    </li>
-                    <li class="collection-item">
-                        <a href="#"> Drink &amp; Nightlife </a>
-                    </li>
-                    <li class="collection-item">
-                        <a href="#"> Cafés </a>
+                    <li class="collection-item" v-for="category in categories" v-bind:key="category">
+                        <a href="#"> {{category.label}} </a>
                     </li>
 
                     <!-- Filtered by Location -->
                     <li class="collection-item">
                         <h6> Location </h6>
                     </li>
-                    <li class="collection-item">
-                        <a href="#"> Manila </a>
-                    </li>
-                    <li class="collection-item">
-                        <a href="#"> Quezon City </a>
-                    </li>
-                    <li class="collection-item">
-                        <a href="#"> Makati City </a>
-                    </li>
-                    <li class="collection-item">
-                        <a href="#"> Pasig City </a>
-                    </li>
-                    <li class="collection-item">
-                        <a href="#"> Pasay City </a>
-                    </li>
-                    <li class="collection-item">
-                        <a href="#"> Parañaque City </a>
-                    </li>
-                    <li class="collection-item">
-                        <a href="#"> Taguig City </a>
-                    </li>
-                    <li class="collection-item">
-                        <a href="#"> See all locations </a>
+                    <li class="collection-item" v-for="location in locations" v-bind:key="location">
+                        <a href="#"> {{location.label}} </a>
                     </li>
 
                     <!--Filtered by Cuisine-->
                     <li class="collection-item">
                         <h6> Cuisine </h6>
                     </li>
-                    <li class="collection-item">
-                        <a href="#"> Filipino </a>
-                    </li>
-                    <li class="collection-item">
-                        <a href="#"> Beverages </a>
-                    </li>
-                    <li class="collection-item">
-                        <a href="#"> American </a>
-                    </li>
-                    <li class="collection-item">
-                        <a href="#"> Fastfood </a>
-                    </li>
-                    <li class="collection-item">
-                        <a href="#"> Chinese </a>
-                    </li>
-                    <li class="collection-item">
-                        <a href="#"> Coffee </a>
-                    </li>
-                    <li class="collection-item">
-                        <a href="#"> Bakery </a>
-                    </li>
-                    <li class="collection-item">
-                        <a href="#"> Tea </a>
-                    </li>
-                    <li class="collection-item">
-                        <a href="#"> Street Food </a>
-                    </li>
-                    <li class="collection-item">
-                        <a href="#"> Japanese </a>
-                        </li>
-                    <li class="collection-item">
-                        <a href="#"> See all cuisines </a>
+                    <li class="collection-item" v-for="cuisine in cuisines" v-bind:key="cuisine">
+                        <a href="#"> {{cuisine.label}} </a>
                     </li>
 
                     <!--Filtered by  Establishment Type-->
                     <li class="collection-item">
                         <h6> Establishment Type </h6>
                     </li>
-                    <li class="collection-item">
-                        <a href="#"> Quick Bites </a>
-                    </li>
-                    <li class="collection-item">
-                        <a href="#"> Casual Dining </a>
-                    </li>
-                    <li class="collection-item">
-                        <a href="#"> Beverage Shops </a>
-                    </li>
-                    <li class="collection-item">
-                        <a href="#"> Kiosks </a>
-                    </li>
-                    <li class="collection-item">
-                        <a href="#"> Cafés </a>
-                    </li>
-                    <li class="collection-item">
-                        <a href="#"> Food Courts </a>
-                    </li>
-                    <li class="collection-item">
-                        <a href="#"> Bakeries </a>
-                    </li>
-                    <li class="collection-item">
-                        <a href="#"> Dessert Parlor </a>
-                    </li>
-                    <li class="collection-item">
-                        <a href="#"> Bars </a>
-                    </li>
-                    <li class="collection-item">
-                        <a href="#"> Fine Dining </a>
+                    <li class="collection-item" v-for="establishment in establishment_types" v-bind:key="establishment">
+                        <a href="#"> {{establishment.label}} </a>
                     </li>
                     
                     <!--Filtered by Cost for two-->
                     <li class="collection-item">
                         <h6> Cost for two </h6>
                     </li>
-                    <li class="collection-item">
-                        <a href="#"> Less than PHP350 </a>
+                    <li class="collection-item" v-for="cost in cost_two" v-bind:key="cost">
+                        <a href="#"> {{cost.label}} </a>
                     </li>
-                    <li class="collection-item">
-                        <a href="#"> PHP350 to PHP700 </a>
-                    </li>
-                    <li class="collection-item">
-                        <a href="#"> PHP700 to PHP1400 </a>
-                    </li>
-                    <li class="collection-item">
-                        <a href="#"> PHP1400 + </a>
-                    </li> 
                 </ul>
             </div>
         </div>
@@ -174,6 +66,149 @@
 import M from 'materialize-css';
 export default {
     Name: "Filterbar",
+    data() {
+        return{
+            sort_by: {
+                ratings:{
+                    label: "Rating",
+                    option: " - high to low"
+                },
+                costasc:{
+                    label: "Cost",
+                    option: " - high to low"
+                },
+                costdes:{
+                    label: "Cost",
+                    option: " - low to high"
+                },
+                newly_added: {
+                    label: "Newly Added",
+                    option: " - high to low"
+                }
+            },
+            categories: {
+                dine_out: {
+                    label: "Dine-out"
+                },
+                delivery: {
+                    label: "Delivery"
+                },
+                drink: {
+                    label: "Drink & Nightlife"
+                },
+                cafe: {
+                    label: "Cafés"
+                }
+            },
+            locations: {
+                manila: {
+                    label: "Manila"
+                },
+                quezon: {
+                    label: "Quezon City"
+                },
+                makati: {
+                    label: "Makati City"
+                },
+                pasig: {
+                    label: "Pasig City"
+                },
+                pasay: {
+                    label: "Pasay City"
+                },
+                paranaque: {
+                    label: "Parañaque City"
+                },
+                taguig: {
+                    label: "Taguig City"
+                },
+                others: {
+                    label: "See all locations"
+                }
+            },
+            cuisines: {
+                filipino: {
+                    label: "Filipino"
+                },
+                beverages: {
+                    label: "Beverages"
+                },
+                american: {
+                    label: "American"
+                },
+                fastfood: {
+                    label: "Fastfood"
+                },
+                chinese: {
+                    label: "Chinese"
+                },
+                coffee: {
+                    label: "Coffee"
+                },
+                bakery: {
+                    label: "Bakery"
+                },
+                tea: {
+                    label: "Tea"
+                },
+                street: {
+                    label: "Street Food"
+                },
+                japanese: {
+                    label: "Japanese"
+                },
+                others: {
+                    label: "See all cuisines"
+                }
+            },
+            establishment_types: {
+                quick: {
+                    label: "Quick Bites"
+                },
+                casual: {
+                    label: "Casual Dining"
+                },
+                beverage: {
+                    label: "Beverage Shops"
+                },
+                kiosks: {
+                    label: "Kiosks"
+                },
+                cafes: {
+                    label: "Cafés"
+                },
+                court: {
+                    label: "Food Courts"
+                },
+                bakeries: {
+                    label: "Bakeries"
+                },
+                dessert: {
+                    label: "Dessert Parlor"
+                },
+                bars: {
+                    label: "Bars"
+                },
+                fine: {
+                    label: "Fine Dining"
+                }
+            },
+            cost_two: {
+                three: {
+                    label: "Less than PHP350"
+                },
+                seven: {
+                    label: "PHP350 to PHP700"
+                },
+                fourteen: {
+                    label: "PHP700 to PHP1400"
+                },
+                up: {
+                    label: "PHP1400 +"
+                }
+            }
+        }
+    },
     mounted() {
         M.AutoInit(); 
     }
