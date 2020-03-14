@@ -124,11 +124,11 @@ export default {
         background-color: #F4F4F2;
     }
 
-    /* :root {
-        --default-button-color: blue !important;
-        --default-navbar-color: pink !important;
+    :root {
+        --default-button-color: #CB202D !important;
+        --default-navbar-color: #CB202D !important;
         --default-card-color:  #2D2D2D !important;
-    } */
+    }
 
     .black-color {
         color: #2D2D2D !important;
@@ -147,9 +147,9 @@ export default {
         border-radius: 15px;
     }
 
-    /* .colored-button {
+    .colored-button {
         background: var(--default-navbar-color) !important;
-    } */
+    }
 
     .pad4 {
         padding-top: 4%;
