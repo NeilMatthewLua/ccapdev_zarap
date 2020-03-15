@@ -2,6 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import DisplayRestaurant from '../views/DisplayRestaurant.vue'
+import SearchResult from '../views/SearchResult.vue'
 import Login from '../views/Login.vue'
 import Register from '../views/Register.vue'
 import UserDetail from '../views/UserDetail.vue'
@@ -18,6 +19,11 @@ const routes = [
     path: '/restaurant', 
     name: 'Display Restaurant', 
     component: DisplayRestaurant
+  },
+  {
+    path: '/searchresult',
+    name: 'Search Result',
+    component: SearchResult
   },
   {
     path: '/login', 
