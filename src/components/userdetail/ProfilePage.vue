@@ -130,15 +130,15 @@ export default {
     name: "ProfilePage",
     data() {
         return {
-            visible : false,
-            editProfileVisible : true,
-            bigEditProfileVisible : true,
-            smallEditProfileVisible : false,
-            isOwn : false, 
-            name : "Richard Alvin Zapanta",
-            address : "29A Princeview Parksuites",
-            email : "zapzapzap@gmail.com",
-            points : "32"
+            visible: false,
+            editProfileVisible: true,
+            bigEditProfileVisible: true,
+            smallEditProfileVisible: false,
+            isOwn: false, 
+            name: "Richard Alvin Zapanta",
+            address: "29A Princeview Parksuites",
+            email: "zapzapzap@gmail.com",
+            points: "32"
         }
     },
     methods: {

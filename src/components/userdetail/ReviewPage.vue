@@ -1,11 +1,11 @@
 <template>
     <div>
-        <div id="content" class="container-review hide-on-restaurant hide-on-profile">
+        <div id="content" class="container-review">
             <div class="col s12 m11 l9 view-review">  
                 <div class="review-section relative-position">
-                    <div class="">
-                    <div class="review-feed">
-                        <div class="review-post padd-top">
+                    <div class="write-review">
+                        <div class="review-feed">
+                            <div class="review-post padd-top">
                                 <div class="edit-review">
                                     <div v-if="!isEditing">
                                         <ReviewPost :isLiked="false" :isOwn="true" @edit-Review="editReview" @delete-Review="deleteReview" :inProfile="true"/> 

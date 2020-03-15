@@ -49,7 +49,7 @@
             <a class="col s3 center" href="#">All Reviews</a>
         </div>
         <div>
-            <ReviewPost :isLiked="false" :isOwn="false" :inProfile="false"/>
+            <ReviewPost :isLiked="false" :isOwn="true" :inProfile="false"/>
             <ReviewPost :isLiked="false" :isOwn="false"  :inProfile="false"/>            
         </div>
     </div>

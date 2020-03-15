@@ -16,7 +16,7 @@
             @click="toggleLike"
             class="material-icons right-align pointer">thumb_up</i>
         </div>
-        <div class="col s2 valign-wrapper" v-else>
+        <div class="col s2 valign-wrapper margin-right" v-else>
             <a class="submit-btn green btn pointer" @click="editReview()"><i class="material-icons review-icons">edit</i></a>
             <a class="submit-btn red btn pointer" @click="deleteReview()"><i class="material-icons review-icons">delete</i></a>
         </div>
@@ -59,4 +59,7 @@ export default {
 
 <style>
 @import '../../assets/css/view-restaurant/review-post.css';
+    .margin-right {
+        margin-right: 3%;
+    }
 </style>

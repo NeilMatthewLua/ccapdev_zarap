@@ -2,7 +2,7 @@
     <div>
         <div class="card" id="GoldenFortuneCardSmall">
             <div class="card-image">
-                <img src="../assets/pictures/Golden Fortune-1.jpg" alt="Golden Fortune" class="mobile-restaurant-image">
+                <img src="../../assets/pictures/Golden Fortune-1.jpg" alt="Golden Fortune" class="mobile-restaurant-image">
                 <button class="btn-small hoverable green right">{{mresto.rate}}</button>
             </div>
             <div class="mobile-restaurant-info">
@@ -26,7 +26,7 @@
 <script>
 import M from 'materialize-css';
 export default {
-    Name: "MRestaurantCard",
+    name: "MRestaurantCard",
     data () {
         return{
             mresto: {

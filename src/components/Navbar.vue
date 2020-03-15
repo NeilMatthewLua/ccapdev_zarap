@@ -25,10 +25,10 @@
       <ul class="right hide-on-med-and-down col s3" v-if="!isLogged">
         <div class="right">
           <li>
-            <a href="/login"> Login </a>
+            <a href="/login" @click="offFilter"> Login </a>
           </li>
           <li>
-            <a href="/register"> Register </a>
+            <a href="/register" @click="offFilter"> Register </a>
           </li>
         </div>
       </ul>
@@ -67,13 +67,13 @@
       <div class="divider"></div>
     </li>
     <li>
-      <a href="/register"> Register </a>
+      <a href="/register" @click="offFilter"> Register </a>
     </li>
     <li>
       <div class="divider"></div>
     </li>
     <li>
-      <a href="/login"> Login </a>
+      <a href="/login" @click="offFilter"> Login </a>
     </li>
   </ul>
 
