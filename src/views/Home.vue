@@ -96,7 +96,6 @@
 
 <script>
 // @ is an alias to /src
-import M from 'materialize-css';
 import Footer from '@/components/Footer.vue';
 
 export default {
@@ -108,34 +107,26 @@ export default {
     return {
       search : null
     }
-  },
-  mounted() {
-    M.AutoInit();
-  } 
+  }
 }
 </script>
 
 <style scoped>
-    body {
-        background-color: #FFFFFF;
-    }
 
     .BG-color {
-        background-color: #F4F4F2;
+        background-color: var(--default-white-color);
     }
 
-    :root {
-        --default-button-color: #CB202D !important;
-        --default-navbar-color: #CB202D !important;
-        --default-card-color:  #2D2D2D !important;
+    .lowerhalf {
+        background-color: var(--default-background-color);
     }
 
     .black-color {
-        color: #2D2D2D !important;
+        color:  var(--default-card-color) !important;
     }
 
     .BG-black-color {
-        background-color: #2D2D2D !important;
+        background-color: var(--default-card-color) !important;
     }
 
     .title {

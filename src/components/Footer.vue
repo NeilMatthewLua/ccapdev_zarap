@@ -35,7 +35,7 @@ export default {
     }
 
     footer {
-        background-color: #2D2D2D !important;
+        background-color: var(--default-footer-color) !important;
     }
 
     .page-footer {
@@ -48,14 +48,14 @@ export default {
     }
 
     .footer-copyright {
-        background-color: #FFFFFF !important; 
+        background-color: var(--default-copyright-color) !important; 
     }
 
     .copyright-text { 
         line-height: 30px !important; 
         text-align: center !important; 
         padding-left: 20px; 
-        color: #2D2D2D !important; 
+        color: var(--default-footer-color) !important; 
     }
 
     .footer-logo {     

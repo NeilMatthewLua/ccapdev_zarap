@@ -57,7 +57,6 @@
 </template>
 
 <script scoped>
-import M from 'materialize-css'; 
 import ReviewPost from './ReviewPost'; 
 export default {
     name: "ReviewSection",
@@ -84,13 +83,57 @@ export default {
         deleteReview() {
             //Deletes Review
         }
-    },
-    mounted() {
-        M.AutoInit();
     }
 }
 </script>
 
 <style scoped>
-    @import '../../assets/css/view-restaurant/review-section.css';
+    .review-section {
+        margin-bottom: 40px; 
+    }
+
+    .write-review {
+        min-height: 50px;  
+        max-height: 400px; 
+        margin-bottom: 40px; 
+        padding: 30px 30px; 
+        background-color: var(--default-restaurantcard-color);
+        clear: both; 
+    }
+
+    .user-review-container {
+        width: 100%; 
+    }
+
+    #review-area {
+        max-height: 200px; 
+        overflow-y: scroll; 
+    }
+
+    .review-btn {
+        z-index: 0 !important; 
+    }
+
+    .submit-btn {
+        border-radius: 15% !important; 
+        margin-right: 20px; 
+        z-index: 0 !important; 
+    }
+
+    .edit-review {
+        width: 100%; 
+    }
+
+    .review-title {
+        margin-top: 0px; 
+    }
+
+    .view-review {
+        padding: 1px 20px 20px;  
+        background-color: var(--default-restaurantcard-color);
+    }
+
+    .view-review-subsection {
+        margin-bottom: 30px !important; 
+    }
 </style>

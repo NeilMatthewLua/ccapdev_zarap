@@ -30,7 +30,6 @@
 </template>
 
 <script>
-import M from 'materialize-css';
 export default {
     Name: "RestaurantName",
     data () {
@@ -47,9 +46,6 @@ export default {
                 rate: "3.9"
             }
         }
-    },
-    mounted() {
-        M.AutoInit(); 
     }
 }
 </script>
