@@ -39,7 +39,6 @@
 </template>
 
 <script>
-import M from 'materialize-css';
 import Navbar from '@/components/Navbar.vue';
 import Footer from '@/components/Footer.vue';
 
@@ -48,9 +47,6 @@ export default {
     components: {
         Navbar,
         Footer
-    },
-    mounted() {
-        M.AutoInit(); 
     },
     data() {
         return {
@@ -69,15 +65,10 @@ export default {
 
 <style scoped>
     body {
-        background-color: #F4F4F2;
+        background-color:var(--default-background-color);
         display: flex;
         min-height: 100vh;
         flex-direction: column;
-    }
-
-    :root {
-        --default-button-color: #CB202D;
-        --default-navbar-color: #CB202D;
     }
 
     .margin-pushdown {

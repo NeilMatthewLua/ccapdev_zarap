@@ -10,7 +10,6 @@
 </template>
 
 <script>
-import M from 'materialize-css';
 export default {
     name: "PhotoSection",
     props: {
@@ -23,13 +22,12 @@ export default {
           {url: require("../../assets/pictures/Golden Fortune-1.jpg")}
         ]
       };
-    },
-    mounted() {
-      M.AutoInit(); 
     }
 }
 </script>
 
 <style scoped>
-@import '../../assets/css/view-restaurant/photo-section.css';
+  .carousel-item {
+      overflow-y: scroll; 
+  }
 </style>

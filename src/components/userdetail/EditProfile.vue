@@ -106,23 +106,13 @@ export default {
 </script>
 
 <style scoped>
-    body {
-        background-color: #F4F4F2;
-    }
-
     #content {
         min-height: calc(100vh - 80px);
-    }
-
-    :root {
-        --default-button-color: #CB202D;
-        --default-navbar-color: #CB202D;
-        --default-container-color: #2D2D2D;
-    }
+    }}
 
     .square {
         border : 1px solid var(--default-container-color);
-        background-color: #2D2D2D;
+        background-color: var(--default-container-color);
         border-radius: 20px !important;
     }
 

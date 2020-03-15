@@ -36,7 +36,6 @@
       <!-- Logged Profile Section -->
       <ul class="right hide-on-med-and-down col s3" v-else>
         <div class="right navbar-right valign-wrapper">
-          //TODO Name of Logged
           <img class="circle navbar-image" src="../assets/pictures/jonal.jpg">
           <li>
             <a class="dropdown-trigger" href="" data-target="dropdown1">
@@ -55,7 +54,6 @@
       <li><a href="/userdetail/dining" class="black-text" >Dining History</a></li>
       <li class="divider"></li>
       <li><a href="/userdetail/review" class="black-text" >My Reviews</a></li>
-      //TODO Logout
       <li class="divider"></li>
       <li><a href="/userdetail" class="black-text">Logout</a></li>
     </ul>
@@ -89,9 +87,6 @@
           <span class="username-sidenav"> Jonal </span>
         </a>
       </div>
-      //TODO Name of Logged
-      <a href="#user"><img class="circle" src="../assets/pictures/jonal.jpg"></a>
-      <a href="#name"><span class="username-sidenav">Jonal</span></a>
     </li>
     <li><div class="divider"></div></li>
     <li><a href="/userdetail/profile" class="waves-effect">Profile</a></li>
@@ -99,25 +94,8 @@
     <li><a href="/userdetail/dining" class="waves-effect" >Dining History</a></li>
     <li><div class="divider"></div></li>
     <li><a href="/userdetail/review" class="waves-effect" >My Reviews</a></li>
-
-    <li>
-      <div class="divider"></div>
-    </li>
-    <li>
-      <a href="/" class="waves-effect"> Profile </a>
-    </li>
-    <li>
-      <div class="divider"></div>
-    </li>
-    <li>
-      <a href="/" class="waves-effect"> Dining History </a>
-    </li>
-    <li>
-      <div class="divider"></div>
-    </li>
-    <li>
-      <a href="/" class="waves-effect"> My Reviews </a>
-    </li>
+    <li><div class="divider"></div></li>
+    <li><a href="/userdetail/review" class="waves-effect" >Logout</a></li>
   </ul>
 
   <!-- Filter -->
@@ -225,7 +203,6 @@
 </template>
 
 <script>
-import M from 'materialize-css';
 export default {
   Name: "Navbar",
   props:{
@@ -375,9 +352,6 @@ export default {
           }
       }
     }
-  },
-  mounted() {
-    M.AutoInit(); 
   }
 }
 </script>

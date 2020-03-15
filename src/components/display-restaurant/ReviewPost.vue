@@ -27,12 +27,8 @@
 </template>
 
 <script>
-import M from 'materialize-css';
 export default {
     name: "ReviewPost",
-    mounted() {
-        M.AutoInit(); 
-    },
     props: {
         isLiked: Boolean, //If the review has been liked by the current user
         isOwn: Boolean, //If the review was also posted by the current user
@@ -57,9 +53,48 @@ export default {
 }
 </script>
 
-<style>
-@import '../../assets/css/view-restaurant/review-post.css';
-    .margin-right {
-        margin-right: 3%;
+<style scoped>
+    .liked {
+        color: var(--default-liked-color); 
     }
+
+    .pointer {
+        cursor: pointer; 
+    }
+
+    .post-author-pic { 
+        display: inline-block; 
+        margin-right: 20px; 
+        height: 50px; 
+        width: 50px; 
+        border-radius: 50%; 
+    }
+
+    .post-rating {
+        margin-left: 20px; 
+        padding: 8px; 
+    }
+
+    .review-post {
+        background-color: var(--default-retaurantcard-color);
+    }
+
+    .review-post > .post-header > h4 {
+        display: inline-block; 
+        margin: 0px!important; 
+        margin-right: 10px; 
+    }
+
+    .review-post > .post-header > h5 {
+        display: inline-block;
+        padding: 5px; 
+        color: var(--default-retaurantcard-color);   
+    }
+
+    @media(max-width: 1500px) {
+        .margin-right {
+            margin-right: 5% !important;
+        }
+    }
+
 </style>
