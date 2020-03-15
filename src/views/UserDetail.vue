@@ -1,6 +1,6 @@
 <template>
     <div>
-        <Navbar :hasSearch="true" :isLogged="false"/> 
+        <Navbar :hasSearch="true" :isLogged="true" :hasFilter="true"/> 
         <!-- Container of menu and display info -->
         <div id="content" class="container-profile  hide-on-restaurant hide-on-review">
             <h3 class="center big-font onload">{{Title}}</h3>
@@ -18,13 +18,12 @@
 </template>
 
 <script>
-import M from 'materialize-css';
 import Navbar from '@/components/Navbar.vue';
 import Footer from '@/components/Footer.vue';
-import ProfilePage from '@/components/ProfilePage.vue';
-import DiningHistoryPage from '@/components/DiningHistoryPage.vue';
-import ReviewPage from '@/components/ReviewPage.vue';
-import UserMenu from '@/components/UserMenu.vue';
+import ProfilePage from '@/components/userdetail/ProfilePage.vue';
+import DiningHistoryPage from '@/components/userdetail/DiningHistoryPage.vue';
+import ReviewPage from '@/components/userdetail/ReviewPage.vue';
+import UserMenu from '@/components/userdetail/UserMenu.vue';
 
 export default {
     name: "UserDetail",
@@ -38,7 +37,6 @@ export default {
     },
     data() {
         return {
-            Title: "ADD LISTENER",
             // isUserPageVisible: true,
             // EditProfileVisible: true,
             ProfileVisible: true,
@@ -46,23 +44,30 @@ export default {
             ReviewVisible: true,
         }
     },
-    mounted() {
-        M.AutoInit(); 
+    created : function() {
+        this.updateUserPage();
     },
     methods: {
-        updateUserPage: function(choice, action) {
-            this.Title = choice;
+        mounted() {
+            this.updateUserPage();
+        },
+        updateUserPage: function() {
+            var action = this.$route.params.menu;
+            //TODO "My" only for logged in
             if(action == 'profile') {
+                this.Title = "My Profile";    
                 this.ProfileVisible = false;
                 this.HistoryVisible = true;
                 this.ReviewVisible = true;
             }
             else if(action == 'dining') {
+                this.Title = "Dining History";    
                 this.ProfileVisible = true;
                 this.HistoryVisible = false;
                 this.ReviewVisible = true;
             }
             else if(action == 'review') {
+                this.Title = "My Reviews";    
                 this.ProfileVisible = true;
                 this.HistoryVisible = true;
                 this.ReviewVisible = false;

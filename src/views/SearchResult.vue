@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Navbar :hasSearch="true" :isLogged="false"/>
+    <Navbar :hasSearch="true" :isLogged="false" :hasFilter="false"/>
     <SearchContent/>
     <Footer/> 
   </div>
@@ -9,7 +9,7 @@
 <script>
 import Navbar from '@/components/Navbar.vue';
 import Footer from '@/components/Footer.vue';
-import SearchContent from '@/components/SearchContent.vue';
+import SearchContent from '@/components/search-restaurant/SearchContent.vue';
 
 export default {
     name: "SearchResult",

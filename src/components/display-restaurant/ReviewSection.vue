@@ -49,8 +49,8 @@
             <a class="col s3 center" href="#">All Reviews</a>
         </div>
         <div>
-            <ReviewPost :isLiked="false" :isOwn="false"/>
-            <ReviewPost :isLiked="false" :isOwn="false"/>            
+            <ReviewPost :isLiked="false" :isOwn="true" :inProfile="false"/>
+            <ReviewPost :isLiked="false" :isOwn="false"  :inProfile="false"/>            
         </div>
     </div>
 </div>
@@ -92,5 +92,5 @@ export default {
 </script>
 
 <style scoped>
-@import '../../assets/css/view-restaurant/review-section.css';
+    @import '../../assets/css/view-restaurant/review-section.css';
 </style>

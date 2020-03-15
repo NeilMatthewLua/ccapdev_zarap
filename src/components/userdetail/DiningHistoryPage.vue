@@ -1,42 +1,34 @@
 <template>
-    <div class="col s12 l2 squared margin-around hide-on-med-and-down">
-        <div class="profile-container">
-            <div class="text menu-font pad-menu"><a href="#" class="white-text hover-underline profile" @click="userMenu('My Profile', 'profile')">My Profile</a></div>
-            <div class="text menu-font pad-menu"><a href="#" class="white-text hover-underline dining-history"  @click="userMenu('Dining History', 'dining')">Dining History</a></div>
-            <div class="text menu-font pad-menu"><a href="#myreviews" class="white-text hover-underline my-reviews" @click="userMenu('My Reviews', 'review')">My Reviews</a></div>
+  <div>
+    <div id="content" class="containter-restaurant">
+      <div class="row pad-left">
+        <div class="col s12 m11 l9">
+          <div class="restaurant-list">
+            <RestaurantCard/>
+          </div>
         </div>
-    </div>
+      </div>
+    </div> 
+  </div>
 </template>
 
 <script>
-import M from 'materialize-css';
+import RestaurantCard from '../search-restaurant/RestaurantCard.vue'
 export default {
-    name: "EditProfile",
-    mounted() {
-        M.AutoInit(); 
-    },
-    methods: {
-        userMenu(choice, action) {
-            this.$emit('userProfile', choice, action);
-        }
+    name: "DiningHistoryPage",
+    components: {
+        RestaurantCard
     }
 }
 </script>
 
-
 <style scoped>
-    body {
+      body {
         background-color: #F4F4F2;
     }
 
     #content {
         min-height: calc(100vh - 80px);
-    }
-
-    .squared {
-        border : 1px solid var(--default-container-color);
-        background-color: #2D2D2D;
-        border-radius: 20px !important;
     }
 
     :root {
@@ -45,6 +37,11 @@ export default {
         --default-container-color: #2D2D2D;
     }
 
+    .square {
+        border : 1px solid var(--default-container-color);
+        background-color: #2D2D2D;
+        border-radius: 20px !important;
+    }
 
     .margin-around {
         margin-left: 2% !important;
