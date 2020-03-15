@@ -1,6 +1,6 @@
 <template>
     <div>
-        <Navbar :hasSearch="false" :isLogged="false"/>  
+        <Navbar :hasSearch="false" :isLogged="false" :hasFilter="true"/>  
             <div class="container">
                 <div class="container">
                     <h1 class ="black-text title-size">Register</h1>

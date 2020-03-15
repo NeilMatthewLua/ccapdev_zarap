@@ -25,10 +25,10 @@
       <ul class="right hide-on-med-and-down col s3" v-if="!isLogged">
         <div class="right">
           <li>
-            <a href="/login"> Login </a>
+            <a href="/login" @click="offFilter"> Login </a>
           </li>
           <li>
-            <a href="/register"> Register </a>
+            <a href="/register" @click="offFilter"> Register </a>
           </li>
         </div>
       </ul>
@@ -36,6 +36,7 @@
       <!-- Logged Profile Section -->
       <ul class="right hide-on-med-and-down col s3" v-else>
         <div class="right navbar-right valign-wrapper">
+          //TODO Name of Logged
           <img class="circle navbar-image" src="../assets/pictures/jonal.jpg">
           <li>
             <a class="dropdown-trigger" href="" data-target="dropdown1">
@@ -49,21 +50,14 @@
     </nav>
     <!-- Dropdown for Profile Section --> 
     <ul id="dropdown1" class="dropdown-content">
-      <li>
-        <a href="../userdetail.html#profile" class="black-text"> My Profile </a>
-      </li>
+      <li><a href="/userdetail/profile" class="black-text" >My Profile</a></li>
       <li class="divider"></li>
-      <li>
-        <a href="../userdetail.html#dining-history" class="black-text"> Dining History </a>
-      </li>
+      <li><a href="/userdetail/dining" class="black-text" >Dining History</a></li>
       <li class="divider"></li>
-      <li>
-        <a href="../userdetail.html#my-reviews" class="black-text"> My Reviews </a>
-      </li>
+      <li><a href="/userdetail/review" class="black-text" >My Reviews</a></li>
+      //TODO Logout
       <li class="divider"></li>
-      <li>
-        <a href="../userdetail.html#my-reviews" class="black-text"> Logout </a>
-      </li>
+      <li><a href="/userdetail" class="black-text">Logout</a></li>
     </ul>
   </div>
   
@@ -73,13 +67,13 @@
       <div class="divider"></div>
     </li>
     <li>
-      <a href="/register"> Register </a>
+      <a href="/register" @click="offFilter"> Register </a>
     </li>
     <li>
       <div class="divider"></div>
     </li>
     <li>
-      <a href="/login"> Login </a>
+      <a href="/login" @click="offFilter"> Login </a>
     </li>
   </ul>
 
@@ -95,7 +89,17 @@
           <span class="username-sidenav"> Jonal </span>
         </a>
       </div>
+      //TODO Name of Logged
+      <a href="#user"><img class="circle" src="../assets/pictures/jonal.jpg"></a>
+      <a href="#name"><span class="username-sidenav">Jonal</span></a>
     </li>
+    <li><div class="divider"></div></li>
+    <li><a href="/userdetail/profile" class="waves-effect">Profile</a></li>
+    <li><div class="divider"></div></li>
+    <li><a href="/userdetail/dining" class="waves-effect" >Dining History</a></li>
+    <li><div class="divider"></div></li>
+    <li><a href="/userdetail/review" class="waves-effect" >My Reviews</a></li>
+
     <li>
       <div class="divider"></div>
     </li>
@@ -195,6 +199,7 @@
     <li>
       <a href="#"> {{cost.label}} </a>
     </li>
+
   </ul>
 
   <!--Search Bar for Smaller Screens-->

@@ -3,7 +3,7 @@
         <!-- Restaurant: Golden Fortune -->
         <div class="card horizontal" id="GoldenFortuneCardLarge">
             <div class="card-image">
-                <img src="../assets/pictures/Golden Fortune-1.jpg" alt="Golden Fortune" class="restaurant-image">
+                <img src="../../assets/pictures/Golden Fortune-1.jpg" alt="Golden Fortune" class="restaurant-image">
             </div>
             <div class="restaurant-info">
                 <div class="card-stacked">

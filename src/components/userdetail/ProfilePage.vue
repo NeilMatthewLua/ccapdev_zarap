@@ -5,21 +5,23 @@
             <div class="profile-container">
             <div class="grouped-info">
                 <div class="info-font white-text pad-right-text"><pre class="remove-margin">Name:       </pre></div>
-                <div class="info-font text menu-font white-text"> Richard Alvin Zapaite</div>
+                <div class="info-font text menu-font white-text"> {{name}}</div>
             </div>
             <div class="grouped-info ">
                 <div class="info-font white-text pad-right-text"><pre class="remove-margin">Address:    </pre></div>
-                <div class="info-font text menu-font white-text"> 29A Priceview Parksuites, Quintin Paredes, Manila</div>
+                <div class="info-font text menu-font white-text"> {{address}}</div>
             </div>
             <div class="grouped-info ">
                 <div class="info-font white-text pad-right-text"><pre class="remove-margin">E-mail:     </pre></div>
-                <div class="info-font text menu-font white-text">user@user.com</div>
+                <div class="info-font text menu-font white-text">{{email}}</div>
             </div>
             <div class="grouped-info ">
                 <div class="info-font white-text pad-right-text"><pre class="remove-margin">Points:     </pre></div>
-                <div class="info-font text menu-font white-text">69</div>
+                <div class="info-font text menu-font white-text">{{points}}</div>
             </div>
-            <a href="#" class="white-text hover-underline corner-bottom-right" id="edit-profile" @click="toggleView">Edit Profile</a>
+            <div  v-if="isOwn">
+                <a href="#" class="white-text hover-underline corner-bottom-right" id="edit-profile" @click="toggleView">Edit Profile</a>
+            </div>
             </div>
         </div>
         <div v-bind:class="{'editVisible': editProfileVisible}">
@@ -67,7 +69,7 @@
                     </div>
                 </div>
                 </div>
-                <div class="center">
+                <div class="center" v-if="isOwn">
                 <a class="waves-effect waves-light btn-large colored-button show-on-edit padd-bottom" href="userdetail.html">Edit Profile!</a>
                 </div>
             </div>
@@ -124,15 +126,19 @@
 </template>
 
 <script>
-import M from 'materialize-css';
 export default {
     name: "ProfilePage",
     data() {
         return {
-            visible : false,
-            editProfileVisible : true,
-            bigEditProfileVisible : true,
-            smallEditProfileVisible : false,
+            visible: false,
+            editProfileVisible: true,
+            bigEditProfileVisible: true,
+            smallEditProfileVisible: false,
+            isOwn: false, 
+            name: "Richard Alvin Zapanta",
+            address: "29A Princeview Parksuites",
+            email: "zapzapzap@gmail.com",
+            points: "32"
         }
     },
     methods: {
@@ -152,13 +158,12 @@ export default {
         }
     },
     mounted() {
-        M.AutoInit(); 
         window.addEventListener('resize', this.onResize)
     }
 }
 </script>
 
-<style>
+<style scoped>
     body {
         background-color: #F4F4F2;
     }
