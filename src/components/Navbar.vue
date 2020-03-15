@@ -89,19 +89,17 @@
           <span class="username-sidenav"> Jonal </span>
         </a>
       </div>
-<<<<<<< HEAD
       //TODO Name of Logged
       <a href="#user"><img class="circle" src="../assets/pictures/jonal.jpg"></a>
       <a href="#name"><span class="username-sidenav">Jonal</span></a>
-    </div></li>
+    </li>
     <li><div class="divider"></div></li>
     <li><a href="/userdetail/profile" class="waves-effect">Profile</a></li>
     <li><div class="divider"></div></li>
     <li><a href="/userdetail/dining" class="waves-effect" >Dining History</a></li>
     <li><div class="divider"></div></li>
     <li><a href="/userdetail/review" class="waves-effect" >My Reviews</a></li>
-=======
-    </li>
+
     <li>
       <div class="divider"></div>
     </li>
@@ -201,7 +199,7 @@
     <li>
       <a href="#"> {{cost.label}} </a>
     </li>
->>>>>>> mp2
+
   </ul>
 
   <!--Search Bar for Smaller Screens-->
