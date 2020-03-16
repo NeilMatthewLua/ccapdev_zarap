@@ -65,25 +65,62 @@ export default {
 </script>
 
 <style>
-    @import '../../assets/css/view-restaurant/review-section.css';
+    .review-section {
+        margin-bottom: 40px; 
+    }
 
-    body {
-        background-color: #F4F4F2;
+    .write-review {
+        min-height: 50px;  
+        max-height: 400px; 
+        margin-bottom: 40px; 
+        padding: 30px 30px; 
+        background-color: var(--default-reviewcard-color);
+        clear: both; 
+    }
+
+    .user-review-container {
+        width: 100%; 
+    }
+
+    #review-area {
+        max-height: 200px; 
+        overflow-y: scroll; 
+    }
+
+    .review-btn {
+        z-index: 0 !important; 
+    }
+
+    .submit-btn {
+        border-radius: 15% !important; 
+        margin-right: 20px; 
+        z-index: 0 !important; 
+    }
+
+    .edit-review {
+        width: 100%; 
+    }
+
+    .review-title {
+        margin-top: 0px; 
+    }
+
+    .view-review {
+        padding: 1px 20px 20px;  
+        background-color: var(--default-reviewcard-color);
+    }
+
+    .view-review-subsection {
+        margin-bottom: 30px !important; 
     }
 
     #content {
         min-height: calc(100vh - 80px);
     }
 
-    :root {
-        --default-button-color: #CB202D;
-        --default-navbar-color: #CB202D;
-        --default-container-color: #2D2D2D;
-    }
-
     .square {
-        border : 1px solid var(--default-container-color);
-        background-color: #2D2D2D;
+        border : 1px solid var(--default-reviewcard-color);
+        background-color: var(--default-reviewcard-color);
         border-radius: 20px !important;
     }
 
@@ -93,7 +130,7 @@ export default {
     }
 
     .colored-button {
-        background-color: var(--default-button-color) !important;
+        background-color: var(--default-reviewcard-color) !important;
     }
 
     .pad-left {
@@ -204,6 +241,13 @@ export default {
             font-size: 18px;
         }
     }
+
+    @media(max-width: 1500px) {
+        .margin-right {
+            margin-right: 5% !important;
+        }
+    }
+
     .push-down {
         margin-top: 2%;
         margin-bottom: 2%;

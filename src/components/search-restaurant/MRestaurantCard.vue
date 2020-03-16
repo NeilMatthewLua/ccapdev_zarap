@@ -24,7 +24,6 @@
 </template>
 
 <script>
-import M from 'materialize-css';
 export default {
     name: "MRestaurantCard",
     data () {
@@ -38,18 +37,11 @@ export default {
                 rate: "3.9"
             }
         }
-    },
-    mounted() {
-        M.AutoInit(); 
     }
 }
 </script>
 
 <style scoped>
-    :root {
-        --default-mobile-restaurant-info-color: #808080;
-    }
-
     .restaurant-list > .card {
         width: 100%;
     }

@@ -63,7 +63,6 @@
 </template>
 
 <script>
-import M from 'materialize-css';
 export default {
     Name: "Filterbar",
     data() {
@@ -208,9 +207,6 @@ export default {
                 }
             }
         }
-    },
-    mounted() {
-        M.AutoInit(); 
     }
 }
 </script>

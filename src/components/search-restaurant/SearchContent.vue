@@ -21,7 +21,6 @@
 </template>
 
 <script>
-import M from 'materialize-css';
 import FilterBar from './FilterBar.vue';
 import RestaurantCard from './RestaurantCard.vue';
 import MRestaurantCard from './MRestaurantCard.vue';
@@ -31,9 +30,6 @@ export default {
         FilterBar,
         RestaurantCard,
         MRestaurantCard
-    },
-    mounted() {
-        M.AutoInit(); 
     }
 }
 </script>

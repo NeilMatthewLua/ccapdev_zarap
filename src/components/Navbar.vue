@@ -6,8 +6,8 @@
       <a href="/" id="zarap" class="hide-on-med-and-down col valign-wrapper" v-bind:class="{s2 : hasSearch, left : hasSearch}">zarap</a>
       <!-- Navbar for Smaller Screens -->
       <div class = "hide-on-large-only">
-        <a href="#" data-target="filter-choice" class="left sidenav-trigger" v-if="!hasFilter"><i class="material-icons">swap_vert</i></a>
         <a href="/" id="zarap" class="brand-logo center">zarap</a>
+        <a href="#" data-target="filter-choice" class="left sidenav-trigger" v-if="!hasFilter"><i class="material-icons">swap_vert</i></a>
         <a href="#" data-target="slide-out" class="right sidenav-trigger"><i class="material-icons">menu</i></a>
       </div>
 
@@ -36,7 +36,6 @@
       <!-- Logged Profile Section -->
       <ul class="right hide-on-med-and-down col s3" v-else>
         <div class="right navbar-right valign-wrapper">
-          <!-- //TODO Name of Logged -->
           <img class="circle navbar-image" src="../assets/pictures/jonal.jpg">
           <li>
             <a class="dropdown-trigger" href="" data-target="dropdown1">
@@ -55,7 +54,6 @@
       <li><a href="/userdetail/dining" class="black-text" >Dining History</a></li>
       <li class="divider"></li>
       <li><a href="/userdetail/review" class="black-text" >My Reviews</a></li>
-      <!-- todo logout -->
       <li class="divider"></li>
       <li><a href="/userdetail" class="black-text">Logout</a></li>
     </ul>
@@ -89,9 +87,6 @@
           <span class="username-sidenav"> Jonal </span>
         </a>
       </div>
-      <!-- //TODO Name of Logged -->
-      <a href="#user"><img class="circle" src="../assets/pictures/jonal.jpg"></a>
-      <a href="#name"><span class="username-sidenav">Jonal</span></a>
     </li>
     <li><div class="divider"></div></li>
     <li><a href="/userdetail/profile" class="waves-effect">Profile</a></li>
@@ -99,29 +94,12 @@
     <li><a href="/userdetail/dining" class="waves-effect" >Dining History</a></li>
     <li><div class="divider"></div></li>
     <li><a href="/userdetail/review" class="waves-effect" >My Reviews</a></li>
-
-    <li>
-      <div class="divider"></div>
-    </li>
-    <li>
-      <a href="/" class="waves-effect"> Profile </a>
-    </li>
-    <li>
-      <div class="divider"></div>
-    </li>
-    <li>
-      <a href="/" class="waves-effect"> Dining History </a>
-    </li>
-    <li>
-      <div class="divider"></div>
-    </li>
-    <li>
-      <a href="/" class="waves-effect"> My Reviews </a>
-    </li>
+    <li><div class="divider"></div></li>
+    <li><a href="/userdetail/review" class="waves-effect" >Logout</a></li>
   </ul>
 
   <!-- Filter -->
-  <ul id="filter-choice" class="right sidenav" v-if="hasFilter">
+  <ul id="filter-choice" class="left sidenav" v-if="hasFilter">
     <li>
       <a href="#!" class="dropdown-trigger" data-target="sort-by"> Sort by
         <i class="material-icons right"> arrow_drop_down </i>
@@ -226,12 +204,24 @@
 
 <script>
 import M from 'materialize-css';
+
 export default {
   Name: "Navbar",
   props:{
     hasSearch: Boolean, //If search bar is present 
     isLogged: Boolean, //If user is logged in 
     hasFilter: Boolean,
+  },
+  mounted() {
+    M.AutoInit();
+    document.addEventListener('DOMContentLoaded', function() {
+      var elem = document.querySelectorAll('.sidenav');
+      M.Sidenav.init(elem, {});
+      var elem_dropdown = document.querySelectorAll('.dropdown-trigger');
+      M.Dropdown.init(elem_dropdown, {
+        coverTrigger: false
+      });
+    });
   },
   data() {
     return{
@@ -375,9 +365,6 @@ export default {
           }
       }
     }
-  },
-  mounted() {
-    M.AutoInit(); 
   }
 }
 </script>

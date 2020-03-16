@@ -30,9 +30,4 @@ export default {
 </script>
 
 <style scoped>
-:root {
-    --default-card-color: #FFFFFF; 
-    --default-text-color: #2D2D2D; 
-    --default-background-color: #F4F4F2; 
-}
 </style>

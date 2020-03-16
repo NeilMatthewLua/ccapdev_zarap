@@ -3,13 +3,13 @@
       <div class="row valign-wrapper">
         <div class="valign-wrapper col s11"  v-if="!inProfile">
             <img class="post-author-pic" src = "../../assets/pictures/neil.jpg">
-            <h4 class="post-author"><a href=""><strong>Neil Lua</strong></a></h4>
+            <h4 class="post-author"><a href=""><strong>{{review.name}}</strong></a></h4>
             <h5 class="post-rating #388e3c green white-text darken-2">5.0</h5>
         </div>
         <div class="valign-wrapper col s11"  v-else>
             <img class="post-author-pic" src = "../../assets/pictures/Golden Fortune-1.jpg">
-            <h4 class="post-author"><a href=""><strong>Golden Fortune</strong></a></h4>
-            <h5 class="post-rating #388e3c green white-text darken-2">5.0</h5>
+            <h4 class="post-author"><a href=""><strong>{{review.restaurant}}</strong></a></h4>
+            <h5 class="post-rating #388e3c green white-text darken-2">{{review.rating}}</h5>
         </div>
         <div class="col s1 valign-wrapper" v-if="!isOwn"><i 
             v-bind:class="{'liked' : isLiked}" 
@@ -21,18 +21,14 @@
             <a class="submit-btn red btn pointer" @click="deleteReview()"><i class="material-icons review-icons">delete</i></a>
         </div>
       </div>
-    <p ref="data">{{postContent}}
+    <p ref="data">{{review.postContent}}
     </p>
     </div>
 </template>
 
 <script>
-import M from 'materialize-css';
 export default {
     name: "ReviewPost",
-    mounted() {
-        M.AutoInit(); 
-    },
     props: {
         isLiked: Boolean, //If the review has been liked by the current user
         isOwn: Boolean, //If the review was also posted by the current user
@@ -40,7 +36,12 @@ export default {
     }, 
     data() {
         return {
-            postContent: "I had a date with hubby here. I enjoyed so much!! Mwah mwah, labyu hubby. It was more than just a restaurant. It was an experience."
+            review: {
+                name: "Neil Lua",
+                restaurant: "Golden Fortune",
+                rating: "5.0",
+                postContent: "I had a date with hubby here. I enjoyed so much!! Mwah mwah, labyu hubby. It was more than just a restaurant. It was an experience."
+            }
         }; 
     },
     methods: {
@@ -57,9 +58,48 @@ export default {
 }
 </script>
 
-<style>
-@import '../../assets/css/view-restaurant/review-post.css';
-    .margin-right {
-        margin-right: 3%;
+<style scoped>
+    .liked {
+        color: var(--default-liked-color); 
     }
+
+    .pointer {
+        cursor: pointer; 
+    }
+
+    .post-author-pic { 
+        display: inline-block; 
+        margin-right: 20px; 
+        height: 50px; 
+        width: 50px; 
+        border-radius: 50%; 
+    }
+
+    .post-rating {
+        margin-left: 20px; 
+        padding: 8px; 
+    }
+
+    .review-post {
+        background-color: var(--default-retaurantcard-color);
+    }
+
+    .review-post > .post-header > h4 {
+        display: inline-block; 
+        margin: 0px!important; 
+        margin-right: 10px; 
+    }
+
+    .review-post > .post-header > h5 {
+        display: inline-block;
+        padding: 5px; 
+        color: var(--default-retaurantcard-color);   
+    }
+
+    @media(max-width: 1500px) {
+        .margin-right {
+            margin-right: 5% !important;
+        }
+    }
+
 </style>

@@ -20,10 +20,6 @@ export default {
 
 
 <style scoped>
-    body {
-        background-color: #F4F4F2;
-    }
-
     #content {
         min-height: calc(100vh - 80px);
     }
@@ -33,13 +29,6 @@ export default {
         background-color: #2D2D2D;
         border-radius: 20px !important;
     }
-
-    :root {
-        --default-button-color: #CB202D;
-        --default-navbar-color: #CB202D;
-        --default-container-color: #2D2D2D;
-    }
-
 
     .margin-around {
         margin-left: 2% !important;
