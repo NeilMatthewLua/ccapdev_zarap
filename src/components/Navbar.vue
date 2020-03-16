@@ -36,7 +36,7 @@
       <!-- Logged Profile Section -->
       <ul class="right hide-on-med-and-down col s3" v-else>
         <div class="right navbar-right valign-wrapper">
-          //TODO Name of Logged
+          <!-- //TODO Name of Logged -->
           <img class="circle navbar-image" src="../assets/pictures/jonal.jpg">
           <li>
             <a class="dropdown-trigger" href="" data-target="dropdown1">
@@ -55,7 +55,7 @@
       <li><a href="/userdetail/dining" class="black-text" >Dining History</a></li>
       <li class="divider"></li>
       <li><a href="/userdetail/review" class="black-text" >My Reviews</a></li>
-      //TODO Logout
+      <!-- todo logout -->
       <li class="divider"></li>
       <li><a href="/userdetail" class="black-text">Logout</a></li>
     </ul>
@@ -89,7 +89,7 @@
           <span class="username-sidenav"> Jonal </span>
         </a>
       </div>
-      //TODO Name of Logged
+      <!-- //TODO Name of Logged -->
       <a href="#user"><img class="circle" src="../assets/pictures/jonal.jpg"></a>
       <a href="#name"><span class="username-sidenav">Jonal</span></a>
     </li>
