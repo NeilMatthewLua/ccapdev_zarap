@@ -3,13 +3,13 @@
       <div class="row valign-wrapper">
         <div class="valign-wrapper col s11"  v-if="!inProfile">
             <img class="post-author-pic" src = "../../assets/pictures/neil.jpg">
-            <h4 class="post-author"><a href=""><strong>Neil Lua</strong></a></h4>
+            <h4 class="post-author"><a href=""><strong>{{review.name}}</strong></a></h4>
             <h5 class="post-rating #388e3c green white-text darken-2">5.0</h5>
         </div>
         <div class="valign-wrapper col s11"  v-else>
             <img class="post-author-pic" src = "../../assets/pictures/Golden Fortune-1.jpg">
-            <h4 class="post-author"><a href=""><strong>Golden Fortune</strong></a></h4>
-            <h5 class="post-rating #388e3c green white-text darken-2">5.0</h5>
+            <h4 class="post-author"><a href=""><strong>{{review.restaurant}}</strong></a></h4>
+            <h5 class="post-rating #388e3c green white-text darken-2">{{review.rating}}</h5>
         </div>
         <div class="col s1 valign-wrapper" v-if="!isOwn"><i 
             v-bind:class="{'liked' : isLiked}" 
@@ -21,7 +21,7 @@
             <a class="submit-btn red btn pointer" @click="deleteReview()"><i class="material-icons review-icons">delete</i></a>
         </div>
       </div>
-    <p ref="data">{{postContent}}
+    <p ref="data">{{review.postContent}}
     </p>
     </div>
 </template>
@@ -36,7 +36,12 @@ export default {
     }, 
     data() {
         return {
-            postContent: "I had a date with hubby here. I enjoyed so much!! Mwah mwah, labyu hubby. It was more than just a restaurant. It was an experience."
+            review: {
+                name: "Neil Lua",
+                restaurant: "Golden Fortune",
+                rating: "5.0",
+                postContent: "I had a date with hubby here. I enjoyed so much!! Mwah mwah, labyu hubby. It was more than just a restaurant. It was an experience."
+            }
         }; 
     },
     methods: {
