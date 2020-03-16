@@ -5,19 +5,19 @@
             <div class="profile-container">
             <div class="grouped-info">
                 <div class="info-font white-text pad-right-text"><pre class="remove-margin">Name:       </pre></div>
-                <div class="info-font text menu-font white-text"> {{name}}</div>
+                <div class="info-font text menu-font white-text"> {{userProfile.name}}</div>
             </div>
             <div class="grouped-info ">
                 <div class="info-font white-text pad-right-text"><pre class="remove-margin">Address:    </pre></div>
-                <div class="info-font text menu-font white-text"> {{address}}</div>
+                <div class="info-font text menu-font white-text"> {{userProfile.address}}</div>
             </div>
             <div class="grouped-info ">
                 <div class="info-font white-text pad-right-text"><pre class="remove-margin">E-mail:     </pre></div>
-                <div class="info-font text menu-font white-text">{{email}}</div>
+                <div class="info-font text menu-font white-text">{{userProfile.email}}</div>
             </div>
             <div class="grouped-info ">
                 <div class="info-font white-text pad-right-text"><pre class="remove-margin">Points:     </pre></div>
-                <div class="info-font text menu-font white-text">{{points}}</div>
+                <div class="info-font text menu-font white-text">{{userProfile.points}}</div>
             </div>
             <div  v-if="isOwn">
                 <a href="#" class="white-text hover-underline corner-bottom-right" id="edit-profile" @click="toggleView">Edit Profile</a>
@@ -135,10 +135,12 @@ export default {
             bigEditProfileVisible: true,
             smallEditProfileVisible: false,
             isOwn: false, 
-            name: "Richard Alvin Zapanta",
-            address: "29A Princeview Parksuites",
-            email: "zapzapzap@gmail.com",
-            points: "32"
+            userProfile: {
+                name: "Richard Alvin Zapanta",
+                address: "29A Princeview Parksuites",
+                email: "zapzapzap@gmail.com",
+                points: "32"
+            }
         }
     },
     methods: {
