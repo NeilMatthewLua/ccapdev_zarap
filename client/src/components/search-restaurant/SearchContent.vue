@@ -6,16 +6,7 @@
         </div>
         <div class="main-content">
             <FilterBar/>
-            <div class="hide-on-small-only">
-                <div class="restaurant-list">
-                    <RestaurantCard/>
-                </div>
-            </div>
-            <div class="hide-on-med-and-up">
-                <div class="mobile-restaurant-list">
-                    <MRestaurantCard/>
-                </div>
-            </div>
+            <RestaurantCard/>
         </div>
     </div>
 </template>
@@ -23,13 +14,11 @@
 <script>
 import FilterBar from './FilterBar.vue';
 import RestaurantCard from './RestaurantCard.vue';
-import MRestaurantCard from './MRestaurantCard.vue';
 export default {
     Name: "SearchContent",
     components: {
         FilterBar,
-        RestaurantCard,
-        MRestaurantCard
+        RestaurantCard
     }
 }
 </script>
