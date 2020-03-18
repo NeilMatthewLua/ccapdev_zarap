@@ -83,7 +83,7 @@ export default {
         }, 
         deleteReview() {
             //Deletes Review
-            let data = axios.get("http://localhost:9090/"); 
+            let data = axios.get("http://localhost:3000/"); 
             console.log(data); 
         }
     }

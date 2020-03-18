@@ -11,7 +11,7 @@ export default new Vuex.Store({
   },
   getters: {
     async getEvents() {
-      let res = await axios.get("http://localhost:9090");
+      let res = await axios.get("http://localhost:3000");
       return res.data;
     }
   },

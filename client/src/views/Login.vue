@@ -32,7 +32,7 @@
                 </div>
             </div>
             <br>
-            <a href="register.html" class="href black-text hovered-link">Register me!</a>
+            <a href="/register" class="href black-text hovered-link">Register me!</a>
         </div>
         <Footer /> 
     </div>

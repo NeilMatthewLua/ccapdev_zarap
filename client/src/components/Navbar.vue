@@ -18,17 +18,17 @@
             <input type="text" class="white search-box" name="searchbar" placeholder="   Search your favorite restaurants here...">
           </div>
         </form>
-        <a class="waves-effect waves-light btn #e53935 red darken-1" href="">search</a>
+        <a class="waves-effect waves-light btn #e53935 red darken-1" href="/searchresult">search</a>
       </div>    
       
       <!-- Unlogged Login Section -->
       <ul class="right hide-on-med-and-down col s3" v-if="!isLogged">
         <div class="right">
           <li>
-            <a href="/login" @click="offFilter"> Login </a>
+            <a href="/login"> Login </a>
           </li>
           <li>
-            <a href="/register" @click="offFilter"> Register </a>
+            <a href="/register"> Register </a>
           </li>
         </div>
       </ul>
@@ -38,7 +38,7 @@
         <div class="right navbar-right valign-wrapper">
           <img class="circle navbar-image" src="../assets/pictures/jonal.jpg">
           <li>
-            <a class="dropdown-trigger" href="" data-target="dropdown1">
+            <a class="dropdown-trigger" href="#" data-target="dropdown1">
               <span class="white-text username"> Welcome, Jonal </span>
               <i class="material-icons right"> arrow_drop_down </i>
             </a>
@@ -65,13 +65,13 @@
       <div class="divider"></div>
     </li>
     <li>
-      <a href="/register" @click="offFilter"> Register </a>
+      <a href="/register"> Register </a>
     </li>
     <li>
       <div class="divider"></div>
     </li>
     <li>
-      <a href="/login" @click="offFilter"> Login </a>
+      <a href="/login"> Login </a>
     </li>
   </ul>
 
@@ -80,10 +80,10 @@
     <li>
       <div class="user-view">
         <div class="background"></div>
-        <a href="#user">
+        <a href="/userdetail/:menu">
           <img class="circle" src="../assets/pictures/jonal.jpg">
         </a>
-        <a href="#name">
+        <a href="/userdetail/:menu">
           <span class="username-sidenav"> Jonal </span>
         </a>
       </div>
@@ -156,14 +156,199 @@
     <li v-for="navbar_location in nav_locations" v-bind:key="navbar_location.id">
       <a href="#"> {{navbar_location.label}} </a>
     </li>
+    <li class="collection-item">
+      <a class="modal-trigger" href="#navbar_modalloc"> See all location</a>
+    </li>
   </ul>
+
+  <div id="navbar_modalloc" class="modal">
+    <div class="modal-content">
+      <h4>Please choose your location</h4>
+        <table>
+          <tbody>
+              <tr>
+                  <td>
+                      <a href="#"> Quezon City </a>
+                  </td>
+                  <td>
+                      <a href="#"> Manila </a>
+                  </td>
+                  <td>
+                      <a href="#"> Makati City </a>
+                  </td>                                    
+              </tr>
+              <tr>
+                  <td>
+                      <a href="#"> Pasig City </a>
+                  </td>
+                  <td>
+                      <a href="#"> Taguig City </a>
+                  </td>
+                  <td>
+                      <a href="#"> Mandaluyong City </a>
+                  </td> 
+              </tr>
+              <tr>
+                  <td>
+                      <a href="#"> Parañaque City </a>
+                  </td>
+                  <td>
+                      <a href="#"> Pasay City </a>
+                  </td>
+                  <td>
+                      <a href="#"> Muntinlupa City </a>
+                  </td> 
+              </tr>
+              <tr>
+                  <td>
+                      <a href="#"> Las Piñas City </a>
+                  </td>
+                  <td>
+                      <a href="#"> Marikina City </a>
+                  </td>
+                  <td>
+                      <a href="#"> San Juan City </a>
+                  </td> 
+              </tr>
+              <tr>
+                  <td>
+                      <a href="#"> Caloocan City </a>
+                  </td>
+                  <td>
+                      <a href="#"> Valenzuela City </a>
+                  </td>
+                  <td>
+                      <a href="#"> Malabon City </a>
+                  </td> 
+              </tr>
+              <tr>
+                  <td>
+                      <a href="#"> Navotas </a>
+                  </td>
+                  <td>
+                      <a href="#"> Pateros City </a>
+                  </td>
+              </tr>
+          </tbody>
+        </table>
+    </div>
+  </div>
 
   <!-- Dropdown for Filter Cuisine -->
   <ul id="cuisine" class="dropdown-content">
     <li v-for="navbar_cuisine in nav_cuisines" v-bind:key="navbar_cuisine.id">
       <a href="#"> {{navbar_cuisine.label}} </a>
     </li>
+    <li class="collection-item">
+      <a class="modal-trigger" href="#navbar_modalcuisines"> See all cuisines</a>
+    </li>
   </ul>
+
+  <div id="navbar_modalcuisines" class="modal">
+    <div class="modal-content">
+      <h4>Please choose your cuisine</h4>
+        <table>
+          <tbody>
+              <tr>
+                  <td>
+                      <a href="#"> American </a>
+                  </td>
+                  <td>
+                      <a href="#"> Asian </a>
+                  </td>
+                  <td>
+                      <a href="#"> BBQ </a>
+                  </td>                                    
+              </tr>
+              <tr>
+                  <td>
+                      <a href="#"> Bakery </a>
+                  </td>
+                  <td>
+                      <a href="#"> Bar Food </a>
+                  </td>
+                  <td>
+                      <a href="#"> Beverages </a>
+                  </td> 
+              </tr>
+              <tr>
+                  <td>
+                      <a href="#"> Bubble Tea </a>
+                  </td>
+                  <td>
+                      <a href="#"> Burger </a>
+                  </td>
+                  <td>
+                      <a href="#"> Chinese </a>
+                  </td> 
+              </tr>
+              <tr>
+                  <td>
+                      <a href="#"> Coffee </a>
+                  </td>
+                  <td>
+                      <a href="#"> Desserts </a>
+                  </td>
+                  <td>
+                      <a href="#"> Fast Food </a>
+                  </td> 
+              </tr>
+              <tr>
+                  <td>
+                      <a href="#"> Filipino </a>
+                  </td> 
+                  <td>
+                      <a href="#"> Healthy Food </a>
+                  </td>
+                  <td>
+                      <a href="#"> Hotpot </a>
+                  </td>
+              </tr>
+              <tr>
+                  <td>
+                      <a href="#"> International </a>
+                  </td> 
+                  <td>
+                      <a href="#"> Italian </a>
+                  </td>
+                  <td>
+                      <a href="#"> Japanese </a>
+                  </td>
+              </tr>
+              <tr>
+                  <td>
+                      <a href="#"> Korean </a>
+                  </td>
+                  <td>
+                      <a href="#"> Korean BBQ </a>
+                  </td>
+                  <td>
+                      <a href="#"> Pizza </a>
+                  </td>
+              </tr>
+              <tr>
+                  <td>
+                      <a href="#"> Ramen </a>
+                  </td>
+                  <td>
+                      <a href="#"> Salad </a>
+                  </td>
+                  <td>
+                      <a href="#"> Seafood </a>
+                  </td>
+              </tr>
+            <tr>
+                <td>
+                    <a href="#"> Street Food </a>
+                </td>
+                <td>
+                    <a href="#"> Tea </a>
+                </td>
+            </tr>
+          </tbody>
+        </table>
+    </div>
+  </div>
 
   <!-- Dropdown for Filter Establishment Type -->
   <ul id="establishment-type" class="dropdown-content">
@@ -194,7 +379,7 @@
       </div>
       <div class="container row">
         <div class="col s12">
-          <a class="waves-effect waves-light btn #e53935 red darken-1" href="../SearchResult.html">search</a>
+          <a class="waves-effect waves-light btn #e53935 red darken-1" href="/searchresult">search</a>
         </div>
       </div>
     </div>
@@ -215,8 +400,13 @@ export default {
   mounted() {
     M.AutoInit();
     document.addEventListener('DOMContentLoaded', function() {
+      // sidenav
       var elem = document.querySelectorAll('.sidenav');
       M.Sidenav.init(elem, {});
+      // modal
+      var elems = document.querySelectorAll('.modal');
+      M.Modal.init(elems, {});
+      // dropdown
       var elem_dropdown = document.querySelectorAll('.dropdown-trigger');
       M.Dropdown.init(elem_dropdown, {
         coverTrigger: false
@@ -274,10 +464,10 @@ export default {
           },
           nav_taguig: {
               label: "Taguig City"
-          },
-          nav_others: {
-              label: "See all locations"
           }
+          // nav_others: {
+          //     label: "See all locations"
+          // }
       },
       nav_cuisines: {
           nav_filipino: {
@@ -309,10 +499,10 @@ export default {
           },
           nav_japanese: {
               label: "Japanese"
-          },
-          nav_others: {
-              label: "See all cuisines"
           }
+          // nav_others: {
+          //     label: "See all cuisines"
+          // }
       },
       nav_establishment_types: {
           nav_quick: {

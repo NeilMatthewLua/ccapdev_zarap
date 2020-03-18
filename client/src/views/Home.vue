@@ -35,7 +35,7 @@
             <div class ="input-field col s6 offset-s2 searchround">
               <input type="text" class ="white truncate padinput" name="searchbar" placeholder="Search your favorite restaurants here..." v-model="search">
             </div>
-            <a class ="waves-effect waves-light btn pushdown colored-button" href="/SearchResult">search</a>
+            <a class ="waves-effect waves-light btn pushdown colored-button" href="/searchresult">search</a>
           </form>
         </div>
         <br>
@@ -61,7 +61,7 @@
                 <p>Casual Dining | Seafood | Chinese</p>
               </div>
               <div class ="card-action">
-                <a href="Golden Fortune/GoldenFortune-displayRestaurant-logged.html">View Restaurant</a>
+                <a href="/restaurant">View Restaurant</a>
               </div>
             </div>
           </div>
@@ -72,7 +72,7 @@
                 <p>Cafés | Coffee | Desserts</p>
               </div>
               <div class ="card-action">
-                <a href="Tim Hortons/TimHortons-displayRestaurant-logged.html">View Restaurant</a>
+                <a href="/restaurant">View Restaurant</a>
               </div>
             </div>
           </div>
@@ -83,7 +83,7 @@
                 <p>Quick Bites | Chinese</p>
               </div>
               <div class ="card-action">
-                <a href="Big Bowl Noodles/BigBowlNoodles-displayRestaurant-logged.html">View Restaurant</a>
+                <a href="/restaurant">View Restaurant</a>
               </div>
             </div>
           </div>
