@@ -12,28 +12,21 @@ function randomReview(length) {
     return res; 
 }
 
-function populateReviews() {
-    Review.deleteMany({})
-        .then(() => {
-            console.log("Deleted Previous Entries.");
-            let i; 
-            for(i = 0; i < 2; i++) {
-                let item = new Review({
-                    reviewID : i,
-                    restaurantID : i,
-                    rating : 1 + Math.floor(Math.random() * 4), 
-                    review: randomReview(Math.floor(Math.random() * 5)),
-                    upvotes: Math.floor(Math.random() * 30)
-                });    
-                item.save()
-                    .catch(function (error) {
-                        console.log(error); 
-                    }); 
-                }
-            })
-        .catch(function (error) {
-            console.log(error); 
-        });
+function populateReviews(limit) {
+    let i; 
+    for(i = 0; i < limit; i++) {
+        let item = new Review({
+            reviewID : i,
+            restaurantID : i,
+            rating : 1 + Math.floor(Math.random() * 4), 
+            review: randomReview(Math.floor(Math.random() * 5)),
+            upvotes: Math.floor(Math.random() * 30)
+        });    
+        item.save()
+            .catch(function (error) {
+                console.log(error); 
+            }); 
+    }        
 }; 
 
 module.exports = populateReviews; 
