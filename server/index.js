@@ -1,43 +1,38 @@
 // All imports needed here
 const express = require('express');
 const path = require('path');
-const MongoClient = require('mongodb').MongoClient; 
+const MongoClient = require('mongodb').MongoClient;
+const mongoose = require('mongoose');
 
-var url = 'mongodb://localhost/RazapDB'; 
+var url = 'mongodb://localhost/ZarapDB'; 
 
 // Creates the express application
 const app = express();
 const port = 9090;
 
+mongoose.connect(url, {useNewUrlParser: true})
+.then(() => {
+  console.log("Connected to MongoDB");
+  mongoose.connection.db.dropCollection("users");
+})
+.catch(function(err) {
+  console.log(error);
+})
+
 // Home route
 app.get('/', function(req, res) {
-    MongoClient.connect(url) 
-      .then(function(err, db) {
-      var dbase = db.db("RazapDB");
-      console.log("Connected"); 
-      dbase.createCollection("user", function(err, res) {
-        if (err) throw err;
-        console.log("User created!");
-      }); 
-      dbase.createCollection("restaurant", function(err, res) {
-        if (err) throw err;
-        console.log("restaurant created!");
-      }); 
-      dbase.createCollection("review", function(err, res) {
-        if (err) throw err;
-        console.log("review created!");
-      }); 
-      dbase.createCollection("picture", function(err, res) {
-        if (err) throw err;
-        console.log("picture created!");
-      }); 
-      db.close(); 
-    })
-    .catch(); 
-    res.send("Cool Beans"); 
+    res.send("Cool Bean"); 
 });
+
+const userRouter = require('./routes/userRouter');
+const populateRouter = require('./routes/populateRouter');
+
+// Router for users
+app.use('/user', userRouter);
+// Populates the database tables
+app.use('/populate', populateRouter);
 
 // Listening to the port provided
 app.listen(port, function() {
-  console.log('Backend listening at port '  + port)
+  console.log(`http://localhost:${port}`)
 });
