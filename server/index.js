@@ -10,26 +10,28 @@ const app = express();
 const port = process.env.PORT;
 
 mongoose.connect(process.env.MONGO_URI, {useNewUrlParser: true, useUnifiedTopology: true})
-.then(() => {
-  console.log("Connected to MongoDB");
-  mongoose.connection.db.dropCollection("users")
-    .then(() => {
-      console.log("Users Dropped");
-      mongoose.connection.db.dropCollection("reviews")
-        .then(() => {
-          console.log("Reviews Dropped"); 
-        })
-        .catch((error) => {
-          console.log(error); 
-        });
+  .then(() => {
+    console.log("Connected to MongoDB");
+    mongoose.connection.db.dropCollection("users")
+      .then(() => {
+        console.log("Users Dropped"); 
+      })
+      .catch(err => {
+        console.log(err);
+      });
     })
-    .catch((error) => {
-      console.log(error); 
-    });
-})
-.catch(function(err) {
-  console.log(error);
-})
+  .then(() => {
+    mongoose.connection.db.dropCollection("reviews")
+      .then(() => {
+        console.log("Reviews Dropped"); 
+      })
+      .catch(err => {
+        console.log(err);
+      });
+    })
+  .catch(function(err) {
+    console.log(err);
+    })
 
 // Home route
 app.get('/', function(req, res) {
