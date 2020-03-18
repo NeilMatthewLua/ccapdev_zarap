@@ -1,28 +1,60 @@
 <template>
     <div>
-        <!-- Restaurant: Golden Fortune -->
-        <div class="card horizontal" id="GoldenFortuneCardLarge">
-            <div class="card-image">
-                <img src="../../assets/pictures/Golden Fortune-1.jpg" alt="Golden Fortune" class="restaurant-image">
-            </div>
-            <div class="restaurant-info">
-                <div class="card-stacked">
-                    <div class="card-content">
-                        <p class="restaurant-establisment-type">{{resto.establishment_type}}</p>
-                        <br>
-                        <a href="#" class="restaurant-name">{{resto.name}}</a>
-                        <br>
-                        <p class="restaurant-location">{{resto.location}}</p>
-                        <p class="restaurant-address">{{resto.address}}</p>
-                        <br>
-                        <p class="restaurant-other-info">Cuisine:&nbsp;{{resto.cuisines}}</p>
-                        <p class="restaurant-other-info">Cost for two:&nbsp;{{resto.cost_two}}</p>
-                        <p class="restaurant-other-info">Hours:&nbsp;{{resto.hours}}</p>
-                        <p class="restaurant-other-info">Tel no:&nbsp;{{resto.phone}}</p>
+        <!-- Restaurant List for Desktop View -->
+        <div class="hide-on-small-only">
+            <div class="restaurant-list">
+                <!-- Restaurant Cards for Desktop View -->
+                <div class="card horizontal" id="GoldenFortuneCardLarge">
+                    <div class="card-image">
+                        <img src="../../assets/pictures/Golden Fortune-1.jpg" alt="Golden Fortune" class="restaurant-image">
+                    </div>
+                    <div class="restaurant-info">
+                        <div class="card-stacked">
+                            <div class="card-content">
+                                <p class="restaurant-establishment-type">{{resto.establishment_type}}</p>
+                                <br>
+                                <a href="#" class="restaurant-name">{{resto.name}}</a>
+                                <br>
+                                <p class="restaurant-location">{{resto.location}}</p>
+                                <p class="restaurant-address">{{resto.address}}</p>
+                                <br>
+                                <p class="restaurant-other-info">Cuisine:&nbsp;{{resto.cuisines}}</p>
+                                <p class="restaurant-other-info">Cost for two:&nbsp;{{resto.cost_two}}</p>
+                                <p class="restaurant-other-info">Hours:&nbsp;{{resto.hours}}</p>
+                                <p class="restaurant-other-info">Tel no:&nbsp;{{resto.phone}}</p>
+                            </div>
+                        </div>
+                        <div class="card-content">
+                            <button class="btn hoverable green">{{resto.rate}}/5</button>
+                        </div>
                     </div>
                 </div>
-                <div class="card-content">
-                    <button class="btn hoverable green">{{resto.rate}}/5</button>
+            </div>
+        </div>
+        
+        <!-- Restaurant List for Mobile and Tablet View -->
+        <div class="hide-on-med-and-up">
+            <div class="mobile-restaurant-list">
+                <!-- Restaurant Cards for Mobile and Tablet View -->
+                <div class="card" id="GoldenFortuneCardSmall">
+                    <div class="card-image">
+                        <img src="../../assets/pictures/Golden Fortune-1.jpg" alt="Golden Fortune" class="mobile-restaurant-image">
+                        <button class="btn-small hoverable green right">{{resto.rate}}</button>
+                    </div>
+                    <div class="mobile-restaurant-info">
+                        <a href="#" class="card-title">{{resto.name}}</a>
+                        <hr>
+                        <p class="card-content">
+                            {{resto.location}}
+                            <br>
+                            Cuisine:&nbsp;{{resto.cuisines}}
+                            <br>
+                            Cost for two:&nbsp;{{resto.cost_two}}
+                            <br>
+                            Hours:&nbsp;{{resto.hours}}
+                            <br>
+                        </p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -80,7 +112,7 @@ export default {
         padding-right: 0%;
     }
 
-    .restaurant-establisment-type {
+    .restaurant-establishment-type {
         font-size: 120%;
     }
 
@@ -116,5 +148,48 @@ export default {
         position: absolute;
         right:0px;
         top:0px;
+    }
+
+    .mobile-restaurant-list {
+        padding-left: 2%;
+        padding-right: 2%;
+        margin: 2%;
+        width: 95%;
+    }
+
+    .mobile-restaurant-list > .card {
+        width: 100%;
+        height: 320px;
+        margin-left: 2%;
+        margin-right: 2%;
+        padding-right: 2%;
+        padding-left: 2%;
+    }
+
+    .mobile-restaurant-list > .card-image {
+        width: 95%;
+        height: 150px;
+    }
+
+    .mobile-restaurant-image {
+        padding: 2%;
+        min-width: 100%;
+        min-height: 200px;
+        max-width: 100%;
+        max-height: 200px;
+    }
+
+    .mobile-restaurant-info > .card-title {
+        font-size: 90%;
+        text-align: center !important;
+        padding-left: 3%;
+    }
+
+    .mobile-restaurant-info > .card-content {
+        font-size: 70%;
+        color: var(--default-mobile-restaurant-info-color);
+        text-align: left !important;
+        padding: 0px;
+        padding-left: 3%;
     }
 </style>

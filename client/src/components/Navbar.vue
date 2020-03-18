@@ -5,9 +5,9 @@
       <div class="nav-wrapper row valign-wrapper">
       <a href="/" id="zarap" class="hide-on-med-and-down col valign-wrapper" v-bind:class="{s2 : hasSearch, left : hasSearch}">zarap</a>
       <!-- Navbar for Smaller Screens -->
-      <div class = "hide-on-large-only">
+      <div class = "hide-on-large-only" id="filter-mobile">
         <a href="/" id="zarap" class="brand-logo center">zarap</a>
-        <a href="#" data-target="filter-choice" class="left sidenav-trigger" v-if="!hasFilter"><i class="material-icons">swap_vert</i></a>
+        <a href="#" data-target="filter-choice" class="left sidenav-trigger" v-if="hasFilter"><i class="material-icons">swap_vert</i></a>
         <a href="#" data-target="slide-out" class="right sidenav-trigger"><i class="material-icons">menu</i></a>
       </div>
 
@@ -137,45 +137,45 @@
     </li>
   </ul>
 
-  <!-- Dropdown for Rating, Cost and Newly Added -->
-  <ul id="sort-by" class="dropdown-content" v-for="sort in nav_sort_by" v-bind:key="sort">
-    <li>
-      <a href="#"> {{sort.label}} - {{sort.option}} </a>
+  <!-- Dropdown for Rating and Cost-->
+  <ul id="sort-by" class="dropdown-content">
+    <li v-for="navbar_sort in nav_sort_by" v-bind:key="navbar_sort.id">
+      <a href="#"> {{navbar_sort.label}}{{navbar_sort.option}} </a>
     </li>
   </ul>
 
   <!-- Dropdown for Filter Category -->
-  <ul id="category" class="dropdown-content" v-for="category in nav_categories" v-bind:key="category">
-    <li>
-      <a href="#"> {{category.label}} </a>
+  <ul id="category" class="dropdown-content">
+    <li v-for="navbar_category in nav_categories" v-bind:key="navbar_category.id">
+      <a href="#"> {{navbar_category.label}} </a>
     </li>
   </ul>
 
   <!--Dropdown for Filter Location-->
-  <ul id="location" class="dropdown-content" v-for="location in nav_locations" v-bind:key="location">
-    <li>
-      <a href="#"> {{location.label}} </a>
+  <ul id="location" class="dropdown-content">
+    <li v-for="navbar_location in nav_locations" v-bind:key="navbar_location.id">
+      <a href="#"> {{navbar_location.label}} </a>
     </li>
   </ul>
 
   <!-- Dropdown for Filter Cuisine -->
-  <ul id="cuisine" class="dropdown-content" v-for="cuisine in nav_cuisines" v-bind:key="cuisine">
-    <li>
-      <a href="#"> {{cuisine.label}} </a>
+  <ul id="cuisine" class="dropdown-content">
+    <li v-for="navbar_cuisine in nav_cuisines" v-bind:key="navbar_cuisine.id">
+      <a href="#"> {{navbar_cuisine.label}} </a>
     </li>
   </ul>
 
   <!-- Dropdown for Filter Establishment Type -->
-  <ul id="establishment-type" class="dropdown-content" v-for="establishment in nav_establishment_types" v-bind:key="establishment">
-    <li>
-      <a href="#"> {{establishment.label}} </a>
+  <ul id="establishment-type" class="dropdown-content">
+    <li v-for="navbar_establishment in nav_establishment_types" v-bind:key="navbar_establishment.id">
+      <a href="#"> {{navbar_establishment.label}} </a>
     </li>
   </ul>
 
   <!-- Dropdown for Filter Cost for two -->
-  <ul id="cost-for-two" class="dropdown-content" v-for="cost in nav_cost_two" v-bind:key="cost">
-    <li>
-      <a href="#"> {{cost.label}} </a>
+  <ul id="cost-for-two" class="dropdown-content">
+    <li v-for="navbar_cost in nav_cost_two" v-bind:key="navbar_cost.id">
+      <a href="#"> {{navbar_cost.label}} </a>
     </li>
 
   </ul>
@@ -226,141 +226,137 @@ export default {
   data() {
     return{
       nav_sort_by: {
-        ratings:{
+        nav_ratings:{
             label: "Rating",
             option: " - high to low"
         },
-        costasc:{
+        nav_costasc:{
             label: "Cost",
             option: " - high to low"
         },
-        costdes:{
+        nav_costdes:{
             label: "Cost",
             option: " - low to high"
-        },
-        newly_added: {
-            label: "Newly Added",
-            option: " - high to low"
         }
       },
       nav_categories: {
-          dine_out: {
+          nav_dine_out: {
               label: "Dine-out"
           },
-          delivery: {
+          nav_delivery: {
               label: "Delivery"
           },
-          drink: {
+          nav_drink: {
               label: "Drink & Nightlife"
           },
-          cafe: {
+          nav_cafe: {
               label: "Cafés"
           }
       },
       nav_locations: {
-          manila: {
+          nav_manila: {
               label: "Manila"
           },
-          quezon: {
+          nav_quezon: {
               label: "Quezon City"
           },
-          makati: {
+          nav_makati: {
               label: "Makati City"
           },
-          pasig: {
+          nav_pasig: {
               label: "Pasig City"
           },
-          pasay: {
+          nav_pasay: {
               label: "Pasay City"
           },
-          paranaque: {
+          nav_paranaque: {
               label: "Parañaque City"
           },
-          taguig: {
+          nav_taguig: {
               label: "Taguig City"
           },
-          others: {
+          nav_others: {
               label: "See all locations"
           }
       },
       nav_cuisines: {
-          filipino: {
+          nav_filipino: {
               label: "Filipino"
           },
-          beverages: {
+          nav_beverages: {
               label: "Beverages"
           },
-          american: {
+          nav_american: {
               label: "American"
           },
-          fastfood: {
+          nav_fastfood: {
               label: "Fastfood"
           },
-          chinese: {
+          nav_chinese: {
               label: "Chinese"
           },
-          coffee: {
+          nav_coffee: {
               label: "Coffee"
           },
-          bakery: {
+          nav_bakery: {
               label: "Bakery"
           },
-          tea: {
+          nav_tea: {
               label: "Tea"
           },
-          street: {
+          nav_street: {
               label: "Street Food"
           },
-          japanese: {
+          nav_japanese: {
               label: "Japanese"
           },
-          others: {
+          nav_others: {
               label: "See all cuisines"
           }
       },
       nav_establishment_types: {
-          quick: {
+          nav_quick: {
               label: "Quick Bites"
           },
-          casual: {
+          nav_casual: {
               label: "Casual Dining"
           },
-          beverage: {
+          nav_beverage: {
               label: "Beverage Shops"
           },
-          kiosks: {
+          nav_kiosks: {
               label: "Kiosks"
           },
-          cafes: {
+          nav_cafes: {
               label: "Cafés"
           },
-          court: {
+          nav_court: {
               label: "Food Courts"
           },
-          bakeries: {
+          nav_bakeries: {
               label: "Bakeries"
           },
-          dessert: {
+          nav_dessert: {
               label: "Dessert Parlor"
           },
-          bars: {
+          nav_bars: {
               label: "Bars"
           },
-          fine: {
+          nav_fine: {
               label: "Fine Dining"
           }
       },
       nav_cost_two: {
-          three: {
+          nav_three: {
               label: "Less than PHP350"
           },
-          seven: {
+          nav_seven: {
               label: "PHP350 to PHP700"
           },
-          fourteen: {
+          nav_fourteen: {
               label: "PHP700 to PHP1400"
           },
-          up: {
+          mav_up: {
               label: "PHP1400 +"
           }
       }
@@ -370,5 +366,102 @@ export default {
 </script>
 
 <style scoped>
-  @import '../assets/css/navbar.css'; 
+  :root {
+      --default-nav-background: #CB202D;
+      --default-font-color: #2D2D2D; 
+  }
+
+  #zarap {
+      padding-left:20px;  
+      font-size: 30px; 
+  } 
+    
+  nav {
+      height: 80px;
+  }
+    
+  .nav-wrapper {
+      background-color: var(--default-nav-background); 
+      padding: 10px; 
+  }
+
+  .navbar-fixed {
+      height: 80px;  
+      z-index: 1 !important; 
+  }
+
+  .search-section {
+      display: inline-block; 
+      text-align: center;
+  }
+
+  .search-mobile {
+      width: 100%;
+  }
+
+  .search-section.valign-wrapper {
+      width: 100%; 
+      line-height: 80px; 
+  }
+
+  .search-bar { 
+      width: 30vw !important; 
+      margin-right: 2vw !important; 
+      display: inline-block; 
+  }
+
+  .search-bar-small {
+      width: 80vw !important; 
+      vertical-align: middle;
+  }
+
+  .search-bar-small + a {
+      width: 20vw !important;
+      vertical-align: middle; 
+  }
+
+  .search-bar-small > .input-field > .truncate {
+      padding-right: 10px; 
+  }
+
+  .search-mobile > .container > .col > .btn {
+      width: 100%; 
+  }
+
+  .search-box {
+      border:5px; 
+      border-color: #2D2D2D; 
+      border-radius: 10px !important; 
+      z-index: 5px; 
+  }
+
+  .sidenav-overlay {
+      z-index: 9 !important;  
+  }
+
+  .search-section > .container > .col > .btn {
+      z-index: 0 !important; 
+  }
+
+  .navbar-right {
+      display: flex; 
+      flex-direction: row;
+  }
+
+  .navbar-image {
+      height: 50px; 
+      width: 50px; 
+  }
+
+  .username {
+      display: inline-block; 
+  }
+
+  .username-sidenav {
+      color: var(--default-font-color); 
+  }
+
+  #filter-mobile {
+    width: 100vw;
+  }
 </style>

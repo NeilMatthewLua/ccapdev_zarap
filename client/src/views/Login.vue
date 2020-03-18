@@ -1,6 +1,6 @@
 <template>
     <div>
-        <Navbar :hasSearch="false" :isLogged="false" :hasFilter="true"/>  
+        <Navbar :hasSearch="false" :isLogged="false" :hasFilter="false"/>  
         <div class="container center margin-pushdown">
             <h1 class="black-text title-size">Log-in</h1>
             <div class="container center margin-top">

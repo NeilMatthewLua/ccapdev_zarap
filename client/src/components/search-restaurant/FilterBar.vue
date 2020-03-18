@@ -8,53 +8,53 @@
                         <h5> Filters </h5>
                     </li>
 
-                    <!-- Filtered by Rating, Cost and Newly Added -->
+                    <!-- Filtered by Rating, Cost -->
                     <li class="collection-item">
                         <h6> Sort by </h6>
                     </li>
-                    <li class="collection-item" v-for="sort in sort_by" v-bind:key="sort">
-                        <a href="#" class="left"> {{sort.label}} </a>
-                        <div class="grey-text"> &nbsp; {{sort.option}} </div>
+                    <li class="collection-item" v-for="filbar_sort in filbar_sort_by" v-bind:key="filbar_sort.id">
+                        <a href="#" class="left"> {{filbar_sort.label}} </a>
+                        <div class="grey-text"> &nbsp; {{filbar_sort.option}} </div>
                     </li>
 
                     <!-- Filtered by Category -->
                     <li class="collection-item">
                         <h6> Category </h6>
                     </li>
-                    <li class="collection-item" v-for="category in categories" v-bind:key="category">
-                        <a href="#"> {{category.label}} </a>
+                    <li class="collection-item" v-for="filbar_category in filbar_categories" v-bind:key="filbar_category.id">
+                        <a href="#"> {{filbar_category.label}} </a>
                     </li>
 
                     <!-- Filtered by Location -->
                     <li class="collection-item">
                         <h6> Location </h6>
                     </li>
-                    <li class="collection-item" v-for="location in locations" v-bind:key="location">
-                        <a href="#"> {{location.label}} </a>
+                    <li class="collection-item" v-for="filbar_location in filbar_locations" v-bind:key="filbar_location.id">
+                        <a href="#"> {{filbar_location.label}} </a>
                     </li>
 
                     <!--Filtered by Cuisine-->
                     <li class="collection-item">
                         <h6> Cuisine </h6>
                     </li>
-                    <li class="collection-item" v-for="cuisine in cuisines" v-bind:key="cuisine">
-                        <a href="#"> {{cuisine.label}} </a>
+                    <li class="collection-item" v-for="filbar_cuisine in filbar_cuisines" v-bind:key="filbar_cuisine.id">
+                        <a href="#"> {{filbar_cuisine.label}} </a>
                     </li>
 
                     <!--Filtered by  Establishment Type-->
                     <li class="collection-item">
                         <h6> Establishment Type </h6>
                     </li>
-                    <li class="collection-item" v-for="establishment in establishment_types" v-bind:key="establishment">
-                        <a href="#"> {{establishment.label}} </a>
+                    <li class="collection-item" v-for="filbar_establishment in filbar_establishment_types" v-bind:key="filbar_establishment.id">
+                        <a href="#"> {{filbar_establishment.label}} </a>
                     </li>
                     
                     <!--Filtered by Cost for two-->
                     <li class="collection-item">
                         <h6> Cost for two </h6>
                     </li>
-                    <li class="collection-item" v-for="cost in cost_two" v-bind:key="cost">
-                        <a href="#"> {{cost.label}} </a>
+                    <li class="collection-item" v-for="filbar_cost in filbar_cost_two" v-bind:key="filbar_cost.id">
+                        <a href="#"> {{filbar_cost.label}} </a>
                     </li>
                 </ul>
             </div>
@@ -67,142 +67,138 @@ export default {
     Name: "Filterbar",
     data() {
         return{
-            sort_by: {
-                ratings:{
+            filbar_sort_by: {
+                filbar_ratings:{
                     label: "Rating",
                     option: " - high to low"
                 },
-                costasc:{
+                filbar_costasc:{
                     label: "Cost",
                     option: " - high to low"
                 },
-                costdes:{
+                filbar_costdes:{
                     label: "Cost",
                     option: " - low to high"
-                },
-                newly_added: {
-                    label: "Newly Added",
-                    option: " - high to low"
                 }
             },
-            categories: {
-                dine_out: {
+            filbar_categories: {
+                filbar_dine_out: {
                     label: "Dine-out"
                 },
-                delivery: {
+                filbar_delivery: {
                     label: "Delivery"
                 },
-                drink: {
+                filbar_drink: {
                     label: "Drink & Nightlife"
                 },
-                cafe: {
+                filbar_cafe: {
                     label: "Cafés"
                 }
             },
-            locations: {
-                manila: {
+            filbar_locations: {
+                filbar_manila: {
                     label: "Manila"
                 },
-                quezon: {
+                filbar_quezon: {
                     label: "Quezon City"
                 },
-                makati: {
+                filbar_makati: {
                     label: "Makati City"
                 },
-                pasig: {
+                filbar_pasig: {
                     label: "Pasig City"
                 },
-                pasay: {
+                filbar_pasay: {
                     label: "Pasay City"
                 },
-                paranaque: {
+                filbar_paranaque: {
                     label: "Parañaque City"
                 },
-                taguig: {
+                filbar_taguig: {
                     label: "Taguig City"
                 },
-                others: {
+                filbar_others: {
                     label: "See all locations"
                 }
             },
-            cuisines: {
-                filipino: {
+            filbar_cuisines: {
+                filbar_filipino: {
                     label: "Filipino"
                 },
-                beverages: {
+                filbar_beverages: {
                     label: "Beverages"
                 },
-                american: {
+                filbar_american: {
                     label: "American"
                 },
-                fastfood: {
+                filbar_fastfood: {
                     label: "Fastfood"
                 },
-                chinese: {
+                filbar_chinese: {
                     label: "Chinese"
                 },
-                coffee: {
+                filbar_coffee: {
                     label: "Coffee"
                 },
-                bakery: {
+                filbar_bakery: {
                     label: "Bakery"
                 },
-                tea: {
+                filbar_tea: {
                     label: "Tea"
                 },
-                street: {
+                filbar_street: {
                     label: "Street Food"
                 },
-                japanese: {
+                filbar_japanese: {
                     label: "Japanese"
                 },
-                others: {
+                filbar_others: {
                     label: "See all cuisines"
                 }
             },
-            establishment_types: {
-                quick: {
+            filbar_establishment_types: {
+                filbar_quick: {
                     label: "Quick Bites"
                 },
-                casual: {
+                filbar_casual: {
                     label: "Casual Dining"
                 },
-                beverage: {
+                filbar_beverage: {
                     label: "Beverage Shops"
                 },
-                kiosks: {
+                filbar_kiosks: {
                     label: "Kiosks"
                 },
-                cafes: {
+                filbar_cafes: {
                     label: "Cafés"
                 },
-                court: {
+                filbar_court: {
                     label: "Food Courts"
                 },
-                bakeries: {
+                filbar_bakeries: {
                     label: "Bakeries"
                 },
-                dessert: {
+                filbar_dessert: {
                     label: "Dessert Parlor"
                 },
-                bars: {
+                filbar_bars: {
                     label: "Bars"
                 },
-                fine: {
+                filbar_fine: {
                     label: "Fine Dining"
                 }
             },
-            cost_two: {
-                three: {
+            filbar_cost_two: {
+                filbar_three: {
                     label: "Less than PHP350"
                 },
-                seven: {
+                filbar_seven: {
                     label: "PHP350 to PHP700"
                 },
-                fourteen: {
+                filbar_fourteen: {
                     label: "PHP700 to PHP1400"
                 },
-                up: {
+                filbar_up: {
                     label: "PHP1400 +"
                 }
             }

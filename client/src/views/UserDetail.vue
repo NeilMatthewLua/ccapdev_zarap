@@ -1,6 +1,6 @@
 <template>
     <div>
-        <Navbar :hasSearch="true" :isLogged="true" :hasFilter="true"/> 
+        <Navbar :hasSearch="true" :isLogged="true" :hasFilter="false"/> 
         <!-- Container of menu and display info -->
         <div id="content" class="container-profile  hide-on-restaurant hide-on-review">
             <h3 class="center big-font onload">{{Title}}</h3>
