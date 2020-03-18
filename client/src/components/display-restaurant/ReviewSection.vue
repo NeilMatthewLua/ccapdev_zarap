@@ -49,7 +49,7 @@
             <a class="col s3 center" href="#">All Reviews</a>
         </div>
         <div>
-            <ReviewPost :isLiked="false" :isOwn="true" :inProfile="false"/>
+            <ReviewPost :isLiked="false" :isOwn="false" :inProfile="false"/>
             <ReviewPost :isLiked="false" :isOwn="false"  :inProfile="false"/>            
         </div>
     </div>
@@ -58,6 +58,7 @@
 
 <script scoped>
 import ReviewPost from './ReviewPost'; 
+import axios from 'axios';
 export default {
     name: "ReviewSection",
     components: {
@@ -82,6 +83,8 @@ export default {
         }, 
         deleteReview() {
             //Deletes Review
+            let data = axios.get("http://localhost:9090/"); 
+            console.log(data); 
         }
     }
 }

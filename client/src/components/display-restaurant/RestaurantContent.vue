@@ -14,7 +14,7 @@
         <PhotoSection :title="photosTitle"/>  
       </div>
       <div v-else>
-        <ReviewSection :hasReview="false"/> 
+        <ReviewSection :hasReview="true"/> 
       </div>
     </div>
     <div class="right-section col s12 xl4">
