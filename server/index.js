@@ -3,17 +3,29 @@ const express = require('express');
 const path = require('path');
 const MongoClient = require('mongodb').MongoClient;
 const mongoose = require('mongoose');
-
-var url = 'mongodb://localhost/ZarapDB'; 
+require('dotenv').config();
 
 // Creates the express application
 const app = express();
-const port = 9090;
+const port = process.env.PORT;
 
-mongoose.connect(url, {useNewUrlParser: true})
+mongoose.connect(process.env.MONGO_URI, {useNewUrlParser: true, useUnifiedTopology: true})
 .then(() => {
   console.log("Connected to MongoDB");
-  mongoose.connection.db.dropCollection("users");
+  mongoose.connection.db.dropCollection("users")
+    .then(() => {
+      console.log("Users Dropped");
+      mongoose.connection.db.dropCollection("reviews")
+        .then(() => {
+          console.log("Reviews Dropped"); 
+        })
+        .catch((error) => {
+          console.log(error); 
+        });
+    })
+    .catch((error) => {
+      console.log(error); 
+    });
 })
 .catch(function(err) {
   console.log(error);
@@ -21,7 +33,7 @@ mongoose.connect(url, {useNewUrlParser: true})
 
 // Home route
 app.get('/', function(req, res) {
-    res.send("Cool Bean"); 
+    res.send("Cool Beans"); 
 });
 
 const userRouter = require('./routes/userRouter');

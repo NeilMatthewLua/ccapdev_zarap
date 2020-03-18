@@ -4,6 +4,7 @@ const path = require('path')
 const mongoose = require('mongoose')
 const faker = require('faker')
 const User = require('../models/Users.js')
+const populateReviews = require('../scripts/populateReviews')
 
 var userCounter = 0;
 var limit = 20;
@@ -33,6 +34,8 @@ router.get('/', (req, res, next) => {
         });
         console.log(user);
     }
+    //Populate Reviews
+    populateReviews(limit); 
 })
 
 module.exports = router;
