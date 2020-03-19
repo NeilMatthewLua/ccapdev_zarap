@@ -1,4 +1,4 @@
-let mongoose = require('mongoose')
+const mongoose = require('mongoose')
 // let validator = require('validator')
 
 let restaurantSchema = new mongoose.Schema({
@@ -20,6 +20,10 @@ let restaurantSchema = new mongoose.Schema({
         type: [String],
         required: true
     },
+    city: {
+        type: String, 
+        required: true
+    }, 
     fullAddress: { //Complete Address
         type: String, 
         required: true
@@ -33,56 +37,52 @@ let restaurantSchema = new mongoose.Schema({
         required: true
     },
     operatingHours: { //Operating hours
-        type: [String], //Change to object
+            type: {
+                Monday: {
+                    type: String
+                },
+                Tuesday: {
+                    type: String
+                },
+                Wednesday: {
+                    type: String
+                },
+                Thursday: {
+                    type: String
+                },
+                Friday: {
+                    type: String
+                },
+                Saturday: {
+                    type: String
+                },
+            },
         required: true
     },
     contactDetails: { //Phone number
-        type: Number, 
+        type: String, 
         required: true
     },
     overallRating: { //Overall rating
         type: Number,
         required: true
     },
-    reviews: { //TODO Convert into schema
-        type: [String], 
+    reviews: { //TODO Review Ids
+        type: [Number], 
         required: true
     },
-    pictures: { //TODO Convert into schema
-        type: [String],
+    pictures: { //TODO Picture Ids
+        type: [Number],
         required: true
     },
-    menu: { //TODO
-        type: [String],
+    menu: { //TODO Menu Ids
+        type: [Number],
         required: true
     },
-    defaultPicture: { //TODO
+    defaultPicture: { //TODO Picture Id
         type: String, 
         required: true
     },
-
-    // schedule: { Use as basis for Operating hours
-    //     type: [{
-    //         Monday: {
-    //             type: String
-    //         },
-    //         Tuesday: {
-    //             type: String
-    //         },
-    //         Wednesday: {
-    //             type: String
-    //         },
-    //         Thursday: {
-    //             type: String
-    //         },
-    //         Friday: {
-    //             type: String
-    //         },
-    //         Saturday: {
-    //             type: String
-    //         },
-    //     }]
-    // }
 })
 
 module.exports = mongoose.model('restaurants', restaurantSchema); 

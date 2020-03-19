@@ -1,18 +1,19 @@
 <template>
   <div class="review-post">
       <div class="row valign-wrapper">
-        <div class="valign-wrapper col s11"  v-if="!inProfile">
+        <div class="valign-wrapper col s10"  v-if="!inProfile">
             <img class="post-author-pic" src = "../../assets/pictures/neil.jpg">
-            <h4 class="post-author"><a href="/userdetail/:menu"><strong>{{review.name}}</strong></a></h4>
-            <h5 class="post-rating #388e3c green white-text darken-2">5.0</h5>
+            <h4 class="post-author"><a href=""><strong>{{review.name}}</strong></a></h4>
+            <h5 class="post-rating #388e3c green white-text darken-2">{{review.rating}}</h5>
         </div>
         <div class="valign-wrapper col s11"  v-else>
             <img class="post-author-pic" src = "../../assets/pictures/Golden Fortune-1.jpg">
             <h4 class="post-author"><a href="/restaurant"><strong>{{review.restaurant}}</strong></a></h4>
             <h5 class="post-rating #388e3c green white-text darken-2">{{review.rating}}</h5>
         </div>
-        <div class="col s1 valign-wrapper" v-if="!isOwn"><i 
-            v-bind:class="{'liked' : isLiked}" 
+        <div class="col s2 valign-wrapper" v-if="!isOwn">
+            <h5 class="green-text upvotes">{{review.upvotes}}</h5>
+            <i v-bind:class="{'liked' : isLiked}" 
             @click="toggleLike"
             class="material-icons right-align pointer">thumb_up</i>
         </div>
@@ -40,6 +41,7 @@ export default {
                 name: "Neil Lua",
                 restaurant: "Golden Fortune",
                 rating: "5.0",
+                upvotes: 69,
                 postContent: "I had a date with hubby here. I enjoyed so much!! Mwah mwah, labyu hubby. It was more than just a restaurant. It was an experience."
             }
         }; 
@@ -47,6 +49,7 @@ export default {
     methods: {
         toggleLike() {
             this.isLiked = !this.isLiked; 
+            //Backend patch to no. of likes
         }, 
         editReview() {
             this.$emit('edit-Review', this.$refs.data.innerHTML); 
@@ -65,6 +68,10 @@ export default {
 
     .pointer {
         cursor: pointer; 
+    }
+
+    .upvotes {
+        margin-right: 5px; 
     }
 
     .post-author-pic { 

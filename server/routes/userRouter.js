@@ -3,7 +3,7 @@ var router = express.Router()
 const path = require('path')
 const mongoose = require('mongoose')
 const faker = require('faker')
-const User = require('../models/Users.js')
+const User = require('../models/users.js')
 
 var userCounter = 0;
 var limit = 20;
