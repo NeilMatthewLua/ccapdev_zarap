@@ -29,84 +29,6 @@
                         </div>
                     </div>
                 </div>
-                                <!-- Restaurant Cards for Desktop View -->
-                <div class="card horizontal" id="GoldenFortuneCardLarge">
-                    <div class="card-image">
-                        <img src="../../assets/pictures/TastyDumplings/TastyDumplingsProfile.jpg" alt="Golden Fortune" class="restaurant-image">
-                    </div>
-                    <div class="restaurant-info">
-                        <div class="card-stacked">
-                            <div class="card-content">
-                                <p class="restaurant-establishment-type">{{resto.establishment_type}}</p>
-                                <br>
-                                <a href="/restaurant" class="restaurant-name">{{resto.name}}</a>
-                                <br>
-                                <p class="restaurant-location">{{resto.location}}</p>
-                                <p class="restaurant-address">{{resto.address}}</p>
-                                <br>
-                                <p class="restaurant-other-info">Cuisine:&nbsp;{{resto.cuisines}}</p>
-                                <p class="restaurant-other-info">Cost for two:&nbsp;{{resto.cost_two}}</p>
-                                <p class="restaurant-other-info">Hours:&nbsp;{{resto.hours}}</p>
-                                <p class="restaurant-other-info">Tel no:&nbsp;{{resto.phone}}</p>
-                            </div>
-                        </div>
-                        <div class="card-content">
-                            <button class="btn hoverable green">{{resto.rate}}/5</button>
-                        </div>
-                    </div>
-                </div>
-                                <!-- Restaurant Cards for Desktop View -->
-                <div class="card horizontal" id="GoldenFortuneCardLarge">
-                    <div class="card-image">
-                        <img src="../../assets/pictures/Yabu/YabuProfile.png" alt="Golden Fortune" class="restaurant-image">
-                    </div>
-                    <div class="restaurant-info">
-                        <div class="card-stacked">
-                            <div class="card-content">
-                                <p class="restaurant-establishment-type">{{resto.establishment_type}}</p>
-                                <br>
-                                <a href="/restaurant" class="restaurant-name">{{resto.name}}</a>
-                                <br>
-                                <p class="restaurant-location">{{resto.location}}</p>
-                                <p class="restaurant-address">{{resto.address}}</p>
-                                <br>
-                                <p class="restaurant-other-info">Cuisine:&nbsp;{{resto.cuisines}}</p>
-                                <p class="restaurant-other-info">Cost for two:&nbsp;{{resto.cost_two}}</p>
-                                <p class="restaurant-other-info">Hours:&nbsp;{{resto.hours}}</p>
-                                <p class="restaurant-other-info">Tel no:&nbsp;{{resto.phone}}</p>
-                            </div>
-                        </div>
-                        <div class="card-content">
-                            <button class="btn hoverable green">{{resto.rate}}/5</button>
-                        </div>
-                    </div>
-                </div>
-                                                <!-- Restaurant Cards for Desktop View -->
-                <div class="card horizontal" id="GoldenFortuneCardLarge">
-                    <div class="card-image">
-                        <img src="../../assets/pictures/bryan.jpg" alt="Golden Fortune" class="restaurant-image">
-                    </div>
-                    <div class="restaurant-info">
-                        <div class="card-stacked">
-                            <div class="card-content">
-                                <p class="restaurant-establishment-type">{{resto.establishment_type}}</p>
-                                <br>
-                                <a href="/restaurant" class="restaurant-name">{{resto.name}}</a>
-                                <br>
-                                <p class="restaurant-location">{{resto.location}}</p>
-                                <p class="restaurant-address">{{resto.address}}</p>
-                                <br>
-                                <p class="restaurant-other-info">Cuisine:&nbsp;{{resto.cuisines}}</p>
-                                <p class="restaurant-other-info">Cost for two:&nbsp;{{resto.cost_two}}</p>
-                                <p class="restaurant-other-info">Hours:&nbsp;{{resto.hours}}</p>
-                                <p class="restaurant-other-info">Tel no:&nbsp;{{resto.phone}}</p>
-                            </div>
-                        </div>
-                        <div class="card-content">
-                            <button class="btn hoverable green">{{resto.rate}}/5</button>
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
         
@@ -164,28 +86,29 @@ export default {
 <style scoped>
     .restaurant-list > .card {
         width: 100%;
-        margin-left: 3%;
+        margin-left: 2%;
     }
 
     .restaurant-list > .card-image {
         /* width: 95%;
         height: 440px; */
-        height: 100%;
+        min-width: 350px;
+        min-height: 440px;
+        max-width: 350px;
+        max-height: 440px;
         overflow: hidden;
         display: flex;
         justify-content: center;
         align-items: center;
-        width: 300px;
+        object-fit: fill;
     }
 
     .restaurant-image {
-        /* padding: 2%;
+        padding: 2%;
         min-width: 350px;
         min-height: 440px;
         max-width: 350px;
-        max-height: 440px; */
-        padding: 2%;
-        height: 300px;
+        max-height: 440px;
     }
 
     .card-stacked > .card-content {
@@ -257,22 +180,23 @@ export default {
     .mobile-restaurant-list > .card-image {
         /* width: 95%;
         height: 150px; */
-        height: 100%;
+        min-width: 100%;
+        min-height: 200px;
+        max-width: 100%;
+        max-height: 200px;
         overflow: hidden;
         display: flex;
         justify-content: center;
         align-items: center;
-        width: 300px;
+        object-fit: fill;
     }
 
     .mobile-restaurant-image {
-        /* padding: 2%;
+        padding: 2%;
         min-width: 100%;
         min-height: 200px;
         max-width: 100%;
-        max-height: 200px; */
-        padding: 2%;
-        height: 200px;
+        max-height: 200px;
     }
 
     .mobile-restaurant-info > .card-title {
