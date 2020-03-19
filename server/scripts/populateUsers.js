@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 const faker = require('faker')
-const User = require('../models/Users.js')
+const User = require('../models/users.js')
 
 function populateUsers(userCounter, limit) {
     for(i = userCounter; i < limit; i++) {
@@ -19,13 +19,9 @@ function populateUsers(userCounter, limit) {
         
         user
         .save()
-        .then(result => {
-            console.log(result);
-        })
         .catch(err => {
             console.log(err);
         });
-        console.log(user);
     }
 } 
 

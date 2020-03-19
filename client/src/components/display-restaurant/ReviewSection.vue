@@ -58,7 +58,8 @@
 
 <script scoped>
 import ReviewPost from './ReviewPost'; 
-import axios from 'axios';
+// import {mapGetters, mapActions} from 'vuex'; 
+// import axios from 'axios';
 export default {
     name: "ReviewSection",
     components: {
@@ -80,11 +81,10 @@ export default {
         editReview (content) { 
             this.isEditing = true;  
             this.$set(this,'editData',content); 
+            //Add in edit data for the server
         }, 
-        deleteReview() {
-            //Deletes Review
-            let data = axios.get("http://localhost:9090/"); 
-            console.log(data); 
+        async deleteReview() {
+            
         }
     }
 }
