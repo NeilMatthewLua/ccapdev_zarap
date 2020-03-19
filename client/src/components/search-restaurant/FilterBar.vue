@@ -32,6 +32,82 @@
                     <li class="collection-item" v-for="filbar_location in filbar_locations" v-bind:key="filbar_location.id">
                         <a href="#"> {{filbar_location.label}} </a>
                     </li>
+                    <li class="collection-item">
+                        <a class="modal-trigger" href="#filbar_modalloc"> See all location</a>
+                    </li>
+                    
+                    <div id="filbar_modalloc" class="modal">
+                        <div class="modal-content">
+                            <h4>Please choose your location</h4>
+                            <table>
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <a href="#"> Quezon City </a>
+                                        </td>
+                                        <td>
+                                            <a href="#"> Manila </a>
+                                        </td>
+                                        <td>
+                                            <a href="#"> Makati City </a>
+                                        </td>                                    
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <a href="#"> Pasig City </a>
+                                        </td>
+                                        <td>
+                                            <a href="#"> Taguig City </a>
+                                        </td>
+                                        <td>
+                                            <a href="#"> Mandaluyong City </a>
+                                        </td> 
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <a href="#"> Parañaque City </a>
+                                        </td>
+                                        <td>
+                                            <a href="#"> Pasay City </a>
+                                        </td>
+                                        <td>
+                                            <a href="#"> Muntinlupa City </a>
+                                        </td> 
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <a href="#"> Las Piñas City </a>
+                                        </td>
+                                        <td>
+                                            <a href="#"> Marikina City </a>
+                                        </td>
+                                        <td>
+                                            <a href="#"> San Juan City </a>
+                                        </td> 
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <a href="#"> Caloocan City </a>
+                                        </td>
+                                        <td>
+                                            <a href="#"> Valenzuela City </a>
+                                        </td>
+                                        <td>
+                                            <a href="#"> Malabon City </a>
+                                        </td> 
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <a href="#"> Navotas </a>
+                                        </td>
+                                        <td>
+                                            <a href="#"> Pateros City </a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
 
                     <!--Filtered by Cuisine-->
                     <li class="collection-item">
@@ -40,6 +116,115 @@
                     <li class="collection-item" v-for="filbar_cuisine in filbar_cuisines" v-bind:key="filbar_cuisine.id">
                         <a href="#"> {{filbar_cuisine.label}} </a>
                     </li>
+                    <li class="collection-item">
+                        <a class="modal-trigger" href="#filbar_modalcuisines"> See all cuisine</a>
+                    </li>
+                    
+                    <div id="filbar_modalcuisines" class="modal">
+                        <div class="modal-content">
+                            <h4>Please choose your cuisines</h4>
+                            <table>
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <a href="#"> American </a>
+                                        </td>
+                                        <td>
+                                            <a href="#"> Asian </a>
+                                        </td>
+                                        <td>
+                                            <a href="#"> BBQ </a>
+                                        </td>                                    
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <a href="#"> Bakery </a>
+                                        </td>
+                                        <td>
+                                            <a href="#"> Bar Food </a>
+                                        </td>
+                                        <td>
+                                            <a href="#"> Beverages </a>
+                                        </td> 
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <a href="#"> Bubble Tea </a>
+                                        </td>
+                                        <td>
+                                            <a href="#"> Burger </a>
+                                        </td>
+                                        <td>
+                                            <a href="#"> Chinese </a>
+                                        </td> 
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <a href="#"> Coffee </a>
+                                        </td>
+                                        <td>
+                                            <a href="#"> Desserts </a>
+                                        </td>
+                                        <td>
+                                            <a href="#"> Fast Food </a>
+                                        </td> 
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <a href="#"> Filipino </a>
+                                        </td> 
+                                        <td>
+                                            <a href="#"> Healthy Food </a>
+                                        </td>
+                                        <td>
+                                            <a href="#"> Hotpot </a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <a href="#"> International </a>
+                                        </td> 
+                                        <td>
+                                            <a href="#"> Italian </a>
+                                        </td>
+                                        <td>
+                                            <a href="#"> Japanese </a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <a href="#"> Korean </a>
+                                        </td>
+                                        <td>
+                                            <a href="#"> Korean BBQ </a>
+                                        </td>
+                                        <td>
+                                            <a href="#"> Pizza </a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <a href="#"> Ramen </a>
+                                        </td>
+                                        <td>
+                                            <a href="#"> Salad </a>
+                                        </td>
+                                        <td>
+                                            <a href="#"> Seafood </a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <a href="#"> Street Food </a>
+                                        </td>
+                                        <td>
+                                            <a href="#"> Tea </a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
 
                     <!--Filtered by  Establishment Type-->
                     <li class="collection-item">
@@ -63,6 +248,7 @@
 </template>
 
 <script>
+import M from 'materialize-css';
 export default {
     Name: "Filterbar",
     data() {
@@ -116,10 +302,10 @@ export default {
                 },
                 filbar_taguig: {
                     label: "Taguig City"
-                },
-                filbar_others: {
-                    label: "See all locations"
                 }
+                // filbar_others: {
+                //     label: "See all locations"
+                // }
             },
             filbar_cuisines: {
                 filbar_filipino: {
@@ -151,10 +337,10 @@ export default {
                 },
                 filbar_japanese: {
                     label: "Japanese"
-                },
-                filbar_others: {
-                    label: "See all cuisines"
                 }
+                // filbar_others: {
+                //     label: "See all cuisines"
+                // }
             },
             filbar_establishment_types: {
                 filbar_quick: {
@@ -203,6 +389,13 @@ export default {
                 }
             }
         }
+    },
+    mounted() {
+        M.AutoInit();
+        document.addEventListener('DOMContentLoaded', function() {
+            var elems = document.querySelectorAll('.modal');
+            M.Modal.init(elems, {});
+        });
     }
 }
 </script>

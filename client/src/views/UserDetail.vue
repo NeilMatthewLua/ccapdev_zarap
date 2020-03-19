@@ -42,6 +42,7 @@ export default {
             ProfileVisible: true,
             HistoryVisible: true,
             ReviewVisible: true,
+            Title: ''
         }
     },
     created : function() {

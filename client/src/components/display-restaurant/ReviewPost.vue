@@ -8,7 +8,7 @@
         </div>
         <div class="valign-wrapper col s11"  v-else>
             <img class="post-author-pic" src = "../../assets/pictures/Golden Fortune-1.jpg">
-            <h4 class="post-author"><a href=""><strong>{{review.restaurant}}</strong></a></h4>
+            <h4 class="post-author"><a href="/restaurant"><strong>{{review.restaurant}}</strong></a></h4>
             <h5 class="post-rating #388e3c green white-text darken-2">{{review.rating}}</h5>
         </div>
         <div class="col s2 valign-wrapper" v-if="!isOwn">
