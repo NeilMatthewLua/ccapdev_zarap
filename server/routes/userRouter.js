@@ -1,50 +1,32 @@
-var express = require('express')
-var router = express.Router()
-const path = require('path')
-const mongoose = require('mongoose')
-const faker = require('faker')
-const User = require('../models/users.js')
+var express = require('express');
+var router = express.Router();
+const path = require('path');
+const mongoose = require('mongoose');
+const url = process.env.MONGO_URI; 
+const User = require('../models/users.js');
 
-var userCounter = 0;
-var limit = 20;
-
-router.get('/populate', (req, res, next) => {
-    for(i = userCounter; i < limit; i++) {
-        const user = new User({
-            userID: i,
-            name: faker.name.firstName() + " " + faker.name.lastName(),
-            password: faker.lorem.words(1),
-            email: faker.internet.email(),
-            address: faker.address.streetAddress(),
-            points: faker.random.number(100) ,
-            beenHere: ["Golden Fortune", "Narnia", "Bermuda Triangle"],
-            reviewd: null,
-            liked: null,
-            picture: null
-        });
-        
-        user
-        .save()
-        .then(result => {
-            console.log(result);
-        })
-        .catch(err => {
-            console.log(err);
-        });
-        console.log(user);
-    }
-})
-
-router.get('/addUser', (req, res, next) => {
-    userCounter++;
+router.post('/addUser', (req, res, next) => { //adds a user
+    var userCounter;
+    //gets the last userID
+    User.findOne({}, {}, { 
+        sort: { 'created_at' : -1 }
+     })
+     .exec()
+     .then(doc => {
+         userCounter = doc['userID'] + 1; //TODO test this
+     })
+     .catch(err => {
+         res.send(err)
+     })
+            
     const user = new User({
         userID: userCounter,
-        name: "Neil Matthew Lua",
-        password: "SwedishMeatballs",
-        email: "killmenow@gmail.com",
-        address: "The house fried chicken built",
-        points: "508",
-        beenHere: ["Golden Fortune", "Narnia", "Bermuda Triangle"],
+        name: req.body.name,
+        password: req.body.password,
+        email: req.body.email,
+        address: req.body.password,
+        points: 0,
+        beenHere: null,
         reviewd: null,
         liked: null,
         picture: null
@@ -60,7 +42,7 @@ router.get('/addUser', (req, res, next) => {
         });
 })
 
-router.get('/:userId', (req, res, next) => {
+router.get('/:userID', (req, res, next) => { //finds a user by userID
     const id = req.params.userId;
     console.log(id);
     User.find({userID: id})
