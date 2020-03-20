@@ -17,7 +17,7 @@ const routes = [
   },
   {
     path: '/restaurant', 
-    name: 'Display Restaurant', 
+    name: 'Display Restaurant Dev', 
     component: DisplayRestaurant
   },
   {

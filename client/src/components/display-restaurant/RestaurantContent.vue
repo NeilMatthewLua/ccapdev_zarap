@@ -10,18 +10,22 @@
           </div>
           <img class="title-picture col s12 m4" src="../../assets/pictures/Golden Fortune-1.jpg" alt="Golden Fortune">
       </div>
-      <div v-if="section === 'Photos'">
-        <PhotoSection :title="photosTitle"/>  
-      </div>
-      <div v-else>
-        <ReviewSection :hasReview="true"/> 
-      </div>
+      <transition name="changeContent" enter-active-class="animated bounceInLeft"> 
+        <div v-if="section === 'Photos'">
+          <PhotoSection :title="photosTitle"/>  
+        </div>
+      </transition> 
+      <transition name="changeContent" enter-active-class="animated bounceInLeft">
+        <div v-if="section === 'Review'">
+            <ReviewSection :hasReview="true"/> 
+        </div>
+      </transition> 
     </div>
     <div class="right-section col s12 xl4">
       <div class="content-selection row">
-        <a @click="changeMenu" class="menu col s4">Menu</a>
-        <a @click="changePhotos" class="photos col s4">Photos</a>
-        <a @click="changeReview" class="review col s4">Review</a>
+        <a @click="changeMenu" class="valign-wrapper center-align menu-buttons col s4"><h5 class="menu-text">Menu</h5></a>
+        <a @click="changePhotos" class="valign-wrapper menu-buttons col s4"><h5 class="menu-text">Photos</h5></a>
+        <a @click="changeReview" class="valign-wrapper menu-buttons col s4"><h5 class="menu-text">Review</h5></a>
       </div>
       <div class="content-details">
           <h4>Telephone Number:</h4>
@@ -45,8 +49,9 @@
 </template>
 
 <script>
-import PhotoSection from './PhotoSection.vue'; 
+import PhotoSection from './PhotoSection.vue';
 import ReviewSection from './ReviewSection.vue'; 
+
 export default {
     Name: "RestaurantContent",
     data() {
@@ -110,6 +115,10 @@ export default {
       width: auto; 
   }
 
+  .delay {
+      animation-delay: 0.3s; 
+  }
+
   .title-card > .col > .btn {
       z-index: 0 !important
   }
@@ -128,27 +137,24 @@ export default {
       z-index: 0 !important;
   }
 
-  .photos {
+  .menu-buttons {
+      height: 100%; 
+      cursor: pointer; 
       text-align: center;
       width: 100%; 
+      transition: background-color 0.5s ease-in-out;
   }
 
-  .carousel-container {
-      padding: 20px; 
-      background-color: var(--default-restaurantcard-color);
-      margin-bottom: 40px; 
-      height: auto; 
+  .menu-text {
+     margin: 0px; 
+     width: 100%;  
+     text-align: center; 
+     font-size: 1.8rem; 
   }
 
-  .carousel {
-      height: 100%; 
-      overflow-x:hidden;
-      overflow-y: scroll;
-  }
-
-  .carousel-item {
-      height: 100%; 
-      width: 100%; 
+  .menu-buttons:hover {
+      background-color: var(--default-card-color); 
+      color: var(--default-white-color); 
   }
 
   .right-section {

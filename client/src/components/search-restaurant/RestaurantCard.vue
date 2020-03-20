@@ -206,6 +206,11 @@ export default {
 
     .restaurant-name {
         font-size:180%;
+        transition: color 0.3s ease-in-out;
+    }
+    
+    .restaurant-name:hover {
+        color: red; 
     }
 
     .restaurant-location {
