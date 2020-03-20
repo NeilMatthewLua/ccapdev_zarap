@@ -30,10 +30,11 @@ app.get('/', function(req, res) {
 const userRouter = require('./routes/userRouter');
 const reviewRouter = require('./routes/reviewsRouter');
 const populateRouter = require('./routes/populateRouter');
-
+const pictureRouter = require('./routes/picturesRouter');
 // Routes
 app.use('/user', userRouter);
 app.use('/review', reviewRouter);
+app.use('/pictures', pictureRouter)
 // Populates the database tables
 app.use('/populate', populateRouter);
 

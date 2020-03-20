@@ -3,7 +3,7 @@
       <div class="row valign-wrapper">
         <div class="valign-wrapper col s10"  v-if="!inProfile">
             <img class="post-author-pic" src = "../../assets/pictures/neil.jpg">
-            <h4 class="post-author"><a href=""><strong>{{review.name}}</strong></a></h4>
+            <a href=""><h4 class="post-author">{{review.name}}</h4></a>
             <h5 class="post-rating #388e3c green white-text darken-2">{{review.rating}}</h5>
         </div>
         <div class="valign-wrapper col s11"  v-else>
@@ -68,10 +68,23 @@ export default {
 
     .pointer {
         cursor: pointer; 
+        transition: all 0.3s ease-in-out;
+    }
+
+    .pointer:hover {
+        transform: scale(1.2);
     }
 
     .upvotes {
         margin-right: 5px; 
+    }
+
+    .post-author {
+        transition: color 0.4s ease-in-out; 
+    }
+
+    .post-author:hover {
+        color: red !important;
     }
 
     .post-author-pic { 

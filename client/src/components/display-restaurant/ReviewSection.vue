@@ -8,13 +8,8 @@
                 <label for="review-area">Enter review details...</label>
                 <textarea v-model="reviewData" id="review-area" class="materialize-textarea" data-length = "300"></textarea>
                 <div class="file-field input-field">
-                <div class="red btn">
-                    <span>File</span>
-                    <input type="file" multiple>
-                </div>
-                <div class="file-path-wrapper">
-                    <input class="file-path validate" type="text" placeholder="Upload one or more files">
-                </div>
+                <!-- File Upload Portion -->
+                <FileUpload/> 
                 <a class="submit-btn red btn right">SUBMIT</a>
                 </div>
             </div>
@@ -29,13 +24,8 @@
                     <i class="material-icons prefix">mode_edit</i>
                     <textarea v-model="editData" id="review-area" class="materialize-textarea" data-length = "300"></textarea>
                     <div class="file-field input-field">
-                    <div class="red btn">
-                        <span>File</span>
-                        <input type="file" multiple>
-                    </div>
-                    <div class="file-path-wrapper">
-                        <input class="file-path validate" type="text" placeholder="Upload one or more files">
-                    </div>
+                    <!-- File Upload Portion -->
+                    <FileUpload/> 
                     <a class="submit-btn red btn right">SUBMIT</a>
                     </div>
                 </div>
@@ -58,12 +48,14 @@
 
 <script scoped>
 import ReviewPost from './ReviewPost'; 
+import FileUpload from '../FileUpload';
 // import {mapGetters, mapActions} from 'vuex'; 
-// import axios from 'axios';
+
 export default {
     name: "ReviewSection",
     components: {
-        ReviewPost
+        ReviewPost,
+        FileUpload
     }, 
     props: {
         hasReview: Boolean //If the user has written a review for said restaurant
@@ -73,19 +65,19 @@ export default {
             isWriting : false, //If user is writing a review
             reviewData : "", //Content to store data in user review
             isEditing: false, //If user is editing current review
-            editData: ""
+            editData: "",
             //Add Computed to get boolean if current user is also review user
         }
     }, 
-    methods : {
-        editReview (content) { 
-            this.isEditing = true;  
-            this.$set(this,'editData',content); 
-            //Add in edit data for the server
-        }, 
-        async deleteReview() {
-            
-        }
+    methods: {
+       editReview (content) { 
+        this.isEditing = true;  
+        this.$set(this,'editData',content); 
+        //Add in edit data for the server
+      }, 
+      deleteReview() {
+        
+      }
     }
 }
 </script>
@@ -97,7 +89,7 @@ export default {
 
     .write-review {
         min-height: 50px;  
-        max-height: 400px; 
+        max-height: 500px; 
         margin-bottom: 40px; 
         padding: 30px 30px; 
         background-color: var(--default-restaurantcard-color);
@@ -109,6 +101,7 @@ export default {
     }
 
     #review-area {
+        min-height: 100px; 
         max-height: 200px; 
         overflow-y: scroll; 
     }
@@ -138,5 +131,13 @@ export default {
 
     .view-review-subsection {
         margin-bottom: 30px !important; 
+    }
+
+    .view-review-subsection > a {
+        transition: color 0.5s ease-in-out;
+    }
+
+    .view-review-subsection > a:hover {
+        color: red; 
     }
 </style>

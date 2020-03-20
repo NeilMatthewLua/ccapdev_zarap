@@ -154,6 +154,14 @@ export default {
         padding-right: 25px;
     }
 
+    .navitem {
+        transition: all 0.4s ease-in-out;
+    }
+
+    .navitem:hover {
+        transform: scale(1.1);
+    }
+
     .pushdown {
         margin-top: 2%;
     }
