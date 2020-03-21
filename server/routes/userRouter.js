@@ -4,6 +4,7 @@ const path = require('path');
 const mongoose = require('mongoose');
 const url = process.env.MONGO_URI; 
 const User = require('../models/users.js');
+const Restaurant = require('../models/restaurants.js');
 
 router.post('/addUser', (req, res, next) => { //adds a user
     var userCounter;
@@ -43,12 +44,34 @@ router.post('/addUser', (req, res, next) => { //adds a user
 })
 
 router.get('/:userID', (req, res, next) => { //finds a user by userID
-    const id = req.params.userId;
+    const id = req.params.userID;
     console.log(id);
     User.find({userID: id})
         .exec()
         .then(doc => {
             console.log(doc);;
+            res.status(200).json(doc);
+        })
+        .catch(err => {
+            res.send(500).json({error: err});
+        })
+})
+
+router.get('/', (req, res, next) => { //finds a user by userID
+    console.log("All users:");
+    User.find({})
+        .exec()
+        .then(doc => {
+            console.log(doc.length);
+            res.status(200).json(doc);
+        })
+        .catch(err => {
+            res.send(500).json({error: err});
+        })
+    Restaurant.find({})
+        .exec()
+        .then(doc => {
+            console.log(doc);
             res.status(200).json(doc);
         })
         .catch(err => {

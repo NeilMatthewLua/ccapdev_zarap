@@ -8,6 +8,7 @@ const Reviews = require('../models/reviews')
 const Restaurants = require('../models/restaurants') 
 const Pictures = require('../models/pictures')
 const populateUsers = require('../scripts/populateUsers')
+const populatePictures = require('../scripts/populatePictures')
 const populateReviews = require('../scripts/populateReviews')
 const populateRestaurants = require('../scripts/populateRestaurants')
 
@@ -15,6 +16,8 @@ var userCounter = 0;
 var limit = 20;
 
 router.get('/', (req, res, ) => {
+    var doneUser = [];
+    var donePicture = [];
     Users.deleteMany({})
       .then(() => {
         console.log("Users Dropped"); 
@@ -39,26 +42,48 @@ router.get('/', (req, res, ) => {
         return Pictures.deleteMany({})
             .then(() => {
                 console.log("Pictures Dropped"); 
+                console.log("")
             })
             .catch(err => {
                 console.log(err);
             });
       })
       .then(() => {
-        //Populate Restaurants
-        populateRestaurants(userCounter, limit);
-        console.log("Populating Restaurants"); 
+        //Populate Pictures
+        console.log("Populating pictures"); 
+        populatePictures(userCounter, limit, donePicture);
+        // .then(() => {
+          //Populate Users
+          console.log("Populating users"); 
+          Promise.all(donePicture)
+          .then(() => {
+            console.log(doneUser)
+            populateUsers(userCounter, limit, doneUser);
+            console.log(doneUser)
+            // .then(() => {
+              //Populate Restaurants
+              console.log("Populating Restaurants"); 
+              Promise.all(doneUser)
+              .then(() => {
+                // Promise.all(donePicture)
+                // .then(() => {
+                  populateRestaurants(userCounter, limit);
+                // })
+                // .catch(err => {
+                //   console.log(err)
+                // })
+            })
+          })
+          .catch(err => {
+            console.log(err)
+          })
+        // })
       })
-      .then(() => {
-        //Populate Users
-        populateUsers(userCounter, limit); 
-        console.log("Populating Users");
-      })
-      .then(() => {
-        //Populate Reviews
-        populateReviews(userCounter, limit); 
-        console.log("Populating Reviews");
-      })
+      // .then(() => {
+      //   //Populate Reviews
+      //   populateReviews(userCounter, limit); 
+      //   console.log("Populating Reviews");
+      // })
      .then(() => {
          res.send("Populated"); 
      })
