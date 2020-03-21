@@ -114,11 +114,11 @@ export default {
 <style scoped>
 
     .BG-color {
-        background-color: var(--default-white-color);
+        background-color: var(--default-background-color);
     }
 
     .lowerhalf {
-        background-color: var(--default-background-color);
+        background-color: var(--default-white-color);
     }
 
     .black-color {
