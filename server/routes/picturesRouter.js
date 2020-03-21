@@ -16,7 +16,7 @@ const imageFilter = function(req, file, cb) {
 
 const storage = multer.diskStorage({
     destination: function(req, file, cb) {
-        cb(null, 'uploads/');
+        cb(null, '../client/src/uploads/');
     },
 
     // By default, multer removes file extensions so let's add them back
@@ -30,8 +30,12 @@ router.get('/', (req, res) => {
 })
 
 router.get('/getAll', (req, res) => {
-    
+
 })
+
+// router.get('/:id', (req, res) => {
+//     res.send(`require("@/assets/pictures/golden-menu.jpg")`); 
+// });
 
 router.post('/upload-profile-pic', (req, res) => {
     // 'profile_pic' is the name of our file input field in the HTML form
@@ -79,6 +83,7 @@ router.post('/upload-multiple', (req, res) => {
         const files = req.files;
         let counter = 0; //Change this to a global id counter
         let result = files.map(obj => (({...obj, id : counter++})));
+        result = files.map(obj => (({...obj, path : `uploads/${obj.filename}`})));
         res.send(result);
     });
 });

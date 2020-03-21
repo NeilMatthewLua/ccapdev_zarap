@@ -9,7 +9,7 @@
                 <textarea v-model="reviewData" id="review-area" class="materialize-textarea" data-length = "300"></textarea>
                 <div class="file-field input-field">
                 <!-- File Upload Portion -->
-                <FileUpload/> 
+                <FileUpload @file-upload="getFiles"/> 
                 <a class="submit-btn red btn right">SUBMIT</a>
                 </div>
             </div>
@@ -25,7 +25,7 @@
                     <textarea v-model="editData" id="review-area" class="materialize-textarea" data-length = "300"></textarea>
                     <div class="file-field input-field">
                     <!-- File Upload Portion -->
-                    <FileUpload/> 
+                    <FileUpload @file-upload="getFiles"/> 
                     <a class="submit-btn red btn right">SUBMIT</a>
                     </div>
                 </div>
@@ -67,6 +67,7 @@ export default {
             isEditing: false, //If user is editing current review
             editData: "",
             //Add Computed to get boolean if current user is also review user
+            uploadedFiles: []
         }
     }, 
     methods: {
@@ -75,8 +76,11 @@ export default {
         this.$set(this,'editData',content); 
         //Add in edit data for the server
       }, 
-      deleteReview() {
+      deleteReview () {
         
+      },
+      getFiles (files) {
+        this.$set(this,'uploadedFiles', files); 
       }
     }
 }
