@@ -48,7 +48,7 @@
 
 <script scoped>
 import ReviewPost from './ReviewPost'; 
-import FileUpload from '../FileUpload';
+import FileUpload from '../fileUpload';
 // import {mapGetters, mapActions} from 'vuex'; 
 
 export default {

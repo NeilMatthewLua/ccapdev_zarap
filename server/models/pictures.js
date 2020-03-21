@@ -3,7 +3,7 @@ let mongoose = require('mongoose')
 
 let pictureSchema = new mongoose.Schema({ 
     pictureID: { //ID
-        type: Number, 
+        type: mongoose.ObjectId, 
         unique: true, 
         required: true
     },

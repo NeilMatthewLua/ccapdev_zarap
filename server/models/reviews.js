@@ -3,12 +3,12 @@ const mongoose = require('mongoose')
 
 let reviewSchema = new mongoose.Schema({
     reviewID: {
-        type: Number, 
+        type: mongoose.ObjectId, 
         required: true,
         unique: true
     },
     restaurantID: {
-        type: Number, 
+        type: mongoose.ObjectId, 
         required: true
     },
     rating: {
