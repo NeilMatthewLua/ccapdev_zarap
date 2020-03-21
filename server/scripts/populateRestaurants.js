@@ -2,7 +2,7 @@ const mongoose = require('mongoose')
 const faker = require('faker')
 const Restaurant = require('../models/restaurants')
 const User = require('../models/users')
-const Pictures = require('../models/pictures')
+const Picture = require('../models/pictures')
 
 
 var restaurantNames = [ 
@@ -207,48 +207,68 @@ function populateOperating() {
     return arr; 
 }
 
-
-function populateRestaurants(userCount, limit) {
-    var i;
-    console.log("RESTO")
-    User.find({}, 'userID')
-        .exec()
-        .then(doc => {
-            Pictures.find()
-            .exec()
-            .then(doc_2 => {
-                for(i = userCount; i < limit; i++) {
-                    var resto = new Restaurant ({
-                        restaurantID: mongoose.Types.ObjectId(),
-                        ownerID: doc[i]['userID'],
-                        name: restaurantNames[i],
-                        establishmentType: restaurantEst[i],
-                        city: restaurantCity[i],
-                        fullAddress: restaurantAddress[i],
-                        cuisines: restaurantCuisines[i],
-                        costForTwo: restaurantCost[i],
-                        operatingHours: populateOperating(),
-                        contactDetails: faker.phone.phoneNumber('+8###-####'),
-                        overallRating: 0,
-                        reviews: populateArray(3),
-                        pictures: [doc_2[limit + (i*2)]['__id'], doc_2[limit + (i*2) + 1]['url']],
-                        menu: [doc_2[(limit * 3) + (i*2)]['__id'], doc_2[(limit * 3) +  (i*2) + 1]['__id']], 
-                        defaultPicture: i //Replace with proper photo
-                   }); 
-                   resto.save()
-                    .catch(err => {
-                        console.log(err);
-                    })
-                }
-            })
-            .catch(err => {
-                res.send(500).json({error: err});
-            })
+function save(resto) {
+    return new Promise((resolve) => {
+        resto
+        .save()
+        .then(() => {
+            resolve();
         })
         .catch(err => {
-            res.send(500).json({error: err});
+            console.log(err);
         })
+    })
+}
 
+//Loads pictures from database
+function loadPictures() {
+    return new Promise((resolve) => {
+        Picture.find({})
+        .exec()
+        .then(doc => {
+            return resolve(doc)
+        })
+    })
+}
+
+//Leads users from database
+function loadUsers() {
+    return new Promise((resolve) => {
+        User.find({})
+        .exec()
+        .then(doc_2 => {
+            return resolve(doc_2)
+        })
+    })
+}
+
+async function populateRestaurants(userCount, limit) {
+    var i;
+    let doc = await loadUsers();
+    let doc_2 = await loadPictures();
+
+    for(i = userCount; i < limit; i++) {
+        let resto = new Restaurant ({
+            restaurantID: mongoose.Types.ObjectId(),
+            ownerID: doc[i]['userID'],
+            name: restaurantNames[i],
+            establishmentType: restaurantEst[i],
+            city: restaurantCity[i],
+            fullAddress: restaurantAddress[i],
+            cuisines: restaurantCuisines[i],
+            costForTwo: restaurantCost[i],
+            operatingHours: populateOperating(),
+            contactDetails: faker.phone.phoneNumber('+8###-####'),
+            overallRating: 0,
+            reviews: populateArray(3),
+            pictures: [doc_2[limit + (i*2)]['_id'], doc_2[limit + (i*2) + 1]['_id']],
+            menu: [doc_2[(limit * 3) + (i*2)]['_id'], doc_2[(limit * 3) +  (i*2) + 1]['_id']], 
+            defaultPicture: [doc_2[limit + (i*2)]['_id']]
+        });
+        await save(resto);
+    }
+
+    return;
 }
 
 module.exports = populateRestaurants; 

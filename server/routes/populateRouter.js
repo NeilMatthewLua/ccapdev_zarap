@@ -16,8 +16,6 @@ var userCounter = 0;
 var limit = 20;
 
 router.get('/', (req, res, ) => {
-    var doneUser = [];
-    var donePicture = [];
     Users.deleteMany({})
       .then(() => {
         console.log("Users Dropped"); 
@@ -50,40 +48,24 @@ router.get('/', (req, res, ) => {
       })
       .then(() => {
         //Populate Pictures
-        console.log("Populating pictures"); 
-        populatePictures(userCounter, limit, donePicture);
-        // .then(() => {
+        populatePictures(userCounter, limit)
+        console.log("Pictures populated")
+        .then(() => {
           //Populate Users
-          console.log("Populating users"); 
-          Promise.all(donePicture)
+          populateUsers(userCounter, limit)
+          console.log("Users populated")
           .then(() => {
-            console.log(doneUser)
-            populateUsers(userCounter, limit, doneUser);
-            console.log(doneUser)
+            //Populate Restaurants
+            populateRestaurants(userCounter, limit)
+            console.log("Restaurants populated")
             // .then(() => {
-              //Populate Restaurants
-              console.log("Populating Restaurants"); 
-              Promise.all(doneUser)
-              .then(() => {
-                // Promise.all(donePicture)
-                // .then(() => {
-                  populateRestaurants(userCounter, limit);
-                // })
-                // .catch(err => {
-                //   console.log(err)
-                // })
-            })
+            //   //Populate Reviews
+            //   populateReviews(userCounter, limit);
+            // })
           })
-          .catch(err => {
-            console.log(err)
-          })
-        // })
+        })
+   
       })
-      // .then(() => {
-      //   //Populate Reviews
-      //   populateReviews(userCounter, limit); 
-      //   console.log("Populating Reviews");
-      // })
      .then(() => {
          res.send("Populated"); 
      })

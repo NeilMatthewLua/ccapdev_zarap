@@ -71,16 +71,16 @@ let restaurantSchema = new mongoose.Schema({
         type: [Number], 
         required: true
     },
-    pictures: { //TODO Picture Ids
-        type: [String],
+    pictures: { 
+        type:  [mongoose.ObjectId],
         required: true
     },
-    menu: { //TODO Menu Ids
-        type: [String],
+    menu: { 
+        type: [mongoose.ObjectId],
         required: true
     },
-    defaultPicture: { //TODO Picture Id
-        type: String, 
+    defaultPicture: { 
+        type:  mongoose.ObjectId, 
         required: true
     },
 })

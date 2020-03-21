@@ -127,8 +127,21 @@ function randomizeURL(array) {
     }
 }
 
-function populatePictures(userCount, limit, promises) {
-    return new Promise (resolve => {
+function save(pic) {
+    return new Promise((resolve) => {
+        pic
+        .save()
+        .then(() => {
+            resolve();
+        })
+        .catch(err => {
+            consolge.log(err);
+        })
+    })
+}
+
+async function populatePictures(userCount, limit) {
+    // let promise = new Promise (resolve => {
         var i; 
         var j; 
         // Populate user pictures
@@ -138,16 +151,9 @@ function populatePictures(userCount, limit, promises) {
                 pictureID: mongoose.Types.ObjectId(), 
                 url: peopleUrls[i] 
             })
-    
-            promises.push(
-            pic
-            .save()
-            .catch(err => {
-                consolge.log(err);
-            })
-            );
+            await save(pic);
         }
-    
+
         // Populate restaurant pictures
         for(j = 0; j < limit * 2; j++) {
             let pic = new Picture ({
@@ -155,13 +161,7 @@ function populatePictures(userCount, limit, promises) {
                 url: restaurantUrls[j] 
             })
     
-            promises.push(
-                pic
-                .save()
-                .catch(err => {
-                    consolge.log(err);
-                })
-            );
+            await save(pic);
         }
     
         // Populate restaurant menu
@@ -170,16 +170,9 @@ function populatePictures(userCount, limit, promises) {
                 pictureID: mongoose.Types.ObjectId(), 
                 url: restaurantMenuUrls[j] 
             })
-    
-            promises.push(
-                pic
-                .save()
-                .catch(err => {
-                    consolge.log(err);
-                })
-            );
+
+            await save(pic);
         }
-    })
 }
 
 module.exports = populatePictures;
