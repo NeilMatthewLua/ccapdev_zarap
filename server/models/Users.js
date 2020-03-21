@@ -32,7 +32,8 @@ Schema({
     },
     points: {
         type: Number,
-        required: true
+        required: true,
+        default: 0
     },
     points: {
         type: Number,
@@ -40,19 +41,22 @@ Schema({
     },
     beenHere: {
         type: [String],
-        required: false
+        required: false,
+        default: null
     },
     reviewed: {
         type: [String],
-        required: false
+        required: false,
+        default: null
     },
     liked: {
         type: [String],
-        required: false
+        required: false,
+        default: null
     },
     picture: {
         type: String,
-        required: false
+        required: true
     }
 })
 
