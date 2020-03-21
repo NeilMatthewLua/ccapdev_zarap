@@ -36,7 +36,7 @@
       <!-- Logged Profile Section -->
       <ul class="right hide-on-med-and-down col s3" v-else>
         <div class="right navbar-right valign-wrapper">
-          <img class="circle navbar-image" src="../assets/pictures/jonal.jpg">
+          <img class="circle navbar-image" src="@/assets/pictures/jonal.jpg">
           <li>
             <a class="dropdown-trigger" href="#" data-target="dropdown1">
               <span class="white-text username"> Welcome, Jonal </span>

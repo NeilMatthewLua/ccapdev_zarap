@@ -3,12 +3,12 @@ const mongoose = require('mongoose')
 
 let restaurantSchema = new mongoose.Schema({
     restaurantID: { //Restaurant ID
-        type: Number, 
+        type: mongoose.ObjectId, 
         required: true,
         unique: true
     }, 
     ownerID: { //Owner ID
-        type: Number, 
+        type: mongoose.ObjectId, 
         required: true, 
         unique: true //Can users have multiple restos
     },
@@ -71,16 +71,16 @@ let restaurantSchema = new mongoose.Schema({
         type: [Number], 
         required: true
     },
-    pictures: { //TODO Picture Ids
-        type: [Number],
+    pictures: { 
+        type:  [mongoose.ObjectId],
         required: true
     },
-    menu: { //TODO Menu Ids
-        type: [Number],
+    menu: { 
+        type: [mongoose.ObjectId],
         required: true
     },
-    defaultPicture: { //TODO Picture Id
-        type: String, 
+    defaultPicture: { 
+        type:  mongoose.ObjectId, 
         required: true
     },
 })

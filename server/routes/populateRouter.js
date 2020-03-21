@@ -8,6 +8,7 @@ const Reviews = require('../models/reviews')
 const Restaurants = require('../models/restaurants') 
 const Pictures = require('../models/pictures')
 const populateUsers = require('../scripts/populateUsers')
+const populatePictures = require('../scripts/populatePictures')
 const populateReviews = require('../scripts/populateReviews')
 const populateRestaurants = require('../scripts/populateRestaurants')
 
@@ -39,25 +40,30 @@ router.get('/', (req, res, ) => {
         return Pictures.deleteMany({})
             .then(() => {
                 console.log("Pictures Dropped"); 
+                console.log("")
             })
             .catch(err => {
                 console.log(err);
             });
       })
-      // .then(() => {
-      //   //Populate Restaurants
-      //   populateRestaurants(userCounter, limit);
-      //   console.log("Populating Restaurants"); 
-      // })
       .then(() => {
-        //Populate Users
-        populateUsers.populateUsers(userCounter, limit); 
-        console.log("Populating Users");
-      })
-      .then(() => {
-        //Populate Reviews
-        populateReviews(userCounter, limit); 
-        console.log("Populating Reviews");
+        //Populate Pictures
+        populatePictures(userCounter, limit)
+        console.log("Pictures populated")
+        .then(() => {
+          //Populate Users
+          populateUsers(userCounter, limit)
+          console.log("Users populated")
+          .then(() => {
+            //Populate Restaurants
+            populateRestaurants(userCounter, limit)
+            console.log("Restaurants populated")
+            // .then(() => {
+            //   //Populate Reviews
+            //   populateReviews(userCounter, limit);
+            // })
+          })
+        })
       })
      .then(() => {
          res.send("Populated"); 

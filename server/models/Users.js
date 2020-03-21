@@ -5,7 +5,7 @@ const validator = require('validator');
 let userSchema = new mongoose.
 Schema({
     userID: {
-        type: Number,
+        type: mongoose.ObjectId,
         required: true,
         unique: true
     },

@@ -3,6 +3,11 @@ const mongoose = require('mongoose')
 
 let reviewSchema = new mongoose.Schema({
     reviewID: {
+        type: mongoose.ObjectId, 
+        required: true,
+        unique: true
+    },
+    restaurantID: {
         type: mongoose.Schema.ObjectId,
         required: true, 
         auto: true
