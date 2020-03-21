@@ -8,7 +8,7 @@
             <h5>Chinese Food | Fine Dining</h5>
             <a class="waves-effect waves-light red btn bookmark-btn"><i class="material-icons left">bookmark</i>Been Here</a>
           </div>
-          <img class="title-picture col s12 m4" src="../../assets/pictures/Golden Fortune-1.jpg" alt="Golden Fortune">
+          <img class="title-picture col s12 m4" src="@/assets/pictures/Golden Fortune-1.jpg" alt="Golden Fortune">
       </div>
       <transition name="changeContent" enter-active-class="animated bounceInLeft"> 
         <div v-if="section === 'Photos'">

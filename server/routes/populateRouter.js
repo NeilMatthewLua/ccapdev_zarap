@@ -64,7 +64,6 @@ router.get('/', (req, res, ) => {
             // })
           })
         })
-   
       })
      .then(() => {
          res.send("Populated"); 

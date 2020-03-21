@@ -53,6 +53,9 @@ export default {
             uploadFieldName: 'photos'
         }
     }, 
+    props: {
+        dest: String //Directory to save the image to 
+    },
     computed: {
       isInitial() {
         return this.currentStatus === STATUS_INITIAL;
@@ -75,7 +78,8 @@ export default {
         this.uploadError = null;
       },
       async upload(formData) {
-        return await axios.post(UPLOAD_ROUTE, formData, {headers: {'Content-Type': 'multipart/form-data' }})
+        console.log(UPLOAD_ROUTE + `/${this.dest}`);
+        return await axios.post(UPLOAD_ROUTE + `/${this.dest}`, formData, {headers: {'Content-Type': 'multipart/form-data' }})
             // get data
             .then(x => x.data)
             .then(x => x.map(img => Object.assign({},
@@ -86,10 +90,9 @@ export default {
         this.currentStatus = STATUS_SAVING; 
         let app = this; 
         this.upload(formData)
-          // .then(wait(1500)) // DEV ONLY: wait for 1.5s 
           .then(x => {
             app.uploadedFiles = [].concat(x);
-            console.log(app.uploadedFiles);
+            // console.log(app.uploadedFiles);
             this.$emit('file-upload', this.uploadedFiles); //Send uploaded files to parent
             this.currentStatus = STATUS_SUCCESS;
           })

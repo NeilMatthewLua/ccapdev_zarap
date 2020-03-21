@@ -56,7 +56,8 @@ Schema({
     },
     picture: {
         type: String,
-        required: true
+        required: true,
+        default: null
     }
 })
 

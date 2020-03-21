@@ -47,7 +47,6 @@ export default {
       height: 100%; 
       min-height: 600px; 
       overflow-x: hidden;
-      overflow-y: scroll;
   }
 
   .carousel-item {
