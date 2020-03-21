@@ -577,7 +577,7 @@ export default {
 
   .navbar-fixed {
       height: 80px;  
-      z-index: 1 !important; 
+      z-index: 10 !important; 
   }
 
   .search-section {

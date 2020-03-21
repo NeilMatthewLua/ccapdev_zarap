@@ -21,9 +21,9 @@
             <a href="javascript:void(0)" @click="reset()">Upload again</a>
             </p>
             <ul class="list-unstyled">
-            <li v-for="item in uploadedFiles" :key="item.id">
-                <img :src="item.url" class="img-responsive img-thumbnail" :alt="item.originalName">
-            </li>
+            <!-- <li v-for="item in uploadedFiles" :key="item.id">
+                <img :src="require(`@/${item.path}`)" class="img-responsive img-thumbnail" :alt="item.originalName">
+            </li> -->
             </ul>
         </div>
         <!--FAILED-->
@@ -79,17 +79,18 @@ export default {
             // get data
             .then(x => x.data)
             .then(x => x.map(img => Object.assign({},
-                img, { url: `${UPLOAD_ROUTE}/images/${img.id}` })))
+                img, { url: `http://localhost:9090/pictures/${img.id}` })))
       },
       save(formData) {
         // upload data to the server
         this.currentStatus = STATUS_SAVING; 
-        var app = this; 
+        let app = this; 
         this.upload(formData)
           // .then(wait(1500)) // DEV ONLY: wait for 1.5s 
           .then(x => {
             app.uploadedFiles = [].concat(x);
             console.log(app.uploadedFiles);
+            this.$emit('file-upload', this.uploadedFiles); //Send uploaded files to parent
             this.currentStatus = STATUS_SUCCESS;
           })
           .catch(err => {
@@ -110,7 +111,7 @@ export default {
           });
         // save it
         this.save(formData);
-      }
+      },
     },
     mounted() {
       this.reset();
@@ -146,5 +147,10 @@ export default {
         font-size: 1.2em;
         text-align: center;
         padding: 10px 0;
+    }
+
+    .img-responsive {
+        height: 20px;
+        display: inline-block; 
     }
 </style>
