@@ -44,14 +44,14 @@ router.get('/', (req, res, ) => {
                 console.log(err);
             });
       })
-      .then(() => {
-        //Populate Restaurants
-        populateRestaurants(userCounter, limit);
-        console.log("Populating Restaurants"); 
-      })
+      // .then(() => {
+      //   //Populate Restaurants
+      //   populateRestaurants(userCounter, limit);
+      //   console.log("Populating Restaurants"); 
+      // })
       .then(() => {
         //Populate Users
-        populateUsers(userCounter, limit); 
+        populateUsers.populateUsers(userCounter, limit); 
         console.log("Populating Users");
       })
       .then(() => {

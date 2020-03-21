@@ -2,12 +2,12 @@
   <div class="review-post">
       <div class="row valign-wrapper">
         <div class="valign-wrapper col s10"  v-if="!inProfile">
-            <img class="post-author-pic" src = "../../assets/pictures/neil.jpg">
+            <img class="post-author-pic" src = "@/assets/pictures/neil.jpg">
             <a href=""><h4 class="post-author">{{review.name}}</h4></a>
             <h5 class="post-rating #388e3c green white-text darken-2">{{review.rating}}</h5>
         </div>
         <div class="valign-wrapper col s11"  v-else>
-            <img class="post-author-pic" src = "../../assets/pictures/Golden Fortune-1.jpg">
+            <img class="post-author-pic" src = "@/assets/pictures/Golden Fortune-1.jpg">
             <h4 class="post-author"><a href="/restaurant"><strong>{{review.restaurant}}</strong></a></h4>
             <h5 class="post-rating #388e3c green white-text darken-2">{{review.rating}}</h5>
         </div>
@@ -15,7 +15,8 @@
             <h5 class="green-text upvotes">{{review.upvotes}}</h5>
             <i v-bind:class="{'liked' : isLiked}" 
             @click="toggleLike"
-            class="material-icons right-align pointer">thumb_up</i>
+            class="material-icons right-align pointer">thumb_up</i> 
+            <!-- only for people logged in -->
         </div>
         <div class="col s2 valign-wrapper margin-right" v-else>
             <a class="submit-btn green btn pointer" @click="editReview()"><i class="material-icons review-icons">edit</i></a>

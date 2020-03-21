@@ -1,5 +1,6 @@
 var express = require('express')
 var router = express.Router()
+const fs = require('fs-extra');
 const multer = require('multer')
 const path = require('path')
 const mongoose = require('mongoose')
@@ -16,7 +17,11 @@ const imageFilter = function(req, file, cb) {
 
 const storage = multer.diskStorage({
     destination: function(req, file, cb) {
-        cb(null, '../client/src/uploads/');
+        //Save the folder in the directory specified in params 
+        let dest = req.params.destination;
+        let path = `${process.env.IMG_PATH}${dest}`;
+        fs.mkdirsSync(path);
+        cb(null, path);
     },
 
     // By default, multer removes file extensions so let's add them back
@@ -61,7 +66,7 @@ router.post('/upload-profile-pic', (req, res) => {
     });
 });
 
-router.post('/upload-multiple', (req, res) => {
+router.post('/upload-multiple/:destination', (req, res) => {
     // 10 is the limit I've defined for number of uploaded files at once
     // 'multiple_images' is the name of our file input field
     let upload = multer({ storage: storage, fileFilter: imageFilter }).array('photos', 5);
@@ -83,7 +88,8 @@ router.post('/upload-multiple', (req, res) => {
         const files = req.files;
         let counter = 0; //Change this to a global id counter
         let result = files.map(obj => (({...obj, id : counter++})));
-        result = files.map(obj => (({...obj, path : `uploads/${obj.filename}`})));
+        result = files.map(obj => (({...obj, path : `images/${req.params.destination}/${obj.filename}`})));
+        console.log(result); 
         res.send(result);
     });
 });

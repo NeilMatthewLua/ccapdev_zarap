@@ -9,7 +9,7 @@
                 <textarea v-model="reviewData" id="review-area" class="materialize-textarea" data-length = "300"></textarea>
                 <div class="file-field input-field">
                 <!-- File Upload Portion -->
-                <FileUpload @file-upload="getFiles"/> 
+                <FileUpload @file-upload="getFiles" :dest="destination"/> 
                 <a class="submit-btn red btn right">SUBMIT</a>
                 </div>
             </div>
@@ -25,7 +25,7 @@
                     <textarea v-model="editData" id="review-area" class="materialize-textarea" data-length = "300"></textarea>
                     <div class="file-field input-field">
                     <!-- File Upload Portion -->
-                    <FileUpload @file-upload="getFiles"/> 
+                    <FileUpload @file-upload="getFiles" :dest="destination"/> 
                     <a class="submit-btn red btn right">SUBMIT</a>
                     </div>
                 </div>
@@ -48,7 +48,7 @@
 
 <script scoped>
 import ReviewPost from './ReviewPost'; 
-import FileUpload from '../FileUpload';
+import FileUpload from '@/components/FileUpload';
 // import {mapGetters, mapActions} from 'vuex'; 
 
 export default {
@@ -66,6 +66,7 @@ export default {
             reviewData : "", //Content to store data in user review
             isEditing: false, //If user is editing current review
             editData: "",
+            destination: "reviews",
             //Add Computed to get boolean if current user is also review user
             uploadedFiles: []
         }

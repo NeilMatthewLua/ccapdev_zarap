@@ -81,7 +81,7 @@
       <div class="user-view">
         <div class="background"></div>
         <a href="/userdetail/:menu">
-          <img class="circle" src="../assets/pictures/jonal.jpg">
+          <img class="circle" src="@/assets/pictures/jonal.jpg">
         </a>
         <a href="/userdetail/:menu">
           <span class="username-sidenav"> Jonal </span>

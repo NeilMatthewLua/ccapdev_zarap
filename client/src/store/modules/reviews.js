@@ -1,11 +1,12 @@
 import axios from 'axios'
 
 const state =  {
-    reviews: [], 
+    reviews: [], //all reviews 
+    userReview: null //Store user review
 }
 
 const getters =  {
-    allReviews: state => state.reviews
+    allReviews: state => state.reviews //All reviews associated with the restaurant 
 }
 
 const actions =  {
