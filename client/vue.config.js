@@ -1,9 +1,9 @@
 module.exports = {
-    dev: {
+    devServer: {
       assetsPublicPath: '../server/',
       assetsSubDirectory: 'images'
     },
-    build: {
+    devServer: {
         assetsPublicPath: '../server/',
         assetsSubDirectory: 'images'
     }

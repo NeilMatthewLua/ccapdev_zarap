@@ -25,7 +25,7 @@
                     <textarea v-model="editData" id="review-area" class="materialize-textarea" data-length = "300"></textarea>
                     <div class="file-field input-field">
                     <!-- File Upload Portion -->
-                    <FileUpload @file-upload="getFiles" :dest="destination"/> 
+                    <FileUpload @file-upload="getFiles" :isMultiple="true" :dest="destination"/> 
                     <a class="submit-btn red btn right">SUBMIT</a>
                     </div>
                 </div>
@@ -48,7 +48,7 @@
 
 <script scoped>
 import ReviewPost from './ReviewPost'; 
-import FileUpload from '@/components/FileUpload';
+import FileUpload from '@/components/fileUpload';
 // import {mapGetters, mapActions} from 'vuex'; 
 
 export default {

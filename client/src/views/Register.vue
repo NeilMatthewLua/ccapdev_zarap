@@ -43,6 +43,10 @@
                                 <label for="address">Home Address</label>
                                 </div>
                             </div>
+                            <div class="row">
+                                <!-- File Upload Portion -->
+                                <FileUpload @file-upload="getFiles" :dest="destination" :isMultiple="false"/> 
+                            </div>
                             <div class="center margin-pushdown">
                             <div class="waves-effect waves-light btn-large btncolor" @click="validateForm"> Sign me up!
                             </div>
@@ -58,12 +62,14 @@
 <script>
 import Navbar from '@/components/Navbar.vue';
 import Footer from '@/components/Footer.vue';
+import FileUpload from '@/components/fileUpload';
 
 export default {
     name: 'Login',
     components: {
         Navbar,
-        Footer
+        Footer,
+        FileUpload
     },
     data() {
         return {
@@ -72,7 +78,8 @@ export default {
             lastname: null,
             email: null,
             password: null,
-            homeaddress: null
+            homeaddress: null,
+            uploadedFiles: []
         }
       },
     methods:{

@@ -4,8 +4,13 @@
         <form enctype="multipart/form-data" novalidate v-if="isInitial || isSaving">
             <h5>Upload images</h5>
             <div class="dropbox">
-            <input type="file" multiple :name="uploadFieldName" :disabled="isSaving" @change="filesChange($event.target.name, $event.target.files); fileCount = $event.target.files.length"
-                accept="image/*" class="input-file">
+            <div v-if="isMultiple">
+              <input type="file" multiple :name="uploadFieldName" :disabled="isSaving" @change="filesChange($event.target.name, $event.target.files); fileCount = $event.target.files.length" accept="image/*" class="input-file">
+            </div>
+            <div v-else>
+              <p>ONe File</p>
+              <input type="file" :name="uploadFieldName" :disabled="isSaving" @change="filesChange($event.target.name, $event.target.files); fileCount = $event.target.files.length" accept="image/*" class="input-file">
+            </div>
                 <p v-if="isInitial">
                 Drag your file(s) here to begin<br> or click to browse
                 </p>
@@ -54,7 +59,8 @@ export default {
         }
     }, 
     props: {
-        dest: String //Directory to save the image to 
+        dest: String, //Directory to save the image to 
+        isMultiple: Boolean
     },
     computed: {
       isInitial() {
