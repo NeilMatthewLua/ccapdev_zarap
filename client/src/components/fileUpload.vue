@@ -2,13 +2,13 @@
    <div class="container">
         <!--UPLOAD-->
         <form enctype="multipart/form-data" novalidate v-if="isInitial || isSaving">
-            <h5>Upload images</h5>
+            <h5 v-if="isMultiple">Upload images</h5>
+            <h5 v-else>Upload profile picture</h5>
             <div class="dropbox">
             <div v-if="isMultiple">
               <input type="file" multiple :name="uploadFieldName" :disabled="isSaving" @change="filesChange($event.target.name, $event.target.files); fileCount = $event.target.files.length" accept="image/*" class="input-file">
             </div>
             <div v-else>
-              <p>ONe File</p>
               <input type="file" :name="uploadFieldName" :disabled="isSaving" @change="filesChange($event.target.name, $event.target.files); fileCount = $event.target.files.length" accept="image/*" class="input-file">
             </div>
                 <p v-if="isInitial">
@@ -84,7 +84,6 @@ export default {
         this.uploadError = null;
       },
       async upload(formData) {
-        console.log(UPLOAD_ROUTE + `/${this.dest}`);
         return await axios.post(UPLOAD_ROUTE + `/${this.dest}`, formData, {headers: {'Content-Type': 'multipart/form-data' }})
             // get data
             .then(x => x.data)

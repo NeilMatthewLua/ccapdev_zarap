@@ -45,7 +45,7 @@
                             </div>
                             <div class="row">
                                 <!-- File Upload Portion -->
-                                <FileUpload @file-upload="getFiles" :dest="destination" :isMultiple="false"/> 
+                                <FileUpload @file-upload="getFiles" :dest="profilePictures" :isMultiple="false"/> 
                             </div>
                             <div class="center margin-pushdown">
                             <div class="waves-effect waves-light btn-large btncolor" @click="validateForm"> Sign me up!
@@ -79,10 +79,14 @@ export default {
             email: null,
             password: null,
             homeaddress: null,
+            profilePictures: "profilePictures",
             uploadedFiles: []
         }
       },
     methods:{
+        getFiles (files) {
+            this.$set(this,'uploadedFiles', files); 
+        },
         print: function () {
             console.log(this.firstname + " " + this.email + " " + this.lastname + " " + this.homeaddress + " " + this.password);
         },
