@@ -8,7 +8,7 @@ Schema({
         type: mongoose.ObjectId,
         required: true,
         auto: true, 
-        unique: true
+        // unique: true
     },
     name: {
         type: String,

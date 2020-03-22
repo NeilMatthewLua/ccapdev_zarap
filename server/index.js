@@ -1,18 +1,22 @@
 // All imports needed here
 const express = require('express')
 const mongoose = require('mongoose')
+const bodyParser = require('body-parser')
 require('dotenv').config()
 
 // Creates the express application
 const app = express();
 const port = process.env.PORT;
 
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
 //To allow sending of data between frontend and backend
 app.use(function (request, response, next) {
   response.header("Access-Control-Allow-Origin", "*");
   response.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
   next();
 })
+
 
 mongoose.connect(process.env.MONGO_URI, {useNewUrlParser: true, useUnifiedTopology: true})
   .then(() => {

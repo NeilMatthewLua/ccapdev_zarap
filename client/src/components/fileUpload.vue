@@ -67,9 +67,11 @@ export default {
         return this.currentStatus === STATUS_INITIAL;
       },
       isSaving() {
+        this.toggleSubmit(false)
         return this.currentStatus === STATUS_SAVING;
       },
       isSuccess() {
+        this.toggleSubmit(true)
         return this.currentStatus === STATUS_SUCCESS;
       },
       isFailed() {
@@ -77,6 +79,9 @@ export default {
       }
     },
     methods: {
+      toggleSubmit(value) {
+        this.$emit('toggleSubmit', value)
+      },
       reset() {
         // reset form to initial state
         this.currentStatus = STATUS_INITIAL;
@@ -89,6 +94,7 @@ export default {
             .then(x => x.data)
             .then(x => x.map(img => Object.assign({},
                 img, { url: `http://localhost:9090/pictures/${img.id}` })))
+        
       },
       save(formData) {
         // upload data to the server

@@ -15,7 +15,8 @@ const actions =  {
         let res = await axios.get("http://localhost:9090/user/"); 
         
         commit('setUsers', res.data); 
-    }
+    },
+
 }
 
 const mutations = {

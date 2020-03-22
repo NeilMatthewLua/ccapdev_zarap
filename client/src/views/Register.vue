@@ -17,38 +17,39 @@
                             <!-- register text area -->
                             <div class="row">
                                 <div class="input-field col s6">
-                                <input id="first_name" type="text" class="validate" v-model="firstname">
+                                <input id="first_name" type="text" class="validate" v-model="user.firstname">
                                 <label for="first_name">First Name</label>
                                 </div>
                                 <div class="input-field col s6">
-                                <input id="last_name" type="text" class="validate" v-model="lastname">
+                                <input id="last_name" type="text" class="validate" v-model="user.lastname">
                                 <label for="last_name">Last Name</label>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="input-field col s12">
-                                <input id="password" type="password" class="validate" v-model="password">
+                                <input id="password" type="password" class="validate" v-model="user.password">
                                 <label for="password">Password</label>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="input-field col s12">
-                                <input id="email" type="email" class="validate" v-model="email">
+                                <input id="email" type="email" class="validate" v-model="user.email">
                                 <label for="email">Email</label>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="input-field col s12">
-                                <input id="address" type="text" class="validate" v-model="homeaddress">
+                                <input id="address" type="text" class="validate" v-model="user.homeaddress">
                                 <label for="address">Home Address</label>
                                 </div>
                             </div>
                             <div class="row">
                                 <!-- File Upload Portion -->
-                                <FileUpload @file-upload="getFiles" :dest="profilePictures" :isMultiple="false"/> 
+                                <FileUpload @file-upload="getFiles" :dest="profilePictures" :isMultiple="false"
+                                @toggleSubmit="toggleSubmitButton"/> 
                             </div>
                             <div class="center margin-pushdown">
-                            <div class="waves-effect waves-light btn-large btncolor" @click="validateForm"> Sign me up!
+                            <div class="waves-effect waves-light btn-large btncolor" v-if='submitVisible' @click="validateForm"> Sign me up!
                             </div>
                         </div>
                     </div>
@@ -60,6 +61,7 @@
 </template>
 
 <script>
+import axios from 'axios';
 import Navbar from '@/components/Navbar.vue';
 import Footer from '@/components/Footer.vue';
 import FileUpload from '@/components/fileUpload';
@@ -74,51 +76,77 @@ export default {
     data() {
         return {
             errors: [],
-            firstname: null,
-            lastname: null,
-            email: null,
-            password: null,
-            homeaddress: null,
+            user: {
+                "firstname": null,
+                "lastname": null,
+                "email": null,
+                "password": null,
+                "homeaddress": null,
+                "uploadedFiles": []
+            },
             profilePictures: "profilePictures",
-            uploadedFiles: []
+            submitVisible: true
         }
       },
     methods:{
+        toggleSubmitButton: function(value) {
+            this.submitVisible = value
+        },
         getFiles (files) {
-            this.$set(this,'uploadedFiles', files); 
+            this.$set(this.user,'uploadedFiles', files); 
         },
         print: function () {
-            console.log(this.firstname + " " + this.email + " " + this.lastname + " " + this.homeaddress + " " + this.password);
+            console.log(this.user.firstname + " " + this.user.email + " " + this.user.lastname + " " + this.user.homeaddress + " " + this.user.password);
         },
         validateForm: function () {
             this.errors = [];
-
-            if(!this.firstname) {
+            if(!this.user.firstname) {
                 this.errors.push('First name required');
             }
-            if(!this.lastname) {
+            if(!this.user.lastname) {
                 this.errors.push('Last name required');
             }
-            if(!this.email) {
+            if(!this.user.email) {
                 this.errors.push('Email required');
-            } else if (!this.validEmail(this.email)) {
+            } else if (!this.validEmail(this.user.email)) {
                 this.errors.push('Valid email required');
             }
-            if(!this.password) {
+            if(!this.user.password) {
                 this.errors.push('Password required');
             }
-            if(!this.homeaddress) {
+            if(!this.user.homeaddress) {
                 this.errors.push('Home Address required');
+            }
+            if(this.user.uploadedFiles.length == 0){
+                this.errors.push('Profile Picture required');
             }
             this.print();
             if(!this.errors.length) {
+                this.saveUser();
                 return true;
-            }
-            return false;
+            }        
         },
-        validEmail: function (email) {
+        validEmail: function(email) {
              var re = /\S+@\S+\.\S+/;
+             console.log(email)
              return re.test(String(email).toLowerCase());
+        },
+        saveUser: function() {
+            let app = this;
+            axios.post("http://localhost:9090/user/addUser", {
+                "firstname": app.user.firstname,
+                "lastname": app.user.lastname,
+                "email": app.user.email,
+                "password": app.user.password,
+                "homeaddress": app.user.homeaddress,
+                "user.uploadedFiles": app.user.uploadedFiles,
+            })
+            .then(() => {
+                console.log("YEET")
+            })
+            .catch(err => {
+                console.log("sad " + err)
+            })
         }
     }   
 }

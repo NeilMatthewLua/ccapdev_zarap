@@ -33,7 +33,7 @@ async function populateUsers(userCounter, limit) {
 
     for(i = userCounter; i < limit; i++) {
         let user = new User({
-            userID: mongoose.Types.ObjectId(),
+            // userID: mongoose.Types.ObjectId(),
             name: faker.name.firstName() + " " + faker.name.lastName(),
             password: faker.lorem.words(1),
             email: faker.internet.email(),
@@ -50,6 +50,7 @@ async function populateUsers(userCounter, limit) {
 function connectUserReviews() {
     User.find({}, (err, users) => {})
     .then((res) => {
+        console.log(res.length)
         res.forEach((user) => {
             //Get all reviews associated with user 
             Review.find({ownerID : user.userID}, "restaurantID")

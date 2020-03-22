@@ -3,7 +3,7 @@ const mongoose = require('mongoose')
 
 let reviewSchema = new mongoose.Schema({
     reviewID: {
-        type: mongoose.ObjectId, 
+        type: mongoose.Schema.ObjectId, 
         required: true,
         unique: true,
         auto: true

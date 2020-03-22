@@ -4,7 +4,7 @@ const fs = require('fs-extra');
 const multer = require('multer')
 const path = require('path')
 const mongoose = require('mongoose')
-const Pictures = require('../models/pictures')
+const Picture = require('../models/pictures')
 
 const imageFilter = function(req, file, cb) {
     // Accept images only
@@ -71,7 +71,7 @@ router.post('/upload-multiple/:destination', (req, res) => {
     // 'multiple_images' is the name of our file input field
     let upload = multer({ storage: storage, fileFilter: imageFilter }).array('photos', 5);
 
-    upload(req, res, function(err) {
+    upload(req, res, async function(err) {
          
         if (req.fileValidationError) {
             return res.send(req.fileValidationError);
@@ -91,6 +91,13 @@ router.post('/upload-multiple/:destination', (req, res) => {
         result = files.map(obj => (({...obj, path : `images/${req.params.destination}/${obj.filename}`})));
         console.log(result); 
         res.send(result);
+
+        let mongoDestination = result[0].destination.substring(1) + "/" + result[0].filename;
+        let pic = new Picture({
+            url: mongoDestination
+        })
+
+        await pic.save()
     });
 });
 
