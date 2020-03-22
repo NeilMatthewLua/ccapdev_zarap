@@ -5,7 +5,8 @@ let pictureSchema = new mongoose.Schema({
     pictureID: { //ID
         type: mongoose.ObjectId, 
         unique: true, 
-        required: true
+        required: true,
+        auto:true
     },
     url: { //Picture URL
         type: String, 
