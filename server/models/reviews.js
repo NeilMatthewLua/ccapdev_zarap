@@ -11,7 +11,6 @@ let reviewSchema = new mongoose.Schema({
     restaurantID: {
         type: mongoose.Schema.ObjectId,
         required: true, 
-        auto: true
     },
     reviewerID: {
         type: mongoose.Schema.ObjectId,

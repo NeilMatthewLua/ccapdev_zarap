@@ -31,10 +31,12 @@ const userRouter = require('./routes/userRouter');
 const reviewRouter = require('./routes/reviewsRouter');
 const populateRouter = require('./routes/populateRouter');
 const pictureRouter = require('./routes/picturesRouter');
+const restaurantRouter = require('./routes/restaurantsRouter'); 
 // Routes
-app.use('/user', userRouter);
-app.use('/review', reviewRouter);
-app.use('/pictures', pictureRouter)
+app.use('/users', userRouter);
+app.use('/reviews', reviewRouter);
+app.use('/pictures', pictureRouter);
+app.use('/restaurants', restaurantRouter); 
 // Populates the database tables
 app.use('/populate', populateRouter);
 

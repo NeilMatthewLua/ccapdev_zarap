@@ -6,12 +6,19 @@ const state =  {
 }
 
 const getters =  {
-    allReviews: state => state.reviews //All reviews associated with the restaurant 
+    currentReviews: state => state.reviews //All reviews associated with the restaurant 
 }
 
 const actions =  {
-    async getReviews({commit}) {
-        let res = await axios.get("http://localhost:9090/review/"); 
+    //Gets Reviews based on restaurant ID
+    async getReviewsByRestaurant({commit}, id) {
+        let res = await axios.get(`http://localhost:9090/reviews/restaurant/${id}`); 
+        
+        commit('setReviews', res.data); 
+    },
+    //Gets reviews based on reviewer ID
+    async getReviewsByReviewer({commit}, id) {
+        let res = await axios.get(`http://localhost:9090/reviews/user/${id}`); 
         
         commit('setReviews', res.data); 
     }
