@@ -4,7 +4,7 @@ const fs = require('fs-extra');
 const multer = require('multer')
 const path = require('path')
 const mongoose = require('mongoose')
-const Pictures = require('../models/pictures')
+const Picture = require('../models/pictures')
 
 const imageFilter = function(req, file, cb) {
     // Accept images only
@@ -34,13 +34,17 @@ router.get('/', (req, res) => {
     res.send("okay")
 })
 
-router.get('/getAll', (req, res) => {
-
+router.get('/:id', (req, res) => {
+    let id = req.params.id  
+    Picture.find({ pictureID : id }, (err, doc) => {
+        if(err) res.send(err); 
+        res.send(doc); 
+    })
 })
 
-// router.get('/:id', (req, res) => {
-//     res.send(`require("@/assets/pictures/golden-menu.jpg")`); 
-// });
+router.post('/save-picture', (req, res) => {
+    //Save Pictures
+})
 
 router.post('/upload-profile-pic', (req, res) => {
     // 'profile_pic' is the name of our file input field in the HTML form

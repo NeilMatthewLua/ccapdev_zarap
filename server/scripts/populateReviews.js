@@ -13,7 +13,7 @@ async function populateReviews(userCounter, limit) {
     let users = await User.find({}, "userID points reviewed liked").exec();
     let restaurants = await Restaurant.find({}, "restaurantID reviews").exec(); 
     for(i = userCounter; i < limit; i++) {
-        let chosenUser = users[(i + 3) % limit]
+        let chosenUser = users[(i + 3) % (users.length - 1)]
         let chosenRes = restaurants[i]
         let item = new Review({
             reviewerID : chosenUser.userID,
@@ -43,7 +43,7 @@ async function populateReviews(userCounter, limit) {
             .catch(err => console.log(err)); 
     }
     for(i = userCounter; i < limit; i++) {
-        let chosenUser = users[(i + 1) % limit]
+        let chosenUser = users[(i + 1) % (users.length - 1)]
         let chosenRes = restaurants[i]
         let item = new Review({
             reviewerID : chosenUser.userID,
@@ -73,7 +73,7 @@ async function populateReviews(userCounter, limit) {
             .catch(err => console.log(err)); 
     }
     for(i = userCounter; i < limit; i++) {
-        let chosenUser = users[(i + 2) % limit]
+        let chosenUser = users[(i + 2) % (users.length - 1)]
         let chosenRes = restaurants[i]
         let item = new Review({
             reviewerID : chosenUser.userID,
