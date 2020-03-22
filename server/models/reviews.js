@@ -5,7 +5,8 @@ let reviewSchema = new mongoose.Schema({
     reviewID: {
         type: mongoose.ObjectId, 
         required: true,
-        unique: true
+        unique: true,
+        auto: true
     },
     restaurantID: {
         type: mongoose.Schema.ObjectId,
@@ -15,12 +16,10 @@ let reviewSchema = new mongoose.Schema({
     reviewerID: {
         type: mongoose.Schema.ObjectId,
         required: true, 
-        auto: true
     },
     restaurantID: {
         type: mongoose.Schema.ObjectId, 
         required: true,
-        auto: true
     },
     rating: {
         type: Number, 

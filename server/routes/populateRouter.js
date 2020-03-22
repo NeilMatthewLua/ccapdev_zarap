@@ -49,19 +49,20 @@ router.get('/', (req, res, ) => {
       .then(() => {
         //Populate Pictures
         populatePictures(userCounter, limit)
-        console.log("Pictures populated")
         .then(() => {
+          console.log("Pictures Populated")
           //Populate Users
-          populateUsers(userCounter, limit)
-          console.log("Users populated")
+          populateUsers.populateUsers(userCounter, limit)
           .then(() => {
+            console.log("Users populated")
             //Populate Restaurants
             populateRestaurants(userCounter, limit)
-            console.log("Restaurants populated")
-            // .then(() => {
-            //   //Populate Reviews
-            //   populateReviews(userCounter, limit);
-            // })
+            .then(() => {
+              console.log("Restaurants populated")
+              //Populate Reviews
+              populateReviews(userCounter, limit)
+              .then(() => console.log("Reviews Populated")); 
+            })
           })
         })
       })

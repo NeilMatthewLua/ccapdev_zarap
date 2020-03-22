@@ -5,7 +5,8 @@ let restaurantSchema = new mongoose.Schema({
     restaurantID: { //Restaurant ID
         type: mongoose.ObjectId, 
         required: true,
-        unique: true
+        unique: true,
+        auto: true
     }, 
     ownerID: { //Owner ID
         type: mongoose.ObjectId, 
@@ -67,8 +68,8 @@ let restaurantSchema = new mongoose.Schema({
         type: Number,
         required: true
     },
-    reviews: { //TODO Review Ids
-        type: [Number], 
+    reviews: { //Review Ids of that restaurant 
+        type: [mongoose.ObjectId], 
         required: true
     },
     pictures: { 

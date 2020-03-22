@@ -39,10 +39,7 @@ async function populateUsers(userCounter, limit) {
             email: faker.internet.email(),
             address: faker.address.streetAddress(),
             points: faker.random.number(100) ,
-            beenHere: ["Golden Fortune", "Narnia", "Bermuda Triangle"],
-            reviewd: null,
-            liked: null,
-            picture: doc[i]['url']
+            picture: doc[i].pictureID
         });
 
         await save(user);

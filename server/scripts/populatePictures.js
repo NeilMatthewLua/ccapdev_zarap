@@ -135,7 +135,7 @@ function save(pic) {
             resolve();
         })
         .catch(err => {
-            consolge.log(err);
+            console.log(err);
         })
     })
 }
@@ -148,7 +148,6 @@ async function populatePictures(userCount, limit) {
         randomizeURL(peopleUrls)
         for(i = userCount; i < limit; i++) {
             let pic = new Picture ({
-                pictureID: mongoose.Types.ObjectId(), 
                 url: peopleUrls[i] 
             })
             await save(pic);
@@ -157,7 +156,6 @@ async function populatePictures(userCount, limit) {
         // Populate restaurant pictures
         for(j = 0; j < limit * 2; j++) {
             let pic = new Picture ({
-                pictureID: mongoose.Types.ObjectId(), 
                 url: restaurantUrls[j] 
             })
     
@@ -167,7 +165,6 @@ async function populatePictures(userCount, limit) {
         // Populate restaurant menu
         for(j = 0; j < limit * 2; j++) {
             let pic = new Picture ({
-                pictureID: mongoose.Types.ObjectId(), 
                 url: restaurantMenuUrls[j] 
             })
 

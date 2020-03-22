@@ -7,6 +7,7 @@ Schema({
     userID: {
         type: mongoose.ObjectId,
         required: true,
+        auto: true, 
         unique: true
     },
     name: {
@@ -40,22 +41,22 @@ Schema({
         required: true
     },
     beenHere: {
-        type: [String],
-        required: false,
-        default: null
+        type: [mongoose.ObjectId],
+        required: true,
+        default: []
     },
     reviewed: {
-        type: [String],
-        required: false,
-        default: null
+        type: [mongoose.ObjectId],
+        required: true,
+        default: []
     },
     liked: {
-        type: [String],
-        required: false,
-        default: null
+        type: [mongoose.ObjectId],
+        required: true,
+        default: []
     },
     picture: {
-        type: String,
+        type: mongoose.ObjectId,
         required: true,
         default: null
     }
