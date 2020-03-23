@@ -76,7 +76,7 @@ export default {
             destination: "reviews",
             //Add Computed to get boolean if current user is also review user
             uploadedFiles: [],
-            showPopular : true
+            showPopular : true,
             submitVisible: true
         }
     }, 

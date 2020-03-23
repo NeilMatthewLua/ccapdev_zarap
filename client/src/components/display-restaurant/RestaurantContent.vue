@@ -10,7 +10,7 @@
               <h5 v-for="estTypes in this.restoDetails.establishmentType" :key="estTypes">{{estTypes}}</h5>
               <a class="waves-effect waves-light red btn bookmark-btn"><i class="material-icons left">bookmark</i>Been Here</a>
             </div>
-            <img class="title-picture col s12 m4" :src="quickUrl" alt="Golden Fortune">
+            <img class="title-picture col s12 m4" :src="this.defaultPic" alt="Golden Fortune">
         </div>
         <transition name="changeContent" enter-active-class="animated bounceInLeft"> 
           <div v-if="section === 'Photos'">
@@ -75,7 +75,6 @@ export default {
           photosTitle: "Photos", //Default Photos Title
           section: "Photos", //Default Section
           isFetching : true,
-          quickUrl: "/static/1.png"
       }
     },
     computed: {
@@ -83,7 +82,7 @@ export default {
         return this.fetchCurrResto(); 
       }, 
       defaultPic () {
-        return "../../../../server" + this.$store.getters.fetchDefaultPic(this.restoDetails.defaultPicture).url;  
+        return this.$store.getters.fetchDefaultPic(this.restoDetails.defaultPicture).url;  
       }
     },
     components: {

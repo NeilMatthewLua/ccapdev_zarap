@@ -3,9 +3,7 @@
 import axios from "axios"
 
 const state =  {
-    reviewPostUsers : []
-    //Either store the entire logged user object from the db 
-    //Or separate each field into a variable to store\
+    reviewPostUsers : [],
     user : null,
     status : ''
 
@@ -28,7 +26,7 @@ const actions =  {
     login({commit}, user){
         return new Promise((resolve, reject) => {
           commit('auth_request')
-          axios.post('http://localhost:9090/user/login', {
+          axios.post('http://localhost:9090/users/login', {
             user
           })
           .then(resp => {
