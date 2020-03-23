@@ -61,26 +61,17 @@ router.get('/', (req, res, next) => { //finds a user by userID
         })
 })
 
-router.post('/login', (req, res) => {
-
-    User.find({email: req.body.email})
+router.post('/login', async (req, res) => {
+    await User.findOne({email: req.body.user.email})
     .then(user => {
-
+        if(req.body.user.password == user.password)
+            res.status(200).send({auth: true, user: user })
+        else
+            res.status(401).send({ auth: false});
     })
     .catch(err => {
         return res.status(500).send('Error on the server.');
     })
-    
-    // (req.body.email, (err, user) => {
-    //     if (err) return res.status(500).send('Error on the server.');
-    //     if (!user) return res.status(404).send('No user found.');
-    //     let passwordIsValid = bcrypt.compareSync(req.body.password, user.password);
-    //     if (!passwordIsValid) return res.status(401).send({ auth: false, token: null });
-    //     let token = jwt.sign({ id: user.id }, config.secret, {
-    //         expiresIn: 86400 // expires in 24 hours
-    //     });
-    //     res.status(200).send({ auth: true, token: token, user: user });
-    // });
 })
 
 module.exports = router;
