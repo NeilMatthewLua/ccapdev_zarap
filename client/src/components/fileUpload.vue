@@ -64,6 +64,7 @@ export default {
     },
     computed: {
       isInitial() {
+        this.toggleSubmit(true)
         return this.currentStatus === STATUS_INITIAL;
       },
       isSaving() {

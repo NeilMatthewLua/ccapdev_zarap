@@ -48,12 +48,19 @@
                                 <FileUpload @file-upload="getFiles" :dest="profilePictures" :isMultiple="false"
                                 @toggleSubmit="toggleSubmitButton"/> 
                             </div>
-                            <div class="center margin-pushdown">
-                            <div class="waves-effect waves-light btn-large btncolor" v-if='submitVisible' @click="validateForm"> Sign me up!
+                            <div v-show='submitVisible'>
+                                <div class="center margin-pushdown bring_back">
+                                    <div class="waves-effect waves-light btn-large btncolor" @click="validateForm"> Sign me up!
+                                    </div>
+                                </div>
+                                <alertModal 
+                                    v-show="isModalVisible"
+                                    @close="closeModal"
+                                    class="bring_front"
+                                />
                             </div>
                         </div>
                     </div>
-                </div>
                 </div>
             </div>
         <Footer /> 
@@ -65,16 +72,21 @@ import axios from 'axios';
 import Navbar from '@/components/Navbar.vue';
 import Footer from '@/components/Footer.vue';
 import FileUpload from '@/components/fileUpload';
+import alertModal from '@/components/alertModal';
+import router from '../router'
 
 export default {
-    name: 'Login',
+    name: 'Register',
     components: {
         Navbar,
         Footer,
-        FileUpload
+        FileUpload,
+        alertModal
     },
     data() {
         return {
+            isModalVisible: false,
+            submitVisible: false,
             errors: [],
             user: {
                 "firstname": null,
@@ -84,11 +96,17 @@ export default {
                 "homeaddress": null,
                 "uploadedFiles": []
             },
-            profilePictures: "profilePictures",
-            submitVisible: true
+            profilePictures: "profilePictures"
         }
-      },
+    },
     methods:{
+        showModal() {
+            this.isModalVisible = true;
+        },
+        closeModal() {
+            this.isModalVisible = false;
+            router.push({name: "Home"});
+        },
         toggleSubmitButton: function(value) {
             this.submitVisible = value
         },
@@ -120,7 +138,7 @@ export default {
             if(this.user.uploadedFiles.length == 0){
                 this.errors.push('Profile Picture required');
             }
-            this.print();
+            // this.print();
             if(!this.errors.length) {
                 this.saveUser();
                 return true;
@@ -128,12 +146,11 @@ export default {
         },
         validEmail: function(email) {
              var re = /\S+@\S+\.\S+/;
-             console.log(email)
              return re.test(String(email).toLowerCase());
         },
-        saveUser: function() {
+        saveUser: async function() {
             let app = this;
-            axios.post("http://localhost:9090/user/addUser", {
+            await axios.post("http://localhost:9090/user/addUser", {
                 "firstname": app.user.firstname,
                 "lastname": app.user.lastname,
                 "email": app.user.email,
@@ -142,10 +159,10 @@ export default {
                 "user.uploadedFiles": app.user.uploadedFiles,
             })
             .then(() => {
-                console.log("YEET")
+                this.showModal();
             })
             .catch(err => {
-                console.log("sad " + err)
+                console.log(err)
             })
         }
     }   
@@ -164,6 +181,14 @@ export default {
         --default-navbar-color: #CB202D;
     }
 
+    .bring_back {
+        z-index: 0;
+    }
+
+    .bring_front {
+        z-index: 1;
+    }
+    
     .margin-pushdown {
         margin-bottom: 2vw;
     }

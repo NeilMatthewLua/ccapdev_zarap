@@ -15,8 +15,8 @@
                             <div class="column">
                                 <div class="input-field col s6">
                                     <i class="material-icons prefix">account_circle</i>
-                                    <input id="icon_prefix" type="text" class="validate" v-model="username">
-                                    <label for="icon_prefix" class="black-text">Username</label>
+                                    <input id="icon_prefix" type="text" class="validate" v-model="email">
+                                    <label for="icon_prefix" class="black-text">Email</label>
                                 </div>
                                 <br>
                                 <div class="input-field col s6">
@@ -24,7 +24,7 @@
                                     <input id="icon_telephone" type="tel" class="validate" v-model="password">
                                     <label for="icon_telephone"  class="black-text">Password</label>
                                 </div>
-                                <div class="waves-effect waves-light btn-large margin-bottom-small send-back-button colored-button white-text" @click="print"> Sign me in!
+                                <div class="waves-effect waves-light btn-large margin-bottom-small send-back-button colored-button white-text" @click="loadUser"> Sign me in!
                                 </div>
                             </div>
                         </div>
@@ -51,13 +51,19 @@ export default {
     data() {
         return {
             errors: [],
-            username: null,
-            password: null
+            "email": null,
+            "password": null
         }
       },
     methods:{
+        loadUser: function() {
+            this.$store.dispatch('login', {
+                "email": this.email,
+                "password": this.password
+            })
+        },
         print: function () {
-            console.log(this.username + " " + this.password);
+            console.log(this.email + " " + this.password);
         }
     }
 }
