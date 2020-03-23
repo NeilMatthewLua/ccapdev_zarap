@@ -260,9 +260,9 @@ async function populateRestaurants(userCount, limit) {
             operatingHours: populateOperating(),
             contactDetails: faker.phone.phoneNumber('+8###-####'),
             overallRating: 0,
-            pictures: [doc_2[limit + (i*2)]['_id'], doc_2[limit + (i*2) + 1]['_id']],
-            menu: [doc_2[(limit * 3) + (i*2)]['_id'], doc_2[(limit * 3) +  (i*2) + 1]['_id']], 
-            defaultPicture: [doc_2[limit + (i*2)]['_id']]
+            pictures: [doc_2[limit + (i*2)]['pictureID'], doc_2[limit + (i*2) + 1]['pictureID']],
+            menu: [doc_2[(limit * 3) + (i*2)]['pictureID'], doc_2[(limit * 3) +  (i*2) + 1]['pictureID']], 
+            defaultPicture: [doc_2[limit + (i*2)]['pictureID']]
         });
         await save(resto);
     }

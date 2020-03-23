@@ -36,7 +36,7 @@ router.get('/', (req, res) => {
 
 router.get('/:id', (req, res) => {
     let id = req.params.id  
-    Picture.find({ pictureID : id }, (err, doc) => {
+    Picture.findOne({ pictureID : id }, (err, doc) => {
         if(err) res.send(err); 
         res.send(doc); 
     })

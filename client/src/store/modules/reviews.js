@@ -6,19 +6,22 @@ const state =  {
 }
 
 const getters =  {
-    currentReviews: state => state.reviews //All reviews associated with the restaurant 
+    fetchReviews: state => state.reviews, //All reviews associated with the restaurant 
+    fetchPopular: state => state.reviews.reduce(function(prev, current) {
+        return (prev.upvotes > current.upvotes) ? prev : current
+    })
 }
 
 const actions =  {
     //Gets Reviews based on restaurant ID
     async getReviewsByRestaurant({commit}, id) {
-        let res = await axios.get(`http://localhost:9090/reviews/restaurant/${id}`); 
-        
+        let res = await axios.get(`http://localhost:9090/reviews/restaurantID/${id}`); 
+        //ADD FILTER TO SET CUR USER AS WELL
         commit('setReviews', res.data); 
     },
     //Gets reviews based on reviewer ID
     async getReviewsByReviewer({commit}, id) {
-        let res = await axios.get(`http://localhost:9090/reviews/user/${id}`); 
+        let res = await axios.get(`http://localhost:9090/reviews/userID/${id}`); 
         
         commit('setReviews', res.data); 
     }
