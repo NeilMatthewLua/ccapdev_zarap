@@ -384,6 +384,11 @@ export default {
     isLogged: Boolean, //If user is logged in 
     hasFilter: Boolean,
   },
+  computed: {
+    isLoggedIn: function() {
+        return this.$store.getters.isLoggedIn;
+    }
+  },
   mounted() {
     M.AutoInit();
     document.addEventListener('DOMContentLoaded', function() {
