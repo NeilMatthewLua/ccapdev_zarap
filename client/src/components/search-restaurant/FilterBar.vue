@@ -17,14 +17,6 @@
                         <div class="grey-text"> &nbsp; {{filbar_sort.option}} </div>
                     </li>
 
-                    <!-- Filtered by Category -->
-                    <li class="collection-item">
-                        <h6> Category </h6>
-                    </li>
-                    <li class="collection-item" v-for="filbar_category in filbar_categories" v-bind:key="filbar_category.id">
-                        <a href="#"> {{filbar_category.label}} </a>
-                    </li>
-
                     <!-- Filtered by Location -->
                     <li class="collection-item">
                         <h6> Location </h6>
@@ -265,20 +257,6 @@ export default {
                 filbar_costdes:{
                     label: "Cost",
                     option: " - low to high"
-                }
-            },
-            filbar_categories: {
-                filbar_dine_out: {
-                    label: "Dine-out"
-                },
-                filbar_delivery: {
-                    label: "Delivery"
-                },
-                filbar_drink: {
-                    label: "Drink & Nightlife"
-                },
-                filbar_cafe: {
-                    label: "Cafés"
                 }
             },
             filbar_locations: {

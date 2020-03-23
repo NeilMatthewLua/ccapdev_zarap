@@ -6,25 +6,25 @@
             <div class="container center margin-top">
                 <div class="container center">
                     <div class="column">
-                        <div class="col s12" id="login" @click="print" method="post">
+                        <div class="col s12" id="login">
                             <!-- if wrong credentials, display error message -->
                             <p v-if="errors.length > 0">
-                                <b>Invalid Credentials!</b>
+                                <b class="errorColor">Invalid Credentials!</b>
                             </p>
                             <!-- login text area -->
                             <div class="column">
                                 <div class="input-field col s6">
                                     <i class="material-icons prefix">account_circle</i>
-                                    <input id="icon_prefix" type="text" class="validate" v-model="username">
-                                    <label for="icon_prefix" class="black-text">Username</label>
+                                    <input id="icon_prefix" type="text" class="validate pad-input" v-model="email">
+                                    <label for="icon_prefix" class="black-text">Email</label>
                                 </div>
                                 <br>
                                 <div class="input-field col s6">
                                     <i class="material-icons prefix">lock</i>
-                                    <input id="icon_telephone" type="tel" class="validate" v-model="password">
+                                    <input id="icon_telephone"  type="password"  class="validate pad-input" v-model="password">
                                     <label for="icon_telephone"  class="black-text">Password</label>
                                 </div>
-                                <div class="waves-effect waves-light btn-large margin-bottom-small send-back-button colored-button white-text" @click="print"> Sign me in!
+                                <div class="waves-effect waves-light btn-large margin-bottom-small send-back-button colored-button white-text" @click="loadUser"> Sign me in!
                                 </div>
                             </div>
                         </div>
@@ -41,6 +41,7 @@
 <script>
 import Navbar from '@/components/Navbar.vue';
 import Footer from '@/components/Footer.vue';
+import router from '../router';
 
 export default {
     name: 'Login',
@@ -51,13 +52,27 @@ export default {
     data() {
         return {
             errors: [],
-            username: null,
-            password: null
+            "email": null,
+            "password": null
         }
-      },
+    },
     methods:{
+        loadUser: function() {
+            this.print()
+            this.$store
+                .dispatch('login', {
+                    "email": this.email,
+                    "password": this.password
+                    })
+                .then(() => {
+                    router.push({name: "Home"});
+                })
+                .catch(() => {
+                    this.errors.push('Error');
+                })
+        },
         print: function () {
-            console.log(this.username + " " + this.password);
+            console.log(this.email + " " + this.password);
         }
     }
 }
@@ -99,5 +114,13 @@ export default {
 
     .white-text {
         color: white !important;
+    }
+
+    .pad-input {
+        padding-left: 10px !important;
+    }
+
+    .errorColor {
+        color: var(--default-error-color)
     }
 </style>
