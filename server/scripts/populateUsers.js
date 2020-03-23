@@ -33,7 +33,6 @@ async function populateUsers(userCounter, limit) {
 
     for(i = userCounter; i < limit; i++) {
         let user = new User({
-            // userID: mongoose.Types.ObjectId(),
             name: faker.name.firstName() + " " + faker.name.lastName(),
             password: faker.lorem.words(1),
             email: faker.internet.email(),
@@ -46,6 +45,7 @@ async function populateUsers(userCounter, limit) {
     }
     return;
 } 
+
 
 function connectUserReviews() {
     User.find({}, (err, users) => {})
@@ -79,3 +79,4 @@ function updateUserPoints() {
 }
 
 module.exports = {populateUsers, connectUserReviews, updateUserPoints }; 
+

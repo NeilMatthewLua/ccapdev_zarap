@@ -5,20 +5,18 @@ let reviewSchema = new mongoose.Schema({
     reviewID: {
         type: mongoose.Schema.ObjectId, 
         required: true,
-        unique: true,
         auto: true
     },
     restaurantID: {
-        type: mongoose.Schema.ObjectId,
+        type: mongoose.ObjectId,
         required: true, 
-        auto: true
     },
     reviewerID: {
-        type: mongoose.Schema.ObjectId,
+        type: mongoose.ObjectId,
         required: true, 
     },
     restaurantID: {
-        type: mongoose.Schema.ObjectId, 
+        type: mongoose.ObjectId, 
         required: true,
     },
     rating: {

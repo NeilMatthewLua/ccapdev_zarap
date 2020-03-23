@@ -52,7 +52,7 @@ router.get('/', (req, res, ) => {
         .then(() => {
           console.log("Pictures Populated")
           //Populate Users
-          populateUsers.populateUsers(userCounter, limit)
+          populateUsers(userCounter, limit)
           .then(() => {
             console.log("Users populated")
             //Populate Restaurants

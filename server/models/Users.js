@@ -8,7 +8,6 @@ Schema({
         type: mongoose.ObjectId,
         required: true,
         auto: true, 
-        // unique: true
     },
     name: {
         type: String,
@@ -58,7 +57,7 @@ Schema({
     picture: {
         type: mongoose.ObjectId,
         required: true,
-        default: null
+        default: undefined
     }
 })
 
