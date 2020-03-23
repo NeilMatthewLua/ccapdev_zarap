@@ -1,26 +1,7 @@
 <template>
   <div>
     <div class ="BG-color">
-    <!--Navbar-->
-      <div>
-        <ul class ="nav-flex-right hide-on-med-and-down"  id="nav-mobile">
-          <li class ="navitem pushdown"><a href="/login" class ="black-color">Login</a></li>
-          <li class ="navitem boxed"><a href="/register" class ="black-color">Register</a></li>
-        </ul>
-      </div>
-
-      <!--Navbar for Smaller Screens-->
-      <div class = "hide-on-large-only">
-        <a href="#" data-target="slide-out" class="right sidenav-trigger push-padding"><i class="material-icons black-text">menu</i></a>
-      </div>
-
-      <!--Sidebar Content-->
-      <ul id="slide-out" class="sidenav">
-        <li><div class="divider"></div></li>
-        <li><a href="/register">Register</a></li>
-        <li><div class="divider"></div></li>
-        <li><a href="/login">Login</a></li>
-      </ul>
+      <NavbarHome/>
 
       <div class ="container pad4">
         <div class ="col s12 m2 valign-wrapper center-align">
@@ -42,7 +23,6 @@
         <br>
       </div>
     </div>
-
       
     <div class ="lowerhalf">
       <div class ="row">
@@ -97,11 +77,13 @@
 <script>
 // @ is an alias to /src
 import Footer from '@/components/Footer.vue';
+import NavbarHome from '@/components/NavbarHome.vue';
 
 export default {
   name: 'Home',
   components: {
-    Footer
+    Footer,
+    NavbarHome
   },
   data() {
     return {
@@ -192,13 +174,6 @@ export default {
 
     .btn.pushdown {
         margin-top:17px;
-    }
-
-    .square {
-        border: 1px solid #2D2D2D;
-        border-radius: 3px;
-        width: 250px;
-        height: 250px;
     }
 
     .nav-flex-right {

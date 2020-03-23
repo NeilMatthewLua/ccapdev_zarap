@@ -107,12 +107,6 @@
     </li>
     <li class="divider"></li>
     <li>
-      <a href="#!" class="dropdown-trigger" data-target="category"> Category
-        <i class="material-icons right"> arrow_drop_down </i>
-      </a>
-    </li>
-    <li class="divider"></li>
-    <li>
       <a href="#!" class="dropdown-trigger" data-target="location"> Location
         <i class="material-icons right"> arrow_drop_down </i>
       </a>
@@ -141,13 +135,6 @@
   <ul id="sort-by" class="dropdown-content">
     <li v-for="navbar_sort in nav_sort_by" v-bind:key="navbar_sort.id">
       <a href="#"> {{navbar_sort.label}}{{navbar_sort.option}} </a>
-    </li>
-  </ul>
-
-  <!-- Dropdown for Filter Category -->
-  <ul id="category" class="dropdown-content">
-    <li v-for="navbar_category in nav_categories" v-bind:key="navbar_category.id">
-      <a href="#"> {{navbar_category.label}} </a>
     </li>
   </ul>
 
@@ -397,6 +384,11 @@ export default {
     isLogged: Boolean, //If user is logged in 
     hasFilter: Boolean,
   },
+  computed: {
+    isLoggedIn: function() {
+        return this.$store.getters.isLoggedIn;
+    }
+  },
   mounted() {
     M.AutoInit();
     document.addEventListener('DOMContentLoaded', function() {
@@ -414,7 +406,7 @@ export default {
     });
   },
   data() {
-    return{
+    return {
       nav_sort_by: {
         nav_ratings:{
             label: "Rating",
@@ -428,20 +420,6 @@ export default {
             label: "Cost",
             option: " - low to high"
         }
-      },
-      nav_categories: {
-          nav_dine_out: {
-              label: "Dine-out"
-          },
-          nav_delivery: {
-              label: "Delivery"
-          },
-          nav_drink: {
-              label: "Drink & Nightlife"
-          },
-          nav_cafe: {
-              label: "Cafés"
-          }
       },
       nav_locations: {
           nav_manila: {

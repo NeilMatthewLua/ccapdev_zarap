@@ -26,8 +26,8 @@
                     <textarea v-model="editData" id="review-area" class="materialize-textarea" data-length = "300"></textarea>
                     <div class="file-field input-field">
                     <!-- File Upload Portion -->
-                    <FileUpload @file-upload="getFiles" :dest="destination"/> 
-                    <a class="submit-btn red btn right">SUBMIT</a>
+                    <FileUpload @file-upload="getFiles" :isMultiple="true" :dest="destination" @toggleSubmit="toggleSubmitButton"/> 
+                    <a class="submit-btn red btn right"  v-if='submitVisible'>SUBMIT</a>
                     </div>
                 </div>
             </div>
@@ -55,7 +55,7 @@
 <script scoped>
 import { mapGetters } from 'vuex'; 
 import ReviewPost from './ReviewPost'; 
-import FileUpload from '@/components/FileUpload';
+import FileUpload from '@/components/fileUpload';
 // import {mapGetters, mapActions} from 'vuex'; 
 
 export default {
@@ -77,6 +77,7 @@ export default {
             //Add Computed to get boolean if current user is also review user
             uploadedFiles: [],
             showPopular : true
+            submitVisible: true
         }
     }, 
     computed : {
@@ -89,6 +90,9 @@ export default {
         //IMPLEMENT Checks if liked by user and is own review 
     },
     methods: {
+        toggleSubmitButton: function(value) {
+            this.submitVisible = value
+        },
        editReview (content) { 
         this.isEditing = true;  
         this.$set(this,'editData',content); 

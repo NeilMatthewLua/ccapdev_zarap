@@ -17,38 +17,50 @@
                             <!-- register text area -->
                             <div class="row">
                                 <div class="input-field col s6">
-                                <input id="first_name" type="text" class="validate" v-model="firstname">
+                                <input id="first_name" type="text" class="validate" v-model="user.firstname">
                                 <label for="first_name">First Name</label>
                                 </div>
                                 <div class="input-field col s6">
-                                <input id="last_name" type="text" class="validate" v-model="lastname">
+                                <input id="last_name" type="text" class="validate" v-model="user.lastname">
                                 <label for="last_name">Last Name</label>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="input-field col s12">
-                                <input id="password" type="password" class="validate" v-model="password">
+                                <input id="password" type="password" class="validate" v-model="user.password">
                                 <label for="password">Password</label>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="input-field col s12">
-                                <input id="email" type="email" class="validate" v-model="email">
+                                <input id="email" type="email" class="validate" v-model="user.email">
                                 <label for="email">Email</label>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="input-field col s12">
-                                <input id="address" type="text" class="validate" v-model="homeaddress">
+                                <input id="address" type="text" class="validate" v-model="user.homeaddress">
                                 <label for="address">Home Address</label>
                                 </div>
                             </div>
-                            <div class="center margin-pushdown">
-                            <div class="waves-effect waves-light btn-large btncolor" @click="validateForm"> Sign me up!
+                            <div class="row">
+                                <!-- File Upload Portion -->
+                                <FileUpload @file-upload="getFiles" :dest="profilePictures" :isMultiple="false"
+                                @toggleSubmit="toggleSubmitButton"/> 
+                            </div>
+                            <div v-show='submitVisible'>
+                                <div class="center margin-pushdown bring_back">
+                                    <div class="waves-effect waves-light btn-large btncolor" @click="validateForm"> Sign me up!
+                                    </div>
+                                </div>
+                                <alertModal 
+                                    v-show="isModalVisible"
+                                    @close="closeModal"
+                                    class="bring_front"
+                                />
                             </div>
                         </div>
                     </div>
-                </div>
                 </div>
             </div>
         <Footer /> 
@@ -56,58 +68,102 @@
 </template>
 
 <script>
+import axios from 'axios';
 import Navbar from '@/components/Navbar.vue';
 import Footer from '@/components/Footer.vue';
+import FileUpload from '@/components/fileUpload';
+import alertModal from '@/components/alertModal';
+import router from '../router'
 
 export default {
-    name: 'Login',
+    name: 'Register',
     components: {
         Navbar,
-        Footer
+        Footer,
+        FileUpload,
+        alertModal
     },
     data() {
         return {
+            isModalVisible: false,
+            submitVisible: false,
             errors: [],
-            firstname: null,
-            lastname: null,
-            email: null,
-            password: null,
-            homeaddress: null
+            user: {
+                "firstname": null,
+                "lastname": null,
+                "email": null,
+                "password": null,
+                "homeaddress": null,
+                "uploadedFiles": []
+            },
+            profilePictures: "profilePictures"
         }
-      },
+    },
     methods:{
+        showModal() {
+            this.isModalVisible = true;
+        },
+        closeModal() {
+            this.isModalVisible = false;
+            router.push({name: "Home"});
+        },
+        toggleSubmitButton: function(value) {
+            this.submitVisible = value
+        },
+        getFiles (files) {
+            this.$set(this.user,'uploadedFiles', files); 
+        },
         print: function () {
-            console.log(this.firstname + " " + this.email + " " + this.lastname + " " + this.homeaddress + " " + this.password);
+            console.log(this.user.firstname + " " + this.user.email + " " + this.user.lastname + " " + this.user.homeaddress + " " + this.user.password);
         },
         validateForm: function () {
             this.errors = [];
-
-            if(!this.firstname) {
+            if(!this.user.firstname) {
                 this.errors.push('First name required');
             }
-            if(!this.lastname) {
+            if(!this.user.lastname) {
                 this.errors.push('Last name required');
             }
-            if(!this.email) {
+            if(!this.user.email) {
                 this.errors.push('Email required');
-            } else if (!this.validEmail(this.email)) {
+            } else if (!this.validEmail(this.user.email)) {
                 this.errors.push('Valid email required');
             }
-            if(!this.password) {
+            if(!this.user.password) {
                 this.errors.push('Password required');
             }
-            if(!this.homeaddress) {
+            if(!this.user.homeaddress) {
                 this.errors.push('Home Address required');
             }
-            this.print();
-            if(!this.errors.length) {
-                return true;
+            if(this.user.uploadedFiles.length == 0){
+                this.errors.push('Profile Picture required');
             }
-            return false;
+            // this.print();
+            if(!this.errors.length) {
+                this.saveUser();
+                return true;
+            }        
         },
-        validEmail: function (email) {
+        validEmail: function(email) {
              var re = /\S+@\S+\.\S+/;
              return re.test(String(email).toLowerCase());
+        },
+        saveUser: async function() {
+            let app = this;
+            await axios.post("http://localhost:9090/user/addUser", {
+                "firstname": app.user.firstname,
+                "lastname": app.user.lastname,
+                "email": app.user.email,
+                "password": app.user.password,
+                "homeaddress": app.user.homeaddress,
+                "user.uploadedFiles": app.user.uploadedFiles,
+            })
+            .then(() => {
+                this.showModal();
+            })
+            .catch(err => {
+                console.log(err)
+            })
         }
     }   
 }
@@ -125,6 +181,14 @@ export default {
         --default-navbar-color: #CB202D;
     }
 
+    .bring_back {
+        z-index: 0;
+    }
+
+    .bring_front {
+        z-index: 1;
+    }
+    
     .margin-pushdown {
         margin-bottom: 2vw;
     }

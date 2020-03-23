@@ -2,10 +2,15 @@
    <div class="container">
         <!--UPLOAD-->
         <form enctype="multipart/form-data" novalidate v-if="isInitial || isSaving">
-            <h5>Upload images</h5>
+            <h5 v-if="isMultiple">Upload images</h5>
+            <h5 v-else>Upload profile picture</h5>
             <div class="dropbox">
-            <input type="file" multiple :name="uploadFieldName" :disabled="isSaving" @change="filesChange($event.target.name, $event.target.files); fileCount = $event.target.files.length"
-                accept="image/*" class="input-file">
+            <div v-if="isMultiple">
+              <input type="file" multiple :name="uploadFieldName" :disabled="isSaving" @change="filesChange($event.target.name, $event.target.files); fileCount = $event.target.files.length" accept="image/*" class="input-file">
+            </div>
+            <div v-else>
+              <input type="file" :name="uploadFieldName" :disabled="isSaving" @change="filesChange($event.target.name, $event.target.files); fileCount = $event.target.files.length" accept="image/*" class="input-file">
+            </div>
                 <p v-if="isInitial">
                 Drag your file(s) here to begin<br> or click to browse
                 </p>
@@ -54,16 +59,20 @@ export default {
         }
     }, 
     props: {
-        dest: String //Directory to save the image to 
+        dest: String, //Directory to save the image to 
+        isMultiple: Boolean
     },
     computed: {
       isInitial() {
+        this.toggleSubmit(true)
         return this.currentStatus === STATUS_INITIAL;
       },
       isSaving() {
+        this.toggleSubmit(false)
         return this.currentStatus === STATUS_SAVING;
       },
       isSuccess() {
+        this.toggleSubmit(true)
         return this.currentStatus === STATUS_SUCCESS;
       },
       isFailed() {
@@ -71,6 +80,9 @@ export default {
       }
     },
     methods: {
+      toggleSubmit(value) {
+        this.$emit('toggleSubmit', value)
+      },
       reset() {
         // reset form to initial state
         this.currentStatus = STATUS_INITIAL;
@@ -78,12 +90,12 @@ export default {
         this.uploadError = null;
       },
       async upload(formData) {
-        console.log(UPLOAD_ROUTE + `/${this.dest}`);
         return await axios.post(UPLOAD_ROUTE + `/${this.dest}`, formData, {headers: {'Content-Type': 'multipart/form-data' }})
             // get data
             .then(x => x.data)
             .then(x => x.map(img => Object.assign({},
                 img, { url: `http://localhost:9090/pictures/${img.id}` })))
+        
       },
       save(formData) {
         // upload data to the server
