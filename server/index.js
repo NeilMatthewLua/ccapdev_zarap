@@ -2,6 +2,7 @@
 const express = require('express')
 const mongoose = require('mongoose')
 const bodyParser = require('body-parser')
+const path = require('path'); 
 require('dotenv').config()
 
 // Creates the express application
@@ -10,6 +11,8 @@ const port = process.env.PORT;
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use('/static', express.static(path.join(__dirname,'/images'))); 
+
 //To allow sending of data between frontend and backend
 app.use(function (request, response, next) {
   response.header("Access-Control-Allow-Origin", "*");

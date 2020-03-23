@@ -78,5 +78,5 @@ function updateUserPoints() {
     //update the user's no. of points based on their reviews 
 }
 
-module.exports = {populateUsers, connectUserReviews, updateUserPoints }; 
+module.exports = populateUsers; 
 

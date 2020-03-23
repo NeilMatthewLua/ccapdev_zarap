@@ -2,7 +2,7 @@
   <div class="review-post">
       <div class="row valign-wrapper">
         <div class="valign-wrapper col s10"  v-if="!inProfile">
-            <img class="post-author-pic" src = "@/assets/pictures/neil.jpg">
+            <img class="post-author-pic" src = "http://localhost:9090/static/logo.png">
             <!-- Change Route to user profile -->
             <a :href="`/userdetail/${this.reviewData.userID}/menu`"><h4 class="post-author">{{this.reviewAuthor.name}}</h4></a>
             <h5 class="post-rating #388e3c green white-text darken-2">{{reviewData.rating}}</h5>
