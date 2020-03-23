@@ -4,52 +4,62 @@ const state =  {
     //Either store the entire logged user object from the db 
     //Or separate each field into a variable to store\
     user : null,
+    status : ''
 
 }
 
 const getters =  {
-    
+    isLoggedIn: state => {
+      if(state.user != null)
+        return true
+      else
+        return false 
+    },
+
+    getUser: state => {return state.user}
 }
 
 const actions =  {
-    // async login({commit}, details) {
-    //     console.log("DEETS: " + details.length)
-    //     let res = 
-    //      axios.get("http://localhost:9090/user/")
-    //     .then((doc) => {
-    //         console.log("RESULT: " + doc.length)
-    //     })
-    //     .catch(() => {
-    //         console.log('Bollocks, error mate')
-    //     }) 
-        
-    //     commit('setUsers', res.data); 
-    // },
     login({commit}, user){
         return new Promise((resolve, reject) => {
           commit('auth_request')
-          axios({url: 'http://localhost:3000/login', data: user, method: 'POST' })
+          axios.post('http://localhost:9090/user/login', {
+            user
+          })
           .then(resp => {
-            const token = resp.data.token
-            const user = resp.data.user
-            localStorage.setItem('token', token)
-            axios.defaults.headers.common['Authorization'] = token
-            commit('auth_success', token, user)
+            commit('auth_success', resp.data.user)
             resolve(resp)
           })
           .catch(err => {
             commit('auth_error')
-            localStorage.removeItem('token')
             reject(err)
           })
         })
     },
+    logout({ commit }) {
+      return new Promise((resolve) => {
+        commit('logout')
+        localStorage.removeItem('token')
+        delete axios.defaults.headers.common['Authorization']
+        resolve()
+      })
+    }
 }
 
 const mutations = {
-    setUsers (state, data) {
-        state.user = data
-    }
+  auth_request(state) {
+    state.status = 'loading'
+  },
+  auth_success(state, user) {
+    state.status = 'success'
+    state.user = user
+  },
+  auth_error(state) {
+    state.status = 'error'
+  },
+  logout(state) {
+    state.status = ''
+  },
 }
 
 export default {
