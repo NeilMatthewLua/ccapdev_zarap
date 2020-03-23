@@ -1,54 +1,70 @@
 <template>
   <!--Restaurant Content-->
-  <div class="main-content row">
-    <div class="left-section col s12 xl8">
-      <div class="title-card row">
-          <div class="col s12 m8">
-            <h2><b>Golden Fortune</b></h2>
-            <h5>Chinese Food | Fine Dining</h5>
-            <a class="waves-effect waves-light red btn bookmark-btn"><i class="material-icons left">bookmark</i>Been Here</a>
+  <div>
+    <transition name="changeContent" enter-active-class="animated fadeInUp">
+    <div class="main-content row" v-if="!isFetching">
+      <div class="left-section col s12 xl8">
+        <div class="title-card row">
+            <div class="col s12 m8">
+              <h2>{{this.restoDetails.name}}</h2>
+              <h5 v-for="estTypes in this.restoDetails.establishmentType" :key="estTypes">{{estTypes}}</h5>
+              <a class="waves-effect waves-light red btn bookmark-btn"><i class="material-icons left">bookmark</i>Been Here</a>
+            </div>
+            <img class="title-picture col s12 m4" :src="quickUrl" alt="Golden Fortune">
+        </div>
+        <transition name="changeContent" enter-active-class="animated bounceInLeft"> 
+          <div v-if="section === 'Photos'">
+            <PhotoSection :title="photosTitle"/>  
           </div>
-          <img class="title-picture col s12 m4" src="@/assets/pictures/Golden Fortune-1.jpg" alt="Golden Fortune">
+        </transition> 
+        <transition name="changeContent" enter-active-class="animated bounceInLeft">
+          <div v-if="section === 'Review'">
+            <!-- TODO : Check if a user is logged in or not through vuex -->
+            <ReviewSection :hasReview="false"/> 
+          </div>
+        </transition> 
       </div>
-      <transition name="changeContent" enter-active-class="animated bounceInLeft"> 
-        <div v-if="section === 'Photos'">
-          <PhotoSection :title="photosTitle"/>  
+      <div class="right-section col s12 xl4">
+        <div class="content-selection row">
+          <a @click="changeMenu" class="valign-wrapper center-align menu-buttons col s4"><h5 class="menu-text">Menu</h5></a>
+          <a @click="changePhotos" class="valign-wrapper menu-buttons col s4"><h5 class="menu-text">Photos</h5></a>
+          <a @click="changeReview" class="valign-wrapper menu-buttons col s4"><h5 class="menu-text">Review</h5></a>
         </div>
-      </transition> 
-      <transition name="changeContent" enter-active-class="animated bounceInLeft">
-        <div v-if="section === 'Review'">
-            <ReviewSection :hasReview="true"/> 
+        <div class="content-details">
+            <h4>Telephone Number:</h4>
+            <h5>{{this.restoDetails.contactDetails}}</h5>
+            <br> 
+            <h4>Cuisines:</h4>
+            <span v-for="cuisine in this.restoDetails.cuisines" :key="cuisine">{{cuisine + " "}}</span>
+            <br> 
+            <h4>Opening Hours:</h4>
+            <h5 v-for="(value, name) in this.restoDetails.operatingHours" :key="name">{{name}} : {{value}}</h5>  
+            <br> 
+            <h4>Address:</h4>
+            <h5>{{this.restoDetails.fullAddress}}</h5>
+            <br> 
+            <h4>Average Cost:</h4>
+            <h5>{{this.restoDetails.costForTwo}}</h5>
+            <br> 
         </div>
-      </transition> 
+      </div>
     </div>
-    <div class="right-section col s12 xl4">
-      <div class="content-selection row">
-        <a @click="changeMenu" class="valign-wrapper center-align menu-buttons col s4"><h5 class="menu-text">Menu</h5></a>
-        <a @click="changePhotos" class="valign-wrapper menu-buttons col s4"><h5 class="menu-text">Photos</h5></a>
-        <a @click="changeReview" class="valign-wrapper menu-buttons col s4"><h5 class="menu-text">Review</h5></a>
-      </div>
-      <div class="content-details">
-          <h4>Telephone Number:</h4>
-          <h5>+552 3877</h5>
-          <br> 
-          <h4>Cuisines:</h4>
-          <h5>Asian</h5>
-          <br> 
-          <h4>Opening Hours:</h4>
-          <h5>6:00AM - 8:00PM</h5>
-          <br> 
-          <h4>Address:</h4>
-          <h5>678 Kalaw Ave.</h5>
-          <br> 
-          <h4>Average Cost:</h4>
-          <h5>P1200</h5>
-          <br> 
-      </div>
+    </transition> 
+    <div v-if="isFetching" class="loading">
+        <breeding-rhombus-spinner
+          :animation-duration="2000"
+          :size="150"
+          color="#CB202D"
+        />
     </div>
   </div>
+  
+  
 </template>
 
 <script>
+import { mapGetters, mapActions }from 'vuex';
+import { BreedingRhombusSpinner } from 'epic-spinners'
 import PhotoSection from './PhotoSection.vue';
 import ReviewSection from './ReviewSection.vue'; 
 
@@ -57,17 +73,28 @@ export default {
     data() {
       return {
           photosTitle: "Photos", //Default Photos Title
-          section: "Review" //Default Section 
+          section: "Photos", //Default Section
+          isFetching : true,
+          quickUrl: "/static/1.png"
+      }
+    },
+    computed: {
+      restoDetails () {
+        return this.fetchCurrResto(); 
+      }, 
+      defaultPic () {
+        return "../../../../server" + this.$store.getters.fetchDefaultPic(this.restoDetails.defaultPicture).url;  
       }
     },
     components: {
       PhotoSection,
-      ReviewSection 
+      ReviewSection,
+      BreedingRhombusSpinner
     },
     methods: { 
-      changeMenu() {
+      async changeMenu() {
         this.section = "Photos";
-        this.photosTitle = "Menu"; 
+        this.photosTitle = "Menu";  
       }, 
       changePhotos() {
         this.section = "Photos"; 
@@ -75,9 +102,21 @@ export default {
       }, 
       changeReview() {
         this.section = "Review"
-      }
+      },
+      ...mapGetters(['fetchCurrResto', 'fetchReviewPostUsers']),
+      ...mapActions(['getRestoById','getRestaurantPictures', 'getMenuPictures', 'getReviewsByRestaurant', 'getReviewPostUsers'])
+    },
+    async created() {
+      await this.getRestoById(this.$route.params.id); //Get restaurant details 
+      let currResto = await this.$store.getters.fetchCurrResto;
+      await this.getRestaurantPictures(currResto.pictures); 
+      await this.getMenuPictures(currResto.menu); 
+      await this.getReviewsByRestaurant(currResto.restaurantID); 
+      await this.getReviewPostUsers(currResto.reviews); 
+      this.isFetching = false; 
+      // setTimeout(() => this.isFetching = false, 1000); //DEV-ONLY
     }
-}
+  }
 </script>
 
 <style scoped>
@@ -194,8 +233,15 @@ export default {
       font-size: 1.8rem !important; 
   }
 
-  .content-details > h5 {
-      font-size: 1.2rem !important; 
+  .content-details > h5, span {
+      font-size: 1.4rem !important; 
+  }
+
+  .loading {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
   }
 
   @media screen and (min-width: 1201px) {
