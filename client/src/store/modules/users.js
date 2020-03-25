@@ -16,13 +16,9 @@ const getters =  {
         return false 
     },
 
-<<<<<<< HEAD
-    getUser: state => {return state.user} //gets the user object
-=======
     getUser: state => {return state.user},
     fetchReviewPostUser : state => id => state.reviewPostUsers.find((users) => users.userID === id),
     fetchReviewPostUsers : state => state.reviewPostUsers
->>>>>>> mp2.5
 }
 
 const actions =  {
