@@ -1,13 +1,12 @@
 <template>
     <div>
-        <!-- Restaurant List for Desktop View -->
+<!-- Restaurant List for Desktop View -->
         <div class="hide-on-small-only">
             <div class="restaurant-list">
                 <!-- Restaurant Cards for Desktop View -->
-                <div class="card horizontal" v-for="resto in this.getAllRestos()" v-bind:key="resto.id">
-                    {{this.getCoverPic(resto.defaultPicture)}}
+                <div class="card horizontal">
                     <div class="card-image">
-                        <img :alt="resto.name" class="restaurant-image">
+                        <img :alt="resto.name" :src="this.$store.getters.getCoverPic(resto.defaultPicture)[0].url"  class="restaurant-image">
                     </div>
                     <div class="restaurant-info">
                         <div class="card-stacked">
@@ -107,35 +106,32 @@
                 </div>
             </div>
         </div>
-
- 
-        
         <!-- Restaurant List for Mobile and Tablet View -->
         <div class="hide-on-med-and-up">
             <div class="mobile-restaurant-list">
                 <!-- Restaurant Cards for Mobile and Tablet View -->
-                <div class="card" v-for="mresto in this.getAllRestos()" v-bind:key="mresto.id">
+                <div class="card">
                     <div class="card-image">
-                        <img :alt="mresto.name" class="mobile-restaurant-image">
-                        <button class="btn-small hoverable green right">{{mresto.overallRating}}</button>
+                        <img :alt="resto.name" class="mobile-restaurant-image">
+                        <button class="btn-small hoverable green right">{{resto.overallRating}}</button>
                     </div>
                     <div class="mobile-restaurant-info">
-                        <a href="/restaurant" class="card-title">{{mresto.name}}</a>
+                        <a href="/restaurant" class="card-title">{{resto.name}}</a>
                         <hr>
                         <p class="card-content">
-                            {{mresto.city}}
+                            {{resto.city}}
                             <br>
-                            Cuisine:&nbsp;{{mresto.cuisines[0]}}
+                            Cuisine:&nbsp;{{resto.cuisines[0]}}
                             <br>
-                            Cost for two:&nbsp;{{mresto.costForTwo}}
+                            Cost for two:&nbsp;{{resto.costForTwo}}
                         </p>
-                        <p class="operating-day" v-if="getToday() === 0">Sunday:&nbsp; {{mresto.operatingHours.Sunday}} <i class="material-icons tiny modal-trigger" href="#m_operating_hours">info</i></p>
-                        <p class="operating-day" v-else-if="getToday() === 1">Monday:&nbsp; {{mresto.operatingHours.Monday}} <i class="material-icons tiny modal-trigger" href="#m_operating_hours">info</i></p>
-                        <p class="operating-day" v-else-if="getToday() === 2">Tuesday:&nbsp; {{mresto.operatingHours.Tuesday}} <i class="material-icons tiny modal-trigger" href="#m_operating_hours">info</i></p>
-                        <p class="operating-day" v-else-if="getToday() === 3">Wednesday:&nbsp; {{mresto.operatingHours.Wednesday}} <i class="material-icons tiny modal-trigger" href="#m_operating_hours">info</i></p>
-                        <p class="operating-day" v-else-if="getToday() === 4">Thursday:&nbsp; {{mresto.operatingHours.Thursday}} <i class="material-icons tiny modal-trigger" href="#m_operating_hours">info</i></p>
-                        <p class="operating-day" v-else-if="getToday() === 5">Friday:&nbsp; {{mresto.operatingHours.Friday}} <i class="material-icons tiny modal-trigger" href="#m_operating_hours">info</i></p>
-                        <p class="operating-day" v-else-if="getToday() === 6">Saturday:&nbsp; {{mresto.operatingHours.Saturday}} <i class="material-icons tiny modal-trigger" href="#m_operating_hours">info</i></p>
+                        <p class="operating-day" v-if="getToday() === 0">Sunday:&nbsp; {{resto.operatingHours.Sunday}} <i class="material-icons tiny modal-trigger" href="#m_operating_hours">info</i></p>
+                        <p class="operating-day" v-else-if="getToday() === 1">Monday:&nbsp; {{resto.operatingHours.Monday}} <i class="material-icons tiny modal-trigger" href="#m_operating_hours">info</i></p>
+                        <p class="operating-day" v-else-if="getToday() === 2">Tuesday:&nbsp; {{resto.operatingHours.Tuesday}} <i class="material-icons tiny modal-trigger" href="#m_operating_hours">info</i></p>
+                        <p class="operating-day" v-else-if="getToday() === 3">Wednesday:&nbsp; {{resto.operatingHours.Wednesday}} <i class="material-icons tiny modal-trigger" href="#m_operating_hours">info</i></p>
+                        <p class="operating-day" v-else-if="getToday() === 4">Thursday:&nbsp; {{resto.operatingHours.Thursday}} <i class="material-icons tiny modal-trigger" href="#m_operating_hours">info</i></p>
+                        <p class="operating-day" v-else-if="getToday() === 5">Friday:&nbsp; {{resto.operatingHours.Friday}} <i class="material-icons tiny modal-trigger" href="#m_operating_hours">info</i></p>
+                        <p class="operating-day" v-else-if="getToday() === 6">Saturday:&nbsp; {{resto.operatingHours.Saturday}} <i class="material-icons tiny modal-trigger" href="#m_operating_hours">info</i></p>
 
                         <!-- Modal for Operating Hours-->
                         <div id="m_operating_hours" class="modal">
@@ -148,7 +144,7 @@
                                                 Monday
                                             </td>
                                             <td>
-                                                {{mresto.operatingHours.Monday}}
+                                                {{resto.operatingHours.Monday}}
                                             </td>
                                         </tr>
                                         <tr>
@@ -156,7 +152,7 @@
                                                 Tuesday
                                             </td>
                                             <td>
-                                                {{mresto.operatingHours.Tuesday}}
+                                                {{resto.operatingHours.Tuesday}}
                                             </td>
                                         </tr>
                                         <tr>
@@ -164,7 +160,7 @@
                                                 Wednesday
                                             </td>
                                             <td>
-                                                {{mresto.operatingHours.Wednesday}}
+                                                {{resto.operatingHours.Wednesday}}
                                             </td>
                                         </tr>
                                         <tr>
@@ -172,7 +168,7 @@
                                                 Thursday
                                             </td>
                                             <td>
-                                                {{mresto.operatingHours.Thursday}}
+                                                {{resto.operatingHours.Thursday}}
                                             </td>
                                         </tr>
                                         <tr>
@@ -180,7 +176,7 @@
                                                 Friday
                                             </td>
                                             <td>
-                                                {{mresto.operatingHours.Friday}}
+                                                {{resto.operatingHours.Friday}}
                                             </td>
                                         </tr>
                                         <tr>
@@ -188,7 +184,7 @@
                                                 Saturday
                                             </td>
                                             <td>
-                                                {{mresto.operatingHours.Saturday}}
+                                                {{resto.operatingHours.Saturday}}
                                             </td>
                                         </tr>
                                         <tr>
@@ -196,7 +192,7 @@
                                                 Sunday
                                             </td>
                                             <td>
-                                                {{mresto.operatingHours.Sunday}}
+                                                {{resto.operatingHours.Sunday}}
                                             </td>
                                         </tr>
                                     </tbody>
@@ -212,22 +208,20 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex';
+import { mapGetters } from 'vuex'; 
 import M from 'materialize-css';
 export default {
     name: "RestaurantName",
+    props : {
+        resto : Object 
+    },
     methods: {
-        ...mapActions(["getRestos", "getRestoQuery", "getPics"]),
-        ...mapGetters(["getAllRestos", "getAllPics", "getCoverPic"]),
+        ...mapGetters(["getCoverPic"]),
         getToday() {
             var d = new Date();
             var n = d.getDay();
             return n;
         }
-    },
-    created() {
-        this.getRestos();
-        this.getPics(this.getAllRestos);
     },
     mounted() {
         M.AutoInit();

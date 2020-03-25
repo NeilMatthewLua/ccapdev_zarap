@@ -6,12 +6,18 @@
         </div>
         <div class="main-content">
             <FilterBar/>
-            <RestaurantCard/>
+            <div v-if="!loading">
+                <RestaurantCard v-for="item in this.getAllRestos()" :key="item.restaurantID" :resto="item"/>
+            </div>
+            <div v-if="loading">
+                <h1>LOADING...</h1>
+            </div>
         </div>
     </div>
 </template>
 
 <script>
+import { mapActions , mapGetters} from 'vuex';
 import FilterBar from './FilterBar.vue';
 import RestaurantCard from './RestaurantCard.vue';
 export default {
@@ -19,6 +25,20 @@ export default {
     components: {
         FilterBar,
         RestaurantCard
+    }, 
+    data () {
+        return {
+            loading : true
+        }
+    },
+    async created() {
+        await this.getRestos();
+        await this.getPics(this.getAllRestos());
+        this.loading = false; 
+    },
+    methods: {
+        ...mapActions(["getRestos", "getRestoQuery", "getPics"]),
+        ...mapGetters(["getAllRestos", "getAllPic"]),
     }
 }
 </script>

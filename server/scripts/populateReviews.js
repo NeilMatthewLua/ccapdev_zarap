@@ -12,6 +12,7 @@ async function populateReviews(userCounter, limit) {
     let i; 
     let users = await User.find({}, "userID points reviewed liked").exec();
     let restaurants = await Restaurant.find({}, "restaurantID reviews").exec(); 
+
     for(i = userCounter; i < limit; i++) {
         let chosenUser = users[(i + 3) % (users.length - 1)]
         let chosenRes = restaurants[i]
@@ -103,7 +104,7 @@ async function populateReviews(userCounter, limit) {
             .catch(err => console.log(err)); 
     }
     let allReviews = await Review.find({}).exec(); 
-    //Randomize the reviews people liked 
+    // Randomize the reviews people liked 
     for(let i = 0; i < users.length; i++) {
         for(let j = 0; j < allReviews.length; j+= faker.random.number(allReviews.length / 2)) {
             if(users[i].userID != allReviews[j].ownerID) {
@@ -128,4 +129,4 @@ async function populateReviews(userCounter, limit) {
     })     
 }; 
 
-module.exports = populateReviews; 
+module.exports = populateReviews;
