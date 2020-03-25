@@ -1,13 +1,15 @@
 import axios from 'axios'
 
 const state =  {
-    allRestos = [], 
-    currResto = null
-    //Store the fields associated with the resto / resto object
+    allRestos : [], //Store all the restos from the query
+    currResto : null, //Store the resto the user clicked here 
+    userReviewRestos : [] //Store the restos reviewed by the user 
 }
 
 const getters =  {
-     getAllRestos : state => state.allRestos
+    fetchAllRestos : state => state.allRestos,
+    fetchCurrResto : state => state.currResto, 
+    fetchUserReviewRestos : state => state.userReviewRestos
 }
 
 const actions =  {
@@ -16,15 +18,29 @@ const actions =  {
 
         commit('setResto', res.data); 
     },
-    async getRestoQuery ({commit}, query) {
+    async getRestoById ({commit}, id) {
+        let res = await axios.get(`http://localhost:9090/restaurants/${id}`); 
+
+        commit('setCurrResto', res.data); 
+    },
+    async getRestoByQuery ({commit}, query) {
         let res = await axios.get(`http://localhost:9090/restaurants?${query}`); 
+
+        commit('setResto', res.data);
+    }, 
+    async getRestoByUser ({commit}, query) {
+        //Access global state by using context root state 
+        // let diningHis = context.rootState.beenHere; 
+        let res = await axios.get(`http://localhost:9090/restaurants?${query}`); 
+         
         commit('setResto', res.data);
     }
 }
 
 const mutations = {
     setResto : (state, restos) => state.allRestos = restos,
-    setCurrResto : (state, resto) => state.currResto = resto
+    setCurrResto : (state, resto) => state.currResto = resto,
+    setUserReviewRestos : (state, restos) => state.userReviewRestos = restos
 }
 
 export default {

@@ -1,6 +1,9 @@
-import axios from 'axios'
+// import axios from 'axios'
+
+import axios from "axios"
 
 const state =  {
+    reviewPostUsers : [],
     user : null,
     status : ''
 }
@@ -13,7 +16,13 @@ const getters =  {
         return false 
     },
 
+<<<<<<< HEAD
     getUser: state => {return state.user} //gets the user object
+=======
+    getUser: state => {return state.user},
+    fetchReviewPostUser : state => id => state.reviewPostUsers.find((users) => users.userID === id),
+    fetchReviewPostUsers : state => state.reviewPostUsers
+>>>>>>> mp2.5
 }
 
 const actions =  {
@@ -38,7 +47,16 @@ const actions =  {
         commit('logout')
         resolve()
       })
-    }
+    },
+    async getReviewPostUsers({commit}, reviewIDs) {
+        let result = []
+        for(let i = 0; i < reviewIDs.length; i++) {
+            let res = await axios.get(`http://localhost:9090/reviews/reviewID/${reviewIDs[i]}`);
+            let res2 = await axios.get(`http://localhost:9090/users/${res.data.reviewerID}`);
+            result.push(res2.data[0]); 
+        }
+        commit('setReviewPostUsers', result); 
+    } 
 }
 
 const mutations = {
@@ -56,6 +74,7 @@ const mutations = {
     state.status = '',
     state.user = null
   },
+  setReviewPostUsers : (state, data) => state.reviewPostUsers = data 
 }
 
 export default {

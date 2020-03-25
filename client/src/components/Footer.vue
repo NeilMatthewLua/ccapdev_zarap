@@ -35,6 +35,7 @@ export default {
     }
 
     footer {
+        z-index: 999 !important; 
         background-color: var(--default-footer-color) !important;
     }
 
