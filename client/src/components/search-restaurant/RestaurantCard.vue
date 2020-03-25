@@ -4,56 +4,206 @@
         <div class="hide-on-small-only">
             <div class="restaurant-list">
                 <!-- Restaurant Cards for Desktop View -->
-                <div class="card horizontal" id="GoldenFortuneCardLarge">
+                <div class="card horizontal" v-for="resto in this.getAllRestos()" v-bind:key="resto.id">
+                    {{this.getCoverPic(resto.defaultPicture)}}
                     <div class="card-image">
-                        <img src="../../assets/pictures/Golden Fortune-1.jpg" alt="Golden Fortune" class="restaurant-image">
+                        <img :alt="resto.name" class="restaurant-image">
                     </div>
                     <div class="restaurant-info">
                         <div class="card-stacked">
                             <div class="card-content">
-                                <p class="restaurant-establishment-type">{{resto.establishment_type}}</p>
+                                <p class="restaurant-establishment-type">{{resto.establishmentType[0]}}</p>
                                 <br>
                                 <a href="/restaurant" class="restaurant-name">{{resto.name}}</a>
                                 <br>
-                                <p class="restaurant-location">{{resto.location}}</p>
-                                <p class="restaurant-address">{{resto.address}}</p>
+                                <p class="restaurant-location">{{resto.city}}</p>
+                                <p class="restaurant-address">{{resto.fullAddress}}</p>
                                 <br>
-                                <p class="restaurant-other-info">Cuisine:&nbsp;{{resto.cuisines}}</p>
-                                <p class="restaurant-other-info">Cost for two:&nbsp;{{resto.cost_two}}</p>
-                                <p class="restaurant-other-info">Hours:&nbsp;{{resto.hours}}</p>
-                                <p class="restaurant-other-info">Tel no:&nbsp;{{resto.phone}}</p>
+                                <p class="restaurant-other-info">Cuisine:&nbsp;{{resto.cuisines[0]}}</p>
+                                <p class="restaurant-other-info">Cost for two:&nbsp;Php{{resto.costForTwo}}</p>
+                                <p class="restaurant-other-info" v-if="getToday() === 0">Sunday:&nbsp; {{resto.operatingHours.Sunday}} <i class="material-icons tiny modal-trigger" href="#operating_hours">info</i></p>
+                                <p class="restaurant-other-info" v-else-if="getToday() === 1">Monday:&nbsp; {{resto.operatingHours.Monday}} <i class="material-icons tiny modal-trigger" href="#operating_hours">info</i></p>
+                                <p class="restaurant-other-info" v-else-if="getToday() === 2">Tuesday:&nbsp; {{resto.operatingHours.Tuesday}} <i class="material-icons tiny modal-trigger" href="#operating_hours">info</i></p>
+                                <p class="restaurant-other-info" v-else-if="getToday() === 3">Wednesday:&nbsp; {{resto.operatingHours.Wednesday}} <i class="material-icons tiny modal-trigger" href="#operating_hours">info</i></p>
+                                <p class="restaurant-other-info" v-else-if="getToday() === 4">Thursday:&nbsp; {{resto.operatingHours.Thursday}} <i class="material-icons tiny modal-trigger" href="#operating_hours">info</i></p>
+                                <p class="restaurant-other-info" v-else-if="getToday() === 5">Friday:&nbsp; {{resto.operatingHours.Friday}} <i class="material-icons tiny modal-trigger" href="#operating_hours">info</i></p>
+                                <p class="restaurant-other-info" v-else-if="getToday() === 6">Saturday:&nbsp; {{resto.operatingHours.Saturday}} <i class="material-icons tiny modal-trigger" href="#operating_hours">info</i></p>
+
+                                <!-- Modal for Operating Hours -->
+                                <div id="operating_hours" class="modal">
+                                    <div class="modal-content">
+                                        <h4>Operating Hours</h4>
+                                        <table>
+                                            <tbody>
+                                                <tr>
+                                                    <td>
+                                                        Monday
+                                                    </td>
+                                                    <td>
+                                                        {{resto.operatingHours.Monday}}
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        Tuesday
+                                                    </td>
+                                                    <td>
+                                                        {{resto.operatingHours.Tuesday}}
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        Wednesday
+                                                    </td>
+                                                    <td>
+                                                        {{resto.operatingHours.Wednesday}}
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        Thursday
+                                                    </td>
+                                                    <td>
+                                                        {{resto.operatingHours.Thursday}}
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        Friday
+                                                    </td>
+                                                    <td>
+                                                        {{resto.operatingHours.Friday}}
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        Saturday
+                                                    </td>
+                                                    <td>
+                                                        {{resto.operatingHours.Saturday}}
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        Sunday
+                                                    </td>
+                                                    <td>
+                                                        {{resto.operatingHours.Sunday}}
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+
+                                <p class="restaurant-other-info">Tel no:&nbsp;{{resto.contactDetails}}</p>
                             </div>
                         </div>
                         <div class="card-content">
-                            <button class="btn hoverable green">{{resto.rate}}/5</button>
+                            <button class="btn hoverable green">{{resto.overallRating}}/5</button>
                         </div>
+
                     </div>
                 </div>
             </div>
         </div>
+
+ 
         
         <!-- Restaurant List for Mobile and Tablet View -->
         <div class="hide-on-med-and-up">
             <div class="mobile-restaurant-list">
                 <!-- Restaurant Cards for Mobile and Tablet View -->
-                <div class="card" id="GoldenFortuneCardSmall">
+                <div class="card" v-for="mresto in this.getAllRestos()" v-bind:key="mresto.id">
                     <div class="card-image">
-                        <img src="../../assets/pictures/Golden Fortune-1.jpg" alt="Golden Fortune" class="mobile-restaurant-image">
-                        <button class="btn-small hoverable green right">{{resto.rate}}</button>
+                        <img :alt="mresto.name" class="mobile-restaurant-image">
+                        <button class="btn-small hoverable green right">{{mresto.overallRating}}</button>
                     </div>
                     <div class="mobile-restaurant-info">
-                        <a href="/restaurant" class="card-title">{{resto.name}}</a>
+                        <a href="/restaurant" class="card-title">{{mresto.name}}</a>
                         <hr>
                         <p class="card-content">
-                            {{resto.location}}
+                            {{mresto.city}}
                             <br>
-                            Cuisine:&nbsp;{{resto.cuisines}}
+                            Cuisine:&nbsp;{{mresto.cuisines[0]}}
                             <br>
-                            Cost for two:&nbsp;{{resto.cost_two}}
-                            <br>
-                            Hours:&nbsp;{{resto.hours}}
-                            <br>
+                            Cost for two:&nbsp;{{mresto.costForTwo}}
                         </p>
+                        <p class="operating-day" v-if="getToday() === 0">Sunday:&nbsp; {{mresto.operatingHours.Sunday}} <i class="material-icons tiny modal-trigger" href="#m_operating_hours">info</i></p>
+                        <p class="operating-day" v-else-if="getToday() === 1">Monday:&nbsp; {{mresto.operatingHours.Monday}} <i class="material-icons tiny modal-trigger" href="#m_operating_hours">info</i></p>
+                        <p class="operating-day" v-else-if="getToday() === 2">Tuesday:&nbsp; {{mresto.operatingHours.Tuesday}} <i class="material-icons tiny modal-trigger" href="#m_operating_hours">info</i></p>
+                        <p class="operating-day" v-else-if="getToday() === 3">Wednesday:&nbsp; {{mresto.operatingHours.Wednesday}} <i class="material-icons tiny modal-trigger" href="#m_operating_hours">info</i></p>
+                        <p class="operating-day" v-else-if="getToday() === 4">Thursday:&nbsp; {{mresto.operatingHours.Thursday}} <i class="material-icons tiny modal-trigger" href="#m_operating_hours">info</i></p>
+                        <p class="operating-day" v-else-if="getToday() === 5">Friday:&nbsp; {{mresto.operatingHours.Friday}} <i class="material-icons tiny modal-trigger" href="#m_operating_hours">info</i></p>
+                        <p class="operating-day" v-else-if="getToday() === 6">Saturday:&nbsp; {{mresto.operatingHours.Saturday}} <i class="material-icons tiny modal-trigger" href="#m_operating_hours">info</i></p>
+
+                        <!-- Modal for Operating Hours-->
+                        <div id="m_operating_hours" class="modal">
+                            <div class="modal-content">
+                                <h4>Operating Hours</h4>
+                                <table>
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                Monday
+                                            </td>
+                                            <td>
+                                                {{mresto.operatingHours.Monday}}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                Tuesday
+                                            </td>
+                                            <td>
+                                                {{mresto.operatingHours.Tuesday}}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                Wednesday
+                                            </td>
+                                            <td>
+                                                {{mresto.operatingHours.Wednesday}}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                Thursday
+                                            </td>
+                                            <td>
+                                                {{mresto.operatingHours.Thursday}}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                Friday
+                                            </td>
+                                            <td>
+                                                {{mresto.operatingHours.Friday}}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                Saturday
+                                            </td>
+                                            <td>
+                                                {{mresto.operatingHours.Saturday}}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                Sunday
+                                            </td>
+                                            <td>
+                                                {{mresto.operatingHours.Sunday}}
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
             </div>
@@ -62,24 +212,31 @@
 </template>
 
 <script>
-
+import { mapGetters, mapActions } from 'vuex';
+import M from 'materialize-css';
 export default {
-    Name: "RestaurantName",
-    data () {
-        return {
-            resto: {
-                name: "Golden Fortune",
-                establishment_type: "Casual Dining",
-                location: "Ermita",
-                address: "678 T.M. Kalaw Avenue, Ermita, Manila",
-                cuisines: "Seafood, Chinese",
-                cost_two: "PHP800",
-                hours: "11am – 2:30pm, 5:30pm – 12 midnight (Mon-Sun)",
-                phone: "02 85222288; 02 85222200",
-                rate: "3.9"
-            }
+    name: "RestaurantName",
+    methods: {
+        ...mapActions(["getRestos", "getRestoQuery", "getPics"]),
+        ...mapGetters(["getAllRestos", "getAllPics", "getCoverPic"]),
+        getToday() {
+            var d = new Date();
+            var n = d.getDay();
+            return n;
         }
+    },
+    created() {
+        this.getRestos();
+        this.getPics(this.getAllRestos);
+    },
+    mounted() {
+        M.AutoInit();
+        document.addEventListener('DOMContentLoaded', function() {
+            var elems = document.querySelectorAll('.modal');
+            M.Modal.init(elems, {});
+        });
     }
+    
 }
 </script>
 
@@ -158,12 +315,16 @@ export default {
         position: absolute;
         right:20px;
         top:10px;
+        width: 66px;
+        height: 36px;
     }
 
     .card-image > button {
         position: absolute;
         right:0px;
         top:0px;
+        width: 66px;
+        height: 36px;
     }
 
     .mobile-restaurant-list {
@@ -216,5 +377,18 @@ export default {
         text-align: left !important;
         padding: 0px;
         padding-left: 3%;
+    }
+
+    .mobile-restaurant-info > .operating-day {
+        font-size: 70%;
+        color: var(--default-mobile-restaurant-info-color);
+        text-align: left !important;
+        padding-left: 3%;
+        margin-top: -10px;
+        padding-top: 0px;
+    }
+
+    i {
+        cursor: pointer;
     }
 </style>
