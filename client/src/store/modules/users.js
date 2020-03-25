@@ -23,7 +23,7 @@ const actions =  {
     login({commit}, user){
         return new Promise((resolve, reject) => {
           commit('auth_request')
-          axios.post('http://localhost:9090/user/login', {
+          axios.post('http://localhost:9090/users/login', {
             user
           })
           .then(resp => {
