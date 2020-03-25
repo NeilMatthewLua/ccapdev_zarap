@@ -19,3 +19,8 @@
 body {
     background-color: var(--default-background-color);
 }
+
+/* Makes all a tags have a pointer curser */
+a {
+    cursor: pointer;
+}

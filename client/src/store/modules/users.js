@@ -1,23 +1,19 @@
 import axios from 'axios'
 
 const state =  {
-    //Either store the entire logged user object from the db 
-    //Or separate each field into a variable to store\
     user : null,
     status : ''
-
 }
 
 const getters =  {
-    isLoggedIn: state => {
-      console.log("LOGGED USER: "  +  state.user)
+    isLoggedIn: state => { //gets the status of the login state
       if(state.user != null)
         return true
       else
         return false 
     },
 
-    getUser: state => {return state.user}
+    getUser: state => {return state.user} //gets the user object
 }
 
 const actions =  {
@@ -57,7 +53,8 @@ const mutations = {
     state.status = 'error'
   },
   logout(state) {
-    state.status = ''
+    state.status = '',
+    state.user = null
   },
 }
 

@@ -3,7 +3,7 @@
   <div class="navbar-fixed">
     <nav>
       <div class="nav-wrapper row valign-wrapper">
-      <a href="/" id="zarap" class="hide-on-med-and-down col valign-wrapper" v-bind:class="{s2 : hasSearch, left : hasSearch}">zarap</a>
+      <a @click="goHome()" id="zarap" class="hide-on-med-and-down col valign-wrapper" v-bind:class="{s2 : hasSearch, left : hasSearch}">zarap</a>
       <!-- Navbar for Smaller Screens -->
       <div class = "hide-on-large-only" id="filter-mobile">
         <a href="/" id="zarap" class="brand-logo center">zarap</a>
@@ -376,6 +376,7 @@
 
 <script>
 import M from 'materialize-css';
+import router from '../router'
 
 export default {
   Name: "Navbar",
@@ -385,9 +386,9 @@ export default {
     hasFilter: Boolean,
   },
   computed: {
-    // isLoggedIn: function() {
-    //     return this.$store.getters.isLoggedIn;
-    // }
+    isLoggedIn: function() {
+        return this.$store.getters.isLoggedIn;
+    }
   },
   methods: {
     checkLogged() {
@@ -396,6 +397,9 @@ export default {
           this.user_firstname = this.user.name.split(" ")[0]
           this.isLogged = true
         }
+    },
+    goHome() {
+      router.push({name:"Home"})
     }
   },
   mounted() {

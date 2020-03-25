@@ -31,7 +31,7 @@
                 <li class="divider"></li>
                 <li><a href="/userdetail/review" class="black-text" >My Reviews</a></li>
                 <li class="divider"></li>
-                <li><a href="/userdetail" class="black-text">Logout</a></li>
+                <li><a  @click="logout()"  class="black-text">Logout</a></li>
               </ul>
             </li>
           </div>
@@ -76,7 +76,7 @@
       <li><div class="divider"></div></li>
       <li><a href="/userdetail/review" class="waves-effect" >My Reviews</a></li>
       <li><div class="divider"></div></li>
-      <li><a href="/userdetail/review" class="waves-effect" >Logout</a></li>
+      <li><a @click="logout()" class="waves-effect" >Logout</a></li>
     </ul>
   </div>
 </template>
@@ -97,9 +97,9 @@ export default {
     }
   },
   computed: {
-    // isLoggedIn: function() {
-    //     return this.$store.getters.isLoggedIn;
-    // }
+    isLoggedIn: function() {
+        return this.$store.getters.isLoggedIn;
+    }
   },
   methods: {
     checkLogged() {
@@ -108,6 +108,12 @@ export default {
           this.user_firstname = this.user.name.split(" ")[0]
           this.isLogged = true
         }
+    },
+    logout() {
+      this.$store.dispatch('logout')
+      .then(() => {
+        this.isLogged= false
+      })
     }
   },
   mounted() {

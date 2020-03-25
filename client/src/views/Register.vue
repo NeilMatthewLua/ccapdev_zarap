@@ -1,6 +1,6 @@
 <template>
     <div>
-        <Navbar :hasSearch="false" :isLogged="false" :hasFilter="false"/>  
+        <Navbar :hasSearch="false" :hasFilter="false"/>  
             <div class="container">
                 <div class="container">
                     <h1 class ="black-text title-size">Register</h1>
@@ -14,7 +14,7 @@
                                 </ul>
                             </p>
 
-                            <!-- register text area -->
+                            <!-- Register text area -->
                             <div class="row">
                                 <div class="input-field col s6">
                                 <input id="first_name" type="text" class="validate" v-model="user.firstname">
@@ -100,7 +100,7 @@ export default {
         }
     },
     methods:{
-        showModal() {
+        showModal() { //confirmation of successful registration
             this.isModalVisible = true;
         },
         closeModal() {
@@ -138,7 +138,6 @@ export default {
             if(this.user.uploadedFiles.length == 0){
                 this.errors.push('Profile Picture required');
             }
-            // this.print();
             if(!this.errors.length) {
                 this.saveUser();
                 return true;
@@ -148,7 +147,7 @@ export default {
              var re = /\S+@\S+\.\S+/;
              return re.test(String(email).toLowerCase());
         },
-        saveUser: async function() {
+        saveUser: async function() { 
             let app = this;
             await axios.post("http://localhost:9090/users/addUser", {
                 "firstname": app.user.firstname,
