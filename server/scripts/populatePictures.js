@@ -2,26 +2,26 @@ const mongoose = require('mongoose')
 const Picture = require('../models/pictures.js')
 
 var peopleUrls = [
-    "http://localhost:9090/static/profilePictures.carlos.jpg",
-    "http://localhost:9090/static/profilePictures.neil.jpg",
-    "http://localhost:9090/static/profilePictures.matthew.jpg",
-    "http://localhost:9090/static/profilePictures.richard.jpg",
-    "http://localhost:9090/static/profilePictures.bryan.jpg",
-    "http://localhost:9090/static/profilePictures.jonal.jpg",
-    "http://localhost:9090/static/profilePictures.rhei.jpg",
-    "http://localhost:9090/static/profilePictures.gabriel.jpg",
-    "http://localhost:9090/static/profilePictures.kurt.jpg",
-    "http://localhost:9090/static/profilePictures.isser.jpg",
-    "http://localhost:9090/static/profilePictures.carlos.jpg",
-    "http://localhost:9090/static/profilePictures.neil.jpg",
-    "http://localhost:9090/static/profilePictures.matthew.jpg",
-    "http://localhost:9090/static/profilePictures.richard.jpg",
-    "http://localhost:9090/static/profilePictures.bryan.jpg",
-    "http://localhost:9090/static/profilePictures.jonal.jpg",
-    "http://localhost:9090/static/profilePictures.rhei.jpg",
-    "http://localhost:9090/static/profilePictures.gabriel.jpg",
-    "http://localhost:9090/static/profilePictures.kurt.jpg",
-    "http://localhost:9090/static/profilePictures.isser.jpg"
+    "http://localhost:9090/static/profilePictures/carlos.jpg",
+    "http://localhost:9090/static/profilePictures/neil.jpg",
+    "http://localhost:9090/static/profilePictures/matthew.jpg",
+    "http://localhost:9090/static/profilePictures/richard.jpg",
+    "http://localhost:9090/static/profilePictures/bryan.jpg",
+    "http://localhost:9090/static/profilePictures/jonal.jpg",
+    "http://localhost:9090/static/profilePictures/rhei.jpg",
+    "http://localhost:9090/static/profilePictures/gabriel.jpg",
+    "http://localhost:9090/static/profilePictures/kurt.jpg",
+    "http://localhost:9090/static/profilePictures/isser.jpg",
+    "http://localhost:9090/static/profilePictures/carlos.jpg",
+    "http://localhost:9090/static/profilePictures/neil.jpg",
+    "http://localhost:9090/static/profilePictures/matthew.jpg",
+    "http://localhost:9090/static/profilePictures/richard.jpg",
+    "http://localhost:9090/static/profilePictures/bryan.jpg",
+    "http://localhost:9090/static/profilePictures/jonal.jpg",
+    "http://localhost:9090/static/profilePictures/rhei.jpg",
+    "http://localhost:9090/static/profilePictures/gabriel.jpg",
+    "http://localhost:9090/static/profilePictures/kurt.jpg",
+    "http://localhost:9090/static/profilePictures/isser.jpg"
 ]
 
 var restaurantUrls = [ 

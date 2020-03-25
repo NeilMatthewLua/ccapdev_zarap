@@ -9,15 +9,15 @@
         <!-- Unlogged Login Section -->
         <div v-if="!isLogged">
           <ul class ="nav-flex-right hide-on-med-and-down"  id="nav-mobile">
-            <li class ="navitem pushdown"><a href="/login" class ="black-color">Login</a></li>
-            <li class ="navitem boxed"><a href="/register" class ="black-color">Register</a></li>
+            <li class ="navitem pushdown"><a @click="goLogin()" class ="black-color">Login</a></li>
+            <li class ="navitem boxed"><a @click="goRegister()" class ="black-color">Register</a></li>
           </ul>
         </div>
 
         <!-- Logged Profile Section -->
         <ul class="right hide-on-med-and-down col s3" v-else>
           <div class="right navbar-right valign-wrapper">
-            <img class="circle navbar-image" src="@/assets/pictures/jonal.jpg">
+            <img class="circle navbar-image" :src= user_picture>
             <li>
               <a class="dropdown-trigger" href="#" data-target="dropdown1">
                 <span class="black-color username"> Welcome, {{user_firstname}} </span>
@@ -25,12 +25,12 @@
               </a>
               <!-- Dropdown for Profile Section --> 
               <ul id="dropdown1" class="dropdown-content">
-                <li><a href="/userdetail/profile" class="black-text" >My Profile</a></li>
-                <li class="divider"></li>
-                <li><a href="/userdetail/dining" class="black-text" >Dining History</a></li>
-                <li class="divider"></li>
-                <li><a href="/userdetail/review" class="black-text" >My Reviews</a></li>
-                <li class="divider"></li>
+                <li><a @click="goMyProfile()" class="waves-effect">Profile</a></li>
+                <li><div class="divider"></div></li>
+                <li><a @click="goMyDining()" class="waves-effect" >Dining History</a></li>
+                <li><div class="divider"></div></li>
+                <li><a @click="goMyReviews()" class="waves-effect" >My Reviews</a></li>
+                <li><div class="divider"></div></li>
                 <li><a  @click="logout()"  class="black-text">Logout</a></li>
               </ul>
             </li>
@@ -46,13 +46,13 @@
         <div class="divider"></div>
       </li>
       <li>
-        <a href="/register"> Register </a>
+        <a @click="goRegister()"> Register </a>
       </li>
       <li>
         <div class="divider"></div>
       </li>
       <li>
-        <a href="/login"> Login </a>
+        <a @click="goLogin()"> Login </a>
       </li>
     </ul>
 
@@ -61,20 +61,21 @@
       <li>
         <div class="user-view">
           <div class="background"></div>
-          <a href="/userdetail/:menu">
-            <img class="circle" src="@/assets/pictures/jonal.jpg">
+          <a>
+            <img class="circle"  :src= user_picture>
           </a>
-          <a href="/userdetail/:menu">
+          <a>
             <span class="username-sidenav"> {{user_firstname}} </span>
           </a>
         </div>
       </li>
       <li><div class="divider"></div></li>
-      <li><a href="/userdetail/profile" class="waves-effect">Profile</a></li>
+      <li><a @click="goMyProfile()" class="waves-effect">Profile</a></li>
       <li><div class="divider"></div></li>
-      <li><a href="/userdetail/dining" class="waves-effect" >Dining History</a></li>
+      <li><a @click="goMyDining()" class="waves-effect" >Dining History</a></li>
       <li><div class="divider"></div></li>
-      <li><a href="/userdetail/review" class="waves-effect" >My Reviews</a></li>
+      <li><div class="divider"></div></li>
+      <li><a @click="goMyReviews()" class="waves-effect" >My Reviews</a></li>
       <li><div class="divider"></div></li>
       <li><a @click="logout()" class="waves-effect" >Logout</a></li>
     </ul>
@@ -83,17 +84,16 @@
 
 <script>
 import M from 'materialize-css';
+import router from '@/router';
 
 export default {
   Name: "NavbarHome",
-  // props:{
-  //   isLogged: Boolean, //If user is logged in 
-  // },
   data() {
     return{
       user: null,
       isLogged: false,
-      user_firstname: ' '
+      user_firstname: ' ',
+      user_picture: ' '
     }
   },
   computed: {
@@ -104,16 +104,32 @@ export default {
   methods: {
     checkLogged() {
         if(this.$store.getters.isLoggedIn) {
-          this.user = this.$store.getters.getUser
-          this.user_firstname = this.user.name.split(" ")[0]
-          this.isLogged = true
+          this.user = this.$store.getters.getUser;
+          this.user_picture = this.$store.getters.getPicture['url'];
+          this.user_firstname = this.user.name.split(" ")[0];
+          this.isLogged = true;
         }
     },
     logout() {
       this.$store.dispatch('logout')
       .then(() => {
-        this.isLogged= false
+        this.isLogged= false;
       })
+    },
+    goMyReviews() {
+      router.push({path: '/userdetail/review'});
+    },
+    goMyDining() {
+      router.push({path: '/userdetail/dining'});
+    },
+    goMyProfile() {
+      router.push({path: '/userdetail/profile'});
+    },
+    goLogin() {
+      router.push({name: 'Login'});
+    },
+    goRegister() {
+      router.push({name: 'Register'});
     }
   },
   mounted() {

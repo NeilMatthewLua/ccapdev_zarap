@@ -5,6 +5,7 @@ import axios from "axios"
 const state =  {
     reviewPostUsers : [],
     user : null,
+    picture : null,
     status : ''
 }
 
@@ -17,6 +18,7 @@ const getters =  {
     },
 
     getUser: state => {return state.user},
+    getPicture: state => {return state.picture},
     fetchReviewPostUser : state => id => state.reviewPostUsers.find((users) => users.userID === id),
     fetchReviewPostUsers : state => state.reviewPostUsers
 }
@@ -30,6 +32,7 @@ const actions =  {
           })
           .then(resp => {
             commit('auth_success', resp.data.user)
+            commit('setPhoto', resp.data.picture)
             resolve(resp)
           })
           .catch(err => {
@@ -70,7 +73,8 @@ const mutations = {
     state.status = '',
     state.user = null
   },
-  setReviewPostUsers : (state, data) => state.reviewPostUsers = data 
+  setReviewPostUsers : (state, data) => state.reviewPostUsers = data, 
+  setPhoto : (state, picture) => state.picture = picture
 }
 
 export default {
