@@ -39,7 +39,7 @@
           <img class="circle navbar-image" src="@/assets/pictures/jonal.jpg">
           <li>
             <a class="dropdown-trigger" href="#" data-target="dropdown1">
-              <span class="white-text username"> Welcome, Jonal </span>
+              <span class="white-text username"> Welcome,  {{user_firstname}}  </span>
               <i class="material-icons right"> arrow_drop_down </i>
             </a>
           </li>
@@ -84,7 +84,7 @@
           <img class="circle" src="@/assets/pictures/jonal.jpg">
         </a>
         <a href="/userdetail/:menu">
-          <span class="username-sidenav"> Jonal </span>
+          <span class="username-sidenav">  {{user_firstname}}  </span>
         </a>
       </div>
     </li>
@@ -381,15 +381,25 @@ export default {
   Name: "Navbar",
   props:{
     hasSearch: Boolean, //If search bar is present 
-    isLogged: Boolean, //If user is logged in 
+    // isLogged: Boolean, //If user is logged in 
     hasFilter: Boolean,
   },
   computed: {
-    isLoggedIn: function() {
-        return this.$store.getters.isLoggedIn;
+    // isLoggedIn: function() {
+    //     return this.$store.getters.isLoggedIn;
+    // }
+  },
+  methods: {
+    checkLogged() {
+        if(this.$store.getters.isLoggedIn) {
+          this.user = this.$store.getters.getUser
+          this.user_firstname = this.user.name.split(" ")[0]
+          this.isLogged = true
+        }
     }
   },
   mounted() {
+    this.checkLogged();
     M.AutoInit();
     document.addEventListener('DOMContentLoaded', function() {
       // sidenav
@@ -407,6 +417,9 @@ export default {
   },
   data() {
     return {
+      user: null,
+      isLogged: false,
+      user_firstname: ' ',
       nav_sort_by: {
         nav_ratings:{
             label: "Rating",

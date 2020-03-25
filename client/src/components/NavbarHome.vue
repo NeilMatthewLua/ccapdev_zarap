@@ -23,20 +23,21 @@
                 <span class="black-color username"> Welcome, {{user_firstname}} </span>
                 <i class="material-icons right"> arrow_drop_down </i>
               </a>
+              <!-- Dropdown for Profile Section --> 
+              <ul id="dropdown1" class="dropdown-content">
+                <li><a href="/userdetail/profile" class="black-text" >My Profile</a></li>
+                <li class="divider"></li>
+                <li><a href="/userdetail/dining" class="black-text" >Dining History</a></li>
+                <li class="divider"></li>
+                <li><a href="/userdetail/review" class="black-text" >My Reviews</a></li>
+                <li class="divider"></li>
+                <li><a href="/userdetail" class="black-text">Logout</a></li>
+              </ul>
             </li>
           </div>
         </ul>
 
-      <!-- Dropdown for Profile Section --> 
-      <ul id="dropdown1" class="dropdown-content">
-        <li><a href="/userdetail/profile" class="black-text" >My Profile</a></li>
-        <li class="divider"></li>
-        <li><a href="/userdetail/dining" class="black-text" >Dining History</a></li>
-        <li class="divider"></li>
-        <li><a href="/userdetail/review" class="black-text" >My Reviews</a></li>
-        <li class="divider"></li>
-        <li><a href="/userdetail" class="black-text">Logout</a></li>
-      </ul>
+      
     </div>
     
     <!-- Sidebar Content Unlogged -->
@@ -96,9 +97,9 @@ export default {
     }
   },
   computed: {
-    isLoggedIn: function() {
-        return this.$store.getters.isLoggedIn;
-    }
+    // isLoggedIn: function() {
+    //     return this.$store.getters.isLoggedIn;
+    // }
   },
   methods: {
     checkLogged() {
