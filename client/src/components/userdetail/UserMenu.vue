@@ -1,19 +1,32 @@
 <template>
     <div class="col s12 l2 squared margin-around hide-on-med-and-down">
         <div class="profile-container">
-            <div class="text menu-font pad-menu"><a href="/userdetail/profile" class="white-text hover-underline profile">My Profile</a></div>
-            <div class="text menu-font pad-menu"><a href="/userdetail/dining" class="white-text hover-underline dining-history">Dining History</a></div>
-            <div class="text menu-font pad-menu"><a href="/userdetail/review" class="white-text hover-underline my-reviews">My Reviews</a></div>
+            <div class="text menu-font pad-menu"><a @click="goMyProfile()" class="white-text hover-underline profile">My Profile</a></div>
+            <div class="text menu-font pad-menu"><a @click="goMyDining()" class="white-text hover-underline dining-history">Dining History</a></div>
+            <div class="text menu-font pad-menu"><a @click="goMyReviews()" class="white-text hover-underline my-reviews">My Reviews</a></div>
         </div>
     </div>
 </template>
 
 <script>
 import M from 'materialize-css';
+import router from '@/router';
+
 export default {
     name: "EditProfile",
     mounted() {
         M.AutoInit(); 
+    },
+    methods: {
+        goMyReviews() {
+        router.push({path: '/userdetail/review'});
+        },
+        goMyDining() {
+        router.push({path: '/userdetail/dining'});
+        },
+        goMyProfile() {
+        router.push({path: '/userdetail/profile'});
+        },
     }
 }
 </script>

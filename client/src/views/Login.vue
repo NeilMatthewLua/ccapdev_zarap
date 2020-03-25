@@ -1,6 +1,6 @@
 <template>
     <div>
-        <Navbar :hasSearch="false" :isLogged="false" :hasFilter="false"/>  
+        <Navbar :hasSearch="false" :hasFilter="false"/>  
         <div class="container center margin-pushdown">
             <h1 class="black-text title-size">Log-in</h1>
             <div class="container center margin-top">
@@ -32,7 +32,7 @@
                 </div>
             </div>
             <br>
-            <a href="/register" class="href black-text hovered-link">Register me!</a>
+            <a @click="goRegister" class="href black-text hovered-link">Register me!</a>
         </div>
         <Footer /> 
     </div>
@@ -57,6 +57,9 @@ export default {
         }
     },
     methods:{
+        goRegister: function() {
+            router.push({name: "Register"});
+        },
         loadUser: function() {
             this.print()
             this.$store

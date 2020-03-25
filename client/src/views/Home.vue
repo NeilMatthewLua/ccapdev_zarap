@@ -1,6 +1,8 @@
 <template>
   <div>
+    <!-- Upper half of home page -->
     <div class ="BG-color">
+      <!-- Navbar for home page -->
       <NavbarHome/>
 
       <div class ="container pad4">
@@ -11,19 +13,21 @@
           <p>Find the best restaurants in the metro and so much more</p>
         </div>
         <br>
+        <!-- Search bar -->
         <div class ="row">
-          <form class ="col s12" id="search_small" method="POST">
+          <div class ="col s12" id="search_small">
             <div class ="input-field col s6 offset-s2 searchround">
               <input type="text" class ="white truncate padinput" name="searchbar" placeholder="Search your favorite restaurants here..." v-model="search">
             </div>
-            <a class ="waves-effect waves-light btn pushdown colored-button" href="/searchresult">search</a>
-          </form>
+            <a class ="waves-effect waves-light btn pushdown colored-button" @click="goSearchResult">search</a>
+          </div>
         </div>
         <br>
         <br>
       </div>
     </div>
-      
+   
+    <!-- Lower half -->
     <div class ="lowerhalf">
       <div class ="row">
         <div class ="col s11 offset-s1 card-small">
@@ -32,6 +36,7 @@
         </div>
       </div>
 
+      <!-- Restaurant cards -->
       <div class ="card-row row">
         <div class ="col s11 offset-s1 card_small">
           <div class ="col s12 m3 margin_right_5">
@@ -41,7 +46,8 @@
                 <p>Casual Dining | Seafood | Chinese</p>
               </div>
               <div class ="card-action">
-                <a href="/restaurant">View Restaurant</a>
+                <!-- TODO RESAURANT ROUTE -->
+                <a >View Restaurant</a>
               </div>
             </div>
           </div>
@@ -52,7 +58,8 @@
                 <p>Cafés | Coffee | Desserts</p>
               </div>
               <div class ="card-action">
-                <a href="/restaurant">View Restaurant</a>
+                <!-- TODO RESAURANT ROUTE -->
+                <a >View Restaurant</a>
               </div>
             </div>
           </div>
@@ -63,7 +70,8 @@
                 <p>Quick Bites | Chinese</p>
               </div>
               <div class ="card-action">
-                <a href="/restaurant">View Restaurant</a>
+                <!-- TODO RESAURANT ROUTE -->
+                <a >View Restaurant</a>
               </div>
             </div>
           </div>
@@ -78,6 +86,7 @@
 // @ is an alias to /src
 import Footer from '@/components/Footer.vue';
 import NavbarHome from '@/components/NavbarHome.vue';
+import router from '@/router'
 
 export default {
   name: 'Home',
@@ -88,6 +97,12 @@ export default {
   data() {
     return {
       search : null
+    }
+  },
+  methods: {
+    goSearchResult: function() {
+      //TODO Search Router
+      router.push({name:"Search Result"})
     }
   }
 }
