@@ -1,6 +1,7 @@
 <template>
 <div class="review-section">
     <div class="write-review valign-wrapper">
+        <!-- TODO Check if User is Logged -->
         <div class="user-review-container" v-if="!hasReview">
             <a class="review-btn waves-effect waves-light btn #388e3c green darken-2" v-if="!isWriting" @click="isWriting = true">Write Review</a>
             <div class = "writing-section" v-else>
@@ -25,8 +26,8 @@
                     <textarea v-model="editData" id="review-area" class="materialize-textarea" data-length = "300"></textarea>
                     <div class="file-field input-field">
                     <!-- File Upload Portion -->
-                    <FileUpload @file-upload="getFiles" :dest="destination"/> 
-                    <a class="submit-btn red btn right">SUBMIT</a>
+                    <FileUpload @file-upload="getFiles" :isMultiple="true" :dest="destination" @toggleSubmit="toggleSubmitButton"/> 
+                    <a class="submit-btn red btn right"  v-if='submitVisible'>SUBMIT</a>
                     </div>
                 </div>
             </div>
@@ -35,20 +36,26 @@
     <div class="view-review">
         <h3><strong>Reviews</strong></h3>
         <div class="view-review-subsection row">
-            <a class="col s3 center" href="#">Popular</a>
-            <a class="col s3 center" href="#">All Reviews</a>
+            <a class="col s3 center" :class="{ selected: showPopular}" @click="switchPopular()">Popular</a>
+            <a class="col s3 center" :class="{ selected: !showPopular}" @click="switchAll()">All Reviews</a>
         </div>
-        <div>
-            <ReviewPost :isLiked="false" :isOwn="false" :inProfile="false"/>
-            <ReviewPost :isLiked="false" :isOwn="false"  :inProfile="false"/>            
+        <div class="reviewFeed">
+            <div v-if="showPopular">
+                <ReviewPost :isLiked="false" :isOwn="false" :inProfile="false" :reviewData="this.popularReview"/> 
+            </div>
+            <div v-if="!showPopular">
+                <ReviewPost v-for="review in this.allReviews" :key="review.reviewID"
+                 :isLiked="false" :isOwn="false" :inProfile="false" :reviewData="review"/>
+            </div>           
         </div>
     </div>
 </div>
 </template>
 
 <script scoped>
+import { mapGetters } from 'vuex'; 
 import ReviewPost from './ReviewPost'; 
-import FileUpload from '@/components/FileUpload';
+import FileUpload from '@/components/fileUpload';
 // import {mapGetters, mapActions} from 'vuex'; 
 
 export default {
@@ -68,10 +75,24 @@ export default {
             editData: "",
             destination: "reviews",
             //Add Computed to get boolean if current user is also review user
-            uploadedFiles: []
+            uploadedFiles: [],
+            showPopular : true,
+            submitVisible: true
         }
     }, 
+    computed : {
+        allReviews () {
+            return this.fetchReviews();
+        },
+        popularReview () {
+            return this.fetchPopular(); 
+        }
+        //IMPLEMENT Checks if liked by user and is own review 
+    },
     methods: {
+        toggleSubmitButton: function(value) {
+            this.submitVisible = value
+        },
        editReview (content) { 
         this.isEditing = true;  
         this.$set(this,'editData',content); 
@@ -82,7 +103,14 @@ export default {
       },
       getFiles (files) {
         this.$set(this,'uploadedFiles', files); 
-      }
+      },
+      switchPopular() {
+        this.showPopular = true 
+      },
+      switchAll() { 
+        this.showPopular = false
+      },
+      ...mapGetters(['fetchReviews', 'fetchPopular'])
     }
 }
 </script>
@@ -125,6 +153,10 @@ export default {
         width: 100%; 
     }
 
+    .selected {
+        background-color: rgb(169, 229, 255, 0.4); 
+    }
+
     .review-title {
         margin-top: 0px; 
     }
@@ -139,7 +171,7 @@ export default {
     }
 
     .view-review-subsection > a {
-        transition: color 0.5s ease-in-out;
+        transition: color 0.2s ease-in-out;
     }
 
     .view-review-subsection > a:hover {

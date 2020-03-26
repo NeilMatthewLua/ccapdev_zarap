@@ -1,12 +1,17 @@
 // All imports needed here
 const express = require('express')
 const mongoose = require('mongoose')
-const path = require('path');
+const bodyParser = require('body-parser')
+const path = require('path'); 
 require('dotenv').config()
 
 // Creates the express application
 const app = express();
 const port = process.env.PORT;
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use('/static', express.static(path.join(__dirname,'/images'))); 
 
 //To allow sending of data between frontend and backend
 app.use(function (request, response, next) {
@@ -15,6 +20,7 @@ app.use(function (request, response, next) {
   next();
 })
 app.use('/static', express.static(path.join(__dirname,'/images'))); 
+
 
 mongoose.connect(process.env.MONGO_URI, {useNewUrlParser: true, useUnifiedTopology: true})
   .then(() => {
