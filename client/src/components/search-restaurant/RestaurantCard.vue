@@ -1,6 +1,6 @@
 <template>
     <div>
-<!-- Restaurant List for Desktop View -->
+        <!-- Restaurant List for Desktop View -->
         <div class="hide-on-small-only">
             <div class="restaurant-list">
                 <!-- Restaurant Cards for Desktop View -->
@@ -112,7 +112,7 @@
                 <!-- Restaurant Cards for Mobile and Tablet View -->
                 <div class="card">
                     <div class="card-image">
-                        <img :alt="resto.name" class="mobile-restaurant-image">
+                        <img :alt="resto.name" :src="this.$store.getters.getCoverPic(resto.defaultPicture)[0].url" class="mobile-restaurant-image">
                         <button class="btn-small hoverable green right">{{resto.overallRating}}</button>
                     </div>
                     <div class="mobile-restaurant-info">
@@ -235,18 +235,26 @@ export default {
 </script>
 
 <style scoped>
+    .restaurant-list {
+        padding-left: 2%;
+        padding-right: 2%;
+        width: 95%;
+        margin-right: 5%;
+    }
+
     .restaurant-list > .card {
-        width: 100%;
+        width: 70vw;
+        height: 400px;
         margin-left: 2%;
     }
 
     .restaurant-list > .card-image {
         /* width: 95%;
         height: 440px; */
-        min-width: 350px;
-        min-height: 440px;
-        max-width: 350px;
-        max-height: 440px;
+        min-width: 35vw;
+        min-height: 400px;
+        max-width: 35vw;
+        max-height:400px;
         overflow: hidden;
         display: flex;
         justify-content: center;
@@ -256,15 +264,22 @@ export default {
 
     .restaurant-image {
         padding: 2%;
-        min-width: 350px;
-        min-height: 440px;
-        max-width: 350px;
-        max-height: 440px;
+        min-width: 35vw;
+        min-height: 400px;
+        max-width: 35vw;
+        max-height: 400px;
+    }
+
+    .card-stacked {
+        width: 30vw;
+        height: 400px;
     }
 
     .card-stacked > .card-content {
         padding-left: 2%;
         margin-left: 2%;
+        width: 30vw;
+        height: 400px;
     }
 
     .restaurant-info {
@@ -303,6 +318,7 @@ export default {
         margin-left: 1%;
         padding-left: 0%;
         padding-right: 2%;
+        height: 400px
     }
 
     .card-content > .btn {

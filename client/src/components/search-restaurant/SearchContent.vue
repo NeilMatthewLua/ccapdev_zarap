@@ -51,13 +51,7 @@ export default {
 
     .main-content {
         display:flex;
-        padding-left: 3%;
         padding-right: 3%;
-    }
-
-    .restaurant-list {
-        padding-left: 2%;
-        padding-right: 2%;
-        width: 95%;
+        justify-content: center;
     }
 </style>
