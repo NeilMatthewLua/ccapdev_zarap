@@ -13,27 +13,33 @@ router.post('/addUser',async (req, res, next) => { //adds a user
         pictureID = post[0]['pictureID']
     })
 
-    const user = new User({
-        name: req.body.firstname + " " + req.body.lastname,
-        password: req.body.password,
-        email: req.body.email,
-        address: req.body.homeaddress,
-        points: 0,
-        beenHere: [],
-        reviewd: [],
-        liked: [],
-        picture: pictureID
-    });
-
-    await user
-        .save()
-        .then(result => {
-            console.log(result);
-            res.status(200).send({auth: true})
-        })
-        .catch(err => {
-            res.status(500).send("There was a problem with registering the user")
+    await User.findOne({email:req.body.email})
+    .then(resp => {
+        res.status(500).send({message: "Account with that email already exists!", auth: false})
+    })
+    .catch(async () => {
+        const user = new User({
+            name: req.body.firstname + " " + req.body.lastname,
+            password: req.body.password,
+            email: req.body.email,
+            address: req.body.homeaddress,
+            points: 0,
+            beenHere: [],
+            reviewd: [],
+            liked: [],
+            picture: pictureID
         });
+    
+        await user
+            .save()
+            .then(result => {
+                console.log(result);
+                res.status(200).send({auth: true})
+            })
+            .catch(err => {
+                res.status(500).send("There was a problem with registering the user")
+            });
+    })
 })
 
 router.get('/:userID', (req, res, next) => { //finds a user by userID
@@ -63,9 +69,13 @@ router.get('/', (req, res, next) => { //finds a user by userID
 
 router.post('/login', async (req, res) => {
     await User.findOne({email: req.body.user.email})
-    .then(user => {
-        if(req.body.user.password == user.password)
-            res.status(200).send({auth: true, user: user })
+    .then( async user => {
+        if(req.body.user.password == user.password) {
+            await Picture.findOne({pictureID: user.picture})
+            .then(picture => {
+                res.status(200).send({auth: true, user: user, picture: picture})
+            })
+        }   
         else
             res.status(401).send({ auth: false});
     })

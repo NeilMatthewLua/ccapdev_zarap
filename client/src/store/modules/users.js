@@ -5,12 +5,12 @@ import axios from "axios"
 const state =  {
     reviewPostUsers : [],
     user : null,
+    picture : null,
     status : ''
-
 }
 
 const getters =  {
-    isLoggedIn: state => {
+    isLoggedIn: state => { //gets the status of the login state
       if(state.user != null)
         return true
       else
@@ -18,6 +18,7 @@ const getters =  {
     },
 
     getUser: state => {return state.user},
+    getPicture: state => {return state.picture},
     fetchReviewPostUser : state => id => state.reviewPostUsers.find((users) => users.userID === id),
     fetchReviewPostUsers : state => state.reviewPostUsers
 }
@@ -31,6 +32,7 @@ const actions =  {
           })
           .then(resp => {
             commit('auth_success', resp.data.user)
+            commit('setPhoto', resp.data.picture)
             resolve(resp)
           })
           .catch(err => {
@@ -42,8 +44,6 @@ const actions =  {
     logout({ commit }) {
       return new Promise((resolve) => {
         commit('logout')
-        localStorage.removeItem('token')
-        delete axios.defaults.headers.common['Authorization']
         resolve()
       })
     },
@@ -70,9 +70,11 @@ const mutations = {
     state.status = 'error'
   },
   logout(state) {
-    state.status = ''
+    state.status = '',
+    state.user = null
   },
-  setReviewPostUsers : (state, data) => state.reviewPostUsers = data 
+  setReviewPostUsers : (state, data) => state.reviewPostUsers = data, 
+  setPhoto : (state, picture) => state.picture = picture
 }
 
 export default {
