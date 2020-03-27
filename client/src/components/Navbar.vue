@@ -22,7 +22,7 @@
       </div>    
       
       <!-- Unlogged Login Section -->
-      <ul class="right hide-on-med-and-down col s3" v-if="!isLogged">
+      <ul class="right hide-on-med-and-down col s3" v-show="!this.isLoggedIn">
         <div class="right">
           <li>
             <a @click="goLogin()"> Login </a>
@@ -34,7 +34,7 @@
       </ul>
 
       <!-- Logged Profile Section -->
-      <ul class="right hide-on-med-and-down col s3" v-else>
+      <ul class="right hide-on-med-and-down col s3" v-show="this.isLoggedIn">
         <div class="right navbar-right valign-wrapper">
           <img class="circle navbar-image" :src= user_picture>
           <li>

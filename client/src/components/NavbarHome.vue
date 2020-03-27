@@ -7,7 +7,7 @@
         </div> 
           
         <!-- Unlogged Login Section -->
-        <div v-if="!isLogged">
+        <div v-show="!this.isLoggedIn">
           <ul class ="nav-flex-right hide-on-med-and-down"  id="nav-mobile">
             <li class ="navitem pushdown"><a @click="goLogin()" class ="black-color">Login</a></li>
             <li class ="navitem boxed"><a @click="goRegister()" class ="black-color">Register</a></li>
@@ -15,7 +15,7 @@
         </div>
 
         <!-- Logged Profile Section -->
-        <ul class="right hide-on-med-and-down col s3" v-else>
+        <ul class="right hide-on-med-and-down col s3" v-show="this.isLoggedIn">
           <div class="right navbar-right valign-wrapper">
             <img class="circle navbar-image" :src= user_picture>
             <li>
@@ -23,19 +23,20 @@
                 <span class="black-color username"> Welcome, {{user_firstname}} </span>
                 <i class="material-icons right"> arrow_drop_down </i>
               </a>
-              <!-- Dropdown for Profile Section --> 
-              <ul id="dropdown1" class="dropdown-content">
-                <li><a @click="goMyProfile()" class="waves-effect">Profile</a></li>
-                <li><div class="divider"></div></li>
-                <li><a @click="goMyDining()" class="waves-effect" >Dining History</a></li>
-                <li><div class="divider"></div></li>
-                <li><a @click="goMyReviews()" class="waves-effect" >My Reviews</a></li>
-                <li><div class="divider"></div></li>
-                <li><a  @click="logout()"  class="black-text">Logout</a></li>
-              </ul>
             </li>
           </div>
         </ul>
+        
+      <!-- Dropdown for Profile Section --> 
+      <ul id="dropdown1" class="dropdown-content">
+        <li><a @click="goMyProfile()" class="waves-effect">Profile</a></li>
+        <li><div class="divider"></div></li>
+        <li><a @click="goMyDining()" class="waves-effect" >Dining History</a></li>
+        <li><div class="divider"></div></li>
+        <li><a @click="goMyReviews()" class="waves-effect" >My Reviews</a></li>
+        <li><div class="divider"></div></li>
+        <li><a  @click="logout()"  class="black-text">Logout</a></li>
+      </ul>
 
       
     </div>
@@ -111,7 +112,8 @@ export default {
   },
   computed: {
     isLoggedIn: function() {
-        return this.$store.getters.isLoggedIn;
+      this.rebind();
+      return this.$store.getters.isLoggedIn;
     }
   },
   methods: {
@@ -150,6 +152,22 @@ export default {
     },
     goRegister() {
       router.push({name: 'Register'});
+    },
+    rebind(){
+      console.log("DD")
+      document.addEventListener('DOMContentLoaded', function() {
+      // sidenav
+      var elem = document.querySelectorAll('.sidenav');
+      M.Sidenav.init(elem, {});
+      // modal
+      var elems = document.querySelectorAll('.modal');
+      M.Modal.init(elems, {});
+      // dropdown
+      var elem_dropdown = document.querySelectorAll('.dropdown-trigger');
+      M.Dropdown.init(elem_dropdown, {
+        coverTrigger: false
+      });
+    });
     }
   },
   mounted() {

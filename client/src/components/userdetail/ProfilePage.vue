@@ -97,7 +97,13 @@
                 </div>
                 </div>
                 <div class="center" v-if="isLogged">
-                <a class="waves-effect waves-light btn-large colored-button show-on-edit padd-bottom" @click="validateForm">Edit Profile!</a>
+                <a class="waves-effect waves-light btn-large colored-button show-on-edit padd-bottom bring_back" @click="validateForm">Edit Profile!</a>
+                    <alertModal 
+                        :message="message"
+                        v-show="isModalVisible"
+                        @close="closeModal"
+                        class="bring_front"
+                    />
                 </div>
             </div>
             <!-- Edit Info Small-->
@@ -261,7 +267,7 @@ export default {
             this.editProfileVisible = true,
             this.bigEditProfileVisible = true,
             this.smallEditProfileVisible = true,
-            this.confirm_password = ' ',
+            this.confirm_password = '',
             this.errors = [],
             this.$refs.resetPhoto.reset();
         },
