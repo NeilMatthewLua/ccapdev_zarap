@@ -35,6 +35,11 @@
                         <li class="white-text" v-for="error in errors" :key="error">{{ error }}</li>
                     </ul>
                 </p>
+                <div class="flex-center">
+                    <img class="circle navbar-image" :src= user_picture>
+                </div>
+                <br>
+                <br>
                 <div class="row">
                     <div class="col s2">
                     <div class="info-font white-text pad-right-text">First Name:</div>
@@ -86,6 +91,8 @@
                  <div class="row">
                     <!-- File Upload Portion -->
                     <FileUpload @file-upload="getFiles" :dest="profilePictures" :isMultiple="false"
+                    :isBlack="false"
+                    ref="resetPhoto"
                     @toggleSubmit="toggleSubmitButton"/> 
                 </div>
                 </div>
@@ -155,11 +162,19 @@
                  <div class="row">
                     <!-- File Upload Portion -->
                     <FileUpload @file-upload="getFiles" :dest="profilePictures" :isMultiple="false"
+                    :isBlack="false"
+                    ref="resetPhoto"
                     @toggleSubmit="toggleSubmitButton"/> 
                 </div>
                 </div>
                 <div class="center">
-                <a class="waves-effect waves-light btn-large colored-button show-on-edit padd-bottom" @click="validateForm">Edit Profile!</a>
+                    <a class="waves-effect waves-light btn-large colored-button show-on-edit padd-bottom bring_back" @click="validateForm">Edit Profile!</a>
+                    <alertModal 
+                        :message="message"
+                        v-show="isModalVisible"
+                        @close="closeModal"
+                        class="bring_front"
+                    />
                 </div>
             </div>
         </div>
@@ -169,14 +184,17 @@
 <script>
 import axios from 'axios';
 import FileUpload from '@/components/fileUpload';
+import alertModal from '@/components/alertModal';
 
 export default {
     name: "ProfilePage",
     components: {
-        FileUpload
+        FileUpload,
+        alertModal
     },
     data() {
         return {
+            isModalVisible: false,
             visible: false,
             editProfileVisible: true,
             bigEditProfileVisible: true,
@@ -186,6 +204,7 @@ export default {
             user_lastname: ' ',
             user_picture: ' ',
             confirm_password: '',
+            message: "Your profile has been successfully updated!",
             isLogged: false,
             uploadedFiles: [],
             errors: [],
@@ -221,6 +240,23 @@ export default {
             this.editProfileVisible = !this.editProfileVisible;
             this.onResize();
         },
+        showModal() { //confirmation of successful update
+            this.isModalVisible = true;
+        },
+        closeModal() {
+            this.isModalVisible = false;
+            this.user = this.$store.getters.getUser;
+            this.reset();
+        },
+        reset() {
+            this.visible = false,
+            this.editProfileVisible = true,
+            this.bigEditProfileVisible = true,
+            this.smallEditProfileVisible = true,
+            this.confirm_password = ' ',
+            this.errors = [],
+            this.$refs.resetPhoto.reset();
+        },
         getFiles(files) {
             this.$set(this,'uploadedFiles', files);
         },
@@ -254,7 +290,11 @@ export default {
                     "picture": app.user.picture,
                     "uploadedFile": app.uploadedFiles
                     })
-                .then(() => )
+                .then(() => {
+                    this.$emit('updateNavbar');
+                    this.user_picture = this.uploadedFiles[0].url;
+                    this.showModal();
+                })
         },
         validateForm: function () {
             this.errors = [];
@@ -309,6 +349,14 @@ export default {
         border : 1px solid var(--default-container-color);
         background-color: var(--default-container-color);
         border-radius: 20px !important;
+    }
+
+    .bring_back {
+        z-index: 0;
+    }
+
+    .bring_front {
+        z-index: 1;
     }
 
     .navbar-image {

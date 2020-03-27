@@ -383,7 +383,6 @@ export default {
   Name: "Navbar",
   props:{
     hasSearch: Boolean, //If search bar is present 
-    // isLogged: Boolean, //If user is logged in 
     hasFilter: Boolean,
   },
   computed: {
