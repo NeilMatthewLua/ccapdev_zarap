@@ -12,10 +12,12 @@ router.post('/addUser',async (req, res, next) => { //adds a user
     await Picture.find({}, {}, { sort: { '_id' : -1 } },  function(err, post) {
         pictureID = post[0]['pictureID']
     })
-
     await User.findOne({email:req.body.email})
-    .then(resp => {
-        res.status(500).send({message: "Account with that email already exists!", auth: false})
+    .then(res => {
+        res.send({
+            "status": "failed",
+            "error": { "code": 200, "message": "Account with that email already exists!" }
+        })
     })
     .catch(async () => {
         const user = new User({
@@ -25,7 +27,7 @@ router.post('/addUser',async (req, res, next) => { //adds a user
             address: req.body.homeaddress,
             points: 0,
             beenHere: [],
-            reviewd: [],
+            reviewed: [],
             liked: [],
             picture: pictureID
         });
@@ -33,8 +35,10 @@ router.post('/addUser',async (req, res, next) => { //adds a user
         await user
             .save()
             .then(result => {
-                console.log(result);
-                res.status(200).send({auth: true})
+                res.send({
+                    "status": "success",
+                    auth: true
+                })
             })
             .catch(err => {
                 res.status(500).send("There was a problem with registering the user")
@@ -47,11 +51,10 @@ router.get('/:userID', (req, res, next) => { //finds a user by userID
     User.find({userID: id})
         .exec()
         .then(doc => {
-            console.log(doc);;
-            res.status(200).json(doc);
+            res.status(200).send({user: user});
         })
         .catch(err => {
-            res.send(500).json({error: err});
+            res.send(500).send({error: err});
         })
 })
 
@@ -59,7 +62,6 @@ router.get('/', (req, res, next) => { //finds a user by userID
     User.find({})
         .exec()
         .then(doc => {
-            console.log(doc.length);
             res.status(200).json(doc);
         })
         .catch(err => {
@@ -78,6 +80,43 @@ router.post('/login', async (req, res) => {
         }   
         else
             res.status(401).send({ auth: false});
+    })
+    .catch(err => {
+        return res.status(500).send('Error on the server.');
+    })
+})
+
+router.post('/updateUser', async (req, res) => {  
+    let filter = {email: req.body.user.email};
+    let update = {
+        name: req.body.user.firstname + " " + req.body.lastname,
+        password: req.body.user.password,
+        email: req.body.user.email,
+        address: req.body.user.address,
+        points: req.body.user.points,
+        beenHere: req.body.user.beenHere,
+        reviewed: req.body.user.reviewed,
+        liked: req.body.user.liked,
+    };
+    let oldPicture = {pictureID: req.body.user.picture};
+    let updatePicture = {
+        url: req.body.user.uploadedFile[0].url
+    }
+    console.log("DETAIL: " + JSON.stringify(req.body.user.uploadedFile))
+    await User.findOneAndUpdate(filter, update, {
+        new: true
+    })
+    .then( async user => {
+        update = {pictureID: user.picture};
+            await Picture.findOneAndUpdate(oldPicture, updatePicture, {
+                new: true
+            })
+            .then(picture => {
+                return res.status(200).send({
+                    user: user,
+                    picture: picture
+                });
+            })
     })
     .catch(err => {
         return res.status(500).send('Error on the server.');

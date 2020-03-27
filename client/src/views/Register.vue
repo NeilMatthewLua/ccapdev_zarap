@@ -33,6 +33,12 @@
                             </div>
                             <div class="row">
                                 <div class="input-field col s12">
+                                <input id="confirm_password" type="password" class="validate" v-model="confirm_password">
+                                <label for="confirm_password">Confirm Password</label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="input-field col s12">
                                 <input id="email" type="email" class="validate" v-model="user.email">
                                 <label for="email">Email</label>
                                 </div>
@@ -96,6 +102,7 @@ export default {
                 "homeaddress": null,
                 "uploadedFiles": []
             },
+            confirm_password: null,
             profilePictures: "profilePictures"
         }
     },
@@ -131,6 +138,12 @@ export default {
             }
             if(!this.user.password) {
                 this.errors.push('Password required');
+                if(!this.confirm_password) {
+                    this.errors.push('Confirm Password required');
+                }
+                else if(this.user.password != this.confirm_password){
+                    this.errors.push('Confirm Password does not match Password');
+                }
             }
             if(!this.user.homeaddress) {
                 this.errors.push('Home Address required');
@@ -149,21 +162,24 @@ export default {
         },
         saveUser: async function() { 
             let app = this;
+            this.errors = [];
             await axios.post("http://localhost:9090/users/addUser", {
                 "firstname": app.user.firstname,
                 "lastname": app.user.lastname,
                 "email": app.user.email,
                 "password": app.user.password,
                 "homeaddress": app.user.homeaddress,
-                "user.uploadedFiles": app.user.uploadedFiles,
+                "uploadedFiles": app.user.uploadedFiles,
             })
-            .then(() => {
-                this.showModal();
+            .then(resp => {
+                console.log(resp.data.status)
+                if(resp.data.status === "success")
+                    this.showModal();
+                else
+                    this.errors.push(resp.data.error.message)
             })
             .catch(error => {
-                console.log(error)
-                console.log(error.data)
-                console.log(error.data.message)
+                console.log(error)                
             })
         }
     }   
