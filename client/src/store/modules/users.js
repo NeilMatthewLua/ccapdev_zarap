@@ -3,7 +3,6 @@
 import axios from "axios"
 
 const state =  {
-    reviewPostUsers : [],
     user : null,
     picture : null,
     status : ''
@@ -19,8 +18,6 @@ const getters =  {
 
     getUser: state => {return state.user},
     getPicture: state => {return state.picture},
-    fetchReviewPostUser : state => id => state.reviewPostUsers.find((users) => users.userID === id),
-    fetchReviewPostUsers : state => state.reviewPostUsers
 }
 
 const actions =  {
@@ -47,15 +44,7 @@ const actions =  {
         resolve()
       })
     },
-    async getReviewPostUsers({commit}, reviewIDs) {
-        let result = []
-        for(let i = 0; i < reviewIDs.length; i++) {
-            let res = await axios.get(`http://localhost:9090/reviews/reviewID/${reviewIDs[i]}`);
-            let res2 = await axios.get(`http://localhost:9090/users/${res.data.reviewerID}`);
-            result.push(res2.data[0]); 
-        }
-        commit('setReviewPostUsers', result); 
-    } 
+    
 }
 
 const mutations = {
@@ -73,7 +62,6 @@ const mutations = {
     state.status = '',
     state.user = null
   },
-  setReviewPostUsers : (state, data) => state.reviewPostUsers = data, 
   setPhoto : (state, picture) => state.picture = picture
 }
 

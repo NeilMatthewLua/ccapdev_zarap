@@ -14,7 +14,7 @@
         </div>
         <transition name="changeContent" enter-active-class="animated bounceInLeft"> 
           <div v-if="section === 'Photos'">
-            <PhotoSection :title="photosTitle"/>  
+            <PhotoSection :urls="this.photoUrls" :title="photosTitle"/>  
           </div>
         </transition> 
         <transition name="changeContent" enter-active-class="animated bounceInLeft">
@@ -72,9 +72,9 @@ export default {
     Name: "RestaurantContent",
     data() {
       return {
-          photosTitle: "Photos", //Default Photos Title
+          photosTitle: "Menu", //Default Photos Title
           section: "Photos", //Default Section
-          isFetching : true,
+          isFetching : true
       }
     },
     computed: {
@@ -83,6 +83,12 @@ export default {
       }, 
       defaultPic () {
         return this.$store.getters.fetchDefaultPic(this.restoDetails.defaultPicture).url;  
+      }, 
+      photoUrls () {
+        if(this.photosTitle === "Photos") 
+          return this.fetchRestaurantPics();
+        else 
+          return this.fetchMenuPics();
       }
     },
     components: {
@@ -91,29 +97,27 @@ export default {
       BreedingRhombusSpinner
     },
     methods: { 
-      async changeMenu() {
+      changeMenu() {
         this.section = "Photos";
         this.photosTitle = "Menu";  
       }, 
-      changePhotos() {
+      changePhotos() { 
         this.section = "Photos"; 
         this.photosTitle = "Photos"; 
       }, 
       changeReview() {
         this.section = "Review"
       },
-      ...mapGetters(['fetchCurrResto', 'fetchReviewPostUsers']),
+      ...mapGetters(['fetchCurrResto', 'fetchReviewPostUsers','fetchMenuPics','fetchRestaurantPics']),
       ...mapActions(['getRestoById','getRestaurantPictures', 'getMenuPictures', 'getReviewsByRestaurant', 'getReviewPostUsers'])
     },
     async created() {
       await this.getRestoById(this.$route.params.id); //Get restaurant details 
       let currResto = await this.$store.getters.fetchCurrResto;
       await this.getRestaurantPictures(currResto.pictures); 
-      await this.getMenuPictures(currResto.menu); 
-      await this.getReviewsByRestaurant(currResto.restaurantID); 
-      await this.getReviewPostUsers(currResto.reviews); 
+      await this.getMenuPictures(currResto.menu);  
+      await this.getReviewPostUsers(currResto.reviews, false); 
       this.isFetching = false; 
-      // setTimeout(() => this.isFetching = false, 1000); //DEV-ONLY
     }
   }
 </script>
@@ -149,7 +153,7 @@ export default {
   .title-card > .title-picture {
       padding-top: 10px; 
       padding-bottom: 10px; 
-      height: 80%; 
+      height: 200px; 
       width: auto; 
   }
 

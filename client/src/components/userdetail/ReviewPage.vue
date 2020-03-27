@@ -61,6 +61,10 @@ export default {
             //Deletes Review
         }
     },
+    async created () {
+        await this.$store.actions.getReviewsByReviewer(this.$route.params.id); 
+        await this.$store.actions.getReviewPostUsers.(this.$store.getters.,true)
+    }
 }
 </script>
 

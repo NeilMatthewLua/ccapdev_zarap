@@ -41,11 +41,11 @@
         </div>
         <div class="reviewFeed">
             <div v-if="showPopular">
-                <ReviewPost :isLiked="false" :isOwn="false" :inProfile="false" :reviewData="this.popularReview"/> 
+                <ReviewPost :inProfile="false" :reviewData="this.popularReview"/> 
             </div>
             <div v-if="!showPopular">
                 <ReviewPost v-for="review in this.allReviews" :key="review.reviewID"
-                 :isLiked="false" :isOwn="false" :inProfile="false" :reviewData="review"/>
+                  :inProfile="false" :reviewData="review"/>
             </div>           
         </div>
     </div>
@@ -82,7 +82,7 @@ export default {
     }, 
     computed : {
         allReviews () {
-            return this.fetchReviews();
+            return this.fetchAllReviews();
         },
         popularReview () {
             return this.fetchPopular(); 
@@ -105,12 +105,13 @@ export default {
         this.$set(this,'uploadedFiles', files); 
       },
       switchPopular() {
+        console.log(this.allReviews)
         this.showPopular = true 
       },
       switchAll() { 
         this.showPopular = false
       },
-      ...mapGetters(['fetchReviews', 'fetchPopular'])
+      ...mapGetters(['fetchAllReviews', 'fetchPopular'])
     }
 }
 </script>

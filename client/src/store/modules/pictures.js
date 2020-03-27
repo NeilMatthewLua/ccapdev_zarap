@@ -9,7 +9,6 @@ const getters =  {
     fetchMenuPics : state => state.menuPictures, 
     fetchRestaurantPics : state => state.restaurantPictures, 
     fetchDefaultPic : state => id => state.restaurantPictures.filter(pics => pics.pictureID === id)[0] 
-    // fetchReviewPics : state => id => state.reviewPictures.filter()
 }
 
 const actions =  {
