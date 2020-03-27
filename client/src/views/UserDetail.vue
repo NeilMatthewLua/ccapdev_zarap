@@ -1,6 +1,6 @@
 <template>
     <div>
-        <Navbar :hasSearch="true" :isLogged="true" :hasFilter="false"/> 
+        <Navbar :hasSearch="true" :hasFilter="false" ref="updateNav"/> 
         <!-- Container of menu and display info -->
         <div id="content" class="container-profile  hide-on-restaurant hide-on-review">
             <h3 class="center big-font onload">{{Title}}</h3>
@@ -8,7 +8,8 @@
                 <!-- User Menu -->
                 <UserMenu  @userProfile="updateUserPage"/>
                 <!-- Display info for large -->
-                <ProfilePage v-bind:class="{'editVisible': ProfileVisible}"/>
+                <ProfilePage v-bind:class="{'editVisible': ProfileVisible}"
+                @updateNavbar="updateNavbar" />
                 <DiningHistoryPage  v-bind:class="{'editVisible': HistoryVisible}"/>
                 <ReviewPage  v-bind:class="{'editVisible': ReviewVisible}"/>
             </div>
@@ -49,6 +50,9 @@ export default {
     methods: {
         mounted() {
             this.updateUserPage();
+        },
+        updateNavbar() {
+            this.$refs.updateNav.checkLogged();
         },
         updateUserPage: function() {
             var action = this.$route.params.menu;
