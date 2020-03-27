@@ -12,16 +12,16 @@ var peopleUrls = [
     "http://localhost:9090/static/profilePictures/gabriel.jpg",
     "http://localhost:9090/static/profilePictures/kurt.jpg",
     "http://localhost:9090/static/profilePictures/isser.jpg",
-    "http://localhost:9090/static/profilePictures/carlos.jpg",
-    "http://localhost:9090/static/profilePictures/neil.jpg",
-    "http://localhost:9090/static/profilePictures/matthew.jpg",
-    "http://localhost:9090/static/profilePictures/richard.jpg",
-    "http://localhost:9090/static/profilePictures/bryan.jpg",
-    "http://localhost:9090/static/profilePictures/jonal.jpg",
-    "http://localhost:9090/static/profilePictures/rhei.jpg",
-    "http://localhost:9090/static/profilePictures/gabriel.jpg",
-    "http://localhost:9090/static/profilePictures/kurt.jpg",
-    "http://localhost:9090/static/profilePictures/isser.jpg"
+    "http://localhost:9090/static/profilePictures/dog1.jpg",
+    "http://localhost:9090/static/profilePictures/dog2.jpg",
+    "http://localhost:9090/static/profilePictures/dog3.jpg",
+    "http://localhost:9090/static/profilePictures/dog4.jpg",
+    "http://localhost:9090/static/profilePictures/dog5.jpg",
+    "http://localhost:9090/static/profilePictures/dog6.jpg",
+    "http://localhost:9090/static/profilePictures/dog7.jpg",
+    "http://localhost:9090/static/profilePictures/dog8.jpg",
+    "http://localhost:9090/static/profilePictures/dog9.jpg",
+    "http://localhost:9090/static/profilePictures/dog10.jpg"
 ]
 
 var restaurantUrls = [ 

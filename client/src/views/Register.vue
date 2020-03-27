@@ -52,6 +52,7 @@
                             <div class="row">
                                 <!-- File Upload Portion -->
                                 <FileUpload @file-upload="getFiles" :dest="profilePictures" :isMultiple="false"
+                                :isBlack="true"
                                 @toggleSubmit="toggleSubmitButton"/> 
                             </div>
                             <div v-show='submitVisible'>
@@ -59,7 +60,7 @@
                                     <div class="waves-effect waves-light btn-large btncolor" @click="validateForm"> Sign me up!
                                     </div>
                                 </div>
-                                <alertModal 
+                                <alertModal                :message= "message" 
                                     v-show="isModalVisible"
                                     @close="closeModal"
                                     class="bring_front"
@@ -103,7 +104,8 @@ export default {
                 "uploadedFiles": []
             },
             confirm_password: null,
-            profilePictures: "profilePictures"
+            profilePictures: "profilePictures",
+            message: "Thanks for registering! We'll bring you back to the home page now!"
         }
     },
     methods:{
@@ -112,7 +114,17 @@ export default {
         },
         closeModal() {
             this.isModalVisible = false;
+            this.reset();
             router.push({name: "Home"});
+        },
+        reset() {
+            this.user.firstname =  null,
+            this.user.lastname =  null,
+            this.user.password =  null,
+            this.user.homeaddress =  null,
+            this.user.email =  null,
+            this.confirm_password = null,
+            this.errors = []
         },
         toggleSubmitButton: function(value) {
             this.submitVisible = value
@@ -193,6 +205,7 @@ export default {
         min-height: 100vh;
         flex-direction: column;
     }
+    
     :root {
         --default-button-color: #CB202D;
         --default-navbar-color: #CB202D;

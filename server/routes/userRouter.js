@@ -92,7 +92,7 @@ router.post('/login', async (req, res) => {
 router.post('/updateUser', async (req, res) => {  
     let filter = {email: req.body.user.email};
     let update = {
-        name: req.body.user.firstname + " " + req.body.lastname,
+        name: req.body.user.firstname + " " + req.body.user.lastname,
         password: req.body.user.password,
         email: req.body.user.email,
         address: req.body.user.address,
@@ -105,7 +105,6 @@ router.post('/updateUser', async (req, res) => {
     let updatePicture = {
         url: req.body.user.uploadedFile[0].url
     }
-    console.log("DETAIL: " + JSON.stringify(req.body.user.uploadedFile))
     await User.findOneAndUpdate(filter, update, {
         new: true
     })

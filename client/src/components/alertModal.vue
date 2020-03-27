@@ -12,15 +12,6 @@
         >
           <slot name="header">
             zarap
-<!-- 
-            <button
-              type="button"
-              class="btn-close"
-              @click="close"
-              aria-label="Close modal"
-            >
-              x
-            </button> -->
           </slot>
         </header>
         <section
@@ -28,7 +19,7 @@
           id="modalDescription"
         >
           <slot name="body">
-            Thanks for registering! We'll bring you back to the home page now!
+            {{message}}
           </slot>
         </section>
         <footer class="modal-footer">
@@ -51,7 +42,9 @@
 <script>
   export default {
     name: 'modal',
-
+    props: {
+      message: String
+    },
     methods: {
       close() {
         this.$emit('close');
