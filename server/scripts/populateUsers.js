@@ -3,6 +3,29 @@ const faker = require('faker')
 const User = require('../models/users')
 const Picture = require('../models/pictures')
 
+let sampleNames= [
+    'Neil',
+    'Gabriel',
+    'Kurt',
+    'Arnold',
+    'Matthew',
+    'Jesus',
+    'Richard',
+    'Alvin',
+    'Geosef',
+    'Anjelo',
+    'Klaus',
+    'George',
+    'Frank',
+    'Arnold',
+    'Adam',
+    'Jake',
+    'Saul',
+    'Timmy',
+    'Jhonny',
+    'Dylan',
+]
+
 function save(user) {
     return new Promise((resolve) => {
         user
@@ -33,7 +56,7 @@ async function populateUsers(userCounter, limit) {
 
     for(i = userCounter; i < limit; i++) {
         let user = new User({
-            name: faker.name.firstName() + " " + faker.name.lastName(),
+            name: sampleNames[i] + " " + faker.name.lastName(),
             password: faker.lorem.words(1),
             email: faker.internet.email(),
             address: faker.address.streetAddress(),

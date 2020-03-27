@@ -68,6 +68,7 @@ export default {
                     "password": this.password
                     })
                 .then(() => {
+                    
                     router.push({name: "Home"});
                 })
                 .catch(() => {

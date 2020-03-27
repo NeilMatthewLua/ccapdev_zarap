@@ -17,16 +17,19 @@ const getters =  {
 }
 
 const actions =  {
+    //Gets All Restos from db
     async getRestos ({commit}) {
         let res = await axios.get("http://localhost:9090/restaurants"); 
 
         commit('setResto', res.data); 
     },
+    //Gets Resto by restaurantID 
     async getRestoById ({commit}, id) {
         let res = await axios.get(`http://localhost:9090/restaurants/${id}`); 
 
         commit('setCurrResto', res.data); 
     },
+    //Gets Restos that fit the query 
     async getRestoByQuery ({commit}, query) {
         let res = await axios.get(`http://localhost:9090/restaurants?${query}`); 
 

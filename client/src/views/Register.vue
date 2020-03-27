@@ -33,6 +33,12 @@
                             </div>
                             <div class="row">
                                 <div class="input-field col s12">
+                                <input id="confirm_password" type="password" class="validate" v-model="confirm_password">
+                                <label for="confirm_password">Confirm Password</label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="input-field col s12">
                                 <input id="email" type="email" class="validate" v-model="user.email">
                                 <label for="email">Email</label>
                                 </div>
@@ -46,6 +52,7 @@
                             <div class="row">
                                 <!-- File Upload Portion -->
                                 <FileUpload @file-upload="getFiles" :dest="profilePictures" :isMultiple="false"
+                                :isBlack="true"
                                 @toggleSubmit="toggleSubmitButton"/> 
                             </div>
                             <div v-show='submitVisible'>
@@ -53,7 +60,7 @@
                                     <div class="waves-effect waves-light btn-large btncolor" @click="validateForm"> Sign me up!
                                     </div>
                                 </div>
-                                <alertModal 
+                                <alertModal                :message= "message" 
                                     v-show="isModalVisible"
                                     @close="closeModal"
                                     class="bring_front"
@@ -96,7 +103,9 @@ export default {
                 "homeaddress": null,
                 "uploadedFiles": []
             },
-            profilePictures: "profilePictures"
+            confirm_password: null,
+            profilePictures: "profilePictures",
+            message: "Thanks for registering! We'll bring you back to the home page now!"
         }
     },
     methods:{
@@ -105,7 +114,17 @@ export default {
         },
         closeModal() {
             this.isModalVisible = false;
+            this.reset();
             router.push({name: "Home"});
+        },
+        reset() {
+            this.user.firstname =  null,
+            this.user.lastname =  null,
+            this.user.password =  null,
+            this.user.homeaddress =  null,
+            this.user.email =  null,
+            this.confirm_password = null,
+            this.errors = []
         },
         toggleSubmitButton: function(value) {
             this.submitVisible = value
@@ -131,6 +150,12 @@ export default {
             }
             if(!this.user.password) {
                 this.errors.push('Password required');
+                if(!this.confirm_password) {
+                    this.errors.push('Confirm Password required');
+                }
+                else if(this.user.password != this.confirm_password){
+                    this.errors.push('Confirm Password does not match Password');
+                }
             }
             if(!this.user.homeaddress) {
                 this.errors.push('Home Address required');
@@ -149,21 +174,24 @@ export default {
         },
         saveUser: async function() { 
             let app = this;
+            this.errors = [];
             await axios.post("http://localhost:9090/users/addUser", {
                 "firstname": app.user.firstname,
                 "lastname": app.user.lastname,
                 "email": app.user.email,
                 "password": app.user.password,
                 "homeaddress": app.user.homeaddress,
-                "user.uploadedFiles": app.user.uploadedFiles,
+                "uploadedFiles": app.user.uploadedFiles,
             })
-            .then(() => {
-                this.showModal();
+            .then(resp => {
+                console.log(resp.data.status)
+                if(resp.data.status === "success")
+                    this.showModal();
+                else
+                    this.errors.push(resp.data.error.message)
             })
             .catch(error => {
-                console.log(error)
-                console.log(error.data)
-                console.log(error.data.message)
+                console.log(error)                
             })
         }
     }   
@@ -177,6 +205,7 @@ export default {
         min-height: 100vh;
         flex-direction: column;
     }
+    
     :root {
         --default-button-color: #CB202D;
         --default-navbar-color: #CB202D;
