@@ -38,6 +38,22 @@ const actions =  {
           })
         })
     },
+    updateUser({commit}, user){
+        return new Promise((resolve, reject) => {
+          axios.post('http://localhost:9090/users/updateUser', {
+            user
+          })
+          .then(resp => {
+            commit('auth_success', resp.data.user)
+            commit('setPhoto', resp.data.picture)
+            resolve(resp)
+          })
+          .catch(err => {
+            commit('auth_error')
+            reject(err)
+          })
+        })
+    },
     logout({ commit }) {
       return new Promise((resolve) => {
         commit('logout')

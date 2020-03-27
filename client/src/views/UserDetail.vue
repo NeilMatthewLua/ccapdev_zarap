@@ -37,9 +37,7 @@ export default {
     },
     data() {
         return {
-            // isUserPageVisible: true,
-            // EditProfileVisible: true,
-            ProfileVisible: true,
+            ProfileVisible: false,
             HistoryVisible: true,
             ReviewVisible: true,
             Title: ''
@@ -54,21 +52,26 @@ export default {
         },
         updateUserPage: function() {
             var action = this.$route.params.menu;
-            //TODO "My" only for logged in
             if(action == 'profile') {
-                this.Title = "My Profile";    
+                this.Title = "Profile";
+                this.ProfileVisible = false;
+                this.HistoryVisible = true;
+                this.ReviewVisible = true;
+            }
+            if(action == 'myprofile') {
+                this.Title = "My Profile";
                 this.ProfileVisible = false;
                 this.HistoryVisible = true;
                 this.ReviewVisible = true;
             }
             else if(action == 'dining') {
-                this.Title = "Dining History";    
+                this.Title = "Dining History";   
                 this.ProfileVisible = true;
                 this.HistoryVisible = false;
                 this.ReviewVisible = true;
             }
             else if(action == 'review') {
-                this.Title = "My Reviews";    
+                this.Title = "My Reviews"; 
                 this.ProfileVisible = true;
                 this.HistoryVisible = true;
                 this.ReviewVisible = false;

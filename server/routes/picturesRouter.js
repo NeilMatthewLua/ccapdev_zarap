@@ -96,11 +96,11 @@ router.post('/upload-multiple/:destination', (req, res) => {
         console.log(result); 
         res.send(result);
 
-        let mongoDestination = result[0].destination.substring(1) + "/" + result[0].filename;
+        let mongoDestination = `http://localhost:9090/static/${req.params.destination}/` + result[0].filename;
+        console.log(mongoDestination)
         let pic = new Picture({
             url: mongoDestination
         })
-
         await pic.save()
     });
 });
