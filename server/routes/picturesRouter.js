@@ -30,15 +30,12 @@ const storage = multer.diskStorage({
     }
 });
 
-router.get('/', (req, res) => {
-    res.send("okay")
-})
-
+//Get Picture Object by ID 
 router.get('/:id', (req, res) => {
     let id = req.params.id  
     Picture.findOne({ pictureID : id }, (err, doc) => {
-        if(err) res.send(err); 
-        res.send(doc); 
+        if(err) res.status(500).send('Error on the server.'); 
+        res.status(200).send(doc)  
     })
 })
 

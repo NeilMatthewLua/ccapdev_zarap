@@ -7,7 +7,8 @@ const User = require('../models/users.js');
 const Picture = require('../models/pictures.js');
 const Restaurant = require('../models/restaurants.js');
 
-router.post('/addUser',async (req, res, next) => { //adds a user
+//adds a user
+router.post('/addUser',async (req, res, next) => { 
     let pictureID
     await Picture.find({}, {}, { sort: { '_id' : -1 } },  function(err, post) {
         pictureID = post[0]['pictureID']
@@ -46,19 +47,21 @@ router.post('/addUser',async (req, res, next) => { //adds a user
     })
 })
 
-router.get('/:userID', (req, res, next) => { //finds a user by userID
+//finds a user by userID
+router.get('/:userID', (req, res, next) => { 
     const id = req.params.userID;
     User.find({userID: id})
         .exec()
         .then(doc => {
-            res.status(200).send({user: user});
+            res.status(200).send({user : doc});
         })
         .catch(err => {
             res.send(500).send({error: err});
         })
 })
 
-router.get('/', (req, res, next) => { //finds a user by userID
+//finds a user by userID
+router.get('/', (req, res, next) => { 
     User.find({})
         .exec()
         .then(doc => {
@@ -120,6 +123,34 @@ router.post('/updateUser', async (req, res) => {
     .catch(err => {
         return res.status(500).send('Error on the server.');
     })
+})
+
+//Increments the points of a user by amount 
+router.post('/increment/:id', (req, res) => {
+    let amount = req.body.value; 
+    let id = req.params.id; 
+    User.findOneAndUpdate({userID : id}, {$inc : {'points' : amount}}, (err,res) => {
+        if (err) throw res.status(500).send('Error on the server.'); 
+        res.status(200).send("Updated User Points"); 
+    })
+})
+
+router.post('/addLiked/:id', (req, res) => {
+    let reviewID = req.body.reviewID;
+    let id = req.params.id; 
+    User.findOneAndUpdate({userID : id}, {$push : {'liked' : reviewID}}, (err,res) => {
+        if (err) res.status(500).send('Error on the server.');
+        res.status(200).send("Updated User Liked Reviews"); 
+    }) 
+})
+
+router.post('/deleteLiked/:id', (req, res) => {
+    let reviewID = req.body.reviewID;
+    let id = req.params.id; 
+    User.findOneAndUpdate({userID : id}, {$pullAll : {'liked' : [reviewID]}}, (err,res) => {
+        if (err) res.status(500).send('Error on the server.');
+        res.status(200).send("Updated User Liked Reviews"); 
+    }) 
 })
 
 module.exports = router;
