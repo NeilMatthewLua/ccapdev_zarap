@@ -6,7 +6,7 @@
                 <!-- Restaurant Cards for Desktop View -->
                 <div class="card horizontal">
                     <div class="card-image">
-                        <img :alt="resto.name" :src="this.$store.getters.getCoverPic(resto.defaultPicture)[0].url"  class="restaurant-image">
+                        <img :alt="resto.name" :src="this.$store.getters.fetchCoverPic(resto.defaultPicture)[0].url"  class="restaurant-image">
                     </div>
                     <div class="restaurant-info">
                         <div class="card-stacked">
@@ -112,7 +112,7 @@
                 <!-- Restaurant Cards for Mobile and Tablet View -->
                 <div class="card">
                     <div class="card-image">
-                        <img :alt="resto.name" :src="this.$store.getters.getCoverPic(resto.defaultPicture)[0].url" class="mobile-restaurant-image">
+                        <img :alt="resto.name" :src="this.$store.getters.fetchCoverPic(resto.defaultPicture)[0].url" class="mobile-restaurant-image">
                         <button class="btn-small hoverable green right">{{resto.overallRating}}</button>
                     </div>
                     <div class="mobile-restaurant-info">
@@ -216,7 +216,7 @@ export default {
         resto : Object 
     },
     methods: {
-        ...mapGetters(["getCoverPic"]),
+        ...mapGetters(["fetchCoverPic"]),
         getToday() {
             var d = new Date();
             var n = d.getDay();

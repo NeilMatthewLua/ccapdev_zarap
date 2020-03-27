@@ -7,7 +7,7 @@
         <div class="main-content">
             <FilterBar/>
             <div v-if="!loading">
-                <RestaurantCard v-for="item in this.getAllRestos()" :key="item.restaurantID" :resto="item"/>
+                <RestaurantCard v-for="item in this.fetchAllRestos()" :key="item.restaurantID" :resto="item"/>
             </div>
             <div v-if="loading">
                 <h1>LOADING...</h1>
@@ -33,12 +33,12 @@ export default {
     },
     async created() {
         await this.getRestos();
-        await this.getPics(this.getAllRestos());
+        await this.getPics(this.fetchAllRestos());
         this.loading = false; 
     },
     methods: {
-        ...mapActions(["getRestos", "getRestoQuery", "getPics"]),
-        ...mapGetters(["getAllRestos", "getAllPic"]),
+        ...mapActions(["getRestos", "getRestoByQuery", "getPics"]),
+        ...mapGetters(["fetchAllRestos", "fetchAllPic"]),
     }
 }
 </script>

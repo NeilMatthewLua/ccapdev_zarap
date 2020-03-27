@@ -9,9 +9,11 @@ const state =  {
 }
 
 const getters =  {
-    getAllRestos : state => state.allRestos,
-    getAllPic : state => state.allPics,
-    getCoverPic: state => id => state.allPics.filter(pics => pics.pictureID === id)
+    fetchAllRestos : state => state.allRestos,
+    fetchCurrResto : state => state.currResto, 
+    fetchUserReviewRestos : state => state.userReviewRestos,
+    fetchsAllPic : state => state.allPics,
+    fetchCoverPic: state => id => state.allPics.filter(pics => pics.pictureID === id)
 }
 
 const actions =  {
@@ -41,7 +43,7 @@ const actions =  {
         let listPics = [];
         for (let i = 0; i < arr.length; i++) {
             let res = await axios.get(`http://localhost:9090/pictures/${arr[i].defaultPicture}`);
-            listPics.push(res.data[0]);
+            listPics.push(res.data);
         }
         commit('setPics', listPics);
     }
