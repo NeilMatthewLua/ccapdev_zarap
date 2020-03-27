@@ -5,26 +5,29 @@ const mongoose = require('mongoose');
 const url = process.env.MONGO_URI; 
 const Restaurant = require('../models/restaurants');
 
-router.get('/', (req, res) => { //Get all Restos
+//Get all Restos
+router.get('/', (req, res) => { 
     Restaurant.find({}, (err, doc) => {
-        if(err) throw err; 
-        return res.json(doc); 
+        if(err) res.status(500).send('Error on the server.');
+        res.status(200).send(doc) 
     });
 }); 
 
-router.get('/:id', (req, res) => { //Get Resto based on Resto ID 
+//Get Resto based on Resto ID
+router.get('/:id', (req, res) => {  
     let id = req.params.id
     Restaurant.findOne({ restaurantID : id }, (err, doc) => {
-        if(err) throw err; 
-        return res.json(doc); 
+        if(err) res.status(500).send('Error on the server.'); 
+        res.status(200).send(doc)  
     });
 });
 
-router.get('owner/:id', (req, res) => { //Get Resto based on Owner ID
+//Get Resto based on Owner ID
+router.get('owner/:id', (req, res) => { 
     let id = req.params.id
     Review.find({ ownerID : id }, (err, doc) => {
-        if(err) throw err; 
-        return res.json(doc); 
+        if(err) res.status(500).send('Error on the server.'); 
+        res.status(200).send(doc) 
     });
 });
 
