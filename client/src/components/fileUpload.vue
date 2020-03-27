@@ -94,8 +94,7 @@ export default {
             // get data
             .then(x => x.data)
             .then(x => x.map(img => Object.assign({},
-                img, { url: `http://localhost:9090/pictures/${img.id}` })))
-        
+                img, { url: `http://localhost:9090/static/${this.dest}/${img.filename}` })))
       },
       save(formData) {
         // upload data to the server
@@ -105,6 +104,7 @@ export default {
           .then(x => {
             app.uploadedFiles = [].concat(x);
             // console.log(app.uploadedFiles);
+            console.log(this.uploadedFiles)
             this.$emit('file-upload', this.uploadedFiles); //Send uploaded files to parent
             this.currentStatus = STATUS_SUCCESS;
           })
