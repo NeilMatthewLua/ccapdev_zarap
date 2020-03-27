@@ -2,8 +2,9 @@
   <!--Restaurant Content-->
   <div>
     <transition name="changeContent" enter-active-class="animated fadeInUp">
-    <div class="main-content row" v-if="!isFetching">
+    <div class="main-content row" v-if="!isFetching && !noResult">
       <div class="left-section col s12 xl8">
+        <!-- Title Card -->
         <div class="title-card row">
             <div class="col s12 m8">
               <h2>{{this.restoDetails.name}}</h2>
@@ -12,6 +13,7 @@
             </div>
             <img class="title-picture col s12 m4" :src="this.defaultPic" alt="Golden Fortune">
         </div>
+        <!-- Left Section Bottom (Either Photos or Review Section) -->
         <transition name="changeContent" enter-active-class="animated bounceInLeft"> 
           <div v-if="section === 'Photos'">
             <PhotoSection :urls="this.photoUrls" :title="photosTitle"/>  
@@ -24,6 +26,7 @@
           </div>
         </transition> 
       </div>
+      <!-- Right Section Content -->
       <div class="right-section col s12 xl4">
         <div class="content-selection row">
           <a @click="changeMenu" class="valign-wrapper center-align menu-buttons col s4"><h5 class="menu-text">Menu</h5></a>
@@ -57,6 +60,10 @@
           color="#CB202D"
         />
     </div>
+    <div class="loading" v-if="noResult">
+      <h3>No Restaurant Found.</h3>
+      <a class="hyperlink" @click="goToSearch()">Search for another restaurant</a>
+    </div>
   </div>
   
   
@@ -67,23 +74,27 @@ import { mapGetters, mapActions }from 'vuex';
 import { BreedingRhombusSpinner } from 'epic-spinners'
 import PhotoSection from './PhotoSection.vue';
 import ReviewSection from './ReviewSection.vue'; 
-
+import router from '@/router';
 export default {
     Name: "RestaurantContent",
     data() {
       return {
           photosTitle: "Menu", //Default Photos Title
           section: "Photos", //Default Section
-          isFetching : true
+          isFetching : true, //If Data is Fetching 
+          noResult : false 
       }
     },
     computed: {
+      //Gets Restaurant Details for Current Restaurant 
       restoDetails () {
         return this.fetchCurrResto(); 
-      }, 
+      },
+      //Gets Default Picture for Current Restaurant  
       defaultPic () {
         return this.$store.getters.fetchDefaultPic(this.restoDetails.defaultPicture).url;  
       }, 
+      //Gets the Menu/Photo urls for Current Restaurant 
       photoUrls () {
         if(this.photosTitle === "Photos") 
           return this.fetchRestaurantPics();
@@ -108,16 +119,26 @@ export default {
       changeReview() {
         this.section = "Review"
       },
-      ...mapGetters(['fetchCurrResto', 'fetchReviewPostUsers','fetchMenuPics','fetchRestaurantPics']),
-      ...mapActions(['getRestoById','getRestaurantPictures', 'getMenuPictures', 'getReviewsByRestaurant', 'getReviewPostUsers'])
+      goToSearch() {
+        router.push({name : "Search Result"}); 
+      },
+      ...mapGetters(['fetchCurrResto','fetchMenuPics','fetchRestaurantPics']),
+      ...mapActions(['getRestoById','getRestaurantPictures', 'getMenuPictures', 'getReviewPostUsers'])
     },
     async created() {
-      await this.getRestoById(this.$route.params.id); //Get restaurant details 
+      //Get Restaurant details 
+      await this.getRestoById(this.$route.params.id); 
       let currResto = await this.$store.getters.fetchCurrResto;
-      await this.getRestaurantPictures(currResto.pictures); 
-      await this.getMenuPictures(currResto.menu);  
-      await this.getReviewPostUsers(currResto.reviews, false); 
-      this.isFetching = false; 
+      if(currResto != null) {
+        await this.getRestaurantPictures(currResto.pictures); 
+        await this.getMenuPictures(currResto.menu);  
+        //Fetch the Reviews of the Restaurant 
+        await this.getReviewPostUsers(currResto.reviews); 
+      }
+      else {
+        this.noResult = true; 
+      }
+      this.isFetching = false;  
     }
   }
 </script>
@@ -242,9 +263,15 @@ export default {
 
   .loading {
       display: flex;
+      flex-direction: column; 
       align-items: center;
       justify-content: center;
       height: 100vh;
+  }
+
+  .hyperlink {
+    text-decoration: underline; 
+    font-size: 2rem; 
   }
 
   @media screen and (min-width: 1201px) {

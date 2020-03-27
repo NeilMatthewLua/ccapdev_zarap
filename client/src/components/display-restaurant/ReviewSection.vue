@@ -1,6 +1,6 @@
 <template>
 <div class="review-section">
-    <div class="write-review valign-wrapper">
+    <div class="write-review valign-wrapper" v-if="isLogged">
         <!-- TODO Check if User is Logged -->
         <div class="user-review-container" v-if="!hasReview">
             <a class="review-btn waves-effect waves-light btn #388e3c green darken-2" v-if="!isWriting" @click="isWriting = true">Write Review</a>
@@ -36,8 +36,8 @@
     <div class="view-review">
         <h3><strong>Reviews</strong></h3>
         <div class="view-review-subsection row">
-            <a class="col s3 center" :class="{ selected: showPopular}" @click="switchPopular()">Popular</a>
-            <a class="col s3 center" :class="{ selected: !showPopular}" @click="switchAll()">All Reviews</a>
+            <a class="col s3 center" :class="{ selected: showPopular }" @click="switchPopular()">Popular</a>
+            <a class="col s3 center" :class="{ selected: !showPopular }" @click="switchAll()">All Reviews</a>
         </div>
         <div class="reviewFeed">
             <div v-if="showPopular">
@@ -85,9 +85,11 @@ export default {
             return this.fetchAllReviews();
         },
         popularReview () {
-            return this.fetchPopular(); 
+            return this.fetchPopularReview(); 
+        },
+        isLogged () {
+            return (this.$store.getters.getUser != undefined) ? true : false; 
         }
-        //IMPLEMENT Checks if liked by user and is own review 
     },
     methods: {
         toggleSubmitButton: function(value) {
@@ -111,7 +113,7 @@ export default {
       switchAll() { 
         this.showPopular = false
       },
-      ...mapGetters(['fetchAllReviews', 'fetchPopular'])
+      ...mapGetters(['fetchAllReviews', 'fetchPopularReview'])
     }
 }
 </script>

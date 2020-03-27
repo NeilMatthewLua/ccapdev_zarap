@@ -18,6 +18,7 @@ const getters =  {
 
     getUser: state => {return state.user},
     getPicture: state => {return state.picture},
+    isLikedReview : state => id => state.user.liked.filter((likes) => likes === id)
 }
 
 const actions =  {
@@ -78,7 +79,9 @@ const mutations = {
     state.status = '',
     state.user = null
   },
-  setPhoto : (state, picture) => state.picture = picture
+  setPhoto : (state, picture) => state.picture = picture ,
+  setLikedReview : (state, review) => state.user.liked.push(review),
+  removeLikedReview : (state, review) => state.user.liked = state.user.liked.filter((likes) => likes != review)
 }
 
 export default {

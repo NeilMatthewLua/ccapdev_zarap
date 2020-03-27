@@ -29,7 +29,6 @@ const actions =  {
         }
         commit('setMenu', listRes); 
     }
-    
 }
 
 const mutations = {

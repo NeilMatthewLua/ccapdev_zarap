@@ -2,6 +2,7 @@
   <div class="photos">
         <div class="carousel-container">
           <h3>Golden Fortune {{title}}</h3>
+          <!-- Carousel for pictures -->
             <Carousel :perPageCustom="[[480, 1]]" :navigationEnabled="true"> 
                 <Slide v-for="url in this.urls" :key="url.url"><img :src="url.url" class="carousel-item"></Slide> 
             </Carousel> 

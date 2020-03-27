@@ -237,25 +237,25 @@ export default {
         toggleSubmitButton: function(value) {
             this.submitVisible = value
         },
-        updateUser() {
-            let app = this;
-            this.$store
-                .dispatch('updateUser', {
-                    "firstname": app.user_firstname,
-                    "lastname": app.user_lastname,
-                    "email": app.user.email,
-                    "password": app.user.password,
-                    "address": app.user.address,
-                    "uploadedFiles": app.user.uploadedFiles,
-                    "beenHere": app.user.beenHere,
-                    "reviewed": app.user.reviewed,
-                    "liked": app.user.liked,
-                    "points": app.user.points,
-                    "picture": app.user.picture,
-                    "uploadedFile": app.uploadedFiles
-                    })
-                .then(() => )
-        },
+        // updateUser() {
+        //     let app = this;
+        //     this.$store
+        //         .dispatch('updateUser', {
+        //             "firstname": app.user_firstname,
+        //             "lastname": app.user_lastname,
+        //             "email": app.user.email,
+        //             "password": app.user.password,
+        //             "address": app.user.address,
+        //             "uploadedFiles": app.user.uploadedFiles,
+        //             "beenHere": app.user.beenHere,
+        //             "reviewed": app.user.reviewed,
+        //             "liked": app.user.liked,
+        //             "points": app.user.points,
+        //             "picture": app.user.picture,
+        //             "uploadedFile": app.uploadedFiles
+        //             })
+        //         .then(() => )
+        // },
         validateForm: function () {
             this.errors = [];
             if(!this.user_firstname) {
