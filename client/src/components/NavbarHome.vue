@@ -46,13 +46,14 @@
         <div class="divider"></div>
       </li>
       <li>
-        <a @click="goRegister()"> Register </a>
+        <a class="sidenav-close" @click="goRegister()" > Register </a>
       </li>
       <li>
         <div class="divider"></div>
       </li>
       <li>
-        <a @click="goLogin()"> Login </a>
+        <a class="sidenav-close" @click="goLogin()"
+        > Login </a>
       </li>
     </ul>
 
@@ -70,29 +71,42 @@
         </div>
       </li>
       <li><div class="divider"></div></li>
-      <li><a @click="goMyProfile()" class="waves-effect">Profile</a></li>
+      <li><a @click="goMyProfile()" class="waves-effect sidenav-close">Profile</a></li>
       <li><div class="divider"></div></li>
-      <li><a @click="goMyDining()" class="waves-effect" >Dining History</a></li>
+      <li><a @click="goMyDining()" class="waves-effect sidenav-close" >Dining History</a></li>
       <li><div class="divider"></div></li>
-      <li><a @click="goMyReviews()" class="waves-effect" >My Reviews</a></li>
+      <li><a @click="goMyReviews()" class="waves-effect sidenav-close" >My Reviews</a></li>
       <li><div class="divider"></div></li>
-      <li><a @click="logout()" class="waves-effect" >Logout</a></li>
+      <li><a class="waves-effect sidenav-close" @click="logout()">Logout</a></li>
     </ul>
+      <alertModal                
+        :message= "message" 
+        v-show="isModalVisible"
+        @close="closeModal"
+        class="bring_front"
+      />
   </div>
 </template>
 
 <script>
 import M from 'materialize-css';
 import router from '@/router';
+import alertModal from '@/components/alertModal';
 
 export default {
-  Name: "NavbarHome",
+  name: "NavbarHome",
+  components: {
+        alertModal
+  },
   data() {
     return{
       user: null,
       isLogged: false,
       user_firstname: ' ',
-      user_picture: ' '
+      user_picture: ' ',
+      show: true,
+      isModalVisible: false,
+      message: "You're logged out!"
     }
   },
   computed: {
@@ -101,6 +115,12 @@ export default {
     }
   },
   methods: {
+    showModal() { //confirmation of successful registration
+        this.isModalVisible = true;
+    },
+    closeModal() {
+        this.isModalVisible = false;
+    },
     checkLogged() {
         if(this.$store.getters.isLoggedIn) {
           this.user = this.$store.getters.getUser;
@@ -114,6 +134,7 @@ export default {
       .then(() => {
         this.isLogged= false;
       })
+      this.showModal();
     },
     goMyReviews() {
       router.push({path:`/userdetail/${this.user.userID}/review`});
@@ -166,6 +187,14 @@ export default {
       height: 80px;
   }
 
+  .bring_back {
+      z-index: 0;
+  }
+
+  .bring_front {
+      z-index: 1;
+  }
+    
   .navbar-fixed {
       height: 80px;  
       z-index: 10 !important; 

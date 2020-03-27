@@ -219,17 +219,25 @@ export default {
     methods: {
        async verifyOwn() {
            this.user = this.$store.getters.getUser;
-            if(this.$route.params.id == this.user.userID) {
-                this.user_picture = this.$store.getters.getPicture['url'];
+           if(this.user != null) {
+                if(this.$route.params.id == this.user.userID) {
+                    this.user_picture = this.$store.getters.getPicture['url'];
                 this.isLogged = true;
                 this.tempUser.user = Object.assign({}, this.user);
-            }
-            else(
-                this.user = await axios.get(`http://localhost:9090/users/${this.$route.params.id}`)
-                .then(resp => {
-                    this.user = resp.data.user
-                })
-            )
+                }
+                else(
+                    this.user = await axios.get(`http://localhost:9090/users/${this.$route.params.id}`)
+                    .then(resp => {
+                        this.user = resp.data.user
+                    })
+                )
+           }
+           else {               
+               this.user = await axios.get(`http://localhost:9090/users/${this.$route.params.id}`)
+               .then(resp => {
+                   this.user = resp.data.user
+               })
+           }
             this.user_firstname = this.user.name.split(" ")[0];
             this.user_lastname = this.user.name.split(" ")[1];
             this.tempUser.first = this.user_firstname
