@@ -30,11 +30,11 @@
       <!-- Dropdown for Profile Section --> 
       <ul id="dropdown1" class="dropdown-content">
         <li><a @click="goMyProfile()" class="waves-effect">Profile</a></li>
-        <li><div class="divider"></div></li>
+        <div class="divider"></div>
         <li><a @click="goMyDining()" class="waves-effect" >Dining History</a></li>
-        <li><div class="divider"></div></li>
+        <div class="divider"></div>
         <li><a @click="goMyReviews()" class="waves-effect" >My Reviews</a></li>
-        <li><div class="divider"></div></li>
+        <div class="divider"></div>
         <li><a  @click="logout()"  class="black-text">Logout</a></li>
       </ul>
 
@@ -139,19 +139,19 @@ export default {
       this.showModal();
     },
     goMyReviews() {
-      router.push({path:`/userdetail/${this.user.userID}/review`});
+      router.push({path:`/userdetail/${this.user.userID}/review`}).catch(() => {});
     },
     goMyDining() {
-      router.push({path: `/userdetail/${this.user.userID}/dining`});
+      router.push({path: `/userdetail/${this.user.userID}/dining`}).catch(() => {});
     },
     goMyProfile() {
-      router.push({path: `/userdetail/${this.user.userID}/myprofile`});
+      router.push({path: `/userdetail/${this.user.userID}/myprofile`}).catch(() => {});
     },
     goLogin() {
-      router.push({name: 'Login'});
+      router.push({name: 'Login'}).catch(() => {});
     },
     goRegister() {
-      router.push({name: 'Register'});
+      router.push({name: 'Register'}).catch(() => {});
     },
     rebind(){
       console.log("DD")

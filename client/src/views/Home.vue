@@ -3,7 +3,7 @@
     <!-- Upper half of home page -->
     <div class ="BG-color">
       <!-- Navbar for home page -->
-      <NavbarHome/>
+      <NavbarHome class="bring_front"/>
 
       <div class ="container pad4">
         <div class ="col s12 m2 valign-wrapper center-align">
@@ -19,7 +19,7 @@
             <div class ="input-field col s6 offset-s2 searchround">
               <input type="text" class ="white truncate padinput" name="searchbar" placeholder="Search your favorite restaurants here..." v-model="search">
             </div>
-            <a class ="waves-effect waves-light btn pushdown colored-button" @click="goSearchResult">search</a>
+            <a class ="waves-effect waves-light btn pushdown colored-button bring_back" @click="goSearchResult">search</a>
           </div>
         </div>
         <br>
@@ -42,8 +42,8 @@
           <div class ="col s12 m3 margin_right_5">
             <div class ="card BG-black-color mobile-height">
               <div class ="card-content white-text">
-                <span class ="card-title">Golden Fortune</span>
-                <p>Casual Dining | Seafood | Chinese</p>
+                <span class ="card-title">{{restaurantCards.restaurant_1.name}}</span>
+                <p>{{restaurantCards.restaurant_1.establishmentType}} | {{restaurantCards.restaurant_1.cuisines}}</p>
               </div>
               <div class ="card-action">
                 <!-- TODO RESAURANT ROUTE -->
@@ -54,8 +54,8 @@
           <div class ="col s12 m3 margin_right_5" >
             <div class ="card BG-black-color mobile-height">
               <div class ="card-content white-text">
-                <span class ="card-title">Tim Hortons</span>
-                <p>Cafés | Coffee | Desserts</p>
+                <span class ="card-title">{{restaurantCards.restaurant_2.name}}</span>
+                <p>{{restaurantCards.restaurant_2.establishmentType}} | {{restaurantCards.restaurant_2.cuisines}}</p>
               </div>
               <div class ="card-action">
                 <!-- TODO RESAURANT ROUTE -->
@@ -66,8 +66,8 @@
           <div class ="col s12 m3 margin_right_5 mobile-height" >
             <div class ="card BG-black-color mobile-height">
               <div class ="card-content white-text">
-                <span class ="card-title">Big Bowl Noodles</span>
-                <p>Quick Bites | Chinese</p>
+                <span class ="card-title">{{restaurantCards.restaurant_3.name}}</span>
+                <p>{{restaurantCards.restaurant_3.establishmentType}} | {{restaurantCards.restaurant_3.cuisines}}</p>
               </div>
               <div class ="card-action">
                 <!-- TODO RESAURANT ROUTE -->
@@ -96,7 +96,17 @@ export default {
   },
   data() {
     return {
-      search : null
+      search : null,
+      restaurantCards : {
+        restaurant_1 : null, 
+        restaurant_2 : null, 
+        restaurant_3 : null 
+      },
+      featuredRestaurants: [
+        'Tim Hotorns',
+        'Big Bowl Noodles',
+        'Golden Fortune',
+      ]
     }
   },
   methods: {
@@ -104,6 +114,13 @@ export default {
       //TODO Search Router
       router.push({name:"Search Result"})
     }
+  },
+  mounted() {
+    //loads the restaurant cards in home 
+    this.restaurantCards.restaurant_1 = this.$store.dispatch('getRestoByName', this.featuredRestaurants[0])
+    console.log(this.restaurantCards.restaurant_1)
+    this.restaurantCards.restaurant_2 = this.$store.dispatch('getRestoByName', this.featuredRestaurants[1])
+    this.restaurantCards.restaurant_3 = this.$store.dispatch('getRestoByName', this.featuredRestaurants[2])
   }
 }
 </script>
@@ -120,6 +137,14 @@ export default {
 
     .black-color {
         color:  var(--default-card-color) !important;
+    }
+
+    .bring_back {
+        z-index: 0;
+    }
+
+    .bring_front {
+        z-index: 1;
     }
 
     .BG-black-color {

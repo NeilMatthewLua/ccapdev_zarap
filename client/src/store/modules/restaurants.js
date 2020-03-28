@@ -28,6 +28,12 @@ const actions =  {
         let res = await axios.get(`http://localhost:9090/restaurants?${query}`); 
 
         commit('setResto', res.data);
+    },
+    //Gets Restos that fit the query 
+    async getRestoByName ({commit}, name) {
+        let res = await axios.get(`http://localhost:9090/restaurants/name/${name}`); 
+
+        commit('setResto', res.data);
     }
 }
 

@@ -31,4 +31,13 @@ router.get('owner/:id', (req, res) => {
     });
 });
 
+//Get Resto based on Name
+router.get('name/:name', (req, res) => { 
+    let name = req.params.name
+    Review.find({ name : name }, (err, doc) => {
+        if(err) res.status(500).send('Error on the server.'); 
+        res.status(200).send(doc) 
+    });
+});
+
 module.exports = router; 
