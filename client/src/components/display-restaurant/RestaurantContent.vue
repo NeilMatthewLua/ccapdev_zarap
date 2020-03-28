@@ -16,7 +16,7 @@
         <!-- Left Section Bottom (Either Photos or Review Section) -->
         <transition name="changeContent" enter-active-class="animated bounceInLeft"> 
           <div v-if="section === 'Photos'">
-            <PhotoSection :urls="this.photoUrls" :title="photosTitle"/>  
+            <PhotoSection :urls="this.photoUrls" :name="this.restoDetails.name" :title="photosTitle"/>  
           </div>
         </transition> 
         <transition name="changeContent" enter-active-class="animated bounceInLeft">

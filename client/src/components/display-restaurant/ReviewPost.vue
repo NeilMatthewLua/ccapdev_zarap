@@ -21,7 +21,6 @@
             <i v-bind:class="{'liked' : this.isLiked}" 
             @click="toggleLike()"
             class="material-icons right-align pointer" v-if="!this.isOwn && this.isLogged">thumb_up</i> 
-            <!-- TODO only for people logged in -->
         </div>
         <!-- Edit and Delete Review Buttons if own Review -->
         <div class="col s2 valign-wrapper margin-right" v-if="this.isOwn">
@@ -29,16 +28,34 @@
             <a class="submit-btn red btn pointer" @click="deleteReview()"><i class="material-icons review-icons">delete</i></a>
         </div>
       </div>
-    <p ref="data">{{this.reviewData.review}}
-    </p>
+    <p ref="data">{{this.reviewData.review}}</p>
+    <div class="pictures-container">
+        <div class="picture-container" v-for="(picture,index) in this.reviewPics" :key="index" @click="showModal">
+            <img class="picture" :index="index" :src="picture" alt="">
+            <div class="zoom-in" :index="index" ><i class="material-icons" :index="index">zoom_in</i></div>
+        </div>
     </div>
+    <PictureModal :url="this.reviewPics[zoomedPic]" 
+                    @close="closeModal()" @change-pic="this.changePic"
+                    v-show="modalVisible"/>
+ </div>
 </template>
 
 <script>
 import {mapActions, mapGetters, mapMutations} from 'vuex'; 
+import PictureModal from '@/components/PictureModal'; 
 import router from '@/router';
 export default {
     name: "ReviewPost",
+    components: {
+      PictureModal  
+    },
+    data: () => {
+        return {
+            zoomedPic : 0,
+            modalVisible : false
+        }
+    },
     props: {
         inProfile: Boolean, //If the review is viewed inside the profile page
         reviewData : Object, //Review object passed
@@ -59,6 +76,9 @@ export default {
         isLiked() {
             return this.isLogged() ? ((this.isLikedReview().length > 0) ? true : false) : false; 
         }, 
+        reviewPics() {
+            return this.reviewData.reviewPics; 
+        }
     },
     methods: {
         ...mapActions(['updatePostLikes']),
@@ -89,6 +109,17 @@ export default {
         }, 
         goToRestaurant() {
             router.push({ name: 'Display Restaurant', params: { id : this.reviewData.restaurantID } });
+        },
+        showModal(e) {
+            this.modalVisible = true; 
+            this.zoomedPic = e.target.getAttribute('index'); 
+        },
+        closeModal() {
+            this.modalVisible = false; 
+        },
+        changePic(direction) {
+            this.zoomedPic = ((parseInt(this.zoomedPic) + parseInt(direction)) % this.reviewPics.length 
+            + parseInt(this.reviewPics.length)) % this.reviewPics.length; 
         }
     }
 }
@@ -147,6 +178,48 @@ export default {
         display: inline-block;
         padding: 5px; 
         color: var(--default-retaurantcard-color);   
+    }
+
+    .pictures-container {
+        padding: 10px; 
+    }
+
+    .picture-container {
+        cursor: pointer;
+        outline: 2px dashed grey;
+        height: 100px; 
+        width: 100px; 
+        display: inline-block; 
+        position: relative;
+        margin-right: 20px; 
+    }
+
+    .picture-container:hover .picture{
+        opacity: 0.3
+    }
+
+    .picture-container:hover .zoom-in{
+        opacity: 1
+    }
+
+    .picture {
+        opacity: 1;
+        height: 100px; 
+        width: 100px; 
+        transition: .5s ease;
+        backface-visibility: hidden;
+    }
+
+    .zoom-in {
+        font-size: 24px; 
+        transition: .5s ease;
+        opacity: 0;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        -ms-transform: translate(-50%, -50%);
+        text-align: center;
     }
 
     @media(max-width: 1500px) {
