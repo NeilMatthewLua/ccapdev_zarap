@@ -4,7 +4,8 @@ const state =  {
     allRestos : [], //Store all the restos from the query
     currResto : null, //Store the resto the user clicked here 
     userReviewRestos : [], //Store the restos reviewed by the user 
-    allPics: [], // Stores all the pictures from the query
+    allPics: [], // Stores all the pictures of the restaurant
+    allOperatingHours: [] // Stores all the operating hours of the restaurant
     //Store the fields associated with the resto / resto object
 }
 
@@ -12,8 +13,10 @@ const getters =  {
     fetchAllRestos : state => state.allRestos,
     fetchCurrResto : state => state.currResto, 
     fetchUserReviewRestos : state => state.userReviewRestos,
-    fetchsAllPic : state => state.allPics,
-    fetchCoverPic: state => id => state.allPics.filter(pics => pics.pictureID === id)
+    fetchAllPic : state => state.allPics,
+    fetchCoverPic: state => id => state.allPics.filter(pics => pics.pictureID === id),
+    fetchAllOperatingHours: state => state.allOperatingHours,
+    fetchOperatingHour: state => id => state.allOperatingHours.filter(resto => resto.restaurantID === id)
 }
 
 const actions =  {
@@ -46,6 +49,11 @@ const actions =  {
             listPics.push(res.data);
         }
         commit('setPics', listPics);
+    },
+    async getOperatingHours ({commit}) {
+        let res = await axios.get("http://localhost:9090/restaurants"); 
+
+        commit('setOperatingHours', res.data); 
     }
 }
 
@@ -53,7 +61,8 @@ const mutations = {
     setResto : (state, restos) => state.allRestos = restos,
     setCurrResto : (state, resto) => state.currResto = resto,
     setPics: (state, pic) => state.allPics = pic,
-    setUserReviewRestos : (state, restos) => state.userReviewRestos = restos
+    setUserReviewRestos : (state, restos) => state.userReviewRestos = restos,
+    setOperatingHours: (state, restos) => state.allOperatingHours = restos
 }
 
 export default {

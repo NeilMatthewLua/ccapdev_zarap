@@ -17,7 +17,7 @@
 </template>
 
 <script>
-import { mapActions , mapGetters} from 'vuex';
+import { mapActions , mapGetters } from 'vuex';
 import FilterBar from './FilterBar.vue';
 import RestaurantCard from './RestaurantCard.vue';
 export default {
@@ -28,17 +28,18 @@ export default {
     }, 
     data () {
         return {
-            loading : true
+            loading : true,
         }
     },
     async created() {
         await this.getRestos();
         await this.getPics(this.fetchAllRestos());
-        this.loading = false; 
+        await this.getOperatingHours(this.fetchAllRestos());
+        this.loading = false;
     },
     methods: {
-        ...mapActions(["getRestos", "getRestoByQuery", "getPics"]),
-        ...mapGetters(["fetchAllRestos", "fetchAllPic"]),
+        ...mapActions(["getRestos", "getRestoByQuery", "getPics", "getRestoById", "getOperatingHours"]),
+        ...mapGetters(["fetchAllRestos", "fetchAllPic", "fetchCurrResto", "fetchAllOperatingHours"]),
     }
 }
 </script>

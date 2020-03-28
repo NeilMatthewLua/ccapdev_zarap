@@ -20,81 +20,45 @@
                                 <br>
                                 <p class="restaurant-other-info">Cuisine:&nbsp;{{resto.cuisines[0]}}</p>
                                 <p class="restaurant-other-info">Cost for two:&nbsp;Php{{resto.costForTwo}}</p>
-                                <p class="restaurant-other-info" v-if="getToday() === 0">Sunday:&nbsp; {{resto.operatingHours.Sunday}} <i class="material-icons tiny modal-trigger" href="#operating_hours">info</i></p>
-                                <p class="restaurant-other-info" v-else-if="getToday() === 1">Monday:&nbsp; {{resto.operatingHours.Monday}} <i class="material-icons tiny modal-trigger" href="#operating_hours">info</i></p>
-                                <p class="restaurant-other-info" v-else-if="getToday() === 2">Tuesday:&nbsp; {{resto.operatingHours.Tuesday}} <i class="material-icons tiny modal-trigger" href="#operating_hours">info</i></p>
-                                <p class="restaurant-other-info" v-else-if="getToday() === 3">Wednesday:&nbsp; {{resto.operatingHours.Wednesday}} <i class="material-icons tiny modal-trigger" href="#operating_hours">info</i></p>
-                                <p class="restaurant-other-info" v-else-if="getToday() === 4">Thursday:&nbsp; {{resto.operatingHours.Thursday}} <i class="material-icons tiny modal-trigger" href="#operating_hours">info</i></p>
-                                <p class="restaurant-other-info" v-else-if="getToday() === 5">Friday:&nbsp; {{resto.operatingHours.Friday}} <i class="material-icons tiny modal-trigger" href="#operating_hours">info</i></p>
-                                <p class="restaurant-other-info" v-else-if="getToday() === 6">Saturday:&nbsp; {{resto.operatingHours.Saturday}} <i class="material-icons tiny modal-trigger" href="#operating_hours">info</i></p>
+
+                                <p class="restaurant-other-info" v-if="getToday() === 0">Sunday:&nbsp; {{resto.operatingHours.Sunday}}
+                                    <a class="modal-trigger" href="#modal_component">
+                                        <i class="material-icons tiny"  @click="openModal()">info</i>
+                                    </a>
+                                </p>
+                                <p class="restaurant-other-info" v-else-if="getToday() === 1">Monday:&nbsp; {{resto.operatingHours.Monday}}
+                                    <a class="modal-trigger" href="#modal_component">
+                                        <i class="material-icons tiny"  @click="openModal()">info</i>
+                                    </a>
+                                </p>
+                                <p class="restaurant-other-info" v-else-if="getToday() === 2">Tuesday:&nbsp; {{resto.operatingHours.Tuesday}}
+                                    <a class="modal-trigger" href="#modal_component">
+                                        <i class="material-icons tiny"  @click="openModal()">info</i>
+                                    </a>
+                                </p>
+                                <p class="restaurant-other-info" v-else-if="getToday() === 3">Wednesday:&nbsp; {{resto.operatingHours.Wednesday}}
+                                    <a class="modal-trigger" href="#modal_component">
+                                        <i class="material-icons tiny"  @click="openModal()">info</i>
+                                    </a>
+                                </p>
+                                <p class="restaurant-other-info" v-else-if="getToday() === 4">Thursday:&nbsp; {{resto.operatingHours.Thursday}}
+                                    <a class="modal-trigger" href="#modal_component">
+                                        <i class="material-icons tiny"  @click="openModal()">info</i>
+                                    </a>
+                                </p>
+                                <p class="restaurant-other-info" v-else-if="getToday() === 5">Friday:&nbsp; {{resto.operatingHours.Friday}}
+                                    <a class="modal-trigger" href="#modal_component">
+                                        <i class="material-icons tiny"  @click="openModal()">info</i>
+                                    </a>
+                                </p>
+                                <p class="restaurant-other-info" v-else-if="getToday() === 6">Saturday:&nbsp; {{resto.operatingHours.Saturday}}
+                                    <a class="modal-trigger" href="#modal_component">
+                                        <i class="material-icons tiny"  @click="openModal()">info</i>
+                                    </a>
+                                </p>
 
                                 <!-- Modal for Operating Hours -->
-                                <div id="operating_hours" class="modal">
-                                    <div class="modal-content">
-                                        <h4>Operating Hours</h4>
-                                        <table>
-                                            <tbody>
-                                                <tr>
-                                                    <td>
-                                                        Monday
-                                                    </td>
-                                                    <td>
-                                                        {{resto.operatingHours.Monday}}
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        Tuesday
-                                                    </td>
-                                                    <td>
-                                                        {{resto.operatingHours.Tuesday}}
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        Wednesday
-                                                    </td>
-                                                    <td>
-                                                        {{resto.operatingHours.Wednesday}}
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        Thursday
-                                                    </td>
-                                                    <td>
-                                                        {{resto.operatingHours.Thursday}}
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        Friday
-                                                    </td>
-                                                    <td>
-                                                        {{resto.operatingHours.Friday}}
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        Saturday
-                                                    </td>
-                                                    <td>
-                                                        {{resto.operatingHours.Saturday}}
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        Sunday
-                                                    </td>
-                                                    <td>
-                                                        {{resto.operatingHours.Sunday}}
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-
+                                <OperatingHourModal id="modal_component" v-if="modalVisible" :operatingHour="this.$store.getters.fetchOperatingHour(currRestoId)[0].operatingHours" @close="closeModal"/>
                                 <p class="restaurant-other-info">Tel no:&nbsp;{{resto.contactDetails}}</p>
                             </div>
                         </div>
@@ -125,81 +89,44 @@
                             <br>
                             Cost for two:&nbsp;{{resto.costForTwo}}
                         </p>
-                        <p class="operating-day" v-if="getToday() === 0">Sunday:&nbsp; {{resto.operatingHours.Sunday}} <i class="material-icons tiny modal-trigger" href="#m_operating_hours">info</i></p>
-                        <p class="operating-day" v-else-if="getToday() === 1">Monday:&nbsp; {{resto.operatingHours.Monday}} <i class="material-icons tiny modal-trigger" href="#m_operating_hours">info</i></p>
-                        <p class="operating-day" v-else-if="getToday() === 2">Tuesday:&nbsp; {{resto.operatingHours.Tuesday}} <i class="material-icons tiny modal-trigger" href="#m_operating_hours">info</i></p>
-                        <p class="operating-day" v-else-if="getToday() === 3">Wednesday:&nbsp; {{resto.operatingHours.Wednesday}} <i class="material-icons tiny modal-trigger" href="#m_operating_hours">info</i></p>
-                        <p class="operating-day" v-else-if="getToday() === 4">Thursday:&nbsp; {{resto.operatingHours.Thursday}} <i class="material-icons tiny modal-trigger" href="#m_operating_hours">info</i></p>
-                        <p class="operating-day" v-else-if="getToday() === 5">Friday:&nbsp; {{resto.operatingHours.Friday}} <i class="material-icons tiny modal-trigger" href="#m_operating_hours">info</i></p>
-                        <p class="operating-day" v-else-if="getToday() === 6">Saturday:&nbsp; {{resto.operatingHours.Saturday}} <i class="material-icons tiny modal-trigger" href="#m_operating_hours">info</i></p>
+                        <p class="operating-day" v-if="getToday() === 0">Sunday:&nbsp; {{resto.operatingHours.Sunday}}
+                            <a class="modal-trigger" href="#mmodal_component">
+                                <i class="material-icons tiny"  @click="openModal()">info</i>
+                            </a>
+                        </p> 
+                        <p class="operating-day" v-else-if="getToday() === 1">Monday:&nbsp; {{resto.operatingHours.Monday}}
+                            <a class="modal-trigger" href="#mmodal_component">
+                                <i class="material-icons tiny"  @click="openModal()">info</i>
+                            </a>
+                        </p> 
+                        <p class="operating-day" v-else-if="getToday() === 2">Tuesday:&nbsp; {{resto.operatingHours.Tuesday}}
+                            <a class="modal-trigger" href="#mmodal_component">
+                                <i class="material-icons tiny"  @click="openModal()">info</i>
+                            </a>
+                        </p> 
+                        <p class="operating-day" v-else-if="getToday() === 3">Wednesday:&nbsp; {{resto.operatingHours.Wednesday}}
+                            <a class="modal-trigger" href="#mmodal_component">
+                                <i class="material-icons tiny"  @click="openModal()">info</i>
+                            </a>
+                        </p> 
+                        <p class="operating-day" v-else-if="getToday() === 4">Thursday:&nbsp; {{resto.operatingHours.Thursday}}
+                            <a class="modal-trigger" href="#mmodal_component">
+                                <i class="material-icons tiny"  @click="openModal()">info</i>
+                            </a>
+                        </p> 
+                        <p class="operating-day" v-else-if="getToday() === 5">Friday:&nbsp; {{resto.operatingHours.Friday}}
+                            <a class="modal-trigger" href="#mmodal_component">
+                                <i class="material-icons tiny"  @click="openModal()">info</i>
+                            </a>
+                        </p> 
+                        <p class="operating-day" v-else-if="getToday() === 6">Saturday:&nbsp; {{resto.operatingHours.Saturday}}
+                            <a class="modal-trigger" href="#mmodal_component">
+                                <i class="material-icons tiny"  @click="openModal()">info</i>
+                            </a>
+                        </p> 
 
                         <!-- Modal for Operating Hours-->
-                        <div id="m_operating_hours" class="modal">
-                            <div class="modal-content">
-                                <h4>Operating Hours</h4>
-                                <table>
-                                    <tbody>
-                                        <tr>
-                                            <td>
-                                                Monday
-                                            </td>
-                                            <td>
-                                                {{resto.operatingHours.Monday}}
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                Tuesday
-                                            </td>
-                                            <td>
-                                                {{resto.operatingHours.Tuesday}}
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                Wednesday
-                                            </td>
-                                            <td>
-                                                {{resto.operatingHours.Wednesday}}
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                Thursday
-                                            </td>
-                                            <td>
-                                                {{resto.operatingHours.Thursday}}
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                Friday
-                                            </td>
-                                            <td>
-                                                {{resto.operatingHours.Friday}}
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                Saturday
-                                            </td>
-                                            <td>
-                                                {{resto.operatingHours.Saturday}}
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                Sunday
-                                            </td>
-                                            <td>
-                                                {{resto.operatingHours.Sunday}}
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-
+                        <OperatingHourModal id="mmodal_component" v-if="modalVisible" :operatingHour="this.$store.getters.fetchOperatingHour(currRestoId)[0].operatingHours" @close="closeModal"/>
                     </div>
                 </div>
             </div>
@@ -209,18 +136,35 @@
 
 <script>
 import { mapGetters } from 'vuex'; 
+import OperatingHourModal from './OperatingHourModal.vue';
 import M from 'materialize-css';
 export default {
-    name: "RestaurantName",
+    name: "RestaurantCard",
+    components: {
+        OperatingHourModal
+    },
     props : {
-        resto : Object 
+        resto : Object
+    },
+    data () {
+        return {
+            currRestoId: null,
+            modalVisible: false
+        }
     },
     methods: {
-        ...mapGetters(["fetchCoverPic"]),
+        ...mapGetters(["fetchCoverPic", "fetchOperatingHour"]),
         getToday() {
             var d = new Date();
             var n = d.getDay();
             return n;
+        },
+        openModal() {
+            this.currRestoId = this.resto.restaurantID,
+            this.modalVisible = true
+        },
+        closeModal() {
+            this.modalVisible = false
         }
     },
     mounted() {
@@ -230,7 +174,6 @@ export default {
             M.Modal.init(elems, {});
         });
     }
-    
 }
 </script>
 
