@@ -5,11 +5,18 @@
         <div class="user-review-container" v-if="!hasReview">
             <a class="review-btn waves-effect waves-light btn #388e3c green darken-2" v-if="!isWriting" @click="isWriting = true">Write Review</a>
             <div class = "writing-section" v-else>
+                <!-- if wrong details, display error message -->
+                <p v-if="errors.length">
+                    <b class="errormsg">Please correct the following error(s):</b>
+                    <ul>
+                        <li v-for="error in errors" :key="error">{{ error }}</li>
+                    </ul>
+                </p>
                 <p for="review-area1">Rate restaurant</p>
                     <p id="review-area1">
                         <label>
                             <input type="checkbox" @change="doThis(1)"
-                            :checked="isChecked[0]"/>
+                            :checked="isChecked[0]" required/>
                             <span></span>
                         </label>
                         <label>
@@ -35,12 +42,12 @@
 
                     </p>
                 <i class="material-icons prefix">mode_edit</i>
-                <label for="review-area">Enter review details...</label>
+                <label for="review-area">Enter review details</label>
                 <textarea v-model="reviewData" id="review-area" class="materialize-textarea" data-length = "300"></textarea>
                 <div class="file-field input-field">
                 <!-- File Upload Portion -->
-                <FileUpload @file-upload="getFiles" :dest="destination"/> 
-                <a class="submit-btn red btn right">SUBMIT</a>
+                <FileUpload @file-upload="getFiles" :isMultiple="true" :dest="destination"/> 
+                <a class="submit-btn red btn right" @click="validateReview">SUBMIT</a>
                 </div>
             </div>
         </div>
@@ -106,8 +113,10 @@ export default {
             destination: "reviews",
             //Add Computed to get boolean if current user is also review user
             uploadedFiles: [],
+            errors: [],
             showPopular : true,
             submitVisible: true,
+            rating: 0,
             isCheckedVal: {
                 '0': false,
                 '1': false,
@@ -144,10 +153,34 @@ export default {
             }
             for(let i = number; i < 5; i++)
                 this.isCheckedVal[i] = false;
-                console.log(this.isCheckedVal)
         },
         toggleSubmitButton: function(value) {
             this.submitVisible = value
+        },
+        validateReview() {
+            this.errors = [];
+            if(!(this.reviewData != '')) {
+                this.errors.push('Review data must be filled!')
+            }
+            for(let i = 4; i >=0; i--){
+                if(this.isCheckedVal[i] == true){
+                    this.rating = i + 1;
+                    break;
+                }
+            }
+            if(this.rating == 0) {
+                this.errors.push('Rating is required!')
+            }
+            if(!this.errors.length) {
+                this.saveReview();
+                return true;
+            }  
+        },
+        saveReview() {
+            console.log(this.rating)
+            console.log(this.isCheckedVal)
+            console.log(this.reviewData)
+            console.log(this.uploadedFiles)
         },
        editReview (content) { 
         this.isEditing = true;  
