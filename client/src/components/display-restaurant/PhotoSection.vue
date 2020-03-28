@@ -1,7 +1,7 @@
 <template>
   <div class="photos">
         <div class="carousel-container">
-          <h3>Golden Fortune {{title}}</h3>
+          <h3>{{this.restoDetails.name}} {{title}}</h3>
           <!-- Carousel for pictures -->
             <Carousel :perPageCustom="[[480, 1]]" :navigationEnabled="true"> 
                 <Slide v-for="url in this.urls" :key="url.url"><img :src="url.url" class="carousel-item"></Slide> 
@@ -22,6 +22,12 @@ export default {
     props: {
       title: String, //Title of Photo section (Menu / Photos)
       urls : Array
+    },
+    computed: {
+      //Gets Restaurant Details for Current Restaurant 
+      restoDetails () {
+        return this.$store.getters.fetchCurrResto; 
+      },
     }
 }
 </script>

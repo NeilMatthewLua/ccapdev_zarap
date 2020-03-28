@@ -154,7 +154,6 @@ export default {
       router.push({name: 'Register'}).catch(() => {});
     },
     rebind(){
-      console.log("DD")
       document.addEventListener('DOMContentLoaded', function() {
       // sidenav
       var elem = document.querySelectorAll('.sidenav');

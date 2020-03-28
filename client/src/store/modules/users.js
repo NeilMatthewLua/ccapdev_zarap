@@ -61,7 +61,22 @@ const actions =  {
         resolve()
       })
     },
-    
+    addRestaurantVisit({commit}, group) {
+      axios.post('http://localhost:9090/users/addUserVisited', {
+        group
+      })
+      .then(resp => {
+        commit('auth_success', resp.data.user)
+      })
+    },
+    deleteRestaurantVisit({commit}, group) {
+      axios.post('http://localhost:9090/users/deleteUserVisited', {
+        group
+      })
+      .then(resp => {
+        commit('auth_success', resp.data.user)
+      })
+    }
 }
 
 const mutations = {
@@ -71,6 +86,7 @@ const mutations = {
   auth_success(state, user) {
     state.status = 'success'
     state.user = user
+    console.log(state.user)
   },
   auth_error(state) {
     state.status = 'error'

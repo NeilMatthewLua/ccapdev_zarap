@@ -20,18 +20,12 @@ const actions =  {
     //Gets Resto by restaurantID 
     async getRestoById ({commit}, id) {
         let res = await axios.get(`http://localhost:9090/restaurants/${id}`); 
-
+        
         commit('setCurrResto', res.data); 
     },
     //Gets Restos that fit the query 
     async getRestoByQuery ({commit}, query) {
         let res = await axios.get(`http://localhost:9090/restaurants?${query}`); 
-
-        commit('setResto', res.data);
-    },
-    //Gets Restos that fit the query 
-    async getRestoByName ({commit}, name) {
-        let res = await axios.get(`http://localhost:9090/restaurants/name/${name}`); 
 
         commit('setResto', res.data);
     }

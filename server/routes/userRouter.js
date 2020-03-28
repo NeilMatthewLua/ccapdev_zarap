@@ -168,4 +168,21 @@ router.post('/deleteLiked/:id', (req, res) => {
     }) 
 })
 
+router.post('/addUserVisited', async (req, res) => {
+    let restaurantID = req.body.group.resto;
+    let id = req.body.group.user.userID;
+    await User.findOneAndUpdate({userID : id}, {$push : {'beenHere' : restaurantID}}, { new: true })
+    .then(resp => res.status(200).send({user: resp}))
+    .catch(() => res.status(500))
+})
+
+router.post('/deleteUserVisited', async (req, res) => {
+    let restaurantID = req.body.group.resto;
+    let id = req.body.group.user.userID; 
+
+    await User.findOneAndUpdate({userID : id}, {$pullAll : {'beenHere' : [restaurantID]}}, { new: true })
+    .then(resp => res.status(200).send({user: resp}))
+    .catch(() => res.status(500))
+})
+
 module.exports = router;
