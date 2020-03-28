@@ -27,8 +27,13 @@ const actions =  {
             for(let i = 0; i < reviewIDs.length; i++) {
                 let review = await axios.get(`http://localhost:9090/reviews/reviewID/${reviewIDs[i]}`);
                 let user = await axios.get(`http://localhost:9090/users/${review.data.reviewerID}`);
-                let userPic = await axios.get(`http://localhost:9090/pictures/${user.data.user[0].picture}`); 
-                users.push({...user.data.user[0], ...review.data, userUrl :  userPic.data.url,});
+                let userPic = await axios.get(`http://localhost:9090/pictures/${user.data.user[0].picture}`);
+                let reviewPictures = []; 
+                for(let j = 0; j < review.data.reviewPictures.length; j++) {
+                    let reviewPic = await axios.get(`http://localhost:9090/pictures/${review.data.reviewPictures[j]}`);
+                    reviewPictures.push(reviewPic.data.url); 
+                }
+                users.push({...user.data.user[0], ...review.data, userUrl :  userPic.data.url, reviewPics : reviewPictures});
             }
             commit('setReviewPostUsers', users); 
     },
@@ -40,9 +45,13 @@ const actions =  {
                 let review = await axios.get(`http://localhost:9090/reviews/reviewID/${reviewIDs[i]}`);
                 let resto = await axios.get(`http://localhost:9090/restaurants/${review.data.restaurantID}`); 
                 let restoPic = await axios.get(`http://localhost:9090/pictures/${resto.data.defaultPicture}`);
-                users.push({...resto.data, ...review.data, restoUrl : restoPic.data.url});
+                let reviewPictures = []; 
+                for(let j = 0; j < review.data.reviewPictures.length; j++) {
+                    let reviewPic = await axios.get(`http://localhost:9090/pictures/${review.data.reviewPictures[j]}`);
+                    reviewPictures.push(reviewPic.data.url); 
+                }
+                users.push({...resto.data, ...review.data, restoUrl : restoPic.data.url, reviewPics : reviewPictures});
             }
-            console.log(users); 
             commit('setUserReviews', users); 
     },
     //Update Review upvotes and User points 

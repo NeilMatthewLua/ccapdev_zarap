@@ -33,7 +33,7 @@ var restaurantUrls = [
     "http://localhost:9090/static/restaurant/TimHortons/TimHortonsProfile2.jpg",
     "http://localhost:9090/static/restaurant/TastyDumplings/TastyDumplingsProfile.jpg",
     "http://localhost:9090/static/restaurant/TastyDumplings/TastyDumplingsProfile2.jpg",
-    "http://localhost:9090/static/restaurant/Yabu/YabuProfile.jpg",
+    "http://localhost:9090/static/restaurant/Yabu/YabuProfile1.jpg",
     "http://localhost:9090/static/restaurant/Yabu/YabuProfile2.jpg",
     "http://localhost:9090/static/restaurant/ChoiGarden/ChoiGardenProfile.jpg",
     "http://localhost:9090/static/restaurant/ChoiGarden/ChoiGardenProfile2.jpg",
@@ -45,8 +45,8 @@ var restaurantUrls = [
     "http://localhost:9090/static/restaurant/KFC/KFCProfile2.jpg",
     "http://localhost:9090/static/restaurant/KFC/KFCProfile.jpg",
     "http://localhost:9090/static/restaurant/KFC/KFCProfile2.jpg",
-    "http://localhost:9090/static/restaurant/MarkMarksCreamery/MarkMarksCreameryProfile.jpg",
-    "http://localhost:9090/static/restaurant/MarkMarksCreamery/MarkMarksCreameryProfile2.jpg",
+    "http://localhost:9090/static/restaurant/MadMarksCreamery/MadMarksCreameryProfile.jpg",
+    "http://localhost:9090/static/restaurant/MadMarksCreamery/MadMarksCreameryProfile2.jpg",
     "http://localhost:9090/static/restaurant/Makchang/MakchangProfile.jpg",
     "http://localhost:9090/static/restaurant/Makchang/MakchangProfile2.jpg",
     "http://localhost:9090/static/restaurant/Mutsarap/MutsarapProfile.jpg",
@@ -88,8 +88,8 @@ var restaurantMenuUrls = [
     "http://localhost:9090/static/restaurant/KFC/KFCMenu2.jpg",
     "http://localhost:9090/static/restaurant/KFC/KFCMenu1.jpg",
     "http://localhost:9090/static/restaurant/KFC/KFCMenu2.jpg",
-    "http://localhost:9090/static/restaurant/MarkMarksCreamery/MarkMarksCreameryMenu1.jpg",
-    "http://localhost:9090/static/restaurant/MarkMarksCreamery/MarkMarksCreameryMenu2.jpg",
+    "http://localhost:9090/static/restaurant/MadMarksCreamery/MadMarksCreameryMenu1.jpg",
+    "http://localhost:9090/static/restaurant/MadMarksCreamery/MadMarksCreameryMenu2.jpg",
     "http://localhost:9090/static/restaurant/Makchang/MakchangMenu1.jpg",
     "http://localhost:9090/static/restaurant/Makchang/MakchangMenu2.jpg",
     "http://localhost:9090/static/restaurant/Mutsarap/MutsarapMenu1.jpg",
@@ -108,6 +108,70 @@ var restaurantMenuUrls = [
     "http://localhost:9090/static/restaurant/Vikings/VikingsMenu2.jpg",
     "http://localhost:9090/static/restaurant/YellowCab/YellowCabMenu1.jpg",
     "http://localhost:9090/static/restaurant/YellowCab/YellowCabMenu2.jpg"
+]
+
+
+var reviewPics = [
+    "http://localhost:9090/static/reviewPictures/bigbowl1.jpg",
+    "http://localhost:9090/static/reviewPictures/bigbowl2.jpg",
+    "http://localhost:9090/static/reviewPictures/bigbowl3.jpg",
+    "http://localhost:9090/static/reviewPictures/goldenfortune1.jpg",
+    "http://localhost:9090/static/reviewPictures/goldenfortune2.jpg",
+    "http://localhost:9090/static/reviewPictures/goldenfortune3.jpg",
+    "http://localhost:9090/static/reviewPictures/timhorton1.jpg",
+    "http://localhost:9090/static/reviewPictures/timhorton2.jpg",
+    "http://localhost:9090/static/reviewPictures/timhorton3.jpg",
+    "http://localhost:9090/static/reviewPictures/tasty1.jpg",
+    "http://localhost:9090/static/reviewPictures/tasty2.jpg",
+    "http://localhost:9090/static/reviewPictures/tasty3.jpg",
+    "http://localhost:9090/static/reviewPictures/yabu1.jpg",
+    "http://localhost:9090/static/reviewPictures/yabu2.jpg",
+    "http://localhost:9090/static/reviewPictures/yabu3.jpg",
+    "http://localhost:9090/static/reviewPictures/choigarden.jpg",
+    "http://localhost:9090/static/reviewPictures/choigarden2.jpg",
+    "http://localhost:9090/static/reviewPictures/choigarden3.jpg",
+    "http://localhost:9090/static/reviewPictures/frankies1.jpg",
+    "http://localhost:9090/static/reviewPictures/frankies2.jpg",
+    "http://localhost:9090/static/reviewPictures/frankies3.jpg",
+    "http://localhost:9090/static/reviewPictures/italianis1.jpg",
+    "http://localhost:9090/static/reviewPictures/italianis2.jpg",
+    "http://localhost:9090/static/reviewPictures/italianis3.jpg",
+    "http://localhost:9090/static/reviewPictures/kfc1.jpg",
+    "http://localhost:9090/static/reviewPictures/kfc2.jpg",
+    "http://localhost:9090/static/reviewPictures/kfc3.jpg",
+    "http://localhost:9090/static/reviewPictures/kfc4.jpg",
+    "http://localhost:9090/static/reviewPictures/kfc5.jpg",
+    "http://localhost:9090/static/reviewPictures/kfc6.jpg",
+    "http://localhost:9090/static/reviewPictures/madmarks1.jpg",
+    "http://localhost:9090/static/reviewPictures/madmarks2.jpg",
+    "http://localhost:9090/static/reviewPictures/madmarks3.jpg",
+    "http://localhost:9090/static/reviewPictures/makchang1.jpg",
+    "http://localhost:9090/static/reviewPictures/makchang2.jpg",
+    "http://localhost:9090/static/reviewPictures/makchang3.jpg",
+    "http://localhost:9090/static/reviewPictures/mutsarap1.jpg",
+    "http://localhost:9090/static/reviewPictures/mutsarap2.jpg",
+    "http://localhost:9090/static/reviewPictures/mutsarap3.jpg",
+    "http://localhost:9090/static/reviewPictures/starbucks1.jpg",
+    "http://localhost:9090/static/reviewPictures/starbucks2.jpg",
+    "http://localhost:9090/static/reviewPictures/starbucks3.jpg",
+    "http://localhost:9090/static/reviewPictures/sushiyum1.jpg",
+    "http://localhost:9090/static/reviewPictures/sushiyum2.jpg",
+    "http://localhost:9090/static/reviewPictures/sushiyum3.jpg",
+    "http://localhost:9090/static/reviewPictures/tajimaya1.jpg",
+    "http://localhost:9090/static/reviewPictures/tajimaya2.jpg",
+    "http://localhost:9090/static/reviewPictures/tajimaya3.jpg",
+    "http://localhost:9090/static/reviewPictures/tendonkohaku1.jpg",
+    "http://localhost:9090/static/reviewPictures/tendonkohaku2.jpg",
+    "http://localhost:9090/static/reviewPictures/tendonkohaku3.jpg",
+    "http://localhost:9090/static/reviewPictures/texasroadhouse1.jpg",
+    "http://localhost:9090/static/reviewPictures/texasroadhouse2.jpg",
+    "http://localhost:9090/static/reviewPictures/texasroadhouse3.jpg",
+    "http://localhost:9090/static/reviewPictures/vikings1.jpg",
+    "http://localhost:9090/static/reviewPictures/vikings2.jpg",
+    "http://localhost:9090/static/reviewPictures/vikings3.jpg",
+    "http://localhost:9090/static/reviewPictures/yellowcab1.jpg",
+    "http://localhost:9090/static/reviewPictures/yellowcab2.jpg",
+    "http://localhost:9090/static/reviewPictures/yellowcab3.jpg"    
 ]
 
 function randomizeURL(array) {
@@ -169,6 +233,13 @@ async function populatePictures(userCount, limit) {
             })
 
             await save(pic);
+        }
+
+        for(j = 0; j < limit * 3; j++) {
+            let pic = new Picture ({
+                url: reviewPics[j]
+            })
+            await save(pic); 
         }
 }
 
