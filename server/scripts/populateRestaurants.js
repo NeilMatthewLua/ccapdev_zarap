@@ -16,7 +16,7 @@ var restaurantNames = [
     "Italiannis",
     "KFC",
     "KFC",
-    "Mark Marks Creamery",
+    "Mad Marks Creamery",
     "Makchang",
     "Mutsarap",
     "Starbucks",
