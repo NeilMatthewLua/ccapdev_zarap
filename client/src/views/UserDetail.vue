@@ -1,6 +1,6 @@
 <template>
     <div>
-        <Navbar :hasSearch="true" :isLogged="true" :hasFilter="false"/> 
+        <Navbar :hasSearch="true" :hasFilter="false" ref="updateNav"/> 
         <!-- Container of menu and display info -->
         <div id="content" class="container-profile  hide-on-restaurant hide-on-review">
             <h3 class="center big-font onload">{{Title}}</h3>
@@ -8,7 +8,8 @@
                 <!-- User Menu -->
                 <UserMenu  @userProfile="updateUserPage"/>
                 <!-- Display info for large -->
-                <ProfilePage v-bind:class="{'editVisible': ProfileVisible}"/>
+                <ProfilePage v-bind:class="{'editVisible': ProfileVisible}"
+                @updateNavbar="updateNavbar" />
                 <DiningHistoryPage  v-bind:class="{'editVisible': HistoryVisible}"/>
                 <ReviewPage  v-bind:class="{'editVisible': ReviewVisible}"/>
             </div>
@@ -37,9 +38,7 @@ export default {
     },
     data() {
         return {
-            // isUserPageVisible: true,
-            // EditProfileVisible: true,
-            ProfileVisible: true,
+            ProfileVisible: false,
             HistoryVisible: true,
             ReviewVisible: true,
             Title: ''
@@ -52,23 +51,31 @@ export default {
         mounted() {
             this.updateUserPage();
         },
+        updateNavbar() {
+            this.$refs.updateNav.checkLogged();
+        },
         updateUserPage: function() {
             var action = this.$route.params.menu;
-            //TODO "My" only for logged in
             if(action == 'profile') {
-                this.Title = "My Profile";    
+                this.Title = "Profile";
+                this.ProfileVisible = false;
+                this.HistoryVisible = true;
+                this.ReviewVisible = true;
+            }
+            if(action == 'myprofile') {
+                this.Title = "My Profile";
                 this.ProfileVisible = false;
                 this.HistoryVisible = true;
                 this.ReviewVisible = true;
             }
             else if(action == 'dining') {
-                this.Title = "Dining History";    
+                this.Title = "Dining History";   
                 this.ProfileVisible = true;
                 this.HistoryVisible = false;
                 this.ReviewVisible = true;
             }
             else if(action == 'review') {
-                this.Title = "My Reviews";    
+                this.Title = "My Reviews"; 
                 this.ProfileVisible = true;
                 this.HistoryVisible = true;
                 this.ReviewVisible = false;

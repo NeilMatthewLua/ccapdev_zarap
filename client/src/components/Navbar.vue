@@ -383,7 +383,6 @@ export default {
   Name: "Navbar",
   props:{
     hasSearch: Boolean, //If search bar is present 
-    // isLogged: Boolean, //If user is logged in 
     hasFilter: Boolean,
   },
   computed: {
@@ -410,13 +409,13 @@ export default {
       router.push({name:"Home"})
     },
     goMyReviews() {
-      router.push({path: '/userdetail/review'});
+      router.push({path:`/userdetail/${this.user.userID}/review`});
     },
     goMyDining() {
-      router.push({path: '/userdetail/dining'});
+      router.push({path: `/userdetail/${this.user.userID}/dining`});
     },
     goMyProfile() {
-      router.push({path: '/userdetail/profile'});
+      router.push({path: `/userdetail/${this.user.userID}/myprofile`});
     },
     goLogin() {
       router.push({name: 'Login'});

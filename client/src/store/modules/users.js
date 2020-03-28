@@ -3,7 +3,6 @@
 import axios from "axios"
 
 const state =  {
-    reviewPostUsers : [],
     user : null,
     picture : null,
     status : ''
@@ -19,8 +18,7 @@ const getters =  {
 
     getUser: state => {return state.user},
     getPicture: state => {return state.picture},
-    fetchReviewPostUser : state => id => state.reviewPostUsers.find((users) => users.userID === id),
-    fetchReviewPostUsers : state => state.reviewPostUsers
+    isLikedReview : state => id => state.user.liked.filter((likes) => likes === id)
 }
 
 const actions =  {
@@ -41,21 +39,29 @@ const actions =  {
           })
         })
     },
+    updateUser({commit}, user){
+        return new Promise((resolve, reject) => {
+          axios.post('http://localhost:9090/users/updateUser', {
+            user
+          })
+          .then(resp => {
+            commit('auth_success', resp.data.user)
+            commit('setPhoto', resp.data.picture)
+            resolve(resp)
+          })
+          .catch(err => {
+            commit('auth_error')
+            reject(err)
+          })
+        })
+    },
     logout({ commit }) {
       return new Promise((resolve) => {
         commit('logout')
         resolve()
       })
     },
-    async getReviewPostUsers({commit}, reviewIDs) {
-        let result = []
-        for(let i = 0; i < reviewIDs.length; i++) {
-            let res = await axios.get(`http://localhost:9090/reviews/reviewID/${reviewIDs[i]}`);
-            let res2 = await axios.get(`http://localhost:9090/users/${res.data.reviewerID}`);
-            result.push(res2.data[0]); 
-        }
-        commit('setReviewPostUsers', result); 
-    } 
+    
 }
 
 const mutations = {
@@ -73,8 +79,9 @@ const mutations = {
     state.status = '',
     state.user = null
   },
-  setReviewPostUsers : (state, data) => state.reviewPostUsers = data, 
-  setPhoto : (state, picture) => state.picture = picture
+  setPhoto : (state, picture) => state.picture = picture ,
+  setLikedReview : (state, review) => state.user.liked.push(review),
+  removeLikedReview : (state, review) => state.user.liked = state.user.liked.filter((likes) => likes != review)
 }
 
 export default {

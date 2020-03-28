@@ -3,7 +3,7 @@
         <!--UPLOAD-->
         <form enctype="multipart/form-data" novalidate v-if="isInitial || isSaving">
             <h5 v-if="isMultiple">Upload images</h5>
-            <h5 v-else>Upload profile picture</h5>
+            <h5 v-else :class="{'white-text': !isBlack}" >Upload profile picture</h5>
             <div class="dropbox">
             <div v-if="isMultiple">
               <input type="file" multiple :name="uploadFieldName" :disabled="isSaving" @change="filesChange($event.target.name, $event.target.files); fileCount = $event.target.files.length" accept="image/*" class="input-file">
@@ -60,7 +60,8 @@ export default {
     }, 
     props: {
         dest: String, //Directory to save the image to 
-        isMultiple: Boolean
+        isMultiple: Boolean,
+        isBlack: Boolean
     },
     computed: {
       isInitial() {
@@ -94,8 +95,7 @@ export default {
             // get data
             .then(x => x.data)
             .then(x => x.map(img => Object.assign({},
-                img, { url: `http://localhost:9090/pictures/${img.id}` })))
-        
+                img, { url: `http://localhost:9090/static/${this.dest}/${img.filename}` })))
       },
       save(formData) {
         // upload data to the server
@@ -105,6 +105,7 @@ export default {
           .then(x => {
             app.uploadedFiles = [].concat(x);
             // console.log(app.uploadedFiles);
+            console.log(this.uploadedFiles)
             this.$emit('file-upload', this.uploadedFiles); //Send uploaded files to parent
             this.currentStatus = STATUS_SUCCESS;
           })

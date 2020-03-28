@@ -3,35 +3,49 @@ var router = express.Router();
 const path = require('path');
 const Review = require('../models/reviews');
 
-router.get('/', (req, res) => { //Get all reviews
+//Get all reviews
+router.get('/', (req, res) => { 
     Review.find({}, (err, doc) => {
         if(err) throw err; 
-        return res.json(doc); 
+        res.status(200).send(doc); 
     });
 }); 
 
-router.get('/reviewID/:id', (req, res) => { //Get review based on review id
+//Get review based on review id
+router.get('/reviewID/:id', (req, res) => { 
     let id = req.params.id
     Review.findOne({ reviewID : id }, (err, doc) => {
         if(err) throw err; 
-        return res.json(doc); 
+        res.status(200).send(doc) 
     });
 });
 
-router.get('/restaurantID/:id', (req, res) => { //Get review based on restaurant id
+//Get review based on restaurant id
+router.get('/restaurantID/:id', (req, res) => { 
     let id = req.params.id
     Review.find({ restaurantID : id }, (err, doc) => {
         if(err) throw err; 
-        return res.json(doc); 
+        res.status(200).send(doc) 
     });
 });
 
-router.get('/userID/:id', (req, res) => { //Get review based on reviewer id
+//Get review based on reviewer id
+router.get('/userID/:id', (req, res) => { 
     let id = req.params.id
-    Review.find({ userID : id }, (err, doc) => {
+    Review.find({ reviewerID : id }, (err, doc) => {
         if(err) throw err; 
-        return res.json(doc); 
+        res.status(200).send(doc) 
     });
 });
+
+//Increments the upvotes of a review by amount 
+router.post('/increment/:id', (req, res) => {
+    let amount = req.body.value; 
+    let id = req.params.id; 
+    Review.findOneAndUpdate({reviewID : id}, {$inc : {'upvotes' : amount}}, (err,res) => {
+        if (err) throw err
+        res.status(200).send("Updated"); 
+    })
+})
 
 module.exports = router; 

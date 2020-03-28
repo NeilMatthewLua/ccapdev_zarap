@@ -74,7 +74,6 @@
       <li><div class="divider"></div></li>
       <li><a @click="goMyDining()" class="waves-effect" >Dining History</a></li>
       <li><div class="divider"></div></li>
-      <li><div class="divider"></div></li>
       <li><a @click="goMyReviews()" class="waves-effect" >My Reviews</a></li>
       <li><div class="divider"></div></li>
       <li><a @click="logout()" class="waves-effect" >Logout</a></li>
@@ -117,13 +116,13 @@ export default {
       })
     },
     goMyReviews() {
-      router.push({path: '/userdetail/review'});
+      router.push({path:`/userdetail/${this.user.userID}/review`});
     },
     goMyDining() {
-      router.push({path: '/userdetail/dining'});
+      router.push({path: `/userdetail/${this.user.userID}/dining`});
     },
     goMyProfile() {
-      router.push({path: '/userdetail/profile'});
+      router.push({path: `/userdetail/${this.user.userID}/myprofile`});
     },
     goLogin() {
       router.push({name: 'Login'});

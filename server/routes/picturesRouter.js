@@ -30,15 +30,12 @@ const storage = multer.diskStorage({
     }
 });
 
-router.get('/', (req, res) => {
-    res.send("okay")
-})
-
+//Get Picture Object by ID 
 router.get('/:id', (req, res) => {
     let id = req.params.id  
     Picture.findOne({ pictureID : id }, (err, doc) => {
-        if(err) res.send(err); 
-        res.send(doc); 
+        if(err) res.status(500).send('Error on the server.'); 
+        res.status(200).send(doc)  
     })
 })
 
@@ -96,11 +93,11 @@ router.post('/upload-multiple/:destination', (req, res) => {
         console.log(result); 
         res.send(result);
 
-        let mongoDestination = result[0].destination.substring(1) + "/" + result[0].filename;
+        let mongoDestination = `http://localhost:9090/static/${req.params.destination}/` + result[0].filename;
+        console.log(mongoDestination)
         let pic = new Picture({
             url: mongoDestination
         })
-
         await pic.save()
     });
 });

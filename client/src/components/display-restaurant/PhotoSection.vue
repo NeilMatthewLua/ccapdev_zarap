@@ -2,31 +2,26 @@
   <div class="photos">
         <div class="carousel-container">
           <h3>Golden Fortune {{title}}</h3>
-          <div class="carousel carousel-slider">
-            <a class="carousel-item" href="" v-for="url in urls" :key="url.url"><img :src="url.url"></a>
-            <a class="carousel-item" href="" ><img :src="urls[0].url"></a>
-          </div>
+          <!-- Carousel for pictures -->
+            <Carousel :perPageCustom="[[480, 1]]" :navigationEnabled="true"> 
+                <Slide v-for="url in this.urls" :key="url.url"><img :src="url.url" class="carousel-item"></Slide> 
+            </Carousel> 
         </div>
     </div>
 </template>
 
 <script>
-import M from 'materialize-css';
+import { Carousel, Slide } from 'vue-carousel';
+// import M from 'materialize-css';
 export default {
     name: "PhotoSection",
+    components: {
+      Carousel, 
+      Slide 
+    },
     props: {
-      title: String //Title of Photo section (Menu / Photos)
-    },
-    data() {
-      return {
-        urls: [
-          {url: require("../../assets/pictures/golden-menu.jpg")},
-          {url: require("../../assets/pictures/Golden Fortune-1.jpg")}
-        ]
-      };
-    },
-    mounted() {
-      M.AutoInit();
+      title: String, //Title of Photo section (Menu / Photos)
+      urls : Array
     }
 }
 </script>
@@ -37,21 +32,17 @@ export default {
   }
 
   .carousel-container {
-      padding: 20px; 
+      padding: 30px; 
+      width: 100%; 
       background-color: var(--default-restaurantcard-color);
       margin-bottom: 40px; 
+      text-align: center; 
       height: auto; 
   }
 
-  .carousel {
-      height: 100%; 
-      min-height: 600px; 
-      overflow-x: hidden;
-  }
-
-  .carousel-item {
-      height: 100%; 
-      width: 100%; 
+   .carousel-item {
+      height: auto; 
+      width: 80%;
       overflow-y: scroll;
-  }
+  } 
 </style>
