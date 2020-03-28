@@ -5,6 +5,35 @@
         <div class="user-review-container" v-if="!hasReview">
             <a class="review-btn waves-effect waves-light btn #388e3c green darken-2" v-if="!isWriting" @click="isWriting = true">Write Review</a>
             <div class = "writing-section" v-else>
+                <p for="review-area1">Rate restaurant</p>
+                    <p id="review-area1">
+                        <label>
+                            <input type="checkbox" @change="doThis(1)"
+                            :checked="isChecked[0]"/>
+                            <span></span>
+                        </label>
+                        <label>
+                            <input type="checkbox"
+                            @change="doThis(2)" :checked="isChecked[1]" />
+                            <span></span>
+                        </label>
+                        <label>
+                            <input type="checkbox"
+                            @change="doThis(3)" :checked="isChecked[2]" />
+                            <span></span>
+                        </label>
+                        <label>
+                            <input type="checkbox"
+                            @change="doThis(4)" :checked="isChecked[3]" />
+                            <span></span>
+                        </label> 
+                        <label>
+                            <input type="checkbox"
+                            @change="doThis(5)" :checked="isChecked[4]" />
+                            <span></span>
+                        </label>
+
+                    </p>
                 <i class="material-icons prefix">mode_edit</i>
                 <label for="review-area">Enter review details...</label>
                 <textarea v-model="reviewData" id="review-area" class="materialize-textarea" data-length = "300"></textarea>
@@ -69,6 +98,7 @@ export default {
     },
     data () {
         return {
+            checked: false,
             isWriting : false, //If user is writing a review
             reviewData : "", //Content to store data in user review
             isEditing: false, //If user is editing current review
@@ -77,9 +107,19 @@ export default {
             //Add Computed to get boolean if current user is also review user
             uploadedFiles: [],
             showPopular : true,
-            submitVisible: true
-        }
+            submitVisible: true,
+            isCheckedVal: {
+                '0': false,
+                '1': false,
+                '2': false,
+                '3': false,
+                '4': false
+            }
+        }   
     }, 
+    mounted() {
+        console.log(this.isCheckedVal)
+    },
     computed : {
         allReviews () {
             return this.fetchAllReviews();
@@ -89,9 +129,23 @@ export default {
         },
         isLogged () {
             return (this.$store.getters.getUser != undefined) ? true : false; 
+        },
+        isChecked() {
+            return this.isCheckedVal
         }
     },
     methods: {
+        doThis(number) {
+            for(let i = 0; i < number; i++){
+                if(this.isCheckedVal[ number - 1] == true)
+                    this.isCheckedVal[i] = !this.isCheckedVal[i];
+                else
+                    this.isCheckedVal[i] = true;
+            }
+            for(let i = number; i < 5; i++)
+                this.isCheckedVal[i] = false;
+                console.log(this.isCheckedVal)
+        },
         toggleSubmitButton: function(value) {
             this.submitVisible = value
         },
