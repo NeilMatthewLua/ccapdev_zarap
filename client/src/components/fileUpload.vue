@@ -94,7 +94,7 @@ export default {
         return await axios.post(UPLOAD_ROUTE + `/${this.dest}`, formData, {headers: {'Content-Type': 'multipart/form-data' }})
             // get data
             .then(x => x.data)
-            .then(x => x.map(img => Object.assign({},
+            .then(x => x.map(img => Object.assign({}, 
                 img, { url: `http://localhost:9090/static/${this.dest}/${img.filename}` })))
       },
       save(formData) {

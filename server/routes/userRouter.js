@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 const path = require('path');
+const fs = require('fs');
 const mongoose = require('mongoose');
 const url = process.env.MONGO_URI; 
 const User = require('../models/users.js');
@@ -110,16 +111,30 @@ router.post('/updateUser', async (req, res) => {
     })
     .then( async user => {
         update = {pictureID: user.picture};
+        await Picture.find({pictureID: req.body.user.picture})
+        .then(async (doc) => {
+            let relPath = doc[0].url.split('/');
+            let removePath = `images/${relPath[4]}/${relPath[5]}`;
+            
+            fs.unlink(removePath, (err) => {
+                if (err) throw err;
+                console.log(`${removePath} was deleted`);
+            });
+
             await Picture.findOneAndUpdate(oldPicture, updatePicture, {
                 new: true
             })
-            .then(picture => {
-                return res.status(200).send({
-                    user: user,
-                    picture: picture
-                });
+                .then(picture => {
+                    return res.status(200).send({
+                        user: user,
+                        picture: picture
+                    });
+                })
             })
-    })
+        })
+        .catch(err=> {
+            console.log(err)
+        })
     .catch(err => {
         return res.status(500).send('Error on the server.');
     })
@@ -151,6 +166,23 @@ router.post('/deleteLiked/:id', (req, res) => {
         if (err) res.status(500).send('Error on the server.');
         res.status(200).send("Updated User Liked Reviews"); 
     }) 
+})
+
+router.post('/addUserVisited', async (req, res) => {
+    let restaurantID = req.body.group.resto;
+    let id = req.body.group.user.userID;
+    await User.findOneAndUpdate({userID : id}, {$push : {'beenHere' : restaurantID}}, { new: true })
+    .then(resp => res.status(200).send({user: resp}))
+    .catch(() => res.status(500))
+})
+
+router.post('/deleteUserVisited', async (req, res) => {
+    let restaurantID = req.body.group.resto;
+    let id = req.body.group.user.userID; 
+
+    await User.findOneAndUpdate({userID : id}, {$pullAll : {'beenHere' : [restaurantID]}}, { new: true })
+    .then(resp => res.status(200).send({user: resp}))
+    .catch(() => res.status(500))
 })
 
 module.exports = router;

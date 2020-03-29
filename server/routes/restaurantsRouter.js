@@ -17,7 +17,7 @@ router.get('/', (req, res) => {
 router.get('/:id', (req, res) => {  
     let id = req.params.id
     Restaurant.findOne({ restaurantID : id }, (err, doc) => {
-        if(err) res.status(500).send('Error on the server.'); 
+        if(err) res.status(500)
         res.status(200).send(doc)  
     });
 });
@@ -26,7 +26,7 @@ router.get('/:id', (req, res) => {
 router.get('owner/:id', (req, res) => { 
     let id = req.params.id
     Review.find({ ownerID : id }, (err, doc) => {
-        if(err) res.status(500).send('Error on the server.'); 
+        if(err) res.status(500)
         res.status(200).send(doc) 
     });
 });
