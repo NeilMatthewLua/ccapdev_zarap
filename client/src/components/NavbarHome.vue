@@ -7,7 +7,7 @@
         </div> 
           
         <!-- Unlogged Login Section -->
-        <div v-if="!isLogged">
+        <div v-show="!this.isLoggedIn">
           <ul class ="nav-flex-right hide-on-med-and-down"  id="nav-mobile">
             <li class ="navitem pushdown"><a @click="goLogin()" class ="black-color">Login</a></li>
             <li class ="navitem boxed"><a @click="goRegister()" class ="black-color">Register</a></li>
@@ -15,7 +15,7 @@
         </div>
 
         <!-- Logged Profile Section -->
-        <ul class="right hide-on-med-and-down col s3" v-else>
+        <ul class="right hide-on-med-and-down col s3" v-show="this.isLoggedIn">
           <div class="right navbar-right valign-wrapper">
             <img class="circle navbar-image" :src= user_picture>
             <li>
@@ -23,19 +23,20 @@
                 <span class="black-color username"> Welcome, {{user_firstname}} </span>
                 <i class="material-icons right"> arrow_drop_down </i>
               </a>
-              <!-- Dropdown for Profile Section --> 
-              <ul id="dropdown1" class="dropdown-content">
-                <li><a @click="goMyProfile()" class="waves-effect">Profile</a></li>
-                <li><div class="divider"></div></li>
-                <li><a @click="goMyDining()" class="waves-effect" >Dining History</a></li>
-                <li><div class="divider"></div></li>
-                <li><a @click="goMyReviews()" class="waves-effect" >My Reviews</a></li>
-                <li><div class="divider"></div></li>
-                <li><a  @click="logout()"  class="black-text">Logout</a></li>
-              </ul>
             </li>
           </div>
         </ul>
+        
+      <!-- Dropdown for Profile Section --> 
+      <ul id="dropdown1" class="dropdown-content">
+        <li><a @click="goMyProfile()" class="waves-effect">Profile</a></li>
+        <div class="divider"></div>
+        <li><a @click="goMyDining()" class="waves-effect" >Dining History</a></li>
+        <div class="divider"></div>
+        <li><a @click="goMyReviews()" class="waves-effect" >My Reviews</a></li>
+        <div class="divider"></div>
+        <li><a  @click="logout()"  class="black-text">Logout</a></li>
+      </ul>
 
       
     </div>
@@ -46,13 +47,14 @@
         <div class="divider"></div>
       </li>
       <li>
-        <a @click="goRegister()"> Register </a>
+        <a class="sidenav-close" @click="goRegister()" > Register </a>
       </li>
       <li>
         <div class="divider"></div>
       </li>
       <li>
-        <a @click="goLogin()"> Login </a>
+        <a class="sidenav-close" @click="goLogin()"
+        > Login </a>
       </li>
     </ul>
 
@@ -70,37 +72,56 @@
         </div>
       </li>
       <li><div class="divider"></div></li>
-      <li><a @click="goMyProfile()" class="waves-effect">Profile</a></li>
+      <li><a @click="goMyProfile()" class="waves-effect sidenav-close">Profile</a></li>
       <li><div class="divider"></div></li>
-      <li><a @click="goMyDining()" class="waves-effect" >Dining History</a></li>
+      <li><a @click="goMyDining()" class="waves-effect sidenav-close" >Dining History</a></li>
       <li><div class="divider"></div></li>
-      <li><a @click="goMyReviews()" class="waves-effect" >My Reviews</a></li>
+      <li><a @click="goMyReviews()" class="waves-effect sidenav-close" >My Reviews</a></li>
       <li><div class="divider"></div></li>
-      <li><a @click="logout()" class="waves-effect" >Logout</a></li>
+      <li><a class="waves-effect sidenav-close" @click="logout()">Logout</a></li>
     </ul>
+      <alertModal                
+        :message= "message" 
+        v-show="isModalVisible"
+        @close="closeModal"
+        class="bring_front"
+      />
   </div>
 </template>
 
 <script>
 import M from 'materialize-css';
 import router from '@/router';
+import alertModal from '@/components/alertModal';
 
 export default {
-  Name: "NavbarHome",
+  name: "NavbarHome",
+  components: {
+        alertModal
+  },
   data() {
     return{
       user: null,
       isLogged: false,
       user_firstname: ' ',
-      user_picture: ' '
+      user_picture: ' ',
+      show: true,
+      isModalVisible: false,
+      message: "You're logged out!"
     }
   },
   computed: {
     isLoggedIn: function() {
-        return this.$store.getters.isLoggedIn;
+      return this.$store.getters.isLoggedIn;
     }
   },
   methods: {
+    showModal() { //confirmation of successful registration
+        this.isModalVisible = true;
+    },
+    closeModal() {
+        this.isModalVisible = false;
+    },
     checkLogged() {
         if(this.$store.getters.isLoggedIn) {
           this.user = this.$store.getters.getUser;
@@ -114,21 +135,22 @@ export default {
       .then(() => {
         this.isLogged= false;
       })
+      this.showModal();
     },
     goMyReviews() {
-      router.push({path:`/userdetail/${this.user.userID}/review`});
+      router.push({path:`/userdetail/${this.user.userID}/review`}).catch(() => {});
     },
     goMyDining() {
-      router.push({path: `/userdetail/${this.user.userID}/dining`});
+      router.push({path: `/userdetail/${this.user.userID}/dining`}).catch(() => {});
     },
     goMyProfile() {
-      router.push({path: `/userdetail/${this.user.userID}/myprofile`});
+      router.push({path: `/userdetail/${this.user.userID}/myprofile`}).catch(() => {});
     },
     goLogin() {
-      router.push({name: 'Login'});
+      router.push({name: 'Login'}).catch(() => {});
     },
     goRegister() {
-      router.push({name: 'Register'});
+      router.push({name: 'Register'}).catch(() => {});
     }
   },
   mounted() {
@@ -166,6 +188,14 @@ export default {
       height: 80px;
   }
 
+  .bring_back {
+      z-index: 0;
+  }
+
+  .bring_front {
+      z-index: 1;
+  }
+    
   .navbar-fixed {
       height: 80px;  
       z-index: 10 !important; 

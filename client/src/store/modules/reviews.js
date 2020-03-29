@@ -65,12 +65,42 @@ const actions =  {
             await axios.post(`http://localhost:9090/users/deleteLiked/${userID}`, {reviewID});
         await axios.post(`http://localhost:9090/reviews/increment/${reviewID}`, {value});
         await axios.post(`http://localhost:9090/users/increment/${ownerID}`, {value});
+    },
+
+    async addReview({commit}, group) {
+        await axios.post(`http://localhost:9090/reviews/addReview/${group.userID}`, group)
+        .then(async resp => {
+
+            //Updates the reviews of the resstaurant
+            let userPic = await axios.get(`http://localhost:9090/pictures/${group.userID.picture}`);
+            let reviewPictures = [];
+            for(let j = 0; j < resp.data.review.reviewPictures.length; j++) {
+                let reviewPic = await axios.get(`http://localhost:9090/pictures/${resp.data.review.reviewPictures[j]}`);
+                reviewPictures.push(reviewPic.data.url); 
+            }
+            let user = [];
+            
+            user.push({...group.userID, ...resp.data.review, userUrl : userPic.data.url, reviewPics : reviewPictures});
+            
+            commit('appendReview', user)
+
+            //Updates the reviews of the user
+            user = [];
+            let resto = await axios.get(`http://localhost:9090/restaurants/${group.restaurantID}`); 
+            let restoPic = await axios.get(`http://localhost:9090/pictures/${resto.data.defaultPicture}`);
+
+            user.push({...resto.data, ...resp.data.review, restoUrl : restoPic.data.url, reviewPics : reviewPictures});
+                
+            commit('appendUserReview', user)
+        })
     }
 }
 
 const mutations = {
     setReviewPostUsers : (state, data) => state.reviewPosts = data,
-    setUserReviews : (state, data) => state.userReviews = data
+    setUserReviews : (state, data) => state.userReviews = data,
+    appendReview : (state, data) => state.reviewPosts =  state.reviewPosts.concat(data),
+    appendUserReview : (state, data) => state.userReviews =  state.userReviews.concat(data)
 }
 
 export default {

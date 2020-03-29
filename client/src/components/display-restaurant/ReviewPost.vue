@@ -65,7 +65,7 @@ export default {
         isOwn() {
             if(this.getUser() != null)
                 return this.getUser().userID === this.reviewData.reviewerID; 
-            else 
+            else
                 return false; 
         },
         //Checks if a user is logged in 
@@ -82,7 +82,7 @@ export default {
     },
     methods: {
         ...mapActions(['updatePostLikes']),
-        ...mapGetters(['getUser','isLikedReview']),
+        ...mapGetters(['getUser','isLoggedIn', 'isLikedReview']),
         ...mapMutations(['setLikedReview', 'removeLikedReview']),
         async toggleLike() {  
             //Add or remove review from user state

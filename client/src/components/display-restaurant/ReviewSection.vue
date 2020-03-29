@@ -4,13 +4,49 @@
         <div class="user-review-container" v-if="!this.hasReview">
             <a class="review-btn waves-effect waves-light btn #388e3c green darken-2" v-if="!isWriting" @click="isWriting = true">Write Review</a>
             <div class = "writing-section" v-else>
+                <!-- if wrong details, display error message -->
+                <p v-if="errors.length">
+                    <b class="errormsg">Please correct the following error(s):</b>
+                    <ul>
+                        <li v-for="error in errors" :key="error">{{ error }}</li>
+                    </ul>
+                </p>
+                <p for="review-area1">Rate restaurant</p>
+                    <p id="review-area1">
+                        <label>
+                            <input type="checkbox" @change="doThis(1)"
+                            :checked="isChecked[0]" required/>
+                            <span></span>
+                        </label>
+                        <label>
+                            <input type="checkbox"
+                            @change="doThis(2)" :checked="isChecked[1]" />
+                            <span></span>
+                        </label>
+                        <label>
+                            <input type="checkbox"
+                            @change="doThis(3)" :checked="isChecked[2]" />
+                            <span></span>
+                        </label>
+                        <label>
+                            <input type="checkbox"
+                            @change="doThis(4)" :checked="isChecked[3]" />
+                            <span></span>
+                        </label> 
+                        <label>
+                            <input type="checkbox"
+                            @change="doThis(5)" :checked="isChecked[4]" />
+                            <span></span>
+                        </label>
+
+                    </p>
                 <i class="material-icons prefix">mode_edit</i>
-                <label for="review-area">Enter review details...</label>
+                <label for="review-area">Enter review details</label>
                 <textarea v-model="reviewData" id="review-area" class="materialize-textarea" data-length = "300"></textarea>
                 <div class="file-field input-field">
                 <!-- File Upload Portion -->
-                <FileUpload @file-upload="getFiles" :dest="destination"/> 
-                <a class="submit-btn red btn right">SUBMIT</a>
+                <FileUpload @file-upload="getFiles" :isMultiple="true" :dest="destination"/> 
+                <a class="submit-btn red btn right" @click="validateReview">SUBMIT</a>
                 </div>
             </div>
         </div>
@@ -65,6 +101,7 @@ export default {
     }, 
     data () {
         return {
+            checked: false,
             isWriting : false, //If user is writing a review
             reviewData : "", //Content to store data in user review
             isEditing: false, //If user is editing current review
@@ -72,10 +109,22 @@ export default {
             destination: "reviews",
             //Add Computed to get boolean if current user is also review user
             uploadedFiles: [],
+            errors: [],
             showPopular : true,
-            submitVisible: true
-        }
+            submitVisible: true,
+            rating: 0,
+            isCheckedVal: {
+                '0': false,
+                '1': false,
+                '2': false,
+                '3': false,
+                '4': false
+            }
+        }   
     }, 
+    mounted() {
+        console.log(this.isCheckedVal)
+    },
     computed : {
         allReviews () {
             return this.fetchAllReviews();
@@ -88,11 +137,55 @@ export default {
         }, 
         hasReview() {
             return (this.isLogged) ? this.$store.getters.hasReview(this.$store.getters.getUser.userID) : false; 
+        },
+        isChecked() {
+            return this.isCheckedVal
         }
     },
     methods: {
+        doThis(number) {
+            for(let i = 0; i < number; i++){
+                if(this.isCheckedVal[ number - 1] == true)
+                    this.isCheckedVal[i] = !this.isCheckedVal[i];
+                else
+                    this.isCheckedVal[i] = true;
+            }
+            for(let i = number; i < 5; i++)
+                this.isCheckedVal[i] = false;
+        },
         toggleSubmitButton: function(value) {
             this.submitVisible = value
+        },
+        validateReview() {
+            this.errors = [];
+            if(!(this.reviewData != '')) {
+                this.errors.push('Review data must be filled!')
+            }
+            for(let i = 4; i >=0; i--){
+                if(this.isCheckedVal[i] == true){
+                    this.rating = i + 1;
+                    break;
+                }
+            }
+            if(this.rating == 0) {
+                this.errors.push('Rating is required!')
+            }
+            if(!this.errors.length) {
+                this.saveReview();
+                return true;
+            }  
+        },
+        saveReview() { //saves and posts the review of the user
+            this.$store.dispatch('addReview', {
+                review: this.reviewData,
+                rating: this.rating,
+                photos: this.uploadedFiles,
+                userID: this.$store.getters.getUser,
+                restaurantID: this.$store.getters.fetchCurrResto.restaurantID
+            })
+            .then(() => { //Adds the restuarant to the user's visited places
+                this.$emit('postedReview')
+            })
         },
        editReview (content) { 
         this.isEditing = true;  
@@ -124,7 +217,7 @@ export default {
 
     .write-review {
         min-height: 50px;  
-        max-height: 500px; 
+        max-height: 800px; 
         margin-bottom: 40px; 
         padding: 30px 30px; 
         background-color: var(--default-restaurantcard-color);

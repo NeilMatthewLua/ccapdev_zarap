@@ -9,9 +9,18 @@
             <div class="col s12 m8">
               <h2>{{this.restoDetails.name}}</h2>
               <h5 v-for="estTypes in this.restoDetails.establishmentType" :key="estTypes">{{estTypes}}</h5>
-              <a class="waves-effect waves-light red btn bookmark-btn"><i class="material-icons left">bookmark</i>Been Here</a>
+              <div v-show="!hasBeen">
+                <a class="waves-effect waves-light red btn bookmark-btn" @click="beenHere()" v-show="isLogged">
+                  I've Been Here
+                </a>
+              </div>
+              <div v-show="hasBeen">
+                <a class="waves-effect waves-light green btn bookmark-btn" @click="notBeenHere()" v-show="isLogged">
+                  <i class="material-icons left">bookmark</i>Been Here
+                </a>
+              </div>
             </div>
-            <img class="title-picture col s12 m4" :src="this.defaultPic" alt="Golden Fortune">
+            <img class="title-picture col s12 m4" :src="this.defaultPic" alt="Picture">
         </div>
         <!-- Left Section Bottom (Either Photos or Review Section) -->
         <transition name="changeContent" enter-active-class="animated bounceInLeft"> 
@@ -21,7 +30,7 @@
         </transition> 
         <transition name="changeContent" enter-active-class="animated bounceInLeft">
           <div v-if="section === 'Review'">
-            <ReviewSection/> 
+            <ReviewSection @postedReview="beenHere()"/> 
           </div>
         </transition> 
       </div>
@@ -69,7 +78,7 @@
 </template>
 
 <script>
-import { mapGetters, mapActions }from 'vuex';
+import { mapGetters, mapActions } from 'vuex';
 import { BreedingRhombusSpinner } from 'epic-spinners'
 import PhotoSection from './PhotoSection.vue';
 import ReviewSection from './ReviewSection.vue'; 
@@ -99,6 +108,13 @@ export default {
           return this.fetchRestaurantPics();
         else 
           return this.fetchMenuPics();
+      },
+      //Gets the logged user, if exists
+      isLogged () {
+        return this.isLoggedIn();
+      },
+      hasBeen () {
+        return this.$store.getters.getUser.beenHere.includes(this.fetchCurrResto().restaurantID); 
       }
     },
     components: {
@@ -121,7 +137,19 @@ export default {
       goToSearch() {
         router.push({name : "Search Result"}); 
       },
-      ...mapGetters(['fetchCurrResto','fetchMenuPics','fetchRestaurantPics']),
+      beenHere() {
+        this.$store.dispatch('addRestaurantVisit', {
+            resto: this.fetchCurrResto().restaurantID,
+            user: this.$store.getters.getUser
+        })
+      },
+      notBeenHere() {
+        this.$store.dispatch('deleteRestaurantVisit', {
+            resto: this.fetchCurrResto().restaurantID,
+            user: this.$store.getters.getUser
+        })
+      },
+      ...mapGetters(['fetchCurrResto','fetchMenuPics','fetchRestaurantPics', 'isLoggedIn']),
       ...mapActions(['getRestoById','getRestaurantPictures', 'getMenuPictures', 'getReviewPostUsers'])
     },
     async created() {

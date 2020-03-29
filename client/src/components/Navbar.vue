@@ -22,7 +22,7 @@
       </div>    
       
       <!-- Unlogged Login Section -->
-      <ul class="right hide-on-med-and-down col s3" v-if="!isLogged">
+      <ul class="right hide-on-med-and-down col s3" v-show="!this.isLoggedIn">
         <div class="right">
           <li>
             <a @click="goLogin()"> Login </a>
@@ -34,7 +34,7 @@
       </ul>
 
       <!-- Logged Profile Section -->
-      <ul class="right hide-on-med-and-down col s3" v-else>
+      <ul class="right hide-on-med-and-down col s3" v-show="this.isLoggedIn" @click="rebind()">
         <div class="right navbar-right valign-wrapper">
           <img class="circle navbar-image" :src= user_picture>
           <li>
@@ -47,34 +47,35 @@
       </ul>
       </div> 
     </nav>
-    <!-- Dropdown for Profile Section --> 
-    <ul id="dropdown1" class="dropdown-content">
-      <li><div class="divider"></div></li>
-      <li><a @click="goMyProfile()" class="waves-effect">Profile</a></li>
-      <li><div class="divider"></div></li>
-      <li><a @click="goMyDining()" class="waves-effect" >Dining History</a></li>
-      <li><div class="divider"></div></li>
-      <li><a @click="goMyReviews()" class="waves-effect" >My Reviews</a></li>
-      <li><div class="divider"></div></li>
-      <li><a @click="logout()" class="waves-effect" >Logout</a></li>
-    </ul>
+
+      <!-- Dropdown for Profile Section --> 
+      <ul id="dropdown1" class="dropdown-content">
+        <li><a @click="goMyProfile()" class="waves-effect">Profile</a></li>
+        <div class="divider"></div>
+        <li><a @click="goMyDining()" class="waves-effect" >Dining History</a></li>
+        <div class="divider"></div>
+        <li><a @click="goMyReviews()" class="waves-effect" >My Reviews</a></li>
+        <div class="divider"></div>
+        <li><a  @click="logout()"  class="waves-effect">Logout</a></li>
+      </ul>
   </div>
   
   <!-- Sidebar Content Unlogged -->
-  <ul id="slide-out" class="sidenav" v-if="!isLogged">
+    <ul id="slide-out" class="sidenav" v-if="!isLogged">
       <li>
         <div class="divider"></div>
       </li>
       <li>
-        <a @click="goRegister()"> Register </a>
+        <a class="sidenav-close" @click="goRegister()" > Register </a>
       </li>
       <li>
         <div class="divider"></div>
       </li>
       <li>
-        <a @click="goLogin()"> Login </a>
+        <a class="sidenav-close" @click="goLogin()"
+        > Login </a>
       </li>
-  </ul>
+    </ul>
 
   <!-- Sidebar Logged --> 
   <ul id="slide-out" class="sidenav" v-else>
@@ -90,13 +91,13 @@
       </div>
     </li>
       <li><div class="divider"></div></li>
-      <li><a @click="goMyProfile()" class="waves-effect">Profile</a></li>
+      <li><a @click="goMyProfile()" class="waves-effect sidenav-close">Profile</a></li>
       <li><div class="divider"></div></li>
-      <li><a @click="goMyDining()" class="waves-effect" >Dining History</a></li>
+      <li><a @click="goMyDining()" class="waves-effect sidenav-close" >Dining History</a></li>
       <li><div class="divider"></div></li>
-      <li><a @click="goMyReviews()" class="waves-effect" >My Reviews</a></li>
+      <li><a @click="goMyReviews()" class="waves-effect sidenav-close" >My Reviews</a></li>
       <li><div class="divider"></div></li>
-      <li><a @click="logout()" class="waves-effect" >Logout</a></li>
+      <li><a  class="waves-effect sidenav-close" @click="logout()">Logout</a></li>
   </ul>
 
   <!-- Filter -->
@@ -365,22 +366,32 @@
           </form>
         </div>
       </div>
-      <div class="container row">
+      <div class="container row bring_back">
         <div class="col s12">
           <a class="waves-effect waves-light btn #e53935 red darken-1" href="/searchresult">search</a>
         </div>
       </div>
     </div>
   </div>
+    <alertModal                
+      :message= "message" 
+      v-show="isModalVisible"
+      @close="closeModal"
+      class="bring_front"
+    />
 </div>
 </template>
 
 <script>
 import M from 'materialize-css';
-import router from '../router'
+import router from '../router';
+import alertModal from '@/components/alertModal';
 
 export default {
   Name: "Navbar",
+  components: {
+      alertModal
+  },
   props:{
     hasSearch: Boolean, //If search bar is present 
     hasFilter: Boolean,
@@ -390,7 +401,14 @@ export default {
         return this.$store.getters.isLoggedIn;
     }
   },
-  methods: {
+  methods: {  
+    showModal() { //confirmation of successful registration
+        this.isModalVisible = true;
+    },
+    closeModal() {
+        this.isModalVisible = false;
+        router.push({name: "Home"});
+    },
     checkLogged() {
         if(this.$store.getters.isLoggedIn) {
           this.user = this.$store.getters.getUser;
@@ -404,24 +422,25 @@ export default {
       .then(() => {
         this.isLogged= false;
       })
+      this.showModal();
     },
     goHome() {
       router.push({name:"Home"})
     },
     goMyReviews() {
-      router.push({path:`/userdetail/${this.user.userID}/review`});
+      router.push({path:`/userdetail/${this.user.userID}/review`}).catch(() => {}); 
     },
     goMyDining() {
-      router.push({path: `/userdetail/${this.user.userID}/dining`});
+      router.push({path: `/userdetail/${this.user.userID}/dining`}).catch(() => {});
     },
     goMyProfile() {
-      router.push({path: `/userdetail/${this.user.userID}/myprofile`});
+      router.push({path: `/userdetail/${this.user.userID}/myprofile`}).catch(() => {});
     },
     goLogin() {
-      router.push({name: 'Login'});
+      router.push({name: 'Login'}).catch(() => {});
     },
     goRegister() {
-      router.push({name: 'Register'});
+      router.push({name: 'Register'}).catch(() => {});
     }
   },
   mounted() {
@@ -444,6 +463,8 @@ export default {
   data() {
     return {
       user: null,
+      isModalVisible: false,
+      message: "You're logged out! Taking you back to home page....",
       isLogged: false,
       user_firstname: ' ',
       user_picture: ' ',
@@ -586,6 +607,14 @@ export default {
     
   nav {
       height: 80px;
+  }
+      
+  .bring_back {
+      z-index: 0;
+  }
+
+  .bring_front {
+      z-index: 1;
   }
     
   .nav-wrapper {
