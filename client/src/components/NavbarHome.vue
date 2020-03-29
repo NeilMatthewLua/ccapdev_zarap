@@ -112,7 +112,6 @@ export default {
   },
   computed: {
     isLoggedIn: function() {
-      this.rebind();
       return this.$store.getters.isLoggedIn;
     }
   },
@@ -152,21 +151,6 @@ export default {
     },
     goRegister() {
       router.push({name: 'Register'}).catch(() => {});
-    },
-    rebind(){
-      document.addEventListener('DOMContentLoaded', function() {
-      // sidenav
-      var elem = document.querySelectorAll('.sidenav');
-      M.Sidenav.init(elem, {});
-      // modal
-      var elems = document.querySelectorAll('.modal');
-      M.Modal.init(elems, {});
-      // dropdown
-      var elem_dropdown = document.querySelectorAll('.dropdown-trigger');
-      M.Dropdown.init(elem_dropdown, {
-        coverTrigger: false
-      });
-    });
     }
   },
   mounted() {
