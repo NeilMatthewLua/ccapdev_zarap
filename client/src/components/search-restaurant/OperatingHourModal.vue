@@ -1,64 +1,17 @@
 <template>
     <div>
-        <div class="modal">
+        <div :id = "id" class="modal">
             <div class="modal-content">
-                <h4>Operating Hours</h4>
-                <table>
+                <h4>Operating Hours
+                </h4>
+                <table v-if = "operatingHour">
                     <tbody>
-                        <tr>
+                        <tr v-for = "(hours,day) in operatingHour" v-bind:key = "day">
                             <td>
-                                Monday
+                                {{day}}
                             </td>
                             <td>
-                                {{operatingHour.Monday}}
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                Tuesday
-                            </td>
-                            <td>
-                                {{operatingHour.Tuesday}}
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                Wednesday
-                            </td>
-                            <td>
-                                {{operatingHour.Wednesday}}
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                Thursday
-                            </td>
-                            <td>
-                                {{operatingHour.Thursday}}
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                Friday
-                            </td>
-                            <td>
-                                {{operatingHour.Friday}}
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                Saturday
-                            </td>
-                            <td>
-                                {{operatingHour.Saturday}}
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                Sunday
-                            </td>
-                            <td>
-                                {{operatingHour.Sunday}}
+                                {{hours}}
                             </td>
                         </tr>
                     </tbody>
@@ -76,12 +29,14 @@ import { mapGetters } from 'vuex';
 export default {
     name: "OperatingHourModal",
     props: {
-        operatingHour: Object
+        operatingHour: Object,
+        id: String
     },
     methods: {
         ...mapGetters(["fetchOperatingHour"]),
         close() {
-            this.$emit('close', false)
+            // Delegate closing of modal to the parent class
+            this.$emit('did_click_close')
         }
     }
 }

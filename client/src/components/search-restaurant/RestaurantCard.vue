@@ -22,7 +22,7 @@
                                 <p class="restaurant-other-info">Cost for two:&nbsp;Php{{resto.costForTwo}}</p>
 
                                 <p class="restaurant-other-info" v-if="getToday() === 0">Sunday:&nbsp; {{resto.operatingHours.Sunday}}
-                                    <a class="modal-trigger" href="#modal_component">
+                                    <a>
                                         <i class="material-icons tiny"  @click="openModal()">info</i>
                                     </a>
                                 </p>
@@ -57,8 +57,6 @@
                                     </a>
                                 </p>
 
-                                <!-- Modal for Operating Hours -->
-                                <OperatingHourModal id="modal_component" v-if="modalVisible" :operatingHour="this.$store.getters.fetchOperatingHour(currRestoId)[0].operatingHours" @close="closeModal"/>
                                 <p class="restaurant-other-info">Tel no:&nbsp;{{resto.contactDetails}}</p>
                             </div>
                         </div>
@@ -124,32 +122,24 @@
                                 <i class="material-icons tiny"  @click="openModal()">info</i>
                             </a>
                         </p> 
-
-                        <!-- Modal for Operating Hours-->
-                        <OperatingHourModal id="mmodal_component" v-if="modalVisible" :operatingHour="this.$store.getters.fetchOperatingHour(currRestoId)[0].operatingHours" @close="closeModal"/>
                     </div>
                 </div>
             </div>
-        </div>
+        </div>      
     </div>
 </template>
 
 <script>
 import { mapGetters } from 'vuex'; 
-import OperatingHourModal from './OperatingHourModal.vue';
 import M from 'materialize-css';
 export default {
     name: "RestaurantCard",
-    components: {
-        OperatingHourModal
-    },
     props : {
         resto : Object
     },
     data () {
         return {
-            currRestoId: null,
-            modalVisible: false
+            currRestoId: null
         }
     },
     methods: {
@@ -160,19 +150,12 @@ export default {
             return n;
         },
         openModal() {
-            this.currRestoId = this.resto.restaurantID,
-            this.modalVisible = true
-        },
-        closeModal() {
-            this.modalVisible = false
+            // Show the modal and delegate the responsibility to the parent class
+            this.$emit("did_click_operating_info", this.resto.restaurantID);
         }
     },
     mounted() {
         M.AutoInit();
-        document.addEventListener('DOMContentLoaded', function() {
-            var elems = document.querySelectorAll('.modal');
-            M.Modal.init(elems, {});
-        });
     }
 }
 </script>
