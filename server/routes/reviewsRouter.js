@@ -48,4 +48,33 @@ router.post('/increment/:id', (req, res) => {
     })
 })
 
+router.post('/addReview/:id', (req,res) => {
+    let pictures = [];
+    for(let i = 0; i < req.body.photos.length; i++) {
+        pictures.push(req.body.photos[i].pictureID)
+    }
+    
+    let item = new Review({
+        reviewerID :req.body.userID.userID,
+        restaurantID : req.body.restaurantID,
+        rating : req.body.rating,
+        review: req.body.review,
+        upvotes: 0,
+        reviewPictures: pictures
+    });
+    item.save()
+    .then(doc => {
+        res.send({review: doc})
+    })
+})
+
+router.post('/:id', (req, res) => {
+    let amount = req.body.value; 
+    let id = req.params.id; 
+    Review.findOneAndUpdate({reviewID : id}, {$inc : {'upvotes' : amount}}, (err,res) => {
+        if (err) throw err
+        res.status(200).send("Updated"); 
+    })
+})
+
 module.exports = router; 

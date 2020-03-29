@@ -3,7 +3,7 @@
     <!-- Upper half of home page -->
     <div class ="BG-color">
       <!-- Navbar for home page -->
-      <NavbarHome/>
+      <NavbarHome class="bring_front"/>
 
       <div class ="container pad4">
         <div class ="col s12 m2 valign-wrapper center-align">
@@ -19,7 +19,7 @@
             <div class ="input-field col s6 offset-s2 searchround">
               <input type="text" class ="white truncate padinput" name="searchbar" placeholder="Search your favorite restaurants here..." v-model="search">
             </div>
-            <a class ="waves-effect waves-light btn pushdown colored-button" @click="goSearchResult">search</a>
+            <a class ="waves-effect waves-light btn pushdown colored-button bring_back" @click="goSearchResult">search</a>
           </div>
         </div>
         <br>
@@ -42,36 +42,33 @@
           <div class ="col s12 m3 margin_right_5">
             <div class ="card BG-black-color mobile-height">
               <div class ="card-content white-text">
-                <span class ="card-title">Golden Fortune</span>
-                <p>Casual Dining | Seafood | Chinese</p>
+                <span class ="card-title">{{restaurantCards.restaurant_1.name}}</span>
+                <p>{{this.restaurantCards.restaurant_1.establishmentType[0]}} | {{this.restaurantCards.restaurant_1.cuisines[0]}}</p>
               </div>
               <div class ="card-action">
-                <!-- TODO RESAURANT ROUTE -->
-                <a >View Restaurant</a>
+                <a @click="goCard1()">View Restaurant</a>
               </div>
             </div>
           </div>
           <div class ="col s12 m3 margin_right_5" >
             <div class ="card BG-black-color mobile-height">
               <div class ="card-content white-text">
-                <span class ="card-title">Tim Hortons</span>
-                <p>Cafés | Coffee | Desserts</p>
+                  <span class ="card-title">{{restaurantCards.restaurant_2.name}}</span>
+                  <p>{{this.restaurantCards.restaurant_2.establishmentType[0]}} | {{this.restaurantCards.restaurant_2.cuisines[0]}}</p>
               </div>
               <div class ="card-action">
-                <!-- TODO RESAURANT ROUTE -->
-                <a >View Restaurant</a>
+                <a @click="goCard2()">View Restaurant</a>
               </div>
             </div>
           </div>
           <div class ="col s12 m3 margin_right_5 mobile-height" >
             <div class ="card BG-black-color mobile-height">
               <div class ="card-content white-text">
-                <span class ="card-title">Big Bowl Noodles</span>
-                <p>Quick Bites | Chinese</p>
+                  <span class ="card-title">{{restaurantCards.restaurant_3.name}}</span>
+                  <p>{{this.restaurantCards.restaurant_3.establishmentType[0]}} | {{this.restaurantCards.restaurant_3.cuisines[0]}}</p>
               </div>
               <div class ="card-action">
-                <!-- TODO RESAURANT ROUTE -->
-                <a >View Restaurant</a>
+                <a @click="goCard3()">View Restaurant</a>
               </div>
             </div>
           </div>
@@ -96,14 +93,84 @@ export default {
   },
   data() {
     return {
-      search : null
+      search : null,
+      restaurantCards : {
+        restaurant_1 : {
+          name: ' ',
+          establishmentType: [''],
+          cuisines: ['']
+        }, 
+        restaurant_2 : {
+          name: ' ',
+          establishmentType: [' '],
+          cuisines: [' ']
+        }, 
+        restaurant_3 : {
+          name: ' ',
+          establishmentType: [' '],
+          cuisines: [' ']
+        }
+      },
+      featuredRestaurants: [ ]
     }
   },
   methods: {
     goSearchResult: function() {
       //TODO Search Router
       router.push({name:"Search Result"})
+    },
+    loadCards: async function() {
+      //loads the restaurant cards in home 
+      await this.$store.dispatch('getRestoById', this.featuredRestaurants[0])
+      this.restaurantCards.restaurant_1 = this.$store.getters.fetchCurrResto;
+      await this.$store.dispatch('getRestoById', this.featuredRestaurants[1])
+      this.restaurantCards.restaurant_2 = this.$store.getters.fetchCurrResto;
+      await this.$store.dispatch('getRestoById', this.featuredRestaurants[2])
+      this.restaurantCards.restaurant_3 = this.$store.getters.fetchCurrResto;
+    },
+    goCard1: function() {
+      router.push({path: `restaurant/${this.restaurantCards.restaurant_1.restaurantID}`});
+    },
+    goCard2: function() {
+      router.push({path: `restaurant/${this.restaurantCards.restaurant_2.restaurantID}`});
+    },
+    goCard3: function() {
+      router.push({path: `restaurant/${this.restaurantCards.restaurant_3.restaurantID}`});
+    },
+    fetchFeatured: async function() {
+      await this.$store.dispatch('getRestos')
+      let restos = this.$store.getters.fetchAllRestos
+      var set = [];
+      for(let i = 0; i < 3; i++) 
+      {
+        let number = this.between(0, restos.length - 1, set);
+        this.featuredRestaurants[i] = restos[number].restaurantID;
+        set.push(number);
+      }
+      this.loadCards();
+    },
+    between: function (min, max, set) {
+      let ans;
+      let flag = 0;
+      do {
+        flag = 0;
+        ans = Math.floor(
+          Math.random() * (max - min + 1) + min
+        )
+        console.log(ans)
+        console.log(set)
+        for(let i = 0; i < set.length && flag == 0; i++){
+            if(ans == set[i])
+              flag = 1;
+        }
+        console.log("Did this")
+      } while(flag == 1) 
+      return ans;
     }
+  },
+  mounted() {
+    this.featuredRestaurants = [ ];
+    this.fetchFeatured();
   }
 }
 </script>
@@ -120,6 +187,14 @@ export default {
 
     .black-color {
         color:  var(--default-card-color) !important;
+    }
+
+    .bring_back {
+        z-index: 0;
+    }
+
+    .bring_front {
+        z-index: 1;
     }
 
     .BG-black-color {

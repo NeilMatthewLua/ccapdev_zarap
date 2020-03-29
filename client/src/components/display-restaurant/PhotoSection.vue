@@ -1,7 +1,7 @@
 <template>
   <div class="photos">
         <div class="carousel-container">
-          <h3>{{name}} {{title}}</h3>
+          <h3>{{this.restoDetails.name}} {{title}}</h3>
           <!-- Carousel for pictures -->
             <Carousel :perPageCustom="[[480, 1]]" :navigationEnabled="true"> 
                 <Slide v-for="(url, index) in this.urls" :key="url.url">
@@ -35,6 +35,12 @@ export default {
       title: String, //Title of Photo section (Menu / Photos)
       urls : Array,
       name : String 
+    },
+    computed: {
+      //Gets Restaurant Details for Current Restaurant 
+      restoDetails () {
+        return this.$store.getters.fetchCurrResto; 
+      }
     }, 
     methods: {
       getUrl(e) {

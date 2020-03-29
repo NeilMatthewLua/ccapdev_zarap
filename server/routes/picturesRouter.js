@@ -88,14 +88,15 @@ router.post('/upload-multiple/:destination', (req, res) => {
         }
         const files = req.files;
         let counter = 0; //Change this to a global id counter
+        let pictureID = mongoose.Types.ObjectId();
         let result = files.map(obj => (({...obj, id : counter++})));
-        result = files.map(obj => (({...obj, path : `images/${req.params.destination}/${obj.filename}`})));
-        console.log(result); 
+        result = files.map(obj => (({...obj, path : `images/${req.params.destination}/${obj.filename}`, pictureID: pictureID})));
         res.send(result);
 
         let mongoDestination = `http://localhost:9090/static/${req.params.destination}/` + result[0].filename;
-        console.log(mongoDestination)
+
         let pic = new Picture({
+            pictureID: pictureID,
             url: mongoDestination
         })
         await pic.save()
