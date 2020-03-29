@@ -20,16 +20,11 @@ const actions =  {
     //Gets Resto by restaurantID 
     async getRestoById ({commit}, id) {
         let res = await axios.get(`http://localhost:9090/restaurants/${id}`); 
-<<<<<<< HEAD
-        
-        commit('setCurrResto', res.data); 
-=======
 
         if(res.data)
             commit('setCurrResto', res.data); 
         else 
             commit('setCurrResto', null);
->>>>>>> mp2.5
     },
     //Gets Restos that fit the query 
     async getRestoByQuery ({commit}, query) {

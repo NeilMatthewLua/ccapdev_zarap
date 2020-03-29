@@ -176,11 +176,17 @@ export default {
                 return true;
             }  
         },
-        saveReview() {
-            console.log(this.rating)
-            console.log(this.isCheckedVal)
-            console.log(this.reviewData)
-            console.log(this.uploadedFiles)
+        saveReview() { //saves and posts the review of the user
+            this.$store.dispatch('addReview', {
+                review: this.reviewData,
+                rating: this.rating,
+                photos: this.uploadedFiles,
+                userID: this.$store.getters.getUser,
+                restaurantID: this.$store.getters.fetchCurrResto.restaurantID
+            })
+            .then(() => { //Adds the restuarant to the user's visited places
+                this.$emit('postedReview')
+            })
         },
        editReview (content) { 
         this.isEditing = true;  
@@ -212,7 +218,7 @@ export default {
 
     .write-review {
         min-height: 50px;  
-        max-height: 500px; 
+        max-height: 800px; 
         margin-bottom: 40px; 
         padding: 30px 30px; 
         background-color: var(--default-restaurantcard-color);
