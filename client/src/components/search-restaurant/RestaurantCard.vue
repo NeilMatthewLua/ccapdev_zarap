@@ -20,43 +20,11 @@
                                 <br>
                                 <p class="restaurant-other-info">Cuisine:&nbsp;{{resto.cuisines[0]}}</p>
                                 <p class="restaurant-other-info">Cost for two:&nbsp;Php{{resto.costForTwo}}</p>
-
-                                <p class="restaurant-other-info" v-if="getToday() === 0">Sunday:&nbsp; {{resto.operatingHours.Sunday}}
+                                <p class="restaurant-other-info">{{getToday()}}:&nbsp; {{resto.operatingHours[getToday()]}}
                                     <a>
                                         <i class="material-icons tiny"  @click="openModal()">info</i>
                                     </a>
                                 </p>
-                                <p class="restaurant-other-info" v-else-if="getToday() === 1">Monday:&nbsp; {{resto.operatingHours.Monday}}
-                                    <a class="modal-trigger" href="#modal_component">
-                                        <i class="material-icons tiny"  @click="openModal()">info</i>
-                                    </a>
-                                </p>
-                                <p class="restaurant-other-info" v-else-if="getToday() === 2">Tuesday:&nbsp; {{resto.operatingHours.Tuesday}}
-                                    <a class="modal-trigger" href="#modal_component">
-                                        <i class="material-icons tiny"  @click="openModal()">info</i>
-                                    </a>
-                                </p>
-                                <p class="restaurant-other-info" v-else-if="getToday() === 3">Wednesday:&nbsp; {{resto.operatingHours.Wednesday}}
-                                    <a class="modal-trigger" href="#modal_component">
-                                        <i class="material-icons tiny"  @click="openModal()">info</i>
-                                    </a>
-                                </p>
-                                <p class="restaurant-other-info" v-else-if="getToday() === 4">Thursday:&nbsp; {{resto.operatingHours.Thursday}}
-                                    <a class="modal-trigger" href="#modal_component">
-                                        <i class="material-icons tiny"  @click="openModal()">info</i>
-                                    </a>
-                                </p>
-                                <p class="restaurant-other-info" v-else-if="getToday() === 5">Friday:&nbsp; {{resto.operatingHours.Friday}}
-                                    <a class="modal-trigger" href="#modal_component">
-                                        <i class="material-icons tiny"  @click="openModal()">info</i>
-                                    </a>
-                                </p>
-                                <p class="restaurant-other-info" v-else-if="getToday() === 6">Saturday:&nbsp; {{resto.operatingHours.Saturday}}
-                                    <a class="modal-trigger" href="#modal_component">
-                                        <i class="material-icons tiny"  @click="openModal()">info</i>
-                                    </a>
-                                </p>
-
                                 <p class="restaurant-other-info">Tel no:&nbsp;{{resto.contactDetails}}</p>
                             </div>
                         </div>
@@ -87,41 +55,11 @@
                             <br>
                             Cost for two:&nbsp;{{resto.costForTwo}}
                         </p>
-                        <p class="operating-day" v-if="getToday() === 0">Sunday:&nbsp; {{resto.operatingHours.Sunday}}
-                            <a class="modal-trigger" href="#mmodal_component">
+                        <p class="restaurant-other-info">{{getToday()}}:&nbsp; {{resto.operatingHours[getToday()]}}
+                            <a>
                                 <i class="material-icons tiny"  @click="openModal()">info</i>
                             </a>
-                        </p> 
-                        <p class="operating-day" v-else-if="getToday() === 1">Monday:&nbsp; {{resto.operatingHours.Monday}}
-                            <a class="modal-trigger" href="#mmodal_component">
-                                <i class="material-icons tiny"  @click="openModal()">info</i>
-                            </a>
-                        </p> 
-                        <p class="operating-day" v-else-if="getToday() === 2">Tuesday:&nbsp; {{resto.operatingHours.Tuesday}}
-                            <a class="modal-trigger" href="#mmodal_component">
-                                <i class="material-icons tiny"  @click="openModal()">info</i>
-                            </a>
-                        </p> 
-                        <p class="operating-day" v-else-if="getToday() === 3">Wednesday:&nbsp; {{resto.operatingHours.Wednesday}}
-                            <a class="modal-trigger" href="#mmodal_component">
-                                <i class="material-icons tiny"  @click="openModal()">info</i>
-                            </a>
-                        </p> 
-                        <p class="operating-day" v-else-if="getToday() === 4">Thursday:&nbsp; {{resto.operatingHours.Thursday}}
-                            <a class="modal-trigger" href="#mmodal_component">
-                                <i class="material-icons tiny"  @click="openModal()">info</i>
-                            </a>
-                        </p> 
-                        <p class="operating-day" v-else-if="getToday() === 5">Friday:&nbsp; {{resto.operatingHours.Friday}}
-                            <a class="modal-trigger" href="#mmodal_component">
-                                <i class="material-icons tiny"  @click="openModal()">info</i>
-                            </a>
-                        </p> 
-                        <p class="operating-day" v-else-if="getToday() === 6">Saturday:&nbsp; {{resto.operatingHours.Saturday}}
-                            <a class="modal-trigger" href="#mmodal_component">
-                                <i class="material-icons tiny"  @click="openModal()">info</i>
-                            </a>
-                        </p> 
+                        </p>
                     </div>
                 </div>
             </div>
@@ -146,8 +84,10 @@ export default {
         ...mapGetters(["fetchCoverPic", "fetchOperatingHour"]),
         getToday() {
             var d = new Date();
-            var n = d.getDay();
-            return n;
+            // Returns the actual String of the date to be represented:
+            // Sunday = 0, Monday = 1, etc.
+            // WARNING: Make sure to use the appropriate string when used as keys
+            return d.toLocaleString('en-us', {  weekday: 'long' });
         },
         openModal() {
             // Show the modal and delegate the responsibility to the parent class
