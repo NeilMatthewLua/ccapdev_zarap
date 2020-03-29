@@ -74,7 +74,7 @@ export default {
         },
         //Checks if post is liked by user 
         isLiked() {
-            return this.isLogged() ? ((this.isLikedReview().length > 0) ? true : false) : false; 
+            return this.isLogged ? ((this.isLikedReview().length > 0) ? true : false) : false; 
         }, 
         reviewPics() {
             return this.reviewData.reviewPics; 

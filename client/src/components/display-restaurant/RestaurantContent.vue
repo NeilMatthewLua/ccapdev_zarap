@@ -21,8 +21,7 @@
         </transition> 
         <transition name="changeContent" enter-active-class="animated bounceInLeft">
           <div v-if="section === 'Review'">
-            <!-- TODO : Check if a user is logged in or not through vuex -->
-            <ReviewSection :hasReview="false"/> 
+            <ReviewSection/> 
           </div>
         </transition> 
       </div>

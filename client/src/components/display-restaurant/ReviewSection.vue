@@ -1,8 +1,7 @@
 <template>
 <div class="review-section">
     <div class="write-review valign-wrapper" v-if="isLogged">
-        <!-- TODO Check if User is Logged -->
-        <div class="user-review-container" v-if="!hasReview">
+        <div class="user-review-container" v-if="!this.hasReview">
             <a class="review-btn waves-effect waves-light btn #388e3c green darken-2" v-if="!isWriting" @click="isWriting = true">Write Review</a>
             <div class = "writing-section" v-else>
                 <i class="material-icons prefix">mode_edit</i>
@@ -64,9 +63,6 @@ export default {
         ReviewPost,
         FileUpload
     }, 
-    props: {
-        hasReview: Boolean //If the user has written a review for said restaurant
-    },
     data () {
         return {
             isWriting : false, //If user is writing a review
@@ -89,6 +85,9 @@ export default {
         },
         isLogged () {
             return (this.$store.getters.getUser != undefined) ? true : false; 
+        }, 
+        hasReview() {
+            return (this.isLogged) ? this.$store.getters.hasReview(this.$store.getters.getUser.userID) : false; 
         }
     },
     methods: {

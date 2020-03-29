@@ -11,7 +11,10 @@ const getters =  {
         return (prev.upvotes > current.upvotes) ? prev : current
     }),
     fetchAllReviews : state => state.reviewPosts,
-    fetchUserReviews : state => state.userReviews
+    fetchUserReviews : state => state.userReviews,
+    hasReview : state => id => {
+        (state.reviewPosts.filter((reviews) => reviews.reviewerID === id).length > 0 ) ? true : false 
+    }
 }
 
 const actions =  {
