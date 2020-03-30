@@ -9,7 +9,7 @@
                                 <div class="review-post padd-top">
                                     <div class="edit-review">
                                         <div v-show="!isEditing">
-                                            <ReviewPost v-for="(review,index) in this.fetchUserReviews()" :key="review.reviewID"  
+                                            <ReviewPost class="review-cells" v-for="(review,index) in this.fetchUserReviews()" :key="review.reviewID"  
                                             :reviewData="review" :index="index" :inFeed="false" @edit-Review="editReview" @delete-Review="deleteReview" :inProfile="true"/> 
                                         </div>
                                         <div v-show="isEditing">
@@ -56,19 +56,20 @@
                                                 <div class="file-field input-field">
                                                 <!-- File Upload Portion -->
                                                 <ImageUpload ref="uploadSection" @file-upload="getFiles"  @toggleSubmit="this.toggleSubmitButton" 
-                                                :dest="destination"  :existingPics="this.reviewPictures" /> 
+                                                :dest="destination"  :existingPics="this.chosenReview.reviewPics" /> 
                                                 <a class="submit-btn red btn right" @click="validateEdit">SUBMIT</a>
-                                                <a class="submit-btn btn right" @click="validateEdit">CANCEL</a>
+                                                <a class="submit-btn btn right" @click="cancelEdit">CANCEL</a>
                                                 </div>
                                             </div>
                                         </div>
-                                        <modal @close="hideSuccessModal" :message="modalMessage" v-show="showSuccessModal"/>
+                                        
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+                <modal @close="hideSuccessModal" :message="modalMessage" v-show="showSuccessModal"/>
             </div>
         </div>
         <div v-if="loading" class="loading">
@@ -97,7 +98,6 @@ export default {
     },
     data () {
         return {
-            checked: false,
             isWriting : false, //If user is writing a review
             reviewData : "", //Content to store data in user review
             isEditing: false, //If user is editing current review
@@ -122,7 +122,10 @@ export default {
     }, 
     computed: {
         chosenReview() {
-            return this.getUserReviews()[this.chosenReviewIndex]; 
+            return this.fetchUserReviews()[this.chosenReviewIndex]; 
+        },
+        isChecked() {
+            return this.isCheckedVal; 
         }
     },
     methods : {
@@ -131,6 +134,8 @@ export default {
         editReview (index) { 
             this.isEditing = true;  
             this.chosenReviewIndex = index; 
+            this.editData = this.chosenReview.review; 
+            this.doThis(this.chosenReview.rating); 
             this.$set(this,'uploadedFiles', this.chosenReview.reviewPics); 
         }, 
         deleteReview() {
@@ -191,6 +196,9 @@ export default {
                             })  
 
       },
+      cancelEdit() {
+          this.isEditing = false; 
+      },
       getFiles (files) {
         this.$set(this,'uploadedFiles', files); 
       },
@@ -227,15 +235,19 @@ export default {
         height: 100vh;
     }
 
+    .review-cells {
+        padding: 10px; 
+        border-bottom: 1px solid #eeeeee;
+    }
+
     .review-section {
         margin-bottom: 40px; 
     }
 
     .write-review {
-        min-height: 50px;  
-        max-height: 400px; 
+        min-height: 50px;   
         margin-bottom: 40px; 
-        padding: 30px 30px; 
+        padding: 0px 30px; 
         background-color: var(--default-reviewcard-color);
         clear: both; 
     }
@@ -255,7 +267,9 @@ export default {
 
     .submit-btn {
         border-radius: 15% !important; 
+        margin-top: 20px; 
         margin-right: 20px; 
+        margin-bottom: 20px; 
         z-index: 0 !important; 
     }
 

@@ -37,7 +37,7 @@
     </div>
     <PictureModal :url="this.reviewPics[zoomedPic]" 
                     @close="closeModal()" @change-pic="this.changePic"
-                    v-show="modalVisible"/>
+                    v-if="modalVisible"/>
  </div>
 </template>
 

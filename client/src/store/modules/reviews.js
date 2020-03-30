@@ -130,8 +130,8 @@ const mutations = {
         state.userReviews = state.userReviews.concat(data); 
     },
     addLikes: (state, post) => {
-        state.reviewPosts = state.reviewPosts.filter((review) => review.reviewID != post.reviewID); 
-        state.reviewPosts.concat(post); 
+        let index = state.reviewPosts.findIndex(item => item.reviewID === post.reviewID); 
+        state.reviewPosts[index].upvotes = post.upvotes; 
     }
 }
 

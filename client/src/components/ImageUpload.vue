@@ -1,14 +1,14 @@
 <template>
    <div>
-     <div class="pictures-container">
-        <div class="picture-container" v-for="(picture,index) in this.reviewPictures" :key="index" @click="showModal">
-            <img class="picture" :index="index" :src="picture" alt="">
-            <div class="zoom-in" :index="index" ><i class="material-icons" :index="index">zoom_in</i></div>
-        </div>
+    <div class="pictures-container">
+      <div class="picture-container" v-for="(picture,index) in this.reviewPictures" :key="index" @click="showModal">
+          <img class="picture" :index="index" :src="picture" alt="">
+          <div class="zoom-in" :index="index" ><i class="material-icons" :index="index">zoom_in</i></div>
       </div>
-      <PictureModal :url="this.reviewPictures[zoomedPic]" :isEditable="true"
-                    @close="closeModal" @change-pic="this.changePic" @remove-pic="removePicture"
-                    v-show="modalVisible"/>
+    </div>
+    <PictureModal :url="this.reviewPictures[zoomedPic]" :isEditable="true"
+                  @close="closeModal" @change-pic="this.changePic" @remove-pic="removePicture"
+                  v-show="modalVisible"/>
     <div class="container">
         <!--UPLOAD-->
         <form enctype="multipart/form-data" novalidate v-if="isInitial || isSaving">
@@ -177,26 +177,19 @@ export default {
 </script>
 
 <style scoped>
-  
-    .input-file {
-        opacity: 0; /* invisible but it's there! */
-        width: 100%;
-        height: 50px;
-        position: absolute;
-        cursor: pointer;
-    }
 
     .pictures-container {
         padding: 10px; 
     }
 
     .picture-container {
+        position: relative; 
+        z-index: 0; 
         cursor: pointer;
         outline: 2px dashed grey;
         height: 100px; 
         width: 100px; 
         display: inline-block; 
-        position: relative;
         margin-right: 20px; 
     }
 
@@ -209,6 +202,7 @@ export default {
     }
 
     .picture {
+        z-index: 0; 
         opacity: 1;
         height: 100px; 
         width: 100px; 
@@ -236,7 +230,6 @@ export default {
         color: dimgray;
         padding: 10px 10px;
         min-height: 50px; /* minimum height */
-        position: relative;
         cursor: pointer;
     }
   

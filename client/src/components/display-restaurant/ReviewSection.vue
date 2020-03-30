@@ -100,7 +100,7 @@
                     <ImageUpload ref="uploadSection" @file-upload="getFiles"  @toggleSubmit="this.toggleSubmitButton" 
                     :dest="destination"  :existingPics="this.reviewPictures" /> 
                     <a class="submit-btn red btn right" @click="validateEdit">SUBMIT</a>
-                    <a class="submit-btn btn right" @click="validateEdit">CANCEL</a>
+                    <a class="submit-btn btn right" @click="cancelEdit">CANCEL</a>
                     </div>
                 </div>
             </div>
@@ -283,6 +283,9 @@ export default {
                           this.displaySuccessModal("Error in updating review.")
                             })  
 
+      },
+      cancelEdit() {
+          this.isEditing = false; 
       },
       deleteReview () {
         // this.$store.dispatch('deleteReview')
