@@ -77,7 +77,7 @@ const actions =  {
         commit('auth_success', resp.data.user)
       })
     }
-}
+  }
 
 const mutations = {
   auth_request(state) {

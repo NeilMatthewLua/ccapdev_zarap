@@ -125,9 +125,6 @@ export default {
                 '4': false
             }
         }   
-    }, 
-    mounted() {
-        console.log(this.isCheckedVal)
     },
     computed : {
         allReviews () {
@@ -182,11 +179,12 @@ export default {
                 rating: this.rating,
                 photos: this.uploadedFiles,
                 userID: this.$store.getters.getUser,
-                restaurantID: this.$store.getters.fetchCurrResto.restaurantID
+                restaurant: this.$store.getters.fetchCurrResto
             })
             .then(() => { //Adds the restuarant to the user's visited places
                 this.$emit('postedReview')
             })
+            .catch(() => console.log("DAMn"))
         },
        editReview (content) { 
         this.isEditing = true;  
@@ -194,7 +192,7 @@ export default {
         //Add in edit data for the server
       }, 
       deleteReview () {
-        
+        // this.$store.dispatch('deleteReview')
       },
       getFiles (files) {
         this.$set(this,'uploadedFiles', files); 

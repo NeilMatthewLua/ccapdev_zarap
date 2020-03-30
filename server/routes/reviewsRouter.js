@@ -1,7 +1,9 @@
 var express = require('express');
 var router = express.Router();
 const path = require('path');
+const mongoose = require('mongoose');
 const Review = require('../models/reviews');
+const Restaurant = require('../models/restaurants');
 
 //Get all reviews
 router.get('/', (req, res) => { 
@@ -53,10 +55,10 @@ router.post('/addReview/:id', (req,res) => {
     for(let i = 0; i < req.body.photos.length; i++) {
         pictures.push(req.body.photos[i].pictureID)
     }
-    
+    console.log("HEYEHSHSH")
     let item = new Review({
         reviewerID :req.body.userID.userID,
-        restaurantID : req.body.restaurantID,
+        restaurantID : req.body.restaurant.restaurantID,
         rating : req.body.rating,
         review: req.body.review,
         upvotes: 0,
@@ -64,9 +66,44 @@ router.post('/addReview/:id', (req,res) => {
     });
     item.save()
     .then(doc => {
-        res.send({review: doc})
+        res.status(200).send({review: doc})
     })
 })
+
+// router.post('/addReview/:id', (req,res) => {
+//     let pictures = [];
+//     for(let i = 0; i < req.body.photos.length; i++) {
+//         pictures.push(req.body.photos[i].pictureID)
+//     }
+    
+//     let reviewerID = mongoose.Types.ObjectId();
+//     let overallRatingUpdate = Math.round(((req.body.restaurant.overallRating * req.body.restaurant.reviews.length) + req.body.rating) / (req.body.restaurant.reviews.length + 1) * 10) / 10;
+
+//     let item = new Review({
+//         reviewID: reviewerID, 
+//         reviewerID: req.body.userID.userID,
+//         restaurantID: req.body.restaurant.restaurantID,
+//         rating: req.body.rating,
+//         review: req.body.review,
+//         upvotes: 0,
+//         reviewPictures: pictures
+//     });
+    
+//     item.save()
+//     .then(async doc => {
+//         await Restaurant.findOneAndUpdate({restaurantID : req.body.restaurant.restaurantID}, {$push : {'reviews' : reviewerID}
+//         }, { new: true })
+//         .then(() =>{
+//                 Restaurant.findOneAndUpdate({restaurantID : req.body.restaurant.restaurantID},
+//                 {'overallRating' : overallRatingUpdate}, {new: true })
+//                 .then(() => res.send())
+//                 .catch(() => res.status(500))
+//             })
+//         .catch(() => res.status(500))
+
+//         res.status(200).send()
+//     })
+// })
 
 router.post('/:id', (req, res) => {
     let amount = req.body.value; 

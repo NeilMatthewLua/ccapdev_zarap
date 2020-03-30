@@ -115,7 +115,7 @@ export default {
         return this.isLoggedIn();
       },
       hasBeen () {
-        return this.$store.getters.getUser.beenHere.includes(this.fetchCurrResto().restaurantID); 
+        return (this.isLogged) ? this.$store.getters.getUser.beenHere.includes(this.fetchCurrResto().restaurantID) : false; 
       }
     },
     components: {
@@ -139,10 +139,11 @@ export default {
         router.push({name : "Search Result"}); 
       },
       beenHere() {
-        this.$store.dispatch('addRestaurantVisit', {
-            resto: this.fetchCurrResto().restaurantID,
-            user: this.$store.getters.getUser
-        })
+        if(!this.$store.getters.getUser.beenHere.includes(this.fetchCurrResto().restaurantID))
+          this.$store.dispatch('addRestaurantVisit', {
+              resto: this.fetchCurrResto().restaurantID,
+              user: this.$store.getters.getUser
+          })
       },
       notBeenHere() {
         this.$store.dispatch('deleteRestaurantVisit', {
