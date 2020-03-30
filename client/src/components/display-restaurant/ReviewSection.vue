@@ -184,7 +184,6 @@ export default {
             .then(() => { //Adds the restuarant to the user's visited places
                 this.$emit('postedReview')
             })
-            .catch(() => console.log("DAMn"))
         },
        editReview (content) { 
         this.isEditing = true;  
