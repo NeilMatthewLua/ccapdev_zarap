@@ -208,7 +208,7 @@ router.post('/deleteUserReviewed', async (req, res) => {
         await Restaurant.findOneAndUpdate({restaurantID : restaurantID}, {$pullAll : {'reviews' : [review]}}, { new: true })
         .then(async () => {
             await Review.findOneAndDelete({'reviewID': review})
-            .then(() => {console.log("HERE NA BRO");res.status(200)})
+            .then(() => {res.status(200).send})
         })
     }) 
     .catch(() => res.status(500))
