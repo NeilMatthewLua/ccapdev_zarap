@@ -249,9 +249,9 @@ export default {
                 review: this.reviewData,
                 rating: this.rating,
                 photos: this.uploadedFiles,
-                userID: this.$store.getters.getUser.userID,
-                restaurantID: this.$store.getters.fetchCurrResto.restaurantID
-            }, false)
+                userID: this.$store.getters.getUser,
+                restaurant: this.$store.getters.fetchCurrResto
+            })
             .then(() => { //Adds the restuarant to the user's visited places
                 this.$emit('postedReview')
             })
@@ -285,7 +285,7 @@ export default {
 
       },
       deleteReview () {
-        
+        // this.$store.dispatch('deleteReview')
       },
       getFiles (files) {
         this.$set(this,'uploadedFiles', files); 

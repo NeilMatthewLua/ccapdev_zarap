@@ -1,7 +1,9 @@
 var express = require('express');
 var router = express.Router();
 const path = require('path');
+const mongoose = require('mongoose');
 const Review = require('../models/reviews');
+const Restaurant = require('../models/restaurants');
 
 //Get all reviews
 router.get('/', (req, res) => { 
@@ -54,17 +56,32 @@ router.post('/addReview/:id', (req,res) => {
         pictures.push(req.body.photos[i].pictureID)
     }
     
+    let reviewerID = mongoose.Types.ObjectId();
+    let overallRatingUpdate = Math.round(((req.body.restaurant.overallRating * req.body.restaurant.reviews.length) + req.body.rating) / (req.body.restaurant.reviews.length + 1) * 10) / 10;
+
     let item = new Review({
-        reviewerID :req.body.userID.userID,
-        restaurantID : req.body.restaurantID,
-        rating : req.body.rating,
+        reviewID: reviewerID, 
+        reviewerID: req.body.userID.userID,
+        restaurantID: req.body.restaurant.restaurantID,
+        rating: req.body.rating,
         review: req.body.review,
         upvotes: 0,
         reviewPictures: pictures
     });
+    
     item.save()
-    .then(doc => {
-        res.send({review: doc})
+    .then(async doc => {
+        await Restaurant.findOneAndUpdate({restaurantID : req.body.restaurant.restaurantID}, {$push : {'reviews' : reviewerID}
+        }, { new: true })
+        .then(() =>{
+                Restaurant.findOneAndUpdate({restaurantID : req.body.restaurant.restaurantID},
+                {'overallRating' : overallRatingUpdate}, {new: true })
+                .then(() => res.send({review: doc}))
+                .catch(() => res.status(500))
+            })
+        .catch(() => res.status(500))
+
+        res.status(200).send({review: doc})
     })
 })
 

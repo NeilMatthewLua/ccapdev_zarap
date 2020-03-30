@@ -34,7 +34,7 @@
       </ul>
 
       <!-- Logged Profile Section -->
-      <ul class="right hide-on-med-and-down col s3" v-show="this.isLoggedIn" @click="rebind()">
+      <ul class="right hide-on-med-and-down col s3" v-show="this.isLoggedIn">
         <div class="right navbar-right valign-wrapper">
           <img class="circle navbar-image" :src= user_picture>
           <li>
