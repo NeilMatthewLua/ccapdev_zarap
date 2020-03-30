@@ -69,14 +69,11 @@ const actions =  {
         .then(async resp => {
             //Updates the reviews of the resstaurant
             let userPic = await axios.get(`http://localhost:9090/pictures/${group.userID.picture}`);
-            let reviewPictures = [];
-            for(let j = 0; j < resp.data.review.reviewPictures.length; j++) {
-                let reviewPic = await axios.get(`http://localhost:9090/pictures/${resp.data.review.reviewPictures[j]}`);
-                reviewPictures.push(reviewPic.data.url); 
-            }
+            let reviewPictures =  group.photos.map((item) => item.url);
+
             let user = [];
             user.push({...group.userID, ...resp.data.review, userUrl : userPic.data.url, reviewPics : reviewPictures});
-            
+
             commit('appendReview', user)
 
             //Updates the reviews of the user
