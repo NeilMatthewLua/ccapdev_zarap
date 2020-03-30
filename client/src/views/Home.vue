@@ -118,6 +118,8 @@ export default {
     goSearchResult: function() {
       //TODO Search Router
       router.push({name:"Search Result"})
+      //For Dev
+      router.push({name:"Display Restaurant", params : {id : "5e7f0b024e652b3734b7e7e2"}})
     },
     loadCards: async function() {
       //loads the restaurant cards in home 

@@ -44,7 +44,7 @@ router.get('/userID/:id', (req, res) => {
 router.post('/increment/:id', (req, res) => {
     let amount = req.body.value; 
     let id = req.params.id; 
-    Review.findOneAndUpdate({reviewID : id}, {$inc : {'upvotes' : amount}}, (err,res) => {
+    Review.findOneAndUpdate({reviewID : id}, {$inc : {'upvotes' : amount}}, (err, result) => {
         if (err) throw err
         res.status(200).send("Updated"); 
     })
@@ -85,10 +85,19 @@ router.post('/addReview/:id', (req,res) => {
     })
 })
 
+router.post('/edit-review/:id', (req, res) => {
+    let data = req.body; 
+    let id = req.params.id; 
+    Review.findOneAndUpdate({reviewID : id}, {'review': data.review, 'rating': data.rating, 'reviewPictures': data.pictureIDs.data}, (err, result) => {
+        if (err) throw err
+        res.status(200).send(result); 
+    })
+})
+
 router.post('/:id', (req, res) => {
     let amount = req.body.value; 
     let id = req.params.id; 
-    Review.findOneAndUpdate({reviewID : id}, {$inc : {'upvotes' : amount}}, (err,res) => {
+    Review.findOneAndUpdate({reviewID : id}, {$inc : {'upvotes' : amount}}, (err,result) => {
         if (err) throw err
         res.status(200).send("Updated"); 
     })

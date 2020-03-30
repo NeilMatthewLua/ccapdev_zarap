@@ -25,6 +25,11 @@
           </div>
           <a @click="changeRight()" class="nav-trigger"><i class="material-icons">keyboard_arrow_right</i></a>
         </section>
+        <footer class="modal-footer" @click="removePicture" v-if="isEditable">
+          <slot name="footer">
+            <a class="remove-picture">REMOVE PICTURE </a>
+          </slot>
+        </footer>
       </div>
     </div>
   </transition>
@@ -34,7 +39,11 @@
   export default {
     name: 'PictureModal',
     props: {
-      url: String 
+      url: String,
+      isEditable : {
+        type: Boolean, 
+        default: false 
+      } 
     },
     methods: {
       close(e) {
@@ -46,6 +55,10 @@
       },
       changeRight() {
         this.$emit('change-pic', 1);
+      },
+      removePicture() {
+        this.$emit('remove-pic'); 
+        this.$emit('close');
       }
     },
   };
@@ -82,10 +95,10 @@
     background-color : rgba(0, 0, 0, .3)
   }
 
+  .modal-footer,
   .modal-header {
     text-align: center;
     padding: 15px;
-    border-bottom: 1px solid #eeeeee;
     color: var(--default-button-color);
   }
 
@@ -102,6 +115,7 @@
   }
 
   .modal {
+    z-index: 10; 
     background: #FFFFFF;
     box-shadow: 2px 2px 20px 1px;
     overflow-x: auto;
@@ -113,7 +127,6 @@
     cursor: pointer; 
     border-bottom: 1px solid #eeeeee;
     transition: background-color 0.4s ease-in-out;
-    color: var(--default-button-color);
     justify-content: space-between;
   }
 
@@ -122,9 +135,30 @@
   }
 
   .modal-body {
-    z-index: 3px;
+    z-index: 3;
     display: table; 
     position: relative;
     padding: 20px 10px;
+  }
+
+  .remove-picture {
+    display: block; 
+    text-align: center; 
+    cursor: pointer; 
+    width: 100%;
+    padding: 20px; 
+    color: red; 
+  }
+
+  .modal-footer {
+    cursor: pointer; 
+    border-top: 1px solid #eeeeee;
+    transition: background-color 0.4s ease-in-out;
+    color: var(--default-button-color);
+    justify-content: space-between;
+  }
+
+  .modal-footer:hover {
+    background-color : rgba(0, 0, 0, .3)
   }
 </style>

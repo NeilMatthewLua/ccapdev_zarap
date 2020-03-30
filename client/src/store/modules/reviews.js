@@ -11,7 +11,11 @@ const getters =  {
         return (prev.upvotes > current.upvotes) ? prev : current
     }),
     fetchAllReviews : state => state.reviewPosts,
-    fetchUserReviews : state => state.userReviews
+    fetchUserReviews : state => state.userReviews,
+    hasReview : state => id => 
+        (state.reviewPosts.filter((reviews) => reviews.reviewerID === id).length > 0 ) ? true : false ,
+    ownReview : state => id => 
+        state.reviewPosts.filter((reviews) => reviews.reviewerID === id)[0] 
 }
 
 const actions =  {
@@ -54,15 +58,6 @@ const actions =  {
             }
             commit('setUserReviews', users); 
     },
-    //Update Review upvotes and User points 
-    async updatePostLikes(userID, reviewID, ownerID, value) {
-        if(value > 0)
-            await axios.post(`http://localhost:9090/users/addLiked/${userID}`, {reviewID}); 
-        else    
-            await axios.post(`http://localhost:9090/users/deleteLiked/${userID}`, {reviewID});
-        await axios.post(`http://localhost:9090/reviews/increment/${reviewID}`, {value});
-        await axios.post(`http://localhost:9090/users/increment/${ownerID}`, {value});
-    },
 
     async addReview({commit}, group) {
         await axios.post(`http://localhost:9090/reviews/addReview/${group.userID}`, group)
@@ -100,6 +95,26 @@ const actions =  {
         })
         .then(() => console.log("DELETEEEEEEED"))
         commit('appendUserReview', details)
+    },
+
+    async editReview({commit}, group, inProfile) {
+        let pictureIDs = await axios.post('http://localhost:9090/pictures/save-pictures', group.photos);
+        group = {...group, pictureIDs : pictureIDs};
+
+        //Update Review Object 
+        let newReview = await axios.post(`http://localhost:9090/reviews/edit-review/${group.reviewID}`, group); 
+        let editedReview = {...group.oldReview};
+        editedReview.reviewPics = group.photos;  
+        editedReview.rating = group.rating; 
+        editedReview.review = group.review;
+        if(!inProfile){
+            state.reviewPosts = state.reviewPosts.filter((item) => item.reviewID != newReview.data.reviewID); 
+            commit('updateReviewResto', editedReview); 
+        }
+        else {
+            state.userPosts = state.userPosts.filter((item) => item.reviewID != newReview.data.reviewID);
+            commit('updateReviewUser', editedReview); 
+        }
     }
 }
 
@@ -107,7 +122,17 @@ const mutations = {
     setReviewPostUsers : (state, data) => state.reviewPosts = data,
     setUserReviews : (state, data) => state.userReviews = data,
     appendReview : (state, data) => state.reviewPosts =  state.reviewPosts.concat(data),    
-    appendUserReview : (state, data) => state.userReviews =  state.userReviews.concat(data)
+    appendUserReview : (state, data) => state.userReviews =  state.userReviews.concat(data),
+    updateReviewResto: (state, data) => { 
+        state.reviewPosts = state.reviewPosts.concat(data); 
+    },
+    updateReviewUser: (state, data) => { 
+        state.userReviews = state.userReviews.concat(data); 
+    },
+    addLikes: (state, post) => {
+        state.reviewPosts = state.reviewPosts.filter((review) => review.reviewID != post.reviewID); 
+        state.reviewPosts.concat(post); 
+    }
 }
 
 export default {
