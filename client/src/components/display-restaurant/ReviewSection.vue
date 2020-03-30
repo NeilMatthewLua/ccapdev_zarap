@@ -38,7 +38,6 @@
                             @change="doThis(5)" :checked="isChecked[4]" />
                             <span></span>
                         </label>
-
                     </p>
                 <i class="material-icons prefix">mode_edit</i>
                 <label for="review-area">Enter review details</label>
@@ -53,16 +52,54 @@
         <div class="edit-review" v-else>
             <div v-if="!isEditing">
                 <h3 class="review-title">My Review</h3>
-                <ReviewPost :isLiked="false" :isOwn="true" @edit-Review="editReview" @delete-Review="deleteReview"/> 
+                <ReviewPost :inProfile="false" :reviewData="this.ownReview" :inFeed="false" @edit-Review="editReview" @delete-Review="deleteReview"/> 
             </div>
             <div v-else>
-                <div class="input-field">
+                <!-- if wrong details, display error message -->
+                <p v-if="errors.length">
+                    <b class="errormsg">Please correct the following error(s):</b>
+                    <ul>
+                        <li v-for="error in errors" :key="error">{{ error }}</li>
+                    </ul>
+                </p>
+                <div class="review-rating">
+                    <p for="review-area1">Rate restaurant</p>
+                    <p id="review-area1">
+                        <label>
+                            <input type="checkbox" @change="doThis(1)"
+                            :checked="isChecked[0]" required/>
+                            <span></span>
+                        </label>
+                        <label>
+                            <input type="checkbox"
+                            @change="doThis(2)" :checked="isChecked[1]" />
+                            <span></span>
+                        </label>
+                        <label>
+                            <input type="checkbox"
+                            @change="doThis(3)" :checked="isChecked[2]" />
+                            <span></span>
+                        </label>
+                        <label>
+                            <input type="checkbox"
+                            @change="doThis(4)" :checked="isChecked[3]" />
+                            <span></span>
+                        </label> 
+                        <label>
+                            <input type="checkbox"
+                            @change="doThis(5)" :checked="isChecked[4]" />
+                            <span></span>
+                        </label>
+                    </p>
+                </div>
+                <div class="input-field"> 
                     <i class="material-icons prefix">mode_edit</i>
                     <textarea v-model="editData" id="review-area" class="materialize-textarea" data-length = "300"></textarea>
                     <div class="file-field input-field">
                     <!-- File Upload Portion -->
-                    <FileUpload @file-upload="getFiles" :isMultiple="true" :dest="destination" @toggleSubmit="toggleSubmitButton"/> 
-                    <a class="submit-btn red btn right"  v-if='submitVisible'>SUBMIT</a>
+                    <ImageUpload @file-upload="getFiles"  @toggleSubmit="this.toggleSubmitButton" 
+                    :dest="destination"  :existingPics="this.ownReview.reviewPictures" /> 
+                    <a class="submit-btn red btn right" @click="validateReview">SUBMIT</a>
                     </div>
                 </div>
             </div>
@@ -76,11 +113,11 @@
         </div>
         <div class="reviewFeed">
             <div v-if="showPopular">
-                <ReviewPost :inProfile="false" :reviewData="this.popularReview"/> 
+                <ReviewPost :inProfile="false" :inFeed="true" :reviewData="this.popularReview"/> 
             </div>
             <div v-if="!showPopular">
                 <ReviewPost v-for="review in this.allReviews" :key="review.reviewID"
-                  :inProfile="false" :reviewData="review"/>
+                  :inProfile="false" :inFeed="true" :reviewData="review"/>
             </div>           
         </div>
     </div>
@@ -91,13 +128,15 @@
 import { mapGetters } from 'vuex'; 
 import ReviewPost from './ReviewPost'; 
 import FileUpload from '@/components/fileUpload';
+import ImageUpload from '@/components/ImageUpload'; 
 // import {mapGetters, mapActions} from 'vuex'; 
 
 export default {
     name: "ReviewSection",
     components: {
         ReviewPost,
-        FileUpload
+        FileUpload,
+        ImageUpload
     }, 
     data () {
         return {
@@ -122,9 +161,6 @@ export default {
             }
         }   
     }, 
-    mounted() {
-        console.log(this.isCheckedVal)
-    },
     computed : {
         allReviews () {
             return this.fetchAllReviews();
@@ -133,10 +169,13 @@ export default {
             return this.fetchPopularReview(); 
         },
         isLogged () {
-            return (this.$store.getters.getUser != undefined) ? true : false; 
+            return (this.getUser() != undefined) ? true : false; 
         }, 
-        hasReview() {
-            return (this.isLogged) ? this.$store.getters.hasReview(this.$store.getters.getUser.userID) : false; 
+        hasReview() { 
+            return (this.isLogged) ? this.$store.getters.hasReview(this.getUser().userID) : false; 
+        },
+        ownReview() {
+            return this.$store.getters.ownReview(this.getUser().userID)[0]
         },
         isChecked() {
             return this.isCheckedVal
@@ -170,6 +209,31 @@ export default {
             if(this.rating == 0) {
                 this.errors.push('Rating is required!')
             }
+            if(this.uploadedFiles.length > 5) {
+                this.errors.push('Only up to 5 images can be uploaded!')
+            }
+            if(!this.errors.length) {
+                // TODO EDIT REVIEW
+                return true;
+            }  
+        },
+        validateEdit() {
+            this.errors = [];
+            if(!(this.editData != '')) {
+                this.errors.push('Review data must be filled!')
+            }
+            for(let i = 4; i >=0; i--){
+                if(this.isCheckedVal[i] == true){
+                    this.rating = i + 1;
+                    break;
+                }
+            }
+            if(this.rating == 0) {
+                this.errors.push('Rating is required!')
+            }
+            if(this.uploadedFiles.length > 5) {
+                this.errors.push('Only up to 5 images can be uploaded!')
+            }
             if(!this.errors.length) {
                 this.saveReview();
                 return true;
@@ -187,10 +251,9 @@ export default {
                 this.$emit('postedReview')
             })
         },
-       editReview (content) { 
+      editReview () { 
         this.isEditing = true;  
-        this.$set(this,'editData',content); 
-        //Add in edit data for the server
+        this.doThis(this.ownReview.rating); 
       }, 
       deleteReview () {
         
@@ -199,13 +262,17 @@ export default {
         this.$set(this,'uploadedFiles', files); 
       },
       switchPopular() {
-        console.log(this.allReviews)
         this.showPopular = true 
       },
       switchAll() { 
         this.showPopular = false
       },
-      ...mapGetters(['fetchAllReviews', 'fetchPopularReview'])
+      ...mapGetters(['fetchAllReviews', 'fetchPopularReview','getUser'])
+    },
+    created() {
+        if(this.hasReview) {
+            this.editData = this.ownReview.review; 
+        }
     }
 }
 </script>
@@ -246,6 +313,10 @@ export default {
 
     .edit-review {
         width: 100%; 
+    }
+
+    .review-rating {
+        display: block; 
     }
 
     .selected {

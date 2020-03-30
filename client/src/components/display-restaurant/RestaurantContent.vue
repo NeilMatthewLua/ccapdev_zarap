@@ -114,7 +114,7 @@ export default {
         return this.isLoggedIn();
       },
       hasBeen () {
-        return this.$store.getters.getUser.beenHere.includes(this.fetchCurrResto().restaurantID); 
+        return (this.isLogged) ? this.$store.getters.getUser.beenHere.includes(this.fetchCurrResto().restaurantID) : false; 
       }
     },
     components: {

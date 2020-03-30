@@ -25,6 +25,18 @@
           </div>
           <a @click="changeRight()" class="nav-trigger"><i class="material-icons">keyboard_arrow_right</i></a>
         </section>
+        <footer class="modal-footer" v-if="isEditable">
+          <slot name="footer">
+            <button
+              type="button"
+              class="btn-red"
+              @click="removePicture"
+              aria-label="Close modal"
+            >
+            REMOVE PICTURE  
+            </button>
+          </slot>
+        </footer>
       </div>
     </div>
   </transition>
@@ -34,7 +46,11 @@
   export default {
     name: 'PictureModal',
     props: {
-      url: String 
+      url: String,
+      isEditable : {
+        type: Boolean, 
+        default: false 
+      } 
     },
     methods: {
       close(e) {
@@ -46,6 +62,9 @@
       },
       changeRight() {
         this.$emit('change-pic', 1);
+      },
+      removePicture() {
+        this.$emit('remove-pic'); 
       }
     },
   };
@@ -82,6 +101,7 @@
     background-color : rgba(0, 0, 0, .3)
   }
 
+  .modal-footer,
   .modal-header {
     text-align: center;
     padding: 15px;

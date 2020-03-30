@@ -10,7 +10,7 @@
                                     <div class="edit-review">
                                         <div v-if="!isEditing">
                                             <ReviewPost v-for="review in this.fetchUserReviews()" :key="review.reviewID"  
-                                            :reviewData="review" @edit-Review="editReview" @delete-Review="deleteReview" :inProfile="true"/> 
+                                            :reviewData="review" :inFeed="false" @edit-Review="editReview" @delete-Review="deleteReview" :inProfile="true"/> 
                                         </div>
                                         <div v-else>
                                             <div class="input-field">

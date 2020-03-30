@@ -144,7 +144,7 @@ router.post('/updateUser', async (req, res) => {
 router.post('/increment/:id', (req, res) => {
     let amount = req.body.value; 
     let id = req.params.id; 
-    User.findOneAndUpdate({userID : id}, {$inc : {'points' : amount}}, (err,res) => {
+    User.findOneAndUpdate({userID : id}, {$inc : {'points' : amount}}, (err,resp) => {
         if (err) throw res.status(500).send('Error on the server.'); 
         res.status(200).send("Updated User Points"); 
     })
@@ -153,7 +153,7 @@ router.post('/increment/:id', (req, res) => {
 router.post('/addLiked/:id', (req, res) => {
     let reviewID = req.body.reviewID;
     let id = req.params.id; 
-    User.findOneAndUpdate({userID : id}, {$push : {'liked' : reviewID}}, (err,res) => {
+    User.findOneAndUpdate({userID : id}, {$push : {'liked' : reviewID}}, (err,resp) => {
         if (err) res.status(500).send('Error on the server.');
         res.status(200).send("Updated User Liked Reviews"); 
     }) 
@@ -162,7 +162,7 @@ router.post('/addLiked/:id', (req, res) => {
 router.post('/deleteLiked/:id', (req, res) => {
     let reviewID = req.body.reviewID;
     let id = req.params.id; 
-    User.findOneAndUpdate({userID : id}, {$pullAll : {'liked' : [reviewID]}}, (err,res) => {
+    User.findOneAndUpdate({userID : id}, {$pullAll : {'liked' : [reviewID]}}, (err,resp) => {
         if (err) res.status(500).send('Error on the server.');
         res.status(200).send("Updated User Liked Reviews"); 
     }) 

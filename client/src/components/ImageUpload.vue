@@ -1,5 +1,16 @@
 <template>
-   <div class="container">
+   <div>
+     <div class="pictures-container">
+        <div class="picture-container" v-for="(picture,index) in existingPics" :key="index" @click="showModal">
+            <img class="picture" :index="index" :src="picture" alt="">
+            <div class="zoom-in" :index="index" ><i class="material-icons" :index="index">zoom_in</i></div>
+        </div>
+      </div>
+      <PictureModal :url="this.reviewPics[zoomedPic]" :isEditable="true"
+                    @close="closeModal()" @change-pic="this.changePic"
+                    v-show="modalVisible"/>
+   </div>
+   <!-- <div class="container"> -->
         <!--UPLOAD-->
         <form enctype="multipart/form-data" novalidate v-if="isInitial || isSaving">
             <h5 v-if="isMultiple">Upload images</h5>
@@ -45,16 +56,18 @@ import axios from 'axios';
 const STATUS_INITIAL = 0, STATUS_SAVING = 1, STATUS_SUCCESS = 2, STATUS_FAILED = 3;
 const UPLOAD_ROUTE="http://localhost:9090/pictures/upload-multiple"; 
 export default {
-    name: "FileUpload",
+    name: "ImageUpload",
     data () {
         return {
             uploadedFiles: [],
             uploadError: null,
             currentStatus: null,
-            uploadFieldName: 'photos'
+            uploadFieldName: 'photos',
+            zoomedPic : 0 
         }
     }, 
     props: {
+        existingPics: Array, 
         dest: String, //Directory to save the image to 
         isMultiple: Boolean,
         isBlack: Boolean
@@ -124,6 +137,17 @@ export default {
         // save it
         this.save(formData);
       },
+      showModal(e) {
+            this.modalVisible = true; 
+            this.zoomedPic = e.target.getAttribute('index'); 
+        },
+      closeModal() {
+          this.modalVisible = false; 
+      },
+      changePic(direction) {
+          this.zoomedPic = ((parseInt(this.zoomedPic) + parseInt(direction)) % this.reviewPics.length 
+          + parseInt(this.reviewPics.length)) % this.reviewPics.length; 
+      }
     },
     mounted() {
       this.reset();
@@ -132,16 +156,7 @@ export default {
 </script>
 
 <style scoped>
-    .dropbox {
-        outline: 2px dashed grey; /* the dash box */
-        outline-offset: -10px;
-        background: lightcyan;
-        color: dimgray;
-        padding: 10px 10px;
-        min-height: 50px; /* minimum height */
-        position: relative;
-        cursor: pointer;
-    }
+    
   
     .input-file {
         opacity: 0; /* invisible but it's there! */
@@ -150,19 +165,48 @@ export default {
         position: absolute;
         cursor: pointer;
     }
-  
-    .dropbox:hover {
-        background: lightblue; /* when mouse over to the drop zone, change color */
-    }
-    
-    .dropbox p {
-        font-size: 1.2em;
-        text-align: center;
-        padding: 10px 0;
+
+    .pictures-container {
+        padding: 10px; 
     }
 
-    .img-responsive {
-        height: 20px;
+    .picture-container {
+        cursor: pointer;
+        outline: 2px dashed grey;
+        height: 100px; 
+        width: 100px; 
         display: inline-block; 
+        position: relative;
+        margin-right: 20px; 
     }
+
+    .picture-container:hover .picture{
+        opacity: 0.3
+    }
+
+    .picture-container:hover .zoom-in{
+        opacity: 1
+    }
+
+    .picture {
+        opacity: 1;
+        height: 100px; 
+        width: 100px; 
+        transition: .5s ease;
+        backface-visibility: hidden;
+    }
+
+    .zoom-in {
+        font-size: 24px; 
+        transition: .5s ease;
+        opacity: 0;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        -ms-transform: translate(-50%, -50%);
+        text-align: center;
+    }
+
+  
 </style>

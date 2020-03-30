@@ -12,9 +12,10 @@ const getters =  {
     }),
     fetchAllReviews : state => state.reviewPosts,
     fetchUserReviews : state => state.userReviews,
-    hasReview : state => id => {
-        (state.reviewPosts.filter((reviews) => reviews.reviewerID === id).length > 0 ) ? true : false 
-    }
+    hasReview : state => id => 
+        (state.reviewPosts.filter((reviews) => reviews.reviewerID === id).length > 0 ) ? true : false ,
+    ownReview : state => id => 
+        state.reviewPosts.filter((reviews) => reviews.reviewerID === id) 
 }
 
 const actions =  {
@@ -56,15 +57,6 @@ const actions =  {
                 users.push({...resto.data, ...review.data, restoUrl : restoPic.data.url, reviewPics : reviewPictures});
             }
             commit('setUserReviews', users); 
-    },
-    //Update Review upvotes and User points 
-    async updatePostLikes(userID, reviewID, ownerID, value) {
-        if(value > 0)
-            await axios.post(`http://localhost:9090/users/addLiked/${userID}`, {reviewID}); 
-        else    
-            await axios.post(`http://localhost:9090/users/deleteLiked/${userID}`, {reviewID});
-        await axios.post(`http://localhost:9090/reviews/increment/${reviewID}`, {value});
-        await axios.post(`http://localhost:9090/users/increment/${ownerID}`, {value});
     },
 
     async addReview({commit}, group) {
