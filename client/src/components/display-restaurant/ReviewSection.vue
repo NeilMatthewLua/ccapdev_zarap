@@ -182,7 +182,7 @@ export default {
                 restaurant: this.$store.getters.fetchCurrResto
             })
             .then(() => { //Adds the restuarant to the user's visited places
-                this.$emit('postedReview')
+                this.$emit('postedReview',true)
             })
         },
        editReview (content) { 
@@ -191,7 +191,7 @@ export default {
         //Add in edit data for the server
       }, 
       deleteReview () {
-        // this.$store.dispatch('deleteReview')
+        this.$emit('postedReview', false)
       },
       getFiles (files) {
         this.$set(this,'uploadedFiles', files); 

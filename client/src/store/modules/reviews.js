@@ -94,12 +94,20 @@ const actions =  {
 
     async deleteReview({commit}, details) {
         await axios.post(`http://localhost:9090/users/deleteUserReviewed`, {
-                restaurantID : details.restaurantID,
-                userID: details.userID,
-                review: state.reviewPosts[state.reviewPosts.findIndex(x => x.reviewerID == details.userID)]
+                restaurant : details.restaurant,
+                user: details.user,
+                review: state.reviewPosts[state.reviewPosts.findIndex(x => x.reviewerID == details.user.userID)]
         })
-        .then(() => console.log("DELETEEEEEEED"))
-        commit('appendUserReview', details)
+        .then(() => 
+        // console.log("HERE"),
+        // console.log(state.reviewPosts),
+        // console.log(state.reviewPosts.findIndex(x => x.reviewerID == details.user.userID)),
+        commit('removeReview', state.reviewPosts.findIndex(x => x.reviewerID == details.user.userID)),
+            // console.log(state.userPosts),
+            // console.log(state.userPosts[state.userPosts.findIndex(y => y.reviewID == state.reviewPosts[state.userPosts.findIndex(x => x.reviewerID == details.user.userID)].reviewID)]),
+            // console.log(state.reviewPosts[state.reviewPosts.findIndex(x => x.reviewerID == details.user.userID)]),
+            // commit('removeUserReview', state.userPosts[state.userPosts.findIndex(y => y.reviewID == state.reviewPosts[state.userPosts.findIndex(x => x.reviewerID == details.user.userID)].reviewID)])
+        )
     }
 }
 
@@ -107,7 +115,9 @@ const mutations = {
     setReviewPostUsers : (state, data) => state.reviewPosts = data,
     setUserReviews : (state, data) => state.userReviews = data,
     appendReview : (state, data) => state.reviewPosts =  state.reviewPosts.concat(data),    
-    appendUserReview : (state, data) => state.userReviews =  state.userReviews.concat(data)
+    appendUserReview : (state, data) => state.userReviews =  state.userReviews.concat(data),
+    removeReview : (state, data) => state.reviewPosts =  state.reviewPosts.splice(data, 1),
+    removeUserReview : (state, data) => state.userReviews =  state.userReviews.splice(data, 1)
 }
 
 export default {

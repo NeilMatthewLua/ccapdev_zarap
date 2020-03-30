@@ -196,22 +196,35 @@ router.post('/addUserReviewed', async (req, res) => {
 })
 
 router.post('/deleteUserReviewed', async (req, res) => {
-    let restaurantID = req.body.restaurantID;
-    let id = req.body.userID; 
-    let review = req.body.review.reviewID
-    let reviewPics = req.body.review.reviewPictures
-
+    let restaurantID = req.body.restaurant.restaurantID;
+    let id = req.body.user.userID; 
+    let review = req.body.review.reviewID;
+    let reviewPics = req.body.review.reviewPictures;
+    let newRating = Math.round(((req.body.restaurant.overallRating * req.body.restaurant.reviews.length) - req.body.review.rating) / (req.body.restaurant.reviews.length - 1) * 10) / 10;
+    let newPoints = req.body.user.points - req.body.review.upvotes;
+console.log("REVIEW IDs that are in the resto")
+console.log(req.body.restaurant.reviews)
+console.log("REVIEW ID I'll delete:")
+console.log(review)
+console.log("RESTO IDs that are in the user")
+console.log(req.body.user.reviewed)
+console.log("RESTO ID I'll delete:")
+console.log(restaurantID)
     //deletes the review from the user's reviewed
-    await User.findOneAndUpdate({userID : id}, {$pullAll : {'reviewed' : [review]}}, { new: true })
-    .then(async () => { //deletes the review from the restaurant
-        await Restaurant.findOneAndUpdate({restaurantID : restaurantID}, {$pullAll : {'reviews' : [review]}}, { new: true })
-        .then(async () => { //deletes the review in the Review db
-            await Review.findOneAndDelete({'reviewID': review})
-            .then(async () => {
-                for(let i = 0; i < reviewPics.length; i++)
-                    await Picture.findOneAndDelete({'pictureID': reviewPics[i]})
-                res.status(200)    
-            })
+    await User.findOneAndUpdate({userID : id}, {$pullAll : {'reviewed' : [restaurantID]},/*, 'beenHere' : [restaurantID]},*/ $set:{'points': newPoints}}, { new: true })
+    .then(async set => { //deletes the review from the restaurant
+        await Restaurant.findOneAndUpdate({restaurantID : restaurantID}, {$pullAll : {'reviews' : [review]}, $set:{'overallRating': newRating}}, { new: true })
+        .then(async doc => { //deletes the review in the Review db
+            console.log("RESTO REVIEWS")
+            console.log(doc.reviews)
+            console.log("USER REVIEWED")
+            console.log(set.reviewed) 
+            // await Review.findOneAndDelete({'reviewID': review})
+            // .then(async () => {
+            //     for(let i = 0; i < reviewPics.length; i++)
+            //         await Picture.findOneAndDelete({'pictureID': reviewPics[i]})
+            //     res.status(200).send()    
+            // })
         })
     }) 
     .catch(() => res.status(500))

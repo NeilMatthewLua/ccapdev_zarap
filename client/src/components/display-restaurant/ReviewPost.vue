@@ -103,9 +103,10 @@ export default {
         }, 
         deleteReview() {
             this.$store.dispatch('deleteReview', {
-                restaurantID: this.$store.getters.fetchCurrResto.restaurantID, 
-                userID: this.$store.getters.getUser.userID 
+                restaurant: this.$store.getters.fetchCurrResto, 
+                user: this.$store.getters.getUser 
             })
+            .then(() => this.$emit('delete-Review'))
         }, 
         goToProfile() {
             router.push({ name: 'UserDetail', params: { id : this.reviewData.reviewerID, menu : "review" } });
