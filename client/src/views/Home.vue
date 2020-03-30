@@ -157,13 +157,10 @@ export default {
         ans = Math.floor(
           Math.random() * (max - min + 1) + min
         )
-        console.log(ans)
-        console.log(set)
         for(let i = 0; i < set.length && flag == 0; i++){
             if(ans == set[i])
               flag = 1;
         }
-        console.log("Did this")
       } while(flag == 1) 
       return ans;
     }

@@ -67,7 +67,6 @@ const actions =  {
     async addReview({commit}, group) {
         await axios.post(`http://localhost:9090/reviews/addReview/${group.userID}`, group)
         .then(async resp => {
-
             //Updates the reviews of the resstaurant
             let userPic = await axios.get(`http://localhost:9090/pictures/${group.userID.picture}`);
             let reviewPictures = [];
@@ -76,14 +75,13 @@ const actions =  {
                 reviewPictures.push(reviewPic.data.url); 
             }
             let user = [];
-            
             user.push({...group.userID, ...resp.data.review, userUrl : userPic.data.url, reviewPics : reviewPictures});
             
             commit('appendReview', user)
 
             //Updates the reviews of the user
             user = [];
-            let resto = await axios.get(`http://localhost:9090/restaurants/${group.restaurantID}`); 
+            let resto = await axios.get(`http://localhost:9090/restaurants/${group.restaurant.restaurantID}`);  
             let restoPic = await axios.get(`http://localhost:9090/pictures/${resto.data.defaultPicture}`);
 
             user.push({...resto.data, ...resp.data.review, restoUrl : restoPic.data.url, reviewPics : reviewPictures});
@@ -96,6 +94,7 @@ const actions =  {
             })
         })
     },
+
     async deleteReview({commit}, details) {
         await axios.post(`http://localhost:9090/users/deleteUserReviewed`, {
                 restaurantID : details.restaurantID,
@@ -103,7 +102,7 @@ const actions =  {
                 review: state.reviewPosts[state.reviewPosts.findIndex(x => x.reviewerID == details.userID)]
         })
         .then(() => console.log("DELETEEEEEEED"))
-            COMMIT TO REVIEW AND USERS commit('appendUserReview', details)
+        commit('appendUserReview', details)
     }
 }
 

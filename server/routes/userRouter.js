@@ -199,16 +199,19 @@ router.post('/deleteUserReviewed', async (req, res) => {
     let restaurantID = req.body.restaurantID;
     let id = req.body.userID; 
     let review = req.body.review.reviewID
+    let reviewPics = req.body.review.reviewPictures
 
-    console.log(restaurantID)
-    console.log(id)
-    console.log(review)
+    //deletes the review from the user's reviewed
     await User.findOneAndUpdate({userID : id}, {$pullAll : {'reviewed' : [review]}}, { new: true })
-    .then(async () => {
+    .then(async () => { //deletes the review from the restaurant
         await Restaurant.findOneAndUpdate({restaurantID : restaurantID}, {$pullAll : {'reviews' : [review]}}, { new: true })
-        .then(async () => {
+        .then(async () => { //deletes the review in the Review db
             await Review.findOneAndDelete({'reviewID': review})
-            .then(() => {res.status(200).send})
+            .then(async () => {
+                for(let i = 0; i < reviewPics.length; i++)
+                    await Picture.findOneAndDelete({'pictureID': reviewPics[i]})
+                res.status(200)    
+            })
         })
     }) 
     .catch(() => res.status(500))
