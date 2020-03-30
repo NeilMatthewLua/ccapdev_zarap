@@ -35,7 +35,7 @@ const actions =  {
                 }
                 users.push({...user.data.user[0], ...review.data, userUrl :  userPic.data.url, reviewPics : reviewPictures});
             }
-            commit('setReviewPostUsers', users); 
+            commit('setReviewPostUsers', users);
     },
     //Get Reviews for a User 
     async getUserReviews({commit}, reviewIDs) {
@@ -89,14 +89,28 @@ const actions =  {
             user.push({...resto.data, ...resp.data.review, restoUrl : restoPic.data.url, reviewPics : reviewPictures});
                 
             commit('appendUserReview', user)
+
+            await axios.post(`http://localhost:9090/users/addUserReviewed`, {
+                reviewID : resp.data.review.reviewID,
+                userID: group.userID
+            })
         })
+    },
+    async deleteReview({commit}, details) {
+        await axios.post(`http://localhost:9090/users/deleteUserReviewed`, {
+                restaurantID : details.restaurantID,
+                userID: details.userID,
+                review: state.reviewPosts[state.reviewPosts.findIndex(x => x.reviewerID == details.userID)]
+        })
+        .then(() => console.log("DELETEEEEEEED"))
+            COMMIT TO REVIEW AND USERS commit('appendUserReview', details)
     }
 }
 
 const mutations = {
     setReviewPostUsers : (state, data) => state.reviewPosts = data,
     setUserReviews : (state, data) => state.userReviews = data,
-    appendReview : (state, data) => state.reviewPosts =  state.reviewPosts.concat(data),
+    appendReview : (state, data) => state.reviewPosts =  state.reviewPosts.concat(data),    
     appendUserReview : (state, data) => state.userReviews =  state.userReviews.concat(data)
 }
 

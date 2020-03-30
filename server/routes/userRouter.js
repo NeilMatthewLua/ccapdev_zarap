@@ -7,6 +7,7 @@ const url = process.env.MONGO_URI;
 const User = require('../models/users.js');
 const Picture = require('../models/pictures.js');
 const Restaurant = require('../models/restaurants.js');
+const Review = require('../models/reviews.js');
 
 //adds a user
 router.post('/addUser',async (req, res, next) => { 
@@ -182,6 +183,34 @@ router.post('/deleteUserVisited', async (req, res) => {
 
     await User.findOneAndUpdate({userID : id}, {$pullAll : {'beenHere' : [restaurantID]}}, { new: true })
     .then(resp => res.status(200).send({user: resp}))
+    .catch(() => res.status(500))
+})
+
+router.post('/addUserReviewed', async (req, res) => {
+    let reviewID = req.body.reviewID;
+    let id = req.body.userID.userID; 
+    
+    await User.findOneAndUpdate({userID : id}, {$push : {'reviewed' : reviewID}}, { new: true })
+    .then(resp =>{ console.log(resp); res.status(200).send({user: resp})})
+    .catch(() => res.status(500))
+})
+
+router.post('/deleteUserReviewed', async (req, res) => {
+    let restaurantID = req.body.restaurantID;
+    let id = req.body.userID; 
+    let review = req.body.review.reviewID
+
+    console.log(restaurantID)
+    console.log(id)
+    console.log(review)
+    await User.findOneAndUpdate({userID : id}, {$pullAll : {'reviewed' : [review]}}, { new: true })
+    .then(async () => {
+        await Restaurant.findOneAndUpdate({restaurantID : restaurantID}, {$pullAll : {'reviews' : [review]}}, { new: true })
+        .then(async () => {
+            await Review.findOneAndDelete({'reviewID': review})
+            .then(() => {console.log("HERE NA BRO");res.status(200)})
+        })
+    }) 
     .catch(() => res.status(500))
 })
 

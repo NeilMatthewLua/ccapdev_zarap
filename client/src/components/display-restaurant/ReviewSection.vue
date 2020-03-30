@@ -194,7 +194,7 @@ export default {
         //Add in edit data for the server
       }, 
       deleteReview () {
-        
+        // this.$store.dispatch('deleteReview')
       },
       getFiles (files) {
         this.$set(this,'uploadedFiles', files); 
