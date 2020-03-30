@@ -1,5 +1,5 @@
 <template>
-  <div class="review-post">
+  <div class="review-post" v-if="this.hasReview">
       <div class="row valign-wrapper">
         <!-- Content if Review is in Restaurant Page -->
         <div class="valign-wrapper col s10"  v-if="!inProfile">
@@ -15,7 +15,7 @@
             <h5 class="post-rating #388e3c green white-text darken-2">{{this.reviewData.rating}}</h5>
         </div>
         <!-- Like and Upvotes of Review  -->
-        <div class="col s2 valign-wrapper" >
+        <div class="col s2 valign-wrapper">
             <i class="material-icons">arrow_upward</i>
             <h5 class="green-text upvotes">{{this.reviewData.upvotes}}</h5>
             <i v-bind:class="{'liked' : this.isLiked}" 
@@ -60,7 +60,8 @@ export default {
     props: {
         inProfile: Boolean, //If the review is viewed inside the profile page
         reviewData : Object, //Review object passed
-        inFeed : Boolean
+        inFeed : Boolean,
+        index : Number
     },
     computed : {
         //Checks if review is own review 
@@ -80,13 +81,15 @@ export default {
         }, 
         reviewPics() {
             return this.reviewData.reviewPics; 
+        },
+        hasReview() {
+            return (this.reviewData != undefined) ? true : false; 
         }
     },
     methods: {
         ...mapGetters(['getUser','isLoggedIn', 'isLikedReview']),
-        ...mapMutations(['setLikedReview', 'removeLikedReview']),
+        ...mapMutations(['setLikedReview', 'removeLikedReview','addLikes']),
         async toggleLike() {  
-            console.log(this.getUser().liked); 
             //Add or remove review from user state
             //Add or remove review from db and update related entries (user liked reviews, review upvotes, review author points)
             if(this.isLiked) {
@@ -99,6 +102,7 @@ export default {
                 this.reviewData.upvotes += 1; 
                 await this.updatePostLikes(1); 
             }
+            this.addLikes(this.reviewData)
         }, 
         async updatePostLikes(value) {
             let userID = this.getUser().userID; 
@@ -112,7 +116,10 @@ export default {
             await axios.post(`http://localhost:9090/users/increment/${ownerID}`, {value});
         },
         editReview() {
-            this.$emit('edit-Review'); 
+            if(this.inProfile)
+                this.$emit('edit-Review', this.index);
+            else 
+                this.$emit('edit-Review');
         }, 
         deleteReview() {
             this.$emit('delete-Review');

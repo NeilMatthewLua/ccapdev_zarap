@@ -118,6 +118,8 @@ export default {
     goSearchResult: function() {
       //TODO Search Router
       router.push({name:"Search Result"})
+      //For Dev
+      router.push({name:"Display Restaurant", params : {id : "5e7f0b024e652b3734b7e7e2"}})
     },
     loadCards: async function() {
       //loads the restaurant cards in home 
@@ -157,13 +159,10 @@ export default {
         ans = Math.floor(
           Math.random() * (max - min + 1) + min
         )
-        console.log(ans)
-        console.log(set)
         for(let i = 0; i < set.length && flag == 0; i++){
             if(ans == set[i])
               flag = 1;
         }
-        console.log("Did this")
       } while(flag == 1) 
       return ans;
     }

@@ -23,12 +23,21 @@ router.get('/:id', (req, res) => {
 });
 
 //Get Resto based on Owner ID
-router.get('owner/:id', (req, res) => { 
+router.get('/owner/:id', (req, res) => { 
     let id = req.params.id
-    Review.find({ ownerID : id }, (err, doc) => {
+    Restaurant.find({ ownerID : id }, (err, doc) => {
         if(err) res.status(500)
         res.status(200).send(doc) 
     });
+});
+
+router.post('/update-rating/:id', (req, res) => { 
+    let id = req.params.id
+    let body = req.body 
+    Restaurant.findOneAndUpdate({restaurantID : id}, {'overallRating' : body.rating}, (err,result) => {
+        if (err) throw err
+        res.status(200).send("Updated"); 
+    })
 });
 
 module.exports = router; 

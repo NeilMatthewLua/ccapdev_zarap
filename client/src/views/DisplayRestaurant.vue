@@ -9,8 +9,7 @@
 <script>
 import Navbar from '@/components/Navbar.vue';
 import Footer from '@/components/Footer.vue';
-import RestaurantContent from '@/components/display-restaurant/RestaurantContent.vue';
-// import { mapGetters } from 'vuex'; 
+import RestaurantContent from '@/components/display-restaurant/RestaurantContent.vue'; 
 export default {
     name: "DisplayRestaurant",
     components: {
@@ -18,14 +17,6 @@ export default {
         Footer, 
         RestaurantContent
     }
-    // computed: {
-    //   ...mapGetters([
-    //   'getEvents',
-    // ])
-    // }, 
-    // mounted() {
-    //   this.getEvents(); 
-    // }
 }
 </script>
 

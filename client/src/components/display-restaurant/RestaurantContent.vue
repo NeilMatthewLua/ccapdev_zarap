@@ -8,6 +8,7 @@
         <div class="title-card row">
             <div class="col s12 m8">
               <h2>{{this.restoDetails.name}}</h2>
+              <span class="post-rating #388e3c green white-text darken-2">{{this.restoDetails.overallRating}}</span>
               <h5 v-for="estTypes in this.restoDetails.establishmentType" :key="estTypes">{{estTypes}}</h5>
               <div v-show="!hasBeen">
                 <a class="waves-effect waves-light red btn bookmark-btn" @click="beenHere()" v-show="isLogged">
@@ -203,6 +204,10 @@ export default {
       padding-bottom: 10px; 
       height: 200px; 
       width: auto; 
+  }
+
+  .post-rating { 
+      padding: 8px; 
   }
 
   .delay {

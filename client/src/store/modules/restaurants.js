@@ -31,12 +31,27 @@ const actions =  {
         let res = await axios.get(`http://localhost:9090/restaurants?${query}`); 
 
         commit('setResto', res.data);
+    },
+    async updateRestoRating({commit}, group, inProfile) { 
+        //Update Restaurant Rating 
+        let oldReview = group.oldRating;  
+        let increase = group.rating - oldReview; 
+        let resto = await axios.get(`http://localhost:9090/restaurants/${group.restaurantID}`); 
+        let totalReviews =  resto.data.reviews.length; 
+        let oldRating = resto.data.overallRating; 
+        let newRating = ((totalReviews * oldRating + increase) / totalReviews).toFixed(1); 
+        await axios.post(`http://localhost:9090/restaurants/update-rating/${group.restaurantID}`, {rating : newRating}); 
+
+        //TODO Add another update in profile depending on Been here implementation in userdetail 
+        if(!inProfile)
+            commit('updateRating', newRating);
     }
 }
 
 const mutations = {
     setResto : (state, restos) => state.allRestos = restos,
-    setCurrResto : (state, resto) => state.currResto = resto
+    setCurrResto : (state, resto) => state.currResto = resto,
+    updateRating : (state, rating) => state.currResto.overallRating = rating
 }
 
 export default {
