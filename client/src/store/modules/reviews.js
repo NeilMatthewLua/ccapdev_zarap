@@ -125,6 +125,8 @@ const actions =  {
         editedReview.reviewPics = group.photos;  
         editedReview.rating = group.rating; 
         editedReview.review = group.review;  
+        
+        console.log("Review Edited"); 
         if(!group.inProfile){ 
             commit('updateReviewResto', editedReview); 
         }

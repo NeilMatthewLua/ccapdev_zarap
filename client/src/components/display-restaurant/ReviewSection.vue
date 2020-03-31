@@ -134,6 +134,7 @@ import { mapGetters } from 'vuex';
 import ReviewPost from './ReviewPost'; 
 import ImageUpload from '@/components/ImageUpload'; 
 import modal from '@/components/alertModal'; 
+import axios from 'axios'; 
 
 export default {
     name: "ReviewSection",
@@ -292,13 +293,14 @@ export default {
         this.$set(this,'uploadedFiles', this.ownReview.reviewPics); 
       }, 
       async saveEdit() {
+          await axios.post(`http://localhost:9090/pictures/delete-existing/${this.ownReview.reviewID}`) 
           await this.$store.dispatch('updateRestoRating', {
                     oldRating : this.ownReview.rating, 
                     rating : this.rating,
                     restaurantID: this.$store.getters.fetchCurrResto.restaurantID,
                     inProfile: false
           })
-          .then(async () => 
+          .then(async () =>  
                 await this.$store.dispatch('editReview', {
                     oldReview: this.ownReview,
                     reviewID: this.ownReview.reviewID,
@@ -314,8 +316,7 @@ export default {
           .catch((err) => {console.log(err)
                           this.displaySuccessModal("Error in updating review.")
                             })  
-        this.update = true; 
-        console.log(this.ownReview);  
+        this.update = true;   
       },
       cancelWrite() {
         this.isWriting = false; 
@@ -326,7 +327,9 @@ export default {
         this.editData = "";  
       },
       cancelEdit() {
+          this.doThis(this.ownReview.rating); 
           this.isEditing = false; 
+          this.$set(this,'uploadedFiles', []);
       },
       deleteReview () {
         this.cancelWrite(); 

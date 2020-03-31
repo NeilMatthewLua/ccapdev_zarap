@@ -42,6 +42,7 @@ const actions =  {
         let newRating = ((totalReviews * oldRating + increase) / totalReviews).toFixed(1); 
         await axios.post(`http://localhost:9090/restaurants/update-rating/${group.restaurantID}`, {rating : newRating}); 
 
+        console.log("Updated Resto Rating"); 
         //TODO Add another update in profile depending on Been here implementation in userdetail 
         if(!group.inProfile)
             commit('updateRating', newRating);

@@ -90,6 +90,7 @@ import { mapActions, mapGetters } from 'vuex';
 import ReviewPost from '@/components/display-restaurant/ReviewPost.vue';
 import ImageUpload from '@/components/ImageUpload'; 
 import modal from '@/components/alertModal'; 
+import axios from 'axios'; 
 export default {
     name: "DiningHistory",
     components: {
@@ -181,6 +182,7 @@ export default {
             }  
         },
       async saveEdit() {
+          await axios.post(`http://localhost:9090/pictures/delete-existing/${this.chosenReview.reviewID}`)
           await this.$store.dispatch('updateRestoRating', {
                     oldRating : this.chosenReview.rating, 
                     rating : this.rating,

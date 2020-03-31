@@ -1,10 +1,12 @@
 var express = require('express')
 var router = express.Router()
-const fs = require('fs-extra');
+const fse = require('fs-extra');
+const fs = require('fs'); 
 const multer = require('multer')
 const path = require('path')
 const mongoose = require('mongoose')
 const Picture = require('../models/pictures')
+const Review = require('../models/reviews')
 
 const imageFilter = function(req, file, cb) {
     // Accept images only
@@ -20,7 +22,7 @@ const storage = multer.diskStorage({
         //Save the folder in the directory specified in params 
         let dest = req.params.destination;
         let path = `${process.env.IMG_PATH}${dest}`;
-        fs.mkdirsSync(path);
+        fse.mkdirsSync(path);
         cb(null, path);
     },
 
@@ -139,5 +141,45 @@ router.post('/edit-review-pics/:destination', (req, res) => {
         res.send(result);
     });
 });
+
+router.post('/delete-existing/:id', (req, res) => {
+    let reviewID = req.params.id    
+    
+    Review.findOne({'reviewID': reviewID}, async (err, review) => {
+        if(err) throw err; 
+        let reviewPics = review.reviewPictures;  
+        for(let i = 0; i < reviewPics.length; i++) {
+            await Picture.findOne({'pictureID' : reviewPics[i]}, (error, pic) => {
+                if(error) throw error; 
+                if(pic != null) {
+                    let doc = pic.url;    
+                    let relPath = doc.split('/');
+                    let removePath = `images/${relPath[4]}/${relPath[5]}`;
+                    console.log(`${removePath} was deleted`);
+                    fs.unlink(removePath, (err) => {
+                        if (err) throw err;
+                    });
+                }
+            })
+            await Picture.deleteOne({'pictureID' : reviewPics[i]}, (error, result) => {
+                if(error) throw error; 
+                console.log(reviewPics[i] + " was deleted from DB")
+            })
+        }
+        res.status(200).send("Old Photos deleted"); 
+    })
+})
+
+router.post('/delete-review-pic', (req, res) => {
+    //Make this into a loop that deletes the pics user uploaded and didn't submit 
+    let data = req.body; 
+    let doc = req.body.url; 
+    let relPath = doc.split('/');
+    let removePath = `images/${relPath[4]}/${relPath[5]}`;
+    fs.unlink(removePath, (err) => {
+        if (err) throw err;
+        console.log(`${removePath} was deleted`);
+    });
+})
 
 module.exports = router; 
