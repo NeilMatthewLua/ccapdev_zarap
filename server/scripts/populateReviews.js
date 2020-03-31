@@ -43,7 +43,9 @@ async function populateReviews(userCounter, limit) {
             .exec()
             .catch(err => console.log(err));     
         await item.save()
-            .catch(err => console.log(err)); 
+            .catch(err => console.log(err));
+        
+            chosenUser.points = chosenUser.points + item.upvotes;
     }
     for(i = userCounter; i < limit; i++) {
         let chosenUser = users[(i + 1) % (users.length - 1)]
@@ -53,7 +55,7 @@ async function populateReviews(userCounter, limit) {
             restaurantID : chosenRes.restaurantID,
             rating : faker.random.number(4) + 1, 
             review: faker.lorem.words(10),
-            upvotes: faker.random.number(40),
+            upvotes: faker.random.number(8),
             reviewPictures: [pics[(limit * 5) + (i*3) + 2]['pictureID']]
         }); 
         //Set reviewed and been here to the restaurant they reviewed 
@@ -75,6 +77,8 @@ async function populateReviews(userCounter, limit) {
             .catch(err => console.log(err));     
         await item.save()
             .catch(err => console.log(err)); 
+
+        chosenUser.points = chosenUser.points + item.upvotes;
     }
     for(i = userCounter; i < limit; i++) {
         let chosenUser = users[(i + 2) % (users.length - 1)]
@@ -84,7 +88,7 @@ async function populateReviews(userCounter, limit) {
             restaurantID : chosenRes.restaurantID,
             rating : faker.random.number(4) + 1, 
             review: faker.lorem.words(10),
-            upvotes: faker.random.number(40)
+            upvotes: faker.random.number(8)
         }); 
         //Set reviewed and been here to the restaurant they reviewed 
         let newReviews = chosenUser.reviewed; 
@@ -105,6 +109,8 @@ async function populateReviews(userCounter, limit) {
             .catch(err => console.log(err));     
         await item.save()
             .catch(err => console.log(err)); 
+
+        chosenUser.points = chosenUser.points + item.upvotes;
     }
     let allReviews = await Review.find({}).exec(); 
     // Randomize the reviews people liked 

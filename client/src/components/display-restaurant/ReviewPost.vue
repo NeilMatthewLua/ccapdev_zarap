@@ -25,8 +25,14 @@
         <!-- Edit and Delete Review Buttons if own Review -->
         <div class="col s2 valign-wrapper margin-right" v-if="this.isOwn && !inFeed">
             <a class="submit-btn green btn pointer" @click="editReview()"><i class="material-icons review-icons">edit</i></a>
-            <a class="submit-btn red btn pointer" @click="deleteReview()"><i class="material-icons review-icons">delete</i></a>
+            <a class="submit-btn red btn pointer" @click="showConfirmModal()"><i class="material-icons review-icons">delete</i></a>
         </div>
+        <confirmModal                
+            :message= "message" 
+            v-show="isModalVisible"
+            @close="isConfirmed"
+            class="bring_front"
+        />
       </div>
     <p ref="data">{{this.reviewData.review}}</p>
     <div class="pictures-container">
@@ -44,17 +50,22 @@
 <script>
 import {mapGetters, mapMutations} from 'vuex'; 
 import PictureModal from '@/components/PictureModal'; 
+import confirmModal from '@/components/confirmModal'; 
 import router from '@/router';
 import axios from 'axios'; 
+
 export default {
     name: "ReviewPost",
     components: {
-      PictureModal  
+      PictureModal,
+      confirmModal  
     },
     data: () => {
         return {
             zoomedPic : 0,
-            modalVisible : false
+            modalVisible : false,
+            isModalVisible : false,
+            message: "Are you sure you want to delete your review? (Your points will be adjusted accordingly)"
         }
     },
     props: {
@@ -148,6 +159,17 @@ export default {
         changePic(direction) {
             this.zoomedPic = ((parseInt(this.zoomedPic) + parseInt(direction)) % this.reviewPics.length 
             + parseInt(this.reviewPics.length)) % this.reviewPics.length; 
+        },
+        isConfirmed(value) { //confirmation of deleting a review
+            if(value == true)
+                this.deleteReview();
+            this.closeConfirmModal();
+        },
+        showConfirmModal() { 
+            this.isModalVisible = true;
+        },
+        closeConfirmModal() {
+            this.isModalVisible = false;
         }
     }
 }
