@@ -14,9 +14,7 @@
         <form enctype="multipart/form-data" novalidate v-if="isInitial || isSaving">
             <h5>Upload images</h5>
             <div class="dropbox">
-            <div>
               <input type="file" multiple :name="uploadFieldName" :disabled="isSaving" @change="filesChange($event.target.name, $event.target.files); fileCount = $event.target.files.length" accept="image/*" class="input-file">
-            </div>
                 <p v-if="isInitial">
                 Drag your file(s) here to begin<br> or click to browse
                 </p>
@@ -93,11 +91,12 @@ export default {
       toggleSubmit(value) {
         this.$emit('toggleSubmit', value)
       },
-      reset(completeReset) {
+      reset(completeReset, pics) {
         // reset form to initial state
         if(completeReset) {
           this.uploadedFiles = []; 
-          this.uploadedFiles = this.existingPics.map((item) => item); 
+          if(pics != undefined)
+          this.uploadedFiles = pics.map((item) => item); 
         }
         this.currentStatus = STATUS_INITIAL;
         this.uploadError = null;
@@ -170,8 +169,8 @@ export default {
       }
     },
     mounted() {
-      this.uploadedFiles = this.existingPics;  
-      this.reset(); 
+      this.uploadedFiles = this.existingPics;   
+      this.reset(true); 
     }
 }
 </script>
@@ -223,6 +222,7 @@ export default {
     }
 
     .dropbox {
+        width: 100%; 
         z-index: 0 !important; 
         outline: 2px dashed grey; /* the dash box */
         outline-offset: -10px;
@@ -235,10 +235,10 @@ export default {
   
     .input-file {
         opacity: 0; /* invisible but it's there! */
-        width: 100%;
-        height: 50px;
-        position: absolute;
+        width: 60%;
+        height: 100px;
         cursor: pointer;
+        position: absolute; 
     }
   
     .dropbox:hover {

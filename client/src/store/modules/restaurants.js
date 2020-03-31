@@ -32,7 +32,7 @@ const actions =  {
 
         commit('setResto', res.data);
     },
-    async updateRestoRating({commit}, group, inProfile) { 
+    async updateRestoRating({commit}, group) {  
         //Update Restaurant Rating 
         let oldReview = group.oldRating;  
         let increase = group.rating - oldReview; 
@@ -43,7 +43,7 @@ const actions =  {
         await axios.post(`http://localhost:9090/restaurants/update-rating/${group.restaurantID}`, {rating : newRating}); 
 
         //TODO Add another update in profile depending on Been here implementation in userdetail 
-        if(!inProfile)
+        if(!group.inProfile)
             commit('updateRating', newRating);
     }
 }

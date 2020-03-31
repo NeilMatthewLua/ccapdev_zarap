@@ -241,7 +241,7 @@ export default {
            else {               
                this.user = await axios.get(`http://localhost:9090/users/${this.$route.params.id}`)
                .then(resp => {
-                   this.user = resp.data.user
+                   this.user = resp.data
                })
            }
             this.user_firstname = this.user.name.split(" ")[0];

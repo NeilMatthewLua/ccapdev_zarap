@@ -15,7 +15,7 @@ const getters =  {
     hasReview : state => id => 
         (state.reviewPosts.filter((reviews) => reviews.reviewerID === id).length > 0 ) ? true : false ,
     ownReview : state => id => 
-        state.reviewPosts.filter((reviews) => reviews.reviewerID === id)[0] 
+        state.reviewPosts.filter((reviews) => reviews.reviewerID === id)[0]
 }
 
 const actions =  {
@@ -97,22 +97,20 @@ const actions =  {
         commit('appendUserReview', details)
     },
 
-    async editReview({commit}, group, inProfile) {
+    async editReview({commit}, group) {
         let pictureIDs = await axios.post('http://localhost:9090/pictures/save-pictures', group.photos);
         group = {...group, pictureIDs : pictureIDs};
 
         //Update Review Object 
-        let newReview = await axios.post(`http://localhost:9090/reviews/edit-review/${group.reviewID}`, group); 
+        await axios.post(`http://localhost:9090/reviews/edit-review/${group.reviewID}`, group); 
         let editedReview = {...group.oldReview};
         editedReview.reviewPics = group.photos;  
         editedReview.rating = group.rating; 
-        editedReview.review = group.review;
-        if(!inProfile){
-            state.reviewPosts = state.reviewPosts.filter((item) => item.reviewID != newReview.data.reviewID); 
+        editedReview.review = group.review;  
+        if(!group.inProfile){ 
             commit('updateReviewResto', editedReview); 
         }
         else {
-            state.userPosts = state.userPosts.filter((item) => item.reviewID != newReview.data.reviewID);
             commit('updateReviewUser', editedReview); 
         }
     }
@@ -124,14 +122,16 @@ const mutations = {
     appendReview : (state, data) => state.reviewPosts =  state.reviewPosts.concat(data),    
     appendUserReview : (state, data) => state.userReviews =  state.userReviews.concat(data),
     updateReviewResto: (state, data) => { 
-        state.reviewPosts = state.reviewPosts.concat(data); 
+        let index = state.reviewPosts.findIndex((item) => item.reviewID === data.reviewID); 
+        state.reviewPosts.splice(index,1,data);  
     },
     updateReviewUser: (state, data) => { 
-        state.userReviews = state.userReviews.concat(data); 
+        let index = state.userReviews.findIndex((item) => item.reviewID === data.reviewID); 
+        state.userReviews.splice(index,1,data);  
     },
     addLikes: (state, post) => {
-        let index = state.reviewPosts.findIndex(item => item.reviewID === post.reviewID); 
-        state.reviewPosts[index].upvotes = post.upvotes; 
+        let index = state.reviewPosts.findIndex(item => item.reviewID === post.reviewID);
+        state.reviewPosts.splice(index,1,post);
     }
 }
 

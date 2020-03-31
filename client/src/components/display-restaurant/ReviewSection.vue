@@ -42,7 +42,7 @@
                 <i class="material-icons prefix">mode_edit</i>
                 <label for="review-area">Enter review details</label>
                 <textarea v-model="reviewData" id="review-area" class="materialize-textarea" data-length = "300"></textarea>
-                <div class="file-field input-field">
+                <div class="input-field">
                 <!-- File Upload Portion -->
                 <FileUpload @file-upload="getFiles" :isMultiple="true" :dest="destination"/> 
                 <a class="submit-btn red btn right" @click="validateReview">SUBMIT</a>
@@ -95,7 +95,7 @@
                 <div class="input-field"> 
                     <i class="material-icons prefix">mode_edit</i>
                     <textarea v-model="editData" id="review-area" class="materialize-textarea" data-length = "300"></textarea>
-                    <div class="file-field input-field">
+                    <div>
                     <!-- File Upload Portion -->
                     <ImageUpload ref="uploadSection" @file-upload="getFiles"  @toggleSubmit="this.toggleSubmitButton" 
                     :dest="destination"  :existingPics="this.reviewPictures" /> 
@@ -154,6 +154,7 @@ export default {
             errors: [],
             showPopular : true,
             submitVisible: true,
+            update: false,  
             rating: 0,
             isCheckedVal: {
                 '0': false,
@@ -168,10 +169,10 @@ export default {
     }, 
     computed : {
         allReviews () {
-            return this.fetchAllReviews();
+            return (this.update || !this.showPopular) ? this.fetchAllReviews() : []; 
         },
         popularReview () {
-            return this.fetchPopularReview(); 
+            return (this.update || this.showPopular) ? this.fetchPopularReview() : []; 
         },
         isLogged () {
             return (this.getUser() != undefined) ? true : false; 
@@ -180,7 +181,7 @@ export default {
             return (this.isLogged) ? this.$store.getters.hasReview(this.getUser().userID) : false; 
         },
         ownReview() {
-            return (this.isLogged) ? this.$store.getters.ownReview(this.getUser().userID) : undefined;  
+            return (this.update || this.isLogged) ? this.$store.getters.ownReview(this.getUser().userID) : undefined;  
         },
         reviewPictures() {
             return (this.hasReview) ? this.ownReview.reviewPics : []; 
@@ -265,8 +266,9 @@ export default {
           await this.$store.dispatch('updateRestoRating', {
                     oldRating : this.ownReview.rating, 
                     rating : this.rating,
-                    restaurantID: this.$store.getters.fetchCurrResto.restaurantID
-          }, false)
+                    restaurantID: this.$store.getters.fetchCurrResto.restaurantID,
+                    inProfile: false
+          })
           .then(async () => 
                 await this.$store.dispatch('editReview', {
                     oldReview: this.ownReview,
@@ -275,14 +277,16 @@ export default {
                     rating : this.rating, 
                     photos: this.uploadedFiles,
                     userID: this.$store.getters.getUser.userID,
-                    restaurantID: this.$store.getters.fetchCurrResto.restaurantID
+                    restaurantID: this.$store.getters.fetchCurrResto.restaurantID,
+                    inProfile: false
                 })
                 .then(() => this.displaySuccessModal("Successfully edited review"))      
                 )  
           .catch((err) => {console.log(err)
                           this.displaySuccessModal("Error in updating review.")
                             })  
-
+        this.update = true; 
+        console.log(this.ownReview);  
       },
       cancelEdit() {
           this.isEditing = false; 
@@ -300,9 +304,10 @@ export default {
         this.showPopular = false
       },
       displaySuccessModal(message) {
-        this.modalMessage = message; 
+        this.modalMessage = message;   
         this.showSuccessModal = true; 
         this.isEditing = false; 
+        this.update = false; 
       },
       hideSuccessModal() {
         this.showSuccessModal = false;
@@ -310,7 +315,7 @@ export default {
       ...mapGetters(['fetchAllReviews', 'fetchPopularReview','getUser'])
     },
     mounted() {
-         this.$refs.uploadSection.reset(true);  
+         this.$refs.uploadSection.reset(true, this.reviewPictures);  
     },
     created() {
         if(this.hasReview) {
