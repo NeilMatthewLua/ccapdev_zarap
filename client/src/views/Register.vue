@@ -60,7 +60,8 @@
                                     <div class="waves-effect waves-light btn-large btncolor" @click="validateForm"> Sign me up!
                                     </div>
                                 </div>
-                                <alertModal                :message= "message" 
+                                <alertModal                
+                                    :message= "message" 
                                     v-show="isModalVisible"
                                     @close="closeModal"
                                     class="bring_front"

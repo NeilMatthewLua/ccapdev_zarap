@@ -5,7 +5,7 @@
                 <div class="col s12 m11 l9 view-review">  
                     <div class="review-section relative-position">
                         <div class="write-review">
-                            <div class="review-feed">
+                            <div class="review-feed" v-if="this.fetchUserReviews().length > 0">
                                 <div class="review-post padd-top">
                                     <div class="edit-review">
                                         <div v-show="!isEditing">
@@ -64,6 +64,9 @@
                                         </div>
                                     </div>
                                 </div>
+                            </div>
+                            <div v-else>
+                                <h5 class="center padd-top"> No Reviews Yet? Review one now!</h5>
                             </div>
                         </div>
                     </div>

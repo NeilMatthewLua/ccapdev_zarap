@@ -60,7 +60,7 @@ async function populateUsers(userCounter, limit) {
             password: faker.lorem.words(1),
             email: faker.internet.email(),
             address: faker.address.streetAddress(),
-            points: faker.random.number(100) ,
+            points: 0,
             picture: doc[i].pictureID
         });
 
