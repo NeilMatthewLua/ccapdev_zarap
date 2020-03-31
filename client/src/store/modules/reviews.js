@@ -88,16 +88,28 @@ const actions =  {
     },
 
     async deleteReview({commit}, details) {
-        let index = state.reviewPosts.findIndex(x => x.reviewerID == details.user.userID)
+        let index, review;
+
+        if(details.route.name == "UserDetail") {
+            index = state.userReviews.findIndex(x => x.restaurantID == details.restaurant.restaurantID)
+            review = state.userReviews[index]
+        }
+        else {
+            index = state.reviewPosts.findIndex(x => x.reviewerID == details.user.userID)
+            review = state.reviewPosts[index]
+        }
+        
         await axios.post(`http://localhost:9090/users/deleteUserReviewed`, {
                 restaurant : details.restaurant,
                 user: details.user,
-                review: state.reviewPosts[state.reviewPosts.findIndex(x => x.reviewerID == details.user.userID)]
+                review: review
         })
-        .then(() => 
-            commit('removeUserReview', state.userReviews[state.userReviews.findIndex(y => y.reviewID == state.reviewPosts[index].reviewID)]),
-            commit('removeReview', index),
-        )
+        .then(() => {
+            if(details.route.name == "UserDetail")
+                commit('removeUserReview', index)
+            else
+                commit('removeReview', index)
+        })
     },
 
     async editReview({commit}, group) {

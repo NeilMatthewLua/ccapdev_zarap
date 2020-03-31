@@ -49,6 +49,7 @@
                 </div>
             </div>
         </div>
+        <modal @close="hideSuccessModal" :message="message" v-show="showSuccessModal"/> 
         <div class="edit-review" v-show="this.hasReview">
             <div v-show="!isEditing">
                 <h3 class="review-title">My Review</h3>
@@ -164,6 +165,7 @@ export default {
                 '4': false
             }, 
             modalMessage: "Review edited successfully!",
+            message: "Review added!",
             showSuccessModal: false
         }   
     }, 
@@ -200,6 +202,17 @@ export default {
             }
             for(let i = number; i < 5; i++)
                 this.isCheckedVal[i] = false;
+        },
+        resetReview() {
+            this.review = "",
+            this.isCheckedVal = {
+                '0': false,
+                '1': false,
+                '2': false,
+                '3': false,
+                '4': false
+            },
+            this.isWriting = false
         },
         toggleSubmitButton: function(value) {
             this.submitVisible = value
@@ -256,7 +269,9 @@ export default {
             .then(async () => { //Adds the restuarant to the user's visited places
                 await this.$store.dispatch('updateGetUser'),
                 await this.$store.dispatch('getRestoById',this.$store.getters.fetchCurrResto.restaurantID),
-                this.$emit('postedReview',true)
+                this.$emit('postedReview',true),
+                this.resetReview(),
+                this.displaySuccessModal("Review added successfully!")
             })
         },
       editReview () { 
