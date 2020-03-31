@@ -17,15 +17,20 @@ export default {
     mounted() {
         M.AutoInit(); 
     },
+    computed: {
+        userID() {
+            return this.$route.params.id; 
+        }
+    },
     methods: {
         goMyReviews() {
-            router.push({path:`/userdetail/${this.user.userID}/review`});
+            router.push({path:`/userdetail/${this.userID}/review`});
         },
         goMyDining() {
-            router.push({path: `/userdetail/${this.user.userID}/dining`});
+            router.push({path: `/userdetail/${this.userID}/dining`});
         },
         goMyProfile() {
-            router.push({path: `/userdetail/${this.user.userID}/myprofile`});
+            router.push({path: `/userdetail/${this.userID}/myprofile`});
         }
     }
 }

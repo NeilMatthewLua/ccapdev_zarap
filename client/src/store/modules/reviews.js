@@ -60,12 +60,15 @@ const actions =  {
     },
 
     async addReview({commit}, group) {
+        let pictureIDs = await axios.post('http://localhost:9090/pictures/save-pictures', group.photos);
+        group.reviewPictures = pictureIDs.data; 
+        console.log(group.reviewPictures); 
         await axios.post(`http://localhost:9090/reviews/addReview/${group.userID}`, group)
         .then(async resp => {
             //Updates the reviews of the resstaurant
             let userPic = await axios.get(`http://localhost:9090/pictures/${group.userID.picture}`);
-            let reviewPictures =  group.photos.map((item) => item.url);
-
+            let reviewPictures =  group.photos;
+            
             let user = [];
             user.push({...group.userID, ...resp.data.review, userUrl : userPic.data.url, reviewPics : reviewPictures});
 
@@ -98,7 +101,7 @@ const actions =  {
             index = state.reviewPosts.findIndex(x => x.reviewerID == details.user.userID)
             review = state.reviewPosts[index]
         }
-        
+   
         await axios.post(`http://localhost:9090/users/deleteUserReviewed`, {
                 restaurant: details.restaurant,
                 user: details.user,

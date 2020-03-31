@@ -143,7 +143,6 @@ export default {
             this.editData = this.chosenReview.review;
             this.doThis(this.chosenReview.rating); 
             this.$set(this,'uploadedFiles', this.chosenReviewPics); 
-            console.log(this.chosenReviewPics); 
             this.$refs.uploadSection.reset(true, this.chosenReviewPics); 
         }, 
         deleteReview() {
@@ -234,7 +233,8 @@ export default {
             return val.reviewID; 
         }); 
         //Get Review Details of Each
-        await this.getUserReviews(arr);
+        if(arr.length > 0)
+            await this.getUserReviews(arr);
         this.loading = false; 
     }
 }

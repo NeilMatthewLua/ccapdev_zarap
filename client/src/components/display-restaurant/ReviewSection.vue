@@ -2,8 +2,8 @@
 <div class="review-section">
     <div class="write-review valign-wrapper" v-show="isLogged">
         <div class="user-review-container" v-show="!this.hasReview">
-            <a class="review-btn waves-effect waves-light btn #388e3c green darken-2" v-if="!isWriting" @click="isWriting = true">Write Review</a>
-            <div class = "writing-section" v-else>
+            <a class="review-btn waves-effect waves-light btn #388e3c green darken-2" v-show="!isWriting" @click="writeReview">Write Review</a>
+            <div class = "writing-section" v-show="isWriting">
                 <!-- if wrong details, display error message -->
                 <p v-if="errors.length">
                     <b class="errormsg">Please correct the following error(s):</b>
@@ -44,8 +44,10 @@
                 <textarea v-model="reviewData" id="review-area" class="materialize-textarea" data-length = "300"></textarea>
                 <div class="input-field">
                 <!-- File Upload Portion -->
-                <FileUpload @file-upload="getFiles" :isMultiple="true" :dest="destination"/> 
-                <a class="submit-btn red btn right" @click="validateReview">SUBMIT</a>
+                    <ImageUpload ref="uploadSection" @file-upload="getFiles"  @toggleSubmit="this.toggleSubmitButton" 
+                    :dest="destination"  :existingPics="this.reviewPictures" /> 
+                    <a class="submit-btn red btn right" @click="validateReview">SUBMIT</a>
+                    <a class="submit-btn btn right" @click="cancelWrite">CANCEL</a>
                 </div>
             </div>
         </div>
@@ -130,7 +132,6 @@
 <script scoped>
 import { mapGetters } from 'vuex'; 
 import ReviewPost from './ReviewPost'; 
-import FileUpload from '@/components/fileUpload';
 import ImageUpload from '@/components/ImageUpload'; 
 import modal from '@/components/alertModal'; 
 
@@ -138,7 +139,6 @@ export default {
     name: "ReviewSection",
     components: {
         ReviewPost,
-        FileUpload,
         ImageUpload, 
         modal 
     }, 
@@ -217,6 +217,11 @@ export default {
         toggleSubmitButton: function(value) {
             this.submitVisible = value
         },
+        writeReview() {
+            this.isWriting = true; 
+            this.doThis(0); 
+            this.$set(this,'uploadedFiles',[]); 
+        },
         validateReview() {
             this.errors = [];
             if(!(this.reviewData != '')) {
@@ -267,12 +272,19 @@ export default {
                 restaurant: this.$store.getters.fetchCurrResto
             })
             .then(async () => { //Adds the restuarant to the user's visited places
-                await this.$store.dispatch('updateGetUser'),
-                await this.$store.dispatch('getRestoById',this.$store.getters.fetchCurrResto.restaurantID),
-                this.$emit('postedReview',true),
-                this.resetReview(),
-                this.displaySuccessModal("Review added successfully!")
-            })
+                await this.$store.dispatch('updateGetUser')
+                await this.$store.dispatch('getRestoById',this.$store.getters.fetchCurrResto.restaurantID)
+                .then(() => {
+                      this.displaySuccessModal("Successfully added review")
+                      this.resetReview()
+                      })      
+                this.$emit('postedReview',true)
+            }) 
+            .catch((err) => {console.log(err)
+                          this.displaySuccessModal("Error in updating review.")
+                            }) 
+            
+            this.update = true;
         },
       editReview () { 
         this.isEditing = true;  
@@ -305,10 +317,19 @@ export default {
         this.update = true; 
         console.log(this.ownReview);  
       },
+      cancelWrite() {
+        this.isWriting = false; 
+        this.$set(this,'uploadedFiles', []);
+        this.update = false;
+        this.rating = 0;
+        this.reviewData = "";
+        this.editData = "";  
+      },
       cancelEdit() {
           this.isEditing = false; 
       },
       deleteReview () {
+        this.cancelWrite(); 
         this.$emit('postedReview', false)
       },
       getFiles (files) {
