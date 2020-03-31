@@ -100,15 +100,19 @@ const actions =  {
         }
         
         await axios.post(`http://localhost:9090/users/deleteUserReviewed`, {
-                restaurant : details.restaurant,
+                restaurant: details.restaurant,
                 user: details.user,
                 review: review
         })
         .then(() => {
-            if(details.route.name == "UserDetail")
+            if(details.route.name == "UserDetail"){
+                console.log("MEH")
                 commit('removeUserReview', index)
-            else
+            }
+            else {
+                console.log("HEREE")
                 commit('removeReview', index)
+            }
         })
     },
 
