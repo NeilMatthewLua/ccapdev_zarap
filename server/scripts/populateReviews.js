@@ -22,7 +22,7 @@ async function populateReviews(userCounter, limit) {
             restaurantID : chosenRes.restaurantID,
             rating : faker.random.number(4) + 1, 
             review: faker.lorem.words(10),
-            upvotes: faker.random.number(40),
+            upvotes: faker.random.number(8),
             reviewPictures: [pics[(limit * 5) + (i*3)]['pictureID'], pics[(limit * 5) + (i*3) + 1]['pictureID']]
         }); 
         //Set reviewed and been here to the restaurant they reviewed 

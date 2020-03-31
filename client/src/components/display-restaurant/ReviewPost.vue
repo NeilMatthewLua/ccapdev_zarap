@@ -129,6 +129,7 @@ export default {
             .then(async () =>{
                 await this.$store.dispatch('updateGetUser'),
                 await this.$store.dispatch('getRestoById',this.$store.getters.fetchCurrResto.restaurantID)
+                console.log(this.$store.getters.fetchCurrResto.restaurantID)
             })
         }, 
         goToProfile() {

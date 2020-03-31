@@ -35,7 +35,7 @@
         <div class="divider"></div>
         <li><a @click="goMyReviews()" class="waves-effect" >My Reviews</a></li>
         <div class="divider"></div>
-        <li><a  @click="logout()"  class="black-text">Logout</a></li>
+        <li><a  @click="logout()"  class="waves-effect">Logout</a></li>
       </ul>
 
       

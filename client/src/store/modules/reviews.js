@@ -95,7 +95,6 @@ const actions =  {
                 review: state.reviewPosts[state.reviewPosts.findIndex(x => x.reviewerID == details.user.userID)]
         })
         .then(() => 
-            commit('removeUserReview', state.userReviews[state.userReviews.findIndex(y => y.reviewID == state.reviewPosts[index].reviewID)]),
             commit('removeReview', index),
         )
     },

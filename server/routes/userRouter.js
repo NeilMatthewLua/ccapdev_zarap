@@ -209,16 +209,25 @@ router.post('/deleteUserReviewed', async (req, res) => {
         await Restaurant.findOneAndUpdate({restaurantID : restaurantID}, {$pullAll : {'reviews' : [review]}, $set:{'overallRating': newRating}}, { new: true })
         .then(async doc => { //deletes the review in the Review db
             await Review.findOneAndDelete({'reviewID': review})
-            .then(async () => {
+            .then(async () => { //deletes the pictures of that review in the db
                 for(let i = 0; i < reviewPics.length; i++) {
                     await Picture.findOneAndDelete({'pictureID': reviewPics[i]})
-                    // let removePath = `images/${relPath[4]}/${relPath[5]}`;
-            
-                    // fs.unlink(removePath, (err) => {
-                    //     if (err) throw err;
-                    //     console.log(`${removePath} was deleted`);
-                    // });
+                    .then( pic => {
+                        let relPath = pic.url.split('/'); 
+                        let removePath = `images/${relPath[4]}/${relPath[5]}`;
+    
+                        fs.unlink(removePath, (err) => { //deletes the pictures of the review in the folder
+                            if (err) throw err;
+                        });
+                    })
                 }
+                
+                await User.find({liked: review}) //removes the reviewID from the users who liked the review
+                .then( async users => {
+                    for(let i = 0; i < users.length; i++) {
+                        await User.findOneAndUpdate({userID: users[i].userID}, {$pullAll : {'liked' : [review]}}, {new: true})
+                    }
+                })
                 res.status(200).send()    
             })
         })
