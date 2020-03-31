@@ -51,10 +51,6 @@ router.post('/increment/:id', (req, res) => {
 })
 
 router.post('/addReview/:id', (req,res) => {
-    let pictures = [];
-    for(let i = 0; i < req.body.photos.length; i++) {
-        pictures.push(req.body.photos[i].pictureID)
-    }
     
     let reviewerID = mongoose.Types.ObjectId();
     let overallRatingUpdate = Math.round(((req.body.restaurant.overallRating * req.body.restaurant.reviews.length) + req.body.rating) / (req.body.restaurant.reviews.length + 1) * 10) / 10;
@@ -66,7 +62,7 @@ router.post('/addReview/:id', (req,res) => {
         rating: req.body.rating,
         review: req.body.review,
         upvotes: 0,
-        reviewPictures: pictures
+        reviewPictures: req.body.reviewPictures
     });
     
     item.save()

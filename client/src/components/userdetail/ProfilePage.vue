@@ -205,7 +205,12 @@ export default {
             editProfileVisible: true,
             bigEditProfileVisible: true,
             smallEditProfileVisible: true,
-            user: ' ',
+            user: {
+                name : ' ',
+                address: ' ',
+                email: ' ',
+                points: ' '
+            },
             user_firstname: ' ',
             user_lastname: ' ',
             user_picture: ' ',
@@ -224,24 +229,23 @@ export default {
     },
     methods: {
        async verifyOwn() {
-           this.user = this.$store.getters.getUser;
-           if(this.user != null) {
+           if(this.$store.getters.getUser != null) {
                 if(this.$route.params.id == this.user.userID) {
                     this.user_picture = this.$store.getters.getPicture['url'];
                 this.isLogged = true;
                 this.tempUser.user = Object.assign({}, this.user);
                 }
                 else(
-                    this.user = await axios.get(`http://localhost:9090/users/${this.$route.params.id}`)
+                    await axios.get(`http://localhost:9090/users/${this.$route.params.id}`)
                     .then(resp => {
-                        this.user = resp.data.user
+                        this.user = resp.data.user[0]
                     })
                 )
            }
            else {               
-               this.user = await axios.get(`http://localhost:9090/users/${this.$route.params.id}`)
+               await axios.get(`http://localhost:9090/users/${this.$route.params.id}`)
                .then(resp => {
-                   this.user = resp.data
+                   this.user = resp.data.user[0]
                })
            }
             this.user_firstname = this.user.name.split(" ")[0];
