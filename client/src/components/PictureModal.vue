@@ -71,7 +71,7 @@
     justify-content: center;
     align-content: stretch;
     width: 100%;  
-    height: 55vh; 
+    height: 45vh; 
   }
 
   .img {
@@ -103,6 +103,7 @@
   }
 
   .modal-backdrop {
+    z-index: 5 !important; 
     position: fixed;
     top: 0;
     bottom: 0;
@@ -115,6 +116,7 @@
   }
 
   .modal {
+    position: relative; 
     z-index: 9999; 
     background: #FFFFFF;
     box-shadow: 2px 2px 20px 1px;

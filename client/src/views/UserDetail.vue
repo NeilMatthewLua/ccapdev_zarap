@@ -47,6 +47,11 @@ export default {
     created : function() {
         this.updateUserPage();
     },
+    watch:{
+    $route (){  
+        this.updateUserPage();
+        }
+    },
     methods: {
         mounted() {
             this.updateUserPage();
