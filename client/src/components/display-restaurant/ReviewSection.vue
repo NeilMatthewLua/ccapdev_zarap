@@ -222,7 +222,7 @@ export default {
                 this.errors.push('Only up to 5 images can be uploaded!')
             }
             if(!this.errors.length) {
-                // TODO EDIT REVIEW
+                this.saveReview(); 
                 return true;
             }  
         },

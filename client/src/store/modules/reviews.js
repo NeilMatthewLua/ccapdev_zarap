@@ -125,7 +125,7 @@ const mutations = {
     appendReview : (state, data) => state.reviewPosts =  state.reviewPosts.concat(data),    
     appendUserReview : (state, data) => state.userReviews =  state.userReviews.concat(data),
     removeReview : (state, data) => state.reviewPosts.splice(data, 1),
-    removeUserReview : (state, data) => state.userReviews.splice(data, 1)
+    removeUserReview : (state, data) => state.userReviews.splice(data, 1),
     updateReviewResto: (state, data) => { 
         let index = state.reviewPosts.findIndex((item) => item.reviewID === data.reviewID); 
         state.reviewPosts.splice(index,1,data);  
