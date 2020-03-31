@@ -252,8 +252,10 @@ export default {
                 userID: this.$store.getters.getUser,
                 restaurant: this.$store.getters.fetchCurrResto
             })
-            .then(() => { //Adds the restuarant to the user's visited places
-                this.$emit('postedReview')
+            .then(async () => { //Adds the restuarant to the user's visited places
+                await this.$store.dispatch('updateGetUser'),
+                await this.$store.dispatch('getRestoById',this.$store.getters.fetchCurrResto.restaurantID),
+                this.$emit('postedReview',true)
             })
         },
       editReview () { 
@@ -285,7 +287,7 @@ export default {
 
       },
       deleteReview () {
-        // this.$store.dispatch('deleteReview')
+        this.$emit('postedReview', false)
       },
       getFiles (files) {
         this.$set(this,'uploadedFiles', files); 

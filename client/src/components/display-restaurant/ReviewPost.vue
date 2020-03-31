@@ -123,8 +123,12 @@ export default {
         }, 
         deleteReview() {
             this.$store.dispatch('deleteReview', {
-                restaurantID: this.$store.getters.fetchCurrResto.restaurantID, 
-                userID: this.$store.getters.getUser.userID 
+                restaurant: this.$store.getters.fetchCurrResto, 
+                user: this.$store.getters.getUser 
+            })
+            .then(async () =>{
+                await this.$store.dispatch('updateGetUser'),
+                await this.$store.dispatch('getRestoById',this.$store.getters.fetchCurrResto.restaurantID)
             })
         }, 
         goToProfile() {

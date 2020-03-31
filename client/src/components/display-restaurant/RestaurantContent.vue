@@ -31,7 +31,7 @@
         </transition> 
         <transition name="changeContent" enter-active-class="animated bounceInLeft">
           <div v-if="section === 'Review'">
-            <ReviewSection @postedReview="beenHere()"/> 
+            <ReviewSection  @postedReview="postedReview"/> 
           </div>
         </transition> 
       </div>
@@ -144,12 +144,25 @@ export default {
               resto: this.fetchCurrResto().restaurantID,
               user: this.$store.getters.getUser
           })
+          .then(async () => {
+            await this.$store.dispatch('updateGetUser')
+          })
       },
       notBeenHere() {
+        if(this.$store.getters.getUser.beenHere.includes(this.fetchCurrResto().restaurantID))
         this.$store.dispatch('deleteRestaurantVisit', {
             resto: this.fetchCurrResto().restaurantID,
             user: this.$store.getters.getUser
         })
+        .then(async () => {
+          await this.$store.dispatch('updateGetUser')
+        })
+      },
+      postedReview(value) {
+        if(value == true)
+          this.beenHere();
+        else
+          this.notBeenHere();
       },
       ...mapGetters(['fetchCurrResto','fetchMenuPics','fetchRestaurantPics', 'isLoggedIn']),
       ...mapActions(['getRestoById','getRestaurantPictures', 'getMenuPictures', 'getReviewPostUsers'])

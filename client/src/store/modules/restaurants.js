@@ -20,7 +20,7 @@ const actions =  {
     //Gets Resto by restaurantID 
     async getRestoById ({commit}, id) {
         let res = await axios.get(`http://localhost:9090/restaurants/${id}`); 
-
+        
         if(res.data)
             commit('setCurrResto', res.data); 
         else 

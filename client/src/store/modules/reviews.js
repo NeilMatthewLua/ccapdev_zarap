@@ -81,20 +81,23 @@ const actions =  {
             commit('appendUserReview', user)
 
             await axios.post(`http://localhost:9090/users/addUserReviewed`, {
-                reviewID : resp.data.review.reviewID,
+                restaurantID : group.restaurant.restaurantID,
                 userID: group.userID
             })
         })
     },
 
     async deleteReview({commit}, details) {
+        let index = state.reviewPosts.findIndex(x => x.reviewerID == details.user.userID)
         await axios.post(`http://localhost:9090/users/deleteUserReviewed`, {
-                restaurantID : details.restaurantID,
-                userID: details.userID,
-                review: state.reviewPosts[state.reviewPosts.findIndex(x => x.reviewerID == details.userID)]
+                restaurant : details.restaurant,
+                user: details.user,
+                review: state.reviewPosts[state.reviewPosts.findIndex(x => x.reviewerID == details.user.userID)]
         })
-        .then(() => console.log("DELETEEEEEEED"))
-        commit('appendUserReview', details)
+        .then(() => 
+            commit('removeUserReview', state.userReviews[state.userReviews.findIndex(y => y.reviewID == state.reviewPosts[index].reviewID)]),
+            commit('removeReview', index),
+        )
     },
 
     async editReview({commit}, group, inProfile) {
@@ -123,6 +126,8 @@ const mutations = {
     setUserReviews : (state, data) => state.userReviews = data,
     appendReview : (state, data) => state.reviewPosts =  state.reviewPosts.concat(data),    
     appendUserReview : (state, data) => state.userReviews =  state.userReviews.concat(data),
+    removeReview : (state, data) => state.reviewPosts.splice(data, 1),
+    removeUserReview : (state, data) => state.userReviews.splice(data, 1)
     updateReviewResto: (state, data) => { 
         state.reviewPosts = state.reviewPosts.concat(data); 
     },

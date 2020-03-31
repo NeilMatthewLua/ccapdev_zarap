@@ -75,6 +75,10 @@ const actions =  {
       .then(resp => {
         commit('auth_success', resp.data.user)
       })
+    },
+    async updateGetUser({commit}) {
+      let user = await axios.get(`http://localhost:9090/users/${state.user.userID}`);
+      commit('auth_success', user.data.user[0])
     }
   }
 
@@ -85,7 +89,6 @@ const mutations = {
   auth_success(state, user) {
     state.status = 'success'
     state.user = user
-    console.log(state.user)
   },
   auth_error(state) {
     state.status = 'error'
