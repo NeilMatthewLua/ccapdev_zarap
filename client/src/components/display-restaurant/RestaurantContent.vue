@@ -144,12 +144,18 @@ export default {
               resto: this.fetchCurrResto().restaurantID,
               user: this.$store.getters.getUser
           })
+          .then(async () => {
+            await this.$store.dispatch('updateGetUser')
+          })
       },
       notBeenHere() {
         if(this.$store.getters.getUser.beenHere.includes(this.fetchCurrResto().restaurantID))
         this.$store.dispatch('deleteRestaurantVisit', {
             resto: this.fetchCurrResto().restaurantID,
             user: this.$store.getters.getUser
+        })
+        .then(async () => {
+          await this.$store.dispatch('updateGetUser')
         })
       },
       postedReview(value) {

@@ -187,11 +187,11 @@ router.post('/deleteUserVisited', async (req, res) => {
 })
 
 router.post('/addUserReviewed', async (req, res) => {
-    let reviewID = req.body.reviewID;
+    let restaurantID = req.body.restaurantID;
     let id = req.body.userID.userID; 
     
-    await User.findOneAndUpdate({userID : id}, {$push : {'reviewed' : reviewID}}, { new: true })
-    .then(resp =>{ console.log(resp); res.status(200).send({user: resp})})
+    await User.findOneAndUpdate({userID : id}, {$push : {'reviewed' : restaurantID}}, { new: true })
+    .then(resp =>{res.status(200).send({user: resp})})
     .catch(() => res.status(500))
 })
 
@@ -202,29 +202,37 @@ router.post('/deleteUserReviewed', async (req, res) => {
     let reviewPics = req.body.review.reviewPictures;
     let newRating = Math.round(((req.body.restaurant.overallRating * req.body.restaurant.reviews.length) - req.body.review.rating) / (req.body.restaurant.reviews.length - 1) * 10) / 10;
     let newPoints = req.body.user.points - req.body.review.upvotes;
-console.log("REVIEW IDs that are in the resto")
-console.log(req.body.restaurant.reviews)
-console.log("REVIEW ID I'll delete:")
-console.log(review)
-console.log("RESTO IDs that are in the user")
-console.log(req.body.user.reviewed)
-console.log("RESTO ID I'll delete:")
-console.log(restaurantID)
+// console.log("REVIEW IDs that are in the resto")
+// console.log(req.body.restaurant.reviews)
+// console.log("REVIEW ID I'll delete:")
+// console.log(review)
+// console.log("RESTO IDs that are in the user")
+// console.log(req.body.user.reviewed)
+// console.log("RESTO ID I'll delete:")
+// console.log(restaurantID)
+
     //deletes the review from the user's reviewed
-    await User.findOneAndUpdate({userID : id}, {$pullAll : {'reviewed' : [restaurantID]},/*, 'beenHere' : [restaurantID]},*/ $set:{'points': newPoints}}, { new: true })
+    await User.findOneAndUpdate({userID : id}, {$pullAll : {'reviewed' : [restaurantID], 'beenHere' : [restaurantID]}, $set:{'points': newPoints}}, { new: true })
     .then(async set => { //deletes the review from the restaurant
         await Restaurant.findOneAndUpdate({restaurantID : restaurantID}, {$pullAll : {'reviews' : [review]}, $set:{'overallRating': newRating}}, { new: true })
         .then(async doc => { //deletes the review in the Review db
-            console.log("RESTO REVIEWS")
-            console.log(doc.reviews)
-            console.log("USER REVIEWED")
-            console.log(set.reviewed) 
-            // await Review.findOneAndDelete({'reviewID': review})
-            // .then(async () => {
-            //     for(let i = 0; i < reviewPics.length; i++)
-            //         await Picture.findOneAndDelete({'pictureID': reviewPics[i]})
-            //     res.status(200).send()    
-            // })
+            // console.log("RESTO REVIEWS")
+            // console.log(doc.reviews)
+            // console.log("USER REVIEWED")
+            // console.log(set.reviewed) 
+            await Review.findOneAndDelete({'reviewID': review})
+            .then(async () => {
+                for(let i = 0; i < reviewPics.length; i++) {
+                    await Picture.findOneAndDelete({'pictureID': reviewPics[i]})
+                    // let removePath = `images/${relPath[4]}/${relPath[5]}`;
+            
+                    // fs.unlink(removePath, (err) => {
+                    //     if (err) throw err;
+                    //     console.log(`${removePath} was deleted`);
+                    // });
+                }
+                res.status(200).send()    
+            })
         })
     }) 
     .catch(() => res.status(500))

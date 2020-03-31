@@ -106,7 +106,10 @@ export default {
                 restaurant: this.$store.getters.fetchCurrResto, 
                 user: this.$store.getters.getUser 
             })
-            .then(() => this.$emit('delete-Review'))
+            .then(async () =>{
+                await this.$store.dispatch('updateGetUser'),
+                await this.$store.dispatch('getRestoById',this.$store.getters.fetchCurrResto.restaurantID)
+            })
         }, 
         goToProfile() {
             router.push({ name: 'UserDetail', params: { id : this.reviewData.reviewerID, menu : "review" } });
