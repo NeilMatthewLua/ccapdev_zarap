@@ -81,7 +81,7 @@ export default {
         }
     },
     methods: {
-        ...mapGetters(["fetchCoverPic", "fetchOperatingHour"]),
+        ...mapGetters(["fetchCoverPic"]),
         getToday() {
             var d = new Date();
             // Returns the actual String of the date to be represented:
