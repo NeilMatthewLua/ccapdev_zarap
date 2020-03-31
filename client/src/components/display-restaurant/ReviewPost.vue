@@ -1,5 +1,5 @@
 <template>
-  <div class="review-post">
+  <div class="review-post" v-if="this.hasReview">
       <div class="row valign-wrapper">
         <!-- Content if Review is in Restaurant Page -->
         <div class="valign-wrapper col s10"  v-if="!inProfile">
@@ -15,7 +15,7 @@
             <h5 class="post-rating #388e3c green white-text darken-2">{{this.reviewData.rating}}</h5>
         </div>
         <!-- Like and Upvotes of Review  -->
-        <div class="col s2 valign-wrapper" >
+        <div class="col s2 valign-wrapper">
             <i class="material-icons">arrow_upward</i>
             <h5 class="green-text upvotes">{{this.reviewData.upvotes}}</h5>
             <i v-bind:class="{'liked' : this.isLiked}" 
@@ -23,7 +23,7 @@
             class="material-icons right-align pointer" v-if="!this.isOwn && this.isLogged">thumb_up</i> 
         </div>
         <!-- Edit and Delete Review Buttons if own Review -->
-        <div class="col s2 valign-wrapper margin-right" v-if="this.isOwn">
+        <div class="col s2 valign-wrapper margin-right" v-if="this.isOwn && !inFeed">
             <a class="submit-btn green btn pointer" @click="editReview()"><i class="material-icons review-icons">edit</i></a>
             <a class="submit-btn red btn pointer" @click="deleteReview()"><i class="material-icons review-icons">delete</i></a>
         </div>
@@ -42,9 +42,10 @@
 </template>
 
 <script>
-import {mapActions, mapGetters, mapMutations} from 'vuex'; 
+import {mapGetters, mapMutations} from 'vuex'; 
 import PictureModal from '@/components/PictureModal'; 
 import router from '@/router';
+import axios from 'axios'; 
 export default {
     name: "ReviewPost",
     components: {
@@ -59,6 +60,8 @@ export default {
     props: {
         inProfile: Boolean, //If the review is viewed inside the profile page
         reviewData : Object, //Review object passed
+        inFeed : Boolean,
+        index : Number
     },
     computed : {
         //Checks if review is own review 
@@ -74,32 +77,49 @@ export default {
         },
         //Checks if post is liked by user 
         isLiked() {
-            return this.isLoggedIn() ? ((this.isLikedReview().length > 0) ? true : false) : false; 
+            return this.isLogged ? ((this.getUser().liked.includes(this.reviewData.reviewID)) ? true : false) : false; 
         }, 
         reviewPics() {
             return this.reviewData.reviewPics; 
+        },
+        hasReview() {
+            return (this.reviewData != undefined) ? true : false; 
         }
     },
     methods: {
-        ...mapActions(['updatePostLikes']),
         ...mapGetters(['getUser','isLoggedIn', 'isLikedReview']),
-        ...mapMutations(['setLikedReview', 'removeLikedReview']),
+        ...mapMutations(['setLikedReview', 'removeLikedReview','addLikes']),
         async toggleLike() {  
             //Add or remove review from user state
             //Add or remove review from db and update related entries (user liked reviews, review upvotes, review author points)
             if(this.isLiked) {
                 this.removeLikedReview(this.reviewData.reviewID); 
                 this.reviewData.upvotes -= 1; 
-                await this.updatePostLikes(this.getUser().userID, this.reviewData.reviewID, this.reviewData.reviewerID, -1); 
+                await this.updatePostLikes(-1); 
             }
             else {
                 this.setLikedReview(this.reviewData.reviewID); 
                 this.reviewData.upvotes += 1; 
-                await this.updatePostLikes(this.getUser().userID, this.reviewData.reviewID, this.reviewData.reviewerID, 1); 
+                await this.updatePostLikes(1); 
             }
+            this.addLikes(this.reviewData)
         }, 
+        async updatePostLikes(value) {
+            let userID = this.getUser().userID; 
+            let reviewID = this.reviewData.reviewID; 
+            let ownerID = this.reviewData.reviewerID; 
+            if(value > 0)
+                await axios.post(`http://localhost:9090/users/addLiked/${userID}`, {reviewID}); 
+            else    
+                await axios.post(`http://localhost:9090/users/deleteLiked/${userID}`, {reviewID});
+            await axios.post(`http://localhost:9090/reviews/increment/${reviewID}`, {value});
+            await axios.post(`http://localhost:9090/users/increment/${ownerID}`, {value});
+        },
         editReview() {
-            this.$emit('edit-Review', this.$refs.data.innerHTML); 
+            if(this.inProfile)
+                this.$emit('edit-Review', this.index);
+            else 
+                this.$emit('edit-Review');
         }, 
         deleteReview() {
             this.$store.dispatch('deleteReview', {

@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div v-if="!loading">
+        <div v-show="!loading">
             <div id="content" class="container-review">
                 <div class="col s12 m11 l9 view-review">  
                     <div class="review-section relative-position">
@@ -8,26 +8,61 @@
                             <div class="review-feed">
                                 <div class="review-post padd-top">
                                     <div class="edit-review">
-                                        <div v-if="!isEditing">
-                                            <ReviewPost v-for="review in this.fetchUserReviews()" :key="review.reviewID"  
-                                            :reviewData="review" @edit-Review="editReview" @delete-Review="deleteReview" :inProfile="true"/> 
+                                        <div v-show="!isEditing">
+                                            <ReviewPost v-for="(review,index) in this.fetchUserReviews()" :key="review.reviewID"  
+                                            :reviewData="review" :index="index" :inFeed="false" @edit-Review="editReview" @delete-Review="deleteReview" :inProfile="true"/> 
                                         </div>
-                                        <div v-else>
-                                            <div class="input-field">
+                                        <div v-show="isEditing">
+                                             <!-- if wrong details, display error message -->
+                                            <p v-if="errors.length">
+                                                <b class="errormsg">Please correct the following error(s):</b>
+                                                <ul>
+                                                    <li v-for="error in errors" :key="error">{{ error }}</li>
+                                                </ul>
+                                            </p>
+                                            <div class="review-rating">
+                                                <p for="review-area1">Rate restaurant</p>
+                                                <p id="review-area1">
+                                                    <label>
+                                                        <input type="checkbox" @change="doThis(1)"
+                                                        :checked="isChecked[0]" required/>
+                                                        <span></span>
+                                                    </label>
+                                                    <label>
+                                                        <input type="checkbox"
+                                                        @change="doThis(2)" :checked="isChecked[1]" />
+                                                        <span></span>
+                                                    </label>
+                                                    <label>
+                                                        <input type="checkbox"
+                                                        @change="doThis(3)" :checked="isChecked[2]" />
+                                                        <span></span>
+                                                    </label>
+                                                    <label>
+                                                        <input type="checkbox"
+                                                        @change="doThis(4)" :checked="isChecked[3]" />
+                                                        <span></span>
+                                                    </label> 
+                                                    <label>
+                                                        <input type="checkbox"
+                                                        @change="doThis(5)" :checked="isChecked[4]" />
+                                                        <span></span>
+                                                    </label>
+                                                </p>
+                                            </div>
+                                            <div class="input-field"> 
                                                 <i class="material-icons prefix">mode_edit</i>
                                                 <textarea v-model="editData" id="review-area" class="materialize-textarea" data-length = "300"></textarea>
                                                 <div class="file-field input-field">
-                                                <div class="red btn">
-                                                    <span>File</span>
-                                                    <input type="file" multiple>
-                                                </div>
-                                                <div class="file-path-wrapper">
-                                                    <input class="file-path validate" type="text" placeholder="Upload one or more files">
-                                                </div>
-                                                <a class="submit-btn red btn right push-down">SUBMIT</a>
+                                                <!-- File Upload Portion -->
+                                                <ImageUpload ref="uploadSection" @file-upload="getFiles"  @toggleSubmit="this.toggleSubmitButton" 
+                                                :dest="destination"  :existingPics="this.reviewPictures" /> 
+                                                <a class="submit-btn red btn right" @click="validateEdit">SUBMIT</a>
+                                                <a class="submit-btn btn right" @click="validateEdit">CANCEL</a>
                                                 </div>
                                             </div>
                                         </div>
+                                        <modal @close="hideSuccessModal" :message="modalMessage" v-show="showSuccessModal"/>
                                     </div>
                                 </div>
                             </div>
@@ -50,32 +85,126 @@
 import { BreedingRhombusSpinner } from 'epic-spinners';
 import { mapActions, mapGetters } from 'vuex'; 
 import ReviewPost from '@/components/display-restaurant/ReviewPost.vue';
+import ImageUpload from '@/components/ImageUpload'; 
+import modal from '@/components/alertModal'; 
 export default {
     name: "DiningHistory",
     components: {
         ReviewPost,
-        BreedingRhombusSpinner
+        BreedingRhombusSpinner,
+        ImageUpload,
+        modal 
     },
     data () {
         return {
+            checked: false,
             isWriting : false, //If user is writing a review
             reviewData : "", //Content to store data in user review
             isEditing: false, //If user is editing current review
+            loading : true,
+            chosenReviewIndex : 0, 
+            rating: 0,
             editData: "",
-            loading : true 
+            destination: "reviewPictures",
             //Add Computed to get boolean if current user is also review user
+            uploadedFiles: [],
+            errors: [],
+            isCheckedVal: {
+                '0': false,
+                '1': false,
+                '2': false,
+                '3': false,
+                '4': false
+            }, 
+            modalMessage: "Review edited successfully!",
+            showSuccessModal: false
         }
     }, 
+    computed: {
+        chosenReview() {
+            return this.getUserReviews()[this.chosenReviewIndex]; 
+        }
+    },
     methods : {
         ...mapActions(['getReviewsByReviewer','getUserReviews']),
         ...mapGetters(['fetchUserReviews']),
-        editReview (content) { 
+        editReview (index) { 
             this.isEditing = true;  
-            this.$set(this,'editData',content); 
+            this.chosenReviewIndex = index; 
+            this.$set(this,'uploadedFiles', this.chosenReview.reviewPics); 
         }, 
         deleteReview() {
             //Deletes Review
-        }
+        },
+        doThis(number) {
+            for(let i = 0; i < number; i++){
+                if(this.isCheckedVal[ number - 1] == true)
+                    this.isCheckedVal[i] = !this.isCheckedVal[i];
+                else
+                    this.isCheckedVal[i] = true;
+            }
+            for(let i = number; i < 5; i++)
+                this.isCheckedVal[i] = false;
+        },
+        toggleSubmitButton: function(value) {
+            this.submitVisible = value
+        },
+        validateEdit() {
+            this.errors = [];
+            if(!(this.editData != '')) {
+                this.errors.push('Review data must be filled!')
+            }
+            for(let i = 4; i >=0; i--){
+                if(this.isCheckedVal[i] == true){
+                    this.rating = i + 1;
+                    break;
+                }
+            }
+            if(this.rating == 0) {
+                this.errors.push('Rating is required!')
+            }
+            if(!this.errors.length) {
+                this.saveEdit(); 
+                return true;
+            }  
+        },
+      async saveEdit() {
+          await this.$store.dispatch('updateRestoRating', {
+                    oldRating : this.chosenReview.rating, 
+                    rating : this.rating,
+                    restaurantID: this.chosenReview.restaurantID
+          }, true)
+          .then(async () => 
+                await this.$store.dispatch('editReview', {
+                    oldReview: this.chosenReview,
+                    reviewID: this.chosenReview.reviewID,
+                    review : this.editData,
+                    rating : this.rating, 
+                    photos: this.uploadedFiles,
+                    userID: this.$store.getters.getUser.userID,
+                    restaurantID: this.$store.getters.fetchCurrResto.restaurantID
+                }, true)
+                .then(() => this.displaySuccessModal("Successfully edited review"))      
+                )  
+          .catch((err) => {console.log(err)
+                          this.displaySuccessModal("Error in updating review.")
+                            })  
+
+      },
+      getFiles (files) {
+        this.$set(this,'uploadedFiles', files); 
+      },
+      displaySuccessModal(message) {
+        this.modalMessage = message; 
+        this.showSuccessModal = true; 
+        this.isEditing = false; 
+      },
+      hideSuccessModal() {
+        this.showSuccessModal = false;
+      },
+      mounted() {
+         this.$refs.uploadSection.reset(true);  
+      },
     },
     async created () {
         //Get User Reviews
