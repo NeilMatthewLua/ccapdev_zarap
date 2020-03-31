@@ -115,7 +115,7 @@
   }
 
   .modal {
-    z-index: 10; 
+    z-index: 9999; 
     background: #FFFFFF;
     box-shadow: 2px 2px 20px 1px;
     overflow-x: auto;

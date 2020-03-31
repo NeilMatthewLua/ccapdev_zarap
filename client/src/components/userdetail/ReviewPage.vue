@@ -9,7 +9,7 @@
                                 <div class="review-post padd-top">
                                     <div class="edit-review">
                                         <div v-show="!isEditing">
-                                            <ReviewPost v-for="(review,index) in this.fetchUserReviews()" :key="review.reviewID"  
+                                            <ReviewPost class="review-cells" v-for="(review,index) in this.fetchUserReviews()" :key="review.reviewID"  
                                             :reviewData="review" :index="index" :inFeed="false" @edit-Review="editReview" @delete-Review="deleteReview" :inProfile="true"/> 
                                         </div>
                                         <div v-show="isEditing">
@@ -50,25 +50,25 @@
                                                     </label>
                                                 </p>
                                             </div>
-                                            <div class="input-field"> 
+                                            <div> 
                                                 <i class="material-icons prefix">mode_edit</i>
                                                 <textarea v-model="editData" id="review-area" class="materialize-textarea" data-length = "300"></textarea>
-                                                <div class="file-field input-field">
-                                                <!-- File Upload Portion -->
-                                                <ImageUpload ref="uploadSection" @file-upload="getFiles"  @toggleSubmit="this.toggleSubmitButton" 
-                                                :dest="destination"  :existingPics="this.reviewPictures" /> 
-                                                <a class="submit-btn red btn right" @click="validateEdit">SUBMIT</a>
-                                                <a class="submit-btn btn right" @click="validateEdit">CANCEL</a>
+                                                <div>
+                                                    <!-- File Upload Portion -->
+                                                    <ImageUpload ref="uploadSection" @file-upload="getFiles"  @toggleSubmit="this.toggleSubmitButton" 
+                                                    :dest="destination"  :existingPics="this.chosenReviewPics" /> 
+                                                    <a class="submit-btn red btn right" @click="validateEdit">SUBMIT</a>
+                                                    <a class="submit-btn btn right" @click="cancelEdit">CANCEL</a>
                                                 </div>
                                             </div>
                                         </div>
-                                        <modal @close="hideSuccessModal" :message="modalMessage" v-show="showSuccessModal"/>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+                <modal @close="hideSuccessModal" :message="modalMessage" v-show="showSuccessModal"/>
             </div>
         </div>
         <div v-if="loading" class="loading">
@@ -97,7 +97,6 @@ export default {
     },
     data () {
         return {
-            checked: false,
             isWriting : false, //If user is writing a review
             reviewData : "", //Content to store data in user review
             isEditing: false, //If user is editing current review
@@ -106,7 +105,7 @@ export default {
             rating: 0,
             editData: "",
             destination: "reviewPictures",
-            //Add Computed to get boolean if current user is also review user
+            update: false, 
             uploadedFiles: [],
             errors: [],
             isCheckedVal: {
@@ -122,16 +121,27 @@ export default {
     }, 
     computed: {
         chosenReview() {
-            return this.getUserReviews()[this.chosenReviewIndex]; 
+            return (this.update || this.fetchUserReviews() != undefined) ? this.fetchUserReviews()[this.chosenReviewIndex] : undefined;  
+        },
+        chosenReviewPics() {
+            return (this.update || this.chosenReview != undefined) ? this.chosenReview.reviewPics : [];   
+        },
+        isChecked() {
+            return this.isCheckedVal; 
         }
     },
     methods : {
         ...mapActions(['getReviewsByReviewer','getUserReviews']),
         ...mapGetters(['fetchUserReviews']),
-        editReview (index) { 
+        async editReview (index) {
+            this.update = true; 
             this.isEditing = true;  
             this.chosenReviewIndex = index; 
-            this.$set(this,'uploadedFiles', this.chosenReview.reviewPics); 
+            this.editData = this.chosenReview.review;
+            this.doThis(this.chosenReview.rating); 
+            this.$set(this,'uploadedFiles', this.chosenReviewPics); 
+            console.log(this.chosenReviewPics); 
+            this.$refs.uploadSection.reset(true, this.chosenReviewPics); 
         }, 
         deleteReview() {
             //Deletes Review
@@ -172,8 +182,9 @@ export default {
           await this.$store.dispatch('updateRestoRating', {
                     oldRating : this.chosenReview.rating, 
                     rating : this.rating,
-                    restaurantID: this.chosenReview.restaurantID
-          }, true)
+                    restaurantID: this.chosenReview.restaurantID,
+                    inProfile : true
+          })
           .then(async () => 
                 await this.$store.dispatch('editReview', {
                     oldReview: this.chosenReview,
@@ -182,14 +193,21 @@ export default {
                     rating : this.rating, 
                     photos: this.uploadedFiles,
                     userID: this.$store.getters.getUser.userID,
-                    restaurantID: this.$store.getters.fetchCurrResto.restaurantID
-                }, true)
+                    restaurantID: this.chosenReview.restaurantID,
+                    inProfile : true
+                })
                 .then(() => this.displaySuccessModal("Successfully edited review"))      
                 )  
           .catch((err) => {console.log(err)
                           this.displaySuccessModal("Error in updating review.")
                             })  
-
+        this.update = false; 
+        this.doThis(0); 
+      },
+      cancelEdit() {
+          this.doThis(0); 
+          this.isEditing = false; 
+          this.update = false;  
       },
       getFiles (files) {
         this.$set(this,'uploadedFiles', files); 
@@ -203,7 +221,7 @@ export default {
         this.showSuccessModal = false;
       },
       mounted() {
-         this.$refs.uploadSection.reset(true);  
+         this.$refs.uploadSection.reset(true, this.chosenReviewPics);  
       },
     },
     async created () {
@@ -227,15 +245,19 @@ export default {
         height: 100vh;
     }
 
+    .review-cells {
+        padding: 10px; 
+        border-bottom: 1px solid #eeeeee;
+    }
+
     .review-section {
         margin-bottom: 40px; 
     }
 
     .write-review {
-        min-height: 50px;  
-        max-height: 400px; 
+        min-height: 50px;   
         margin-bottom: 40px; 
-        padding: 30px 30px; 
+        padding: 0px 30px; 
         background-color: var(--default-reviewcard-color);
         clear: both; 
     }
@@ -255,7 +277,9 @@ export default {
 
     .submit-btn {
         border-radius: 15% !important; 
+        margin-top: 20px; 
         margin-right: 20px; 
+        margin-bottom: 20px; 
         z-index: 0 !important; 
     }
 
