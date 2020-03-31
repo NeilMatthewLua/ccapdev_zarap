@@ -1,11 +1,13 @@
 var express = require('express');
 var router = express.Router();
 const path = require('path');
+const fs = require('fs');
 const mongoose = require('mongoose');
 const url = process.env.MONGO_URI; 
 const User = require('../models/users.js');
 const Picture = require('../models/pictures.js');
 const Restaurant = require('../models/restaurants.js');
+const Review = require('../models/reviews.js');
 
 //adds a user
 router.post('/addUser',async (req, res, next) => { 
@@ -110,16 +112,30 @@ router.post('/updateUser', async (req, res) => {
     })
     .then( async user => {
         update = {pictureID: user.picture};
+        await Picture.find({pictureID: req.body.user.picture})
+        .then(async (doc) => {
+            let relPath = doc[0].url.split('/');
+            let removePath = `images/${relPath[4]}/${relPath[5]}`;
+            
+            fs.unlink(removePath, (err) => {
+                if (err) throw err;
+                console.log(`${removePath} was deleted`);
+            });
+
             await Picture.findOneAndUpdate(oldPicture, updatePicture, {
                 new: true
             })
-            .then(picture => {
-                return res.status(200).send({
-                    user: user,
-                    picture: picture
-                });
+                .then(picture => {
+                    return res.status(200).send({
+                        user: user,
+                        picture: picture
+                    });
+                })
             })
-    })
+        })
+        .catch(err=> {
+            console.log(err)
+        })
     .catch(err => {
         return res.status(500).send('Error on the server.');
     })
@@ -129,7 +145,7 @@ router.post('/updateUser', async (req, res) => {
 router.post('/increment/:id', (req, res) => {
     let amount = req.body.value; 
     let id = req.params.id; 
-    User.findOneAndUpdate({userID : id}, {$inc : {'points' : amount}}, (err,res) => {
+    User.findOneAndUpdate({userID : id}, {$inc : {'points' : amount}}, (err,resp) => {
         if (err) throw res.status(500).send('Error on the server.'); 
         res.status(200).send("Updated User Points"); 
     })
@@ -138,7 +154,7 @@ router.post('/increment/:id', (req, res) => {
 router.post('/addLiked/:id', (req, res) => {
     let reviewID = req.body.reviewID;
     let id = req.params.id; 
-    User.findOneAndUpdate({userID : id}, {$push : {'liked' : reviewID}}, (err,res) => {
+    User.findOneAndUpdate({userID : id}, {$push : {'liked' : reviewID}}, (err,resp) => {
         if (err) res.status(500).send('Error on the server.');
         res.status(200).send("Updated User Liked Reviews"); 
     }) 
@@ -147,10 +163,76 @@ router.post('/addLiked/:id', (req, res) => {
 router.post('/deleteLiked/:id', (req, res) => {
     let reviewID = req.body.reviewID;
     let id = req.params.id; 
-    User.findOneAndUpdate({userID : id}, {$pullAll : {'liked' : [reviewID]}}, (err,res) => {
+    User.findOneAndUpdate({userID : id}, {$pullAll : {'liked' : [reviewID]}}, (err,resp) => {
         if (err) res.status(500).send('Error on the server.');
         res.status(200).send("Updated User Liked Reviews"); 
     }) 
+})
+
+router.post('/addUserVisited', async (req, res) => {
+    let restaurantID = req.body.group.resto;
+    let id = req.body.group.user.userID;
+    await User.findOneAndUpdate({userID : id}, {$push : {'beenHere' : restaurantID}}, { new: true })
+    .then(resp => res.status(200).send({user: resp}))
+    .catch(() => res.status(500))
+})
+
+router.post('/deleteUserVisited', async (req, res) => {
+    let restaurantID = req.body.group.resto;
+    let id = req.body.group.user.userID; 
+
+    await User.findOneAndUpdate({userID : id}, {$pullAll : {'beenHere' : [restaurantID]}}, { new: true })
+    .then(resp => res.status(200).send({user: resp}))
+    .catch(() => res.status(500))
+})
+
+router.post('/addUserReviewed', async (req, res) => {
+    let restaurantID = req.body.restaurantID;
+    let id = req.body.userID.userID; 
+    
+    await User.findOneAndUpdate({userID : id}, {$push : {'reviewed' : restaurantID}}, { new: true })
+    .then(resp =>{res.status(200).send({user: resp})})
+    .catch(() => res.status(500))
+})
+
+router.post('/deleteUserReviewed', async (req, res) => {
+    let restaurantID = req.body.restaurant.restaurantID;
+    let id = req.body.user.userID; 
+    let review = req.body.review.reviewID;
+    let reviewPics = req.body.review.reviewPictures;
+    let newRating = Math.round(((req.body.restaurant.overallRating * req.body.restaurant.reviews.length) - req.body.review.rating) / (req.body.restaurant.reviews.length - 1) * 10) / 10;
+    let newPoints = req.body.user.points - req.body.review.upvotes;
+
+    //deletes the review from the user's reviewed
+    await User.findOneAndUpdate({userID : id}, {$pullAll : {'reviewed' : [restaurantID], 'beenHere' : [restaurantID]}, $set:{'points': newPoints}}, { new: true })
+    .then(async set => { //deletes the review from the restaurant
+        await Restaurant.findOneAndUpdate({restaurantID : restaurantID}, {$pullAll : {'reviews' : [review]}, $set:{'overallRating': newRating}}, { new: true })
+        .then(async doc => { //deletes the review in the Review db
+            await Review.findOneAndDelete({'reviewID': review})
+            .then(async () => { //deletes the pictures of that review in the db
+                for(let i = 0; i < reviewPics.length; i++) {
+                    await Picture.findOneAndDelete({'pictureID': reviewPics[i]})
+                    .then( pic => {
+                        let relPath = pic.url.split('/'); 
+                        let removePath = `images/${relPath[4]}/${relPath[5]}`;
+    
+                        fs.unlink(removePath, (err) => { //deletes the pictures of the review in the folder
+                            if (err) throw err;
+                        });
+                    })
+                }
+                
+                await User.find({liked: review}) //removes the reviewID from the users who liked the review
+                .then( async users => {
+                    for(let i = 0; i < users.length; i++) {
+                        await User.findOneAndUpdate({userID: users[i].userID}, {$pullAll : {'liked' : [review]}}, {new: true})
+                    }
+                })
+                res.status(200).send()    
+            })
+        })
+    }) 
+    .catch(() => res.status(500))
 })
 
 module.exports = router;

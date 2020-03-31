@@ -18,7 +18,6 @@ const getters =  {
 
     getUser: state => {return state.user},
     getPicture: state => {return state.picture},
-    isLikedReview : state => id => state.user.liked.filter((likes) => likes === id)
 }
 
 const actions =  {
@@ -61,8 +60,27 @@ const actions =  {
         resolve()
       })
     },
-    
-}
+    addRestaurantVisit({commit}, group) {
+      axios.post('http://localhost:9090/users/addUserVisited', {
+        group
+      })
+      .then(resp => {
+        commit('auth_success', resp.data.user)
+      })
+    },
+    deleteRestaurantVisit({commit}, group) {
+      axios.post('http://localhost:9090/users/deleteUserVisited', {
+        group
+      })
+      .then(resp => {
+        commit('auth_success', resp.data.user)
+      })
+    },
+    async updateGetUser({commit}) {
+      let user = await axios.get(`http://localhost:9090/users/${state.user.userID}`);
+      commit('auth_success', user.data.user[0])
+    }
+  }
 
 const mutations = {
   auth_request(state) {
@@ -80,7 +98,7 @@ const mutations = {
     state.user = null
   },
   setPhoto : (state, picture) => state.picture = picture ,
-  setLikedReview : (state, review) => state.user.liked.push(review),
+  setLikedReview : (state, review) => state.user.liked = state.user.liked.concat(review),
   removeLikedReview : (state, review) => state.user.liked = state.user.liked.filter((likes) => likes != review)
 }
 

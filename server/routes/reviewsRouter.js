@@ -1,7 +1,9 @@
 var express = require('express');
 var router = express.Router();
 const path = require('path');
+const mongoose = require('mongoose');
 const Review = require('../models/reviews');
+const Restaurant = require('../models/restaurants');
 
 //Get all reviews
 router.get('/', (req, res) => { 
@@ -42,7 +44,56 @@ router.get('/userID/:id', (req, res) => {
 router.post('/increment/:id', (req, res) => {
     let amount = req.body.value; 
     let id = req.params.id; 
-    Review.findOneAndUpdate({reviewID : id}, {$inc : {'upvotes' : amount}}, (err,res) => {
+    Review.findOneAndUpdate({reviewID : id}, {$inc : {'upvotes' : amount}}, (err, result) => {
+        if (err) throw err
+        res.status(200).send("Updated"); 
+    })
+})
+
+router.post('/addReview/:id', (req,res) => {
+    
+    let reviewerID = mongoose.Types.ObjectId();
+    let overallRatingUpdate = Math.round(((req.body.restaurant.overallRating * req.body.restaurant.reviews.length) + req.body.rating) / (req.body.restaurant.reviews.length + 1) * 10) / 10;
+
+    let item = new Review({
+        reviewID: reviewerID, 
+        reviewerID: req.body.userID.userID,
+        restaurantID: req.body.restaurant.restaurantID,
+        rating: req.body.rating,
+        review: req.body.review,
+        upvotes: 0,
+        reviewPictures: req.body.reviewPictures
+    });
+    
+    item.save()
+    .then(async doc => {
+        await Restaurant.findOneAndUpdate({restaurantID : req.body.restaurant.restaurantID}, {$push : {'reviews' : reviewerID}
+        }, { new: true })
+        .then(() =>{
+                Restaurant.findOneAndUpdate({restaurantID : req.body.restaurant.restaurantID},
+                {'overallRating' : overallRatingUpdate}, {new: true })
+                .then(() => res.send({review: doc}))
+                .catch(() => res.status(500))
+            })
+        .catch(() => res.status(500))
+
+        res.status(200).send({review: doc})
+    })
+})
+
+router.post('/edit-review/:id', (req, res) => {
+    let data = req.body; 
+    let id = req.params.id; 
+    Review.findOneAndUpdate({reviewID : id}, {'review': data.review, 'rating': data.rating, 'reviewPictures': data.pictureIDs.data}, (err, result) => {
+        if (err) throw err
+        res.status(200).send(result); 
+    })
+})
+
+router.post('/:id', (req, res) => {
+    let amount = req.body.value; 
+    let id = req.params.id; 
+    Review.findOneAndUpdate({reviewID : id}, {$inc : {'upvotes' : amount}}, (err,result) => {
         if (err) throw err
         res.status(200).send("Updated"); 
     })

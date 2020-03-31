@@ -25,11 +25,7 @@
             <p>
             <a href="javascript:void(0)" @click="reset()">Upload again</a>
             </p>
-            <ul class="list-unstyled">
-            <!-- <li v-for="item in uploadedFiles" :key="item.id">
-                <img :src="require(`@/${item.path}`)" class="img-responsive img-thumbnail" :alt="item.originalName">
-            </li> -->
-            </ul>
+            
         </div>
         <!--FAILED-->
         <div v-if="isFailed">
@@ -94,7 +90,7 @@ export default {
         return await axios.post(UPLOAD_ROUTE + `/${this.dest}`, formData, {headers: {'Content-Type': 'multipart/form-data' }})
             // get data
             .then(x => x.data)
-            .then(x => x.map(img => Object.assign({},
+            .then(x => x.map(img => Object.assign({}, 
                 img, { url: `http://localhost:9090/static/${this.dest}/${img.filename}` })))
       },
       save(formData) {

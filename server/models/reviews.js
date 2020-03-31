@@ -32,6 +32,11 @@ let reviewSchema = new mongoose.Schema({
         type: Number, 
         required: true, 
         default: 0
+    },
+    reviewPictures: {
+        type: [mongoose.ObjectId],
+        required: false, 
+        default: [] 
     }
 })
 

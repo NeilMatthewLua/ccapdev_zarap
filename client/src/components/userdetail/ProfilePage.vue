@@ -97,7 +97,13 @@
                 </div>
                 </div>
                 <div class="center" v-if="isLogged">
-                <a class="waves-effect waves-light btn-large colored-button show-on-edit padd-bottom" @click="validateForm">Edit Profile!</a>
+                <a class="waves-effect waves-light btn-large colored-button show-on-edit padd-bottom bring_back" @click="validateForm">Edit Profile!</a>
+                    <alertModal 
+                        :message="message"
+                        v-show="isModalVisible"
+                        @close="closeModal"
+                        class="bring_front"
+                    />
                 </div>
             </div>
             <!-- Edit Info Small-->
@@ -199,7 +205,12 @@ export default {
             editProfileVisible: true,
             bigEditProfileVisible: true,
             smallEditProfileVisible: true,
-            user: ' ',
+            user: {
+                name : ' ',
+                address: ' ',
+                email: ' ',
+                points: ' '
+            },
             user_firstname: ' ',
             user_lastname: ' ',
             user_picture: ' ',
@@ -218,18 +229,25 @@ export default {
     },
     methods: {
        async verifyOwn() {
-           this.user = this.$store.getters.getUser;
-            if(this.$route.params.id == this.user.userID) {
-                this.user_picture = this.$store.getters.getPicture['url'];
+           if(this.$store.getters.getUser != null) {
+                if(this.$route.params.id == this.user.userID) {
+                    this.user_picture = this.$store.getters.getPicture['url'];
                 this.isLogged = true;
                 this.tempUser.user = Object.assign({}, this.user);
-            }
-            else(
-                this.user = await axios.get(`http://localhost:9090/users/${this.$route.params.id}`)
-                .then(resp => {
-                    this.user = resp.data.user
-                })
-            )
+                }
+                else(
+                    await axios.get(`http://localhost:9090/users/${this.$route.params.id}`)
+                    .then(resp => {
+                        this.user = resp.data.user[0]
+                    })
+                )
+           }
+           else {               
+               await axios.get(`http://localhost:9090/users/${this.$route.params.id}`)
+               .then(resp => {
+                   this.user = resp.data.user[0]
+               })
+           }
             this.user_firstname = this.user.name.split(" ")[0];
             this.user_lastname = this.user.name.split(" ")[1];
             this.tempUser.first = this.user_firstname
@@ -253,7 +271,7 @@ export default {
             this.editProfileVisible = true,
             this.bigEditProfileVisible = true,
             this.smallEditProfileVisible = true,
-            this.confirm_password = ' ',
+            this.confirm_password = '',
             this.errors = [],
             this.$refs.resetPhoto.reset();
         },
