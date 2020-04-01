@@ -143,8 +143,7 @@ export default {
                 await this.$store.dispatch('updateGetUser'),
                 await this.$store.dispatch('getRestoById',this.$store.getters.fetchCurrResto.restaurantID)
                 console.log(this.$store.getters.fetchCurrResto.restaurantID)
-            })
-            this.$emit("delete-Review"); 
+            }) 
         }, 
         goToProfile() {
             router.push({ name: 'UserDetail', params: { id : this.reviewData.reviewerID, menu : "review" } });

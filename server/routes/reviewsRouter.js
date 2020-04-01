@@ -85,7 +85,7 @@ router.post('/addReview/:id', (req,res) => {
 router.post('/edit-review/:id', (req, res) => {
     let data = req.body; 
     let id = req.params.id; 
-    Review.findOneAndUpdate({reviewID : id}, {'review': data.review, 'rating': data.rating, 'reviewPictures': data.pictureIDs.data}, (err, result) => {
+    Review.findOneAndUpdate({reviewID : id}, {'review': data.review, 'rating': data.rating, 'reviewPictures' : data.photos}, (err, result) => {
         if (err) throw err
         res.status(200).send(result); 
     })

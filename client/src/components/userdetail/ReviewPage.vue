@@ -5,12 +5,12 @@
                 <div class="col s12 m11 l9 view-review">  
                     <div class="review-section relative-position">
                         <div class="write-review">
-                            <div class="review-feed" v-if="this.fetchUserReviews().length > 0">
+                            <div class="review-feed" v-show="this.fetchUserReviews().length > 0">
                                 <div class="review-post padd-top">
                                     <div class="edit-review">
                                         <div v-show="!isEditing">
                                             <ReviewPost class="review-cells" v-for="(review,index) in this.fetchUserReviews()" :key="review.reviewID"  
-                                            :reviewData="review" :index="index" :inFeed="false" @edit-Review="editReview" @delete-Review="deleteReview" :inProfile="true"/> 
+                                            :reviewData="review" :index="index" :inFeed="false" @edit-Review="editReview" :inProfile="true"/> 
                                         </div>
                                         <div v-show="isEditing">
                                              <!-- if wrong details, display error message -->
@@ -55,7 +55,7 @@
                                                 <textarea v-model="editData" id="review-area" class="materialize-textarea" data-length = "300"></textarea>
                                                 <div>
                                                     <!-- File Upload Portion -->
-                                                    <ImageUpload ref="uploadSection" @file-upload="getFiles"  @toggleSubmit="this.toggleSubmitButton" 
+                                                    <ImageUpload ref="uploadSection" @toggleSubmit="this.toggleSubmitButton" 
                                                     :dest="destination"  :existingPics="this.chosenReviewPics" /> 
                                                     <a class="submit-btn red btn right" @click="validateEdit">SUBMIT</a>
                                                     <a class="submit-btn btn right" @click="cancelEdit">CANCEL</a>
@@ -65,7 +65,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div v-else>
+                            <div v-show="this.fetchUserReviews().length == 0">
                                 <h5 class="center padd-top"> No Reviews Yet? Review one now!</h5>
                             </div>
                         </div>
@@ -86,11 +86,11 @@
 
 <script>
 import { BreedingRhombusSpinner } from 'epic-spinners';
-import { mapActions, mapGetters } from 'vuex'; 
+import { mapGetters, mapActions, mapMutations } from 'vuex'; 
 import ReviewPost from '@/components/display-restaurant/ReviewPost.vue';
 import ImageUpload from '@/components/ImageUpload'; 
 import modal from '@/components/alertModal'; 
-import axios from 'axios'; 
+import axios from 'axios';  
 export default {
     name: "DiningHistory",
     components: {
@@ -102,66 +102,42 @@ export default {
     data () {
         return {
             isWriting : false, //If user is writing a review
-            reviewData : "", //Content to store data in user review
             isEditing: false, //If user is editing current review
-            loading : true,
-            chosenReviewIndex : 0, 
+            loading : true, //When fetching review posts
+            update: false, //To force computed properties to update
+            modalMessage: "Review edited successfully!",
+            showSuccessModal: false,
+            chosenReviewIndex : 0, //Index of review chosen to edit 
             rating: 0,
-            editData: "",
+            editData: "", //Stores the review text of the review being edited 
             destination: "reviewPictures",
-            update: false, 
-            uploadedFiles: [],
             errors: [],
-            isCheckedVal: {
+            isCheckedVal: { 
                 '0': false,
                 '1': false,
                 '2': false,
                 '3': false,
                 '4': false
             }, 
-            modalMessage: "Review edited successfully!",
-            showSuccessModal: false
         }
     }, 
     computed: {
+        //Data of the chosen review to edit 
         chosenReview() {
-            return (this.update || this.fetchUserReviews() != undefined) ? this.fetchUserReviews()[this.chosenReviewIndex] : undefined;  
+            return ((this.update && !this.update) || this.fetchUserReviews() != undefined) ? this.fetchUserReviews()[this.chosenReviewIndex] : undefined;  
         },
         chosenReviewPics() {
-            return (this.update || this.chosenReview != undefined) ? this.chosenReview.reviewPics : [];   
+            return ((this.update && !this.update) || this.chosenReview != undefined) ? this.chosenReview.reviewPics : [];   
         },
         isChecked() {
             return this.isCheckedVal; 
         }
     },
     methods : {
-        ...mapActions(['getReviewsByReviewer','getUserReviews']),
-        ...mapGetters(['fetchUserReviews']),
-        async editReview (index) {
-            this.update = true; 
-            this.isEditing = true;  
-            this.chosenReviewIndex = index; 
-            this.editData = this.chosenReview.review;
-            this.doThis(this.chosenReview.rating); 
-            this.$set(this,'uploadedFiles', this.chosenReviewPics); 
-            this.$refs.uploadSection.reset(true, this.chosenReviewPics); 
-        }, 
-        deleteReview() {
-            //Deletes Review
-        },
-        doThis(number) {
-            for(let i = 0; i < number; i++){
-                if(this.isCheckedVal[ number - 1] == true)
-                    this.isCheckedVal[i] = !this.isCheckedVal[i];
-                else
-                    this.isCheckedVal[i] = true;
-            }
-            for(let i = number; i < 5; i++)
-                this.isCheckedVal[i] = false;
-        },
-        toggleSubmitButton: function(value) {
-            this.submitVisible = value
-        },
+        ...mapActions(['getReviewsByReviewer','getUserReviews','removeUnusedPictures']),
+        ...mapGetters(['fetchUserReviews', 'fetchUploadedReviews','fetchUploadedPics']),
+        ...mapMutations(['setUploadedPics']),
+        //Validates form before saving edit 
         validateEdit() {
             this.errors = [];
             if(!(this.editData != '')) {
@@ -181,52 +157,85 @@ export default {
                 return true;
             }  
         },
-      async saveEdit() {
-          await axios.post(`http://localhost:9090/pictures/delete-existing/${this.chosenReview.reviewID}`)
-          await this.$store.dispatch('updateRestoRating', {
+        //Save the edit in the db 
+        async saveEdit() {
+            //Delete existing pictures from reviews
+            let newIDs = await axios.post(`http://localhost:9090/pictures/delete-existing/${this.chosenReview.reviewID}`, {
+                    newPictures : this.fetchUploadedPics()
+            })
+            //Update the restaurants rating in the db 
+            await this.$store.dispatch('updateRestoRating', {
                     oldRating : this.chosenReview.rating, 
                     rating : this.rating,
                     restaurantID: this.chosenReview.restaurantID,
                     inProfile : true
-          })
-          .then(async () => 
+            })
+            //Edit review in the db 
+            .then(async () => 
                 await this.$store.dispatch('editReview', {
                     oldReview: this.chosenReview,
                     reviewID: this.chosenReview.reviewID,
                     review : this.editData,
                     rating : this.rating, 
-                    photos: this.uploadedFiles,
+                    photos : newIDs.data,
+                    newUrls :  this.fetchUploadedPics(),
                     userID: this.$store.getters.getUser.userID,
                     restaurantID: this.chosenReview.restaurantID,
                     inProfile : true
                 })
-                .then(() => this.displaySuccessModal("Successfully edited review"))      
+                //Once all complete, display success modal 
+                .then(async () => { 
+                    this.displaySuccessModal("Successfully edited review") 
+                    })      
                 )  
-          .catch((err) => {console.log(err)
-                          this.displaySuccessModal("Error in updating review.")
+            .catch((err) => {console.log(err)
+                            this.displaySuccessModal("Error in updating review.")
                             })  
-        this.update = false; 
-        this.doThis(0); 
-      },
-      cancelEdit() {
-          this.doThis(0); 
-          this.isEditing = false; 
-          this.update = false;  
-      },
-      getFiles (files) {
-        this.$set(this,'uploadedFiles', files); 
-      },
-      displaySuccessModal(message) {
-        this.modalMessage = message; 
-        this.showSuccessModal = true; 
-        this.isEditing = false; 
-      },
-      hideSuccessModal() {
-        this.showSuccessModal = false;
-      },
-      mounted() {
-         this.$refs.uploadSection.reset(true, this.chosenReviewPics);  
-      },
+            this.update = false; 
+            this.doThis(0); 
+        },
+        //Sets data inside edit form to chosen review 
+        async editReview (index) {
+            this.update = true; 
+            this.isEditing = true;  
+            this.chosenReviewIndex = index; 
+            this.editData = this.chosenReview.review;
+            this.doThis(this.chosenReview.rating); 
+            this.$refs.uploadSection.reset(false, []); 
+            this.setUploadedPics(this.chosenReviewPics);   
+        }, 
+        async cancelEdit() { 
+            await this.removeUnusedPictures();
+            this.setUploadedPics(this.chosenReviewPics);
+            this.update = true; 
+            this.doThis(0); 
+            this.isEditing = false;   
+        },
+        displaySuccessModal(message) {
+            this.modalMessage = message; 
+            this.showSuccessModal = true; 
+            this.isEditing = false; 
+        },
+        hideSuccessModal() {
+            this.showSuccessModal = false;
+        },
+        //Sets the number of checks when editing a review
+        doThis(number) {
+            for(let i = 0; i < number; i++){
+                if(this.isCheckedVal[ number - 1] == true)
+                    this.isCheckedVal[i] = !this.isCheckedVal[i];
+                else
+                    this.isCheckedVal[i] = true;
+            }
+            for(let i = number; i < 5; i++)
+                this.isCheckedVal[i] = false;
+        },
+        toggleSubmitButton: function(value) {
+            this.submitVisible = value
+        },
+    },
+    mounted() {
+        this.$refs.uploadSection.reset(true, this.chosenReviewPics);  
     },
     async created () {
         //Get User Reviews
@@ -234,10 +243,16 @@ export default {
         let arr = this.fetchUserReviews().map((val) => {
             return val.reviewID; 
         }); 
+
         //Get Review Details of Each
         if(arr.length > 0)
             await this.getUserReviews(arr);
         this.loading = false; 
+
+        //Removes unused pictures when window is closed 
+        window.addEventListener('beforeunload', async () => {
+            await this.removeUnusedPictures(); 
+        }, false)
     }
 }
 </script>

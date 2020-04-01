@@ -144,42 +144,76 @@ router.post('/edit-review-pics/:destination', (req, res) => {
 
 router.post('/delete-existing/:id', (req, res) => {
     let reviewID = req.params.id    
-    
+    let newPictures = req.body.newPictures; 
+    let skip = 0;
+    let newIDs = [] 
     Review.findOne({'reviewID': reviewID}, async (err, review) => {
         if(err) throw err; 
-        let reviewPics = review.reviewPictures;  
+        let reviewPics = review.reviewPictures;   
         for(let i = 0; i < reviewPics.length; i++) {
-            await Picture.findOne({'pictureID' : reviewPics[i]}, (error, pic) => {
+            //Look for the existing pictures of the review and compare if any remain the same 
+            await Picture.findOne({'pictureID' : reviewPics[i]}, async (error, pic) => {
                 if(error) throw error; 
-                if(pic != null) {
+                let found = false; 
+                for(let j = 0; j < newPictures.length && !found; j++) {
+                    if(newPictures[j] === pic.url) {
+                        newIDs.push(reviewPics[i]); 
+                        found = true; 
+                        skip++; 
+                    }
+                }
+                //Delete the review pictures that are no longer used 
+                if(!found) {
                     let doc = pic.url;    
                     let relPath = doc.split('/');
                     let removePath = `images/${relPath[4]}/${relPath[5]}`;
-                    console.log(`${removePath} was deleted`);
                     fs.unlink(removePath, (err) => {
                         if (err) throw err;
                     });
-                }
-            })
-            await Picture.deleteOne({'pictureID' : reviewPics[i]}, (error, result) => {
-                if(error) throw error; 
-                console.log(reviewPics[i] + " was deleted from DB")
+                    await Picture.deleteOne({'pictureID' : reviewPics[i]}, (error, result) => {
+                        if(error) throw error; 
+                        console.log(reviewPics[i] + " was deleted from DB")
+                    })
+                    console.log(`${removePath} was deleted`);
+                }    
             })
         }
-        res.status(200).send("Old Photos deleted"); 
+        for(let j = skip; j < newPictures.length; j++) {
+            let newPic = new Picture ({
+                url : newPictures[j]
+            })
+            newIDs.push(newPic.pictureID); 
+            await newPic.save().catch(err => console.log(err)); 
+        }
+        res.status(200).send(newIDs); 
     })
 })
 
-router.post('/delete-review-pic', (req, res) => {
-    //Make this into a loop that deletes the pics user uploaded and didn't submit 
-    let data = req.body; 
-    let doc = req.body.url; 
-    let relPath = doc.split('/');
-    let removePath = `images/${relPath[4]}/${relPath[5]}`;
-    fs.unlink(removePath, (err) => {
-        if (err) throw err;
-        console.log(`${removePath} was deleted`);
-    });
+router.post('/delete-unused-pics', async (req, res) => {
+    let urls = req.body.urls;   
+    let found = false;
+    let skip = 999;   
+    let i; 
+    //Pass by pictures that are part of the review
+    for(i = 0; i < urls.length && !found; i++) {
+        await Picture.findOne({'url' : urls[i]}, (err, result) => {
+            if(result === null) {
+               found = true;
+               skip = i;      
+            }
+        }) 
+    }
+    // Delete unused pictures
+    for(let j = skip; j < urls.length; j++) {
+        let url = urls[j]; 
+        let relPath = url.split('/');
+        let removePath = `images/${relPath[4]}/${relPath[5]}`;
+        fs.unlink(removePath, (err) => {
+            if (err) throw err;
+            console.log(`${removePath} was deleted`);
+        });
+    }
+    res.status(200).send(urls);
 })
 
 module.exports = router; 

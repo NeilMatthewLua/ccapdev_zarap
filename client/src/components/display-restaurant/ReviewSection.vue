@@ -44,7 +44,7 @@
                 <textarea v-model="reviewData" id="review-area" class="materialize-textarea" data-length = "300"></textarea>
                 <div class="input-field">
                 <!-- File Upload Portion -->
-                    <ImageUpload ref="uploadSection" @file-upload="getFiles"  @toggleSubmit="this.toggleSubmitButton" 
+                    <ImageUpload ref="uploadSection" @toggleSubmit="this.toggleSubmitButton" 
                     :dest="destination"  :existingPics="this.reviewPictures" /> 
                     <a class="submit-btn red btn right" @click="validateReview">SUBMIT</a>
                     <a class="submit-btn btn right" @click="cancelWrite">CANCEL</a>
@@ -95,16 +95,14 @@
                         </label>
                     </p>
                 </div>
+                <i class="material-icons prefix">mode_edit</i>
+                <textarea v-model="editData" id="review-area" class="materialize-textarea" data-length = "300"></textarea>
                 <div class="input-field"> 
-                    <i class="material-icons prefix">mode_edit</i>
-                    <textarea v-model="editData" id="review-area" class="materialize-textarea" data-length = "300"></textarea>
-                    <div>
                     <!-- File Upload Portion -->
-                    <ImageUpload ref="uploadSection" @file-upload="getFiles"  @toggleSubmit="this.toggleSubmitButton" 
+                    <ImageUpload ref="uploadSection"  @toggleSubmit="this.toggleSubmitButton" 
                     :dest="destination"  :existingPics="this.reviewPictures" /> 
                     <a class="submit-btn red btn right" @click="validateEdit">SUBMIT</a>
                     <a class="submit-btn btn right" @click="cancelEdit">CANCEL</a>
-                    </div>
                 </div>
             </div>
             <modal @close="hideSuccessModal" :message="modalMessage" v-show="showSuccessModal"/> 
@@ -130,7 +128,7 @@
 </template>
 
 <script scoped>
-import { mapGetters } from 'vuex'; 
+import { mapGetters, mapActions, mapMutations } from 'vuex'; 
 import ReviewPost from './ReviewPost'; 
 import ImageUpload from '@/components/ImageUpload'; 
 import modal from '@/components/alertModal'; 
@@ -152,7 +150,6 @@ export default {
             editData: "",
             destination: "reviewPictures",
             //Add Computed to get boolean if current user is also review user
-            uploadedFiles: [],
             errors: [],
             showPopular : true,
             submitVisible: true,
@@ -172,56 +169,37 @@ export default {
     }, 
     computed : {
         allReviews () {
-            return (this.update || !this.showPopular) ? this.fetchAllReviews() : []; 
+            return ((this.update && !this.update) || !this.showPopular) ? this.fetchAllReviews() : []; 
         },
         popularReview () {
-            return (this.update || this.showPopular) ? this.fetchPopularReview() : []; 
+            return ((this.update && !this.update) || this.showPopular) ? this.fetchPopularReview() : []; 
         },
         isLogged () {
-            return (this.getUser() != undefined) ? true : false; 
+            return ((this.update && !this.update) || this.getUser() != undefined) ? true : false; 
         }, 
         hasReview() { 
             return (this.isLogged) ? this.$store.getters.hasReview(this.getUser().userID) : false; 
         },
         ownReview() {
-            return (this.update || this.isLogged) ? this.$store.getters.ownReview(this.getUser().userID) : undefined;  
+            return (this.isLogged) ? this.$store.getters.ownReview(this.getUser().userID) : undefined;  
         },
         reviewPictures() {
-            return (this.hasReview) ? this.ownReview.reviewPics : []; 
+            return ((this.update && !this.update) || this.hasReview) ? this.ownReview.reviewPics : []; 
         },
         isChecked() {
             return this.isCheckedVal
         }
     },
     methods: {
-        doThis(number) {
-            for(let i = 0; i < number; i++){
-                if(this.isCheckedVal[ number - 1] == true)
-                    this.isCheckedVal[i] = !this.isCheckedVal[i];
-                else
-                    this.isCheckedVal[i] = true;
-            }
-            for(let i = number; i < 5; i++)
-                this.isCheckedVal[i] = false;
-        },
-        resetReview() {
-            this.review = "",
-            this.isCheckedVal = {
-                '0': false,
-                '1': false,
-                '2': false,
-                '3': false,
-                '4': false
-            },
-            this.isWriting = false
-        },
-        toggleSubmitButton: function(value) {
-            this.submitVisible = value
-        },
+        ...mapGetters(['fetchAllReviews', 'fetchPopularReview','getUser', 'fetchUploadedPics']),
+        ...mapActions(['removeUnusedPictures']), 
+        ...mapMutations(['setUploadedPics', 'setUploadedPics']),
         writeReview() {
-            this.isWriting = true; 
+            this.isWriting = true;
+            this.update = true;  
             this.doThis(0); 
-            this.$set(this,'uploadedFiles',[]); 
+            this.setUploadedPics([]);
+            this.$refs.uploadSection.reset(false,[]);  
         },
         validateReview() {
             this.errors = [];
@@ -236,9 +214,6 @@ export default {
             }
             if(this.rating == 0) {
                 this.errors.push('Rating is required!')
-            }
-            if(this.uploadedFiles.length > 5) {
-                this.errors.push('Only up to 5 images can be uploaded!')
             }
             if(!this.errors.length) {
                 this.saveReview(); 
@@ -264,15 +239,17 @@ export default {
                 return true;
             }  
         },
-        saveReview() { //saves and posts the review of the user
+         //saves and posts the review of the user
+        saveReview() {
             this.$store.dispatch('addReview', {
                 review: this.reviewData,
                 rating: this.rating,
-                photos: this.uploadedFiles,
+                photos: this.fetchUploadedPics(),
                 userID: this.$store.getters.getUser,
                 restaurant: this.$store.getters.fetchCurrResto
             })
-            .then(async () => { //Adds the restuarant to the user's visited places
+            //Adds the restuarant to the user's visited places
+            .then(async () => { 
                 await this.$store.dispatch('updateGetUser')
                 await this.$store.dispatch('getRestoById',this.$store.getters.fetchCurrResto.restaurantID)
                 .then(() => {
@@ -285,83 +262,117 @@ export default {
                           this.displaySuccessModal("Error in updating review.")
                             }) 
             
-            this.update = true;
+            this.update = false;
         },
-      editReview () { 
-        this.isEditing = true;  
-        this.doThis(this.ownReview.rating); 
-        this.$set(this,'uploadedFiles', this.ownReview.reviewPics); 
-      }, 
-      async saveEdit() {
-          await axios.post(`http://localhost:9090/pictures/delete-existing/${this.ownReview.reviewID}`) 
-          await this.$store.dispatch('updateRestoRating', {
+        editReview () { 
+            this.isEditing = true;  
+            this.doThis(this.ownReview.rating);
+            this.editData = this.ownReview.review;   
+        }, 
+        async saveEdit() {
+            let newIDs = await axios.post(`http://localhost:9090/pictures/delete-existing/${this.ownReview.reviewID}`, {
+                    newPictures : this.fetchUploadedPics()
+            })
+            await this.$store.dispatch('updateRestoRating', {
                     oldRating : this.ownReview.rating, 
                     rating : this.rating,
                     restaurantID: this.$store.getters.fetchCurrResto.restaurantID,
                     inProfile: false
-          })
-          .then(async () =>  
+            })
+            .then(async () =>  
                 await this.$store.dispatch('editReview', {
                     oldReview: this.ownReview,
                     reviewID: this.ownReview.reviewID,
                     review : this.editData,
                     rating : this.rating, 
-                    photos: this.uploadedFiles,
+                    photos : newIDs.data,
+                    newUrls :  this.fetchUploadedPics(),
                     userID: this.$store.getters.getUser.userID,
                     restaurantID: this.$store.getters.fetchCurrResto.restaurantID,
                     inProfile: false
                 })
                 .then(() => this.displaySuccessModal("Successfully edited review"))      
                 )  
-          .catch((err) => {console.log(err)
-                          this.displaySuccessModal("Error in updating review.")
+            .catch((err) => {console.log(err)
+                            this.displaySuccessModal("Error in updating review.")
                             })  
-        this.update = true;   
-      },
-      cancelWrite() {
-        this.isWriting = false; 
-        this.$set(this,'uploadedFiles', []);
-        this.update = false;
-        this.rating = 0;
-        this.reviewData = "";
-        this.editData = "";  
-      },
-      cancelEdit() {
-          this.doThis(this.ownReview.rating); 
-          this.isEditing = false; 
-          this.$set(this,'uploadedFiles', []);
-      },
-      deleteReview () {
-        this.cancelWrite(); 
-        this.$emit('postedReview', false)
-      },
-      getFiles (files) {
-        this.$set(this,'uploadedFiles', files); 
-      },
-      switchPopular() {
-        this.showPopular = true 
-      },
-      switchAll() { 
-        this.showPopular = false
-      },
-      displaySuccessModal(message) {
-        this.modalMessage = message;   
-        this.showSuccessModal = true; 
-        this.isEditing = false; 
-        this.update = false; 
-      },
-      hideSuccessModal() {
-        this.showSuccessModal = false;
-      },
-      ...mapGetters(['fetchAllReviews', 'fetchPopularReview','getUser'])
+            this.update = false;   
+        },
+        async cancelWrite() {
+            await this.removeUnusedPictures();
+            this.$refs.uploadSection.reset(true, []);
+            this.isWriting = false;
+            this.isEditing = false;  
+            this.rating = 0;
+            this.reviewData = "";
+            this.editData = "";
+            this.update = true;  
+        },
+        async cancelEdit() { 
+            await this.removeUnusedPictures();
+            this.setUploadedPics(this.ownReview.reviewPics); 
+            this.$refs.uploadSection.reset(true, this.ownReview.reviewPics);
+            this.doThis(this.ownReview.rating);  
+            this.isWriting = false; 
+            this.isEditing = false; 
+            this.update = true; 
+        },
+        resetReview() {
+            this.reviewData = "",
+            this.isCheckedVal = {
+                '0': false,
+                '1': false,
+                '2': false,
+                '3': false,
+                '4': false
+            },
+            this.isWriting = false
+        },
+        deleteReview () {
+            this.cancelWrite(); 
+            this.$emit('postedReview', false)
+            this.update = true;
+        },
+        switchPopular() {
+            this.showPopular = true 
+        },
+        switchAll() { 
+            this.showPopular = false
+        },
+        displaySuccessModal(message) {
+            this.modalMessage = message;   
+            this.showSuccessModal = true; 
+            this.isEditing = false; 
+            this.update = false; 
+        },
+        hideSuccessModal() {
+            this.showSuccessModal = false;
+        },
+        doThis(number) {
+                for(let i = 0; i < number; i++){
+                    if(this.isCheckedVal[ number - 1] == true)
+                        this.isCheckedVal[i] = !this.isCheckedVal[i];
+                    else
+                        this.isCheckedVal[i] = true;
+                }
+                for(let i = number; i < 5; i++)
+                    this.isCheckedVal[i] = false;
+            },
+        toggleSubmitButton: function(value) {
+            this.submitVisible = value
+        },
     },
     mounted() {
-         this.$refs.uploadSection.reset(true, this.reviewPictures);  
+         this.$refs.uploadSection.reset(true, this.ownReview.reviewPics);  
     },
     created() {
         if(this.hasReview) {
             this.editData = this.ownReview.review; 
+            this.setUploadedPics(this.ownReview.reviewPics); 
         }
+        window.addEventListener('beforeunload', async () => {
+            await this.removeUnusedPictures();
+        }, false)
     }
 }
 </script>
