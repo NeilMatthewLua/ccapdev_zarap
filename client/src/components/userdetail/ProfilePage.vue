@@ -5,21 +5,21 @@
             <div class="profile-container">
             <div class="grouped-info">
                 <div class="info-font white-text pad-right-text"><pre class="remove-margin">Name:       </pre></div>
-                <div class="info-font text menu-font white-text"> {{user.name}}</div>
+                <div class="info-font text menu-font white-text"> {{userData.name}}</div>
             </div>
             <div class="grouped-info ">
                 <div class="info-font white-text pad-right-text"><pre class="remove-margin">Address:    </pre></div>
-                <div class="info-font text menu-font white-text"> {{user.address}}</div>
+                <div class="info-font text menu-font white-text"> {{userData.address}}</div>
             </div>
             <div class="grouped-info ">
                 <div class="info-font white-text pad-right-text"><pre class="remove-margin">E-mail:     </pre></div>
-                <div class="info-font text menu-font white-text">{{user.email}}</div>
+                <div class="info-font text menu-font white-text">{{userData.email}}</div>
             </div>
             <div class="grouped-info ">
                 <div class="info-font white-text pad-right-text"><pre class="remove-margin">Points:     </pre></div>
-                <div class="info-font text menu-font white-text">{{user.points}}</div>
+                <div class="info-font text menu-font white-text">{{userData.points}}</div>
             </div>
-            <div  v-if="isLoggedIn">
+            <div  v-if="loggedIn">
                 <a class="white-text hover-underline corner-bottom-right" id="edit-profile" @click="toggleView">Edit Profile</a>
             </div>
             </div>
@@ -94,7 +94,7 @@
                     :dest="profilePictures" :singleUpload="true" :existingPics="[this.profilePicture]" />
                 </div>
                 </div>
-                <div class="center" v-if="isLoggedIn">
+                <div class="center" v-if="loggedIn">
                 <a class="waves-effect waves-light btn-large colored-button show-on-edit padd-bottom bring_back" @click="validateForm">Edit Profile!</a>
                     <alertModal 
                         :message="message"
@@ -188,6 +188,7 @@ import axios from 'axios';
 import {mapGetters, mapActions, mapMutations} from 'vuex'; 
 import ImageUpload from '@/components/ImageUpload'; 
 import alertModal from '@/components/alertModal';
+import { mapGetters } from 'vuex';
 
 export default {
     name: "ProfilePage",
@@ -231,12 +232,16 @@ export default {
       },
       profilePicture() {
         return (this.update || !this.update) ? this.user_picture: []; 
+      },
+      userData() {
+        return this.getUser();
       }
     },
     methods: {
        ...mapActions(['removeUnusedPictures']),
-       ...mapGetters(['fetchUploadedPics']),
+       ...mapGetters(['fetchUploadedPics','getUser', 'isLoggedIn']),
        ...mapMutations(['setUploadedPics']),
+    },
        async verifyOwn() {
            if(this.$store.getters.getUser != null) {
                this.user = this.$store.getters.getUser;

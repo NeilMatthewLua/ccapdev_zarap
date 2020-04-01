@@ -57,6 +57,9 @@ export default {
         mounted() {
             this.updateUserPage();
         },
+        reset() {
+            this.$refs.resetEdit.reset();
+        },
         uploadFiles(files) {
             this.$set(this, "uploadedFiles", files);  
         },
