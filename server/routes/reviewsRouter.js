@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 const path = require('path');
+const fs = require('fs'); 
 const mongoose = require('mongoose');
 const Review = require('../models/reviews');
 const Restaurant = require('../models/restaurants');
@@ -84,7 +85,7 @@ router.post('/addReview/:id', (req,res) => {
 router.post('/edit-review/:id', (req, res) => {
     let data = req.body; 
     let id = req.params.id; 
-    Review.findOneAndUpdate({reviewID : id}, {'review': data.review, 'rating': data.rating, 'reviewPictures': data.pictureIDs.data}, (err, result) => {
+    Review.findOneAndUpdate({reviewID : id}, {'review': data.review, 'rating': data.rating, 'reviewPictures' : data.photos}, (err, result) => {
         if (err) throw err
         res.status(200).send(result); 
     })

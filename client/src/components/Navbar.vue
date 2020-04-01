@@ -386,7 +386,7 @@
 import M from 'materialize-css';
 import router from '../router';
 import alertModal from '@/components/alertModal';
-
+import { mapActions } from 'vuex'; 
 export default {
   Name: "Navbar",
   components: {
@@ -401,7 +401,8 @@ export default {
         return this.$store.getters.isLoggedIn;
     }
   },
-  methods: {  
+  methods: {
+    ...mapActions(['removeUnusedPictures']),  
     showModal() { //confirmation of successful registration
         this.isModalVisible = true;
     },
@@ -417,7 +418,9 @@ export default {
           this.isLogged = true;
         }
     },
-    logout() {
+    async logout() {
+      await this.removeUnusedPictures();
+      this.$emit("logout"); 
       this.$store.dispatch('logout')
       .then(() => {
         this.isLogged= false;

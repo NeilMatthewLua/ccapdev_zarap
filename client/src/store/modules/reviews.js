@@ -103,28 +103,29 @@ const actions =  {
         }
    
         await axios.post(`http://localhost:9090/users/deleteUserReviewed`, {
-                restaurant : details.restaurant,
+                restaurant: details.restaurant,
                 user: details.user,
                 review: review
         })
         .then(() => {
-            if(details.route.name == "UserDetail")
+            if(details.route.name == "UserDetail"){
                 commit('removeUserReview', index)
-            else
+            }
+            else {
                 commit('removeReview', index)
+            }
         })
     },
 
     async editReview({commit}, group) {
-        let pictureIDs = await axios.post('http://localhost:9090/pictures/save-pictures', group.photos);
-        group = {...group, pictureIDs : pictureIDs};
 
         //Update Review Object 
         await axios.post(`http://localhost:9090/reviews/edit-review/${group.reviewID}`, group); 
-        let editedReview = {...group.oldReview};
-        editedReview.reviewPics = group.photos;  
+        let editedReview = {...group.oldReview};  
         editedReview.rating = group.rating; 
         editedReview.review = group.review;  
+        editedReview.reviewPics = group.newUrls; 
+        console.log("Review Edited"); 
         if(!group.inProfile){ 
             commit('updateReviewResto', editedReview); 
         }

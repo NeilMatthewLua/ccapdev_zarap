@@ -24,13 +24,15 @@ export default {
     },
     methods: {
         goMyReviews() {
-            router.push({path:`/userdetail/${this.userID}/review`});
+            router.push({path:`/userdetail/${this.userID}/review`}).catch(() => {}); 
         },
         goMyDining() {
-            router.push({path: `/userdetail/${this.userID}/dining`});
+            this.$emit("reset");
+            router.push({path: `/userdetail/${this.userID}/dining`}).catch(() => {}); 
         },
         goMyProfile() {
-            router.push({path: `/userdetail/${this.userID}/myprofile`});
+            this.$emit("reset");
+            router.push({path: `/userdetail/${this.userID}/myprofile`}).catch(() => {}); 
         }
     }
 }

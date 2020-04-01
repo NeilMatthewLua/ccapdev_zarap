@@ -197,17 +197,17 @@ router.post('/addUserReviewed', async (req, res) => {
 
 router.post('/deleteUserReviewed', async (req, res) => {
     let restaurantID = req.body.restaurant.restaurantID;
+    let thisRestaurant = await Restaurant.find({restaurantID: restaurantID}).exec()
     let id = req.body.user.userID; 
     let review = req.body.review.reviewID;
     let reviewPics = req.body.review.reviewPictures;
-    let newRating = Math.round(((req.body.restaurant.overallRating * req.body.restaurant.reviews.length) - req.body.review.rating) / (req.body.restaurant.reviews.length - 1) * 10) / 10;
+    let newRating = Math.round(((thisRestaurant[0].overallRating * thisRestaurant[0].reviews.length) - req.body.review.rating) / (thisRestaurant[0].reviews.length - 1) * 10) / 10;
     let newPoints = req.body.user.points - req.body.review.upvotes;
-
     //deletes the review from the user's reviewed
     await User.findOneAndUpdate({userID : id}, {$pullAll : {'reviewed' : [restaurantID], 'beenHere' : [restaurantID]}, $set:{'points': newPoints}}, { new: true })
     .then(async set => { //deletes the review from the restaurant
         await Restaurant.findOneAndUpdate({restaurantID : restaurantID}, {$pullAll : {'reviews' : [review]}, $set:{'overallRating': newRating}}, { new: true })
-        .then(async doc => { //deletes the review in the Review db
+        .then(async doc => { //deletes the review in the Review db 
             await Review.findOneAndDelete({'reviewID': review})
             .then(async () => { //deletes the pictures of that review in the db
                 for(let i = 0; i < reviewPics.length; i++) {
