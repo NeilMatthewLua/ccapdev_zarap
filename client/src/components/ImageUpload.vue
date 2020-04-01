@@ -7,7 +7,7 @@
       </div>
     </div>
     <PictureModal :url="this.reviewPictures[zoomedPic]" :isEditable="true"
-                  @close="closeModal" @change-pic="this.changePic" @remove-pic="removePicture"
+                  @close="closeModal" @change-pic="this.changePic" @remove-pic="removeSelected"
                   v-show="modalVisible"/>
     <div class="container">
         <!--UPLOAD-->
@@ -44,6 +44,7 @@
 
 <script>
 // This Component Uploads Multiple Images to the Uploads folder found in the backend
+import { mapGetters, mapActions, mapMutations} from 'vuex'; 
 import axios from 'axios';
 import PictureModal from '@/components/PictureModal'; 
 const STATUS_INITIAL = 0, STATUS_SAVING = 1, STATUS_SUCCESS = 2, STATUS_FAILED = 3;
@@ -55,7 +56,6 @@ export default {
     },
     data () {
         return {
-            uploadedFiles: [],
             uploadError: null,
             currentStatus: null,
             uploadFieldName: 'photos',
@@ -84,26 +84,31 @@ export default {
         return this.currentStatus === STATUS_FAILED;
       },
       reviewPictures() {
-        return this.uploadedFiles.map((item) => item); 
+        return this.fetchUploadedPics();  
       }
     },
     methods: {
+      ...mapGetters(['fetchUploadedPics']),
+      ...mapActions(['removePicture']),
+      ...mapMutations(['setUploadedPics', 'addUploadedPics']),
+      //Hides submit button while uploading 
       toggleSubmit(value) {
         this.$emit('toggleSubmit', value)
       },
+      // Resets image container to display initial images 
       reset(completeReset, pics) {
-        // reset form to initial state
         if(completeReset) {
-          this.uploadedFiles = []; 
+          this.setUploadedPics([]) 
           if(pics != undefined)
-          this.uploadedFiles = pics.map((item) => item); 
+            this.setUploadedPics(pics);  
         }
         this.currentStatus = STATUS_INITIAL;
         this.uploadError = null;
       },
+      //Uploads the pictures to the backend 
       async upload(formData) {
         return await axios.post(UPLOAD_ROUTE + `/${this.dest}`, formData, {headers: {'Content-Type': 'multipart/form-data' }})
-            // get data
+            //set the data 
             .then(res => res.data)
             .then(res => res.map(img => Object.assign({}, 
                 img, { url: `http://localhost:9090/static/${this.dest}/${img.filename}` })))
@@ -112,15 +117,13 @@ export default {
               this.currentStatus = STATUS_FAILED;
             })
       },
+      //Calls the server to save the pictures 
       save(formData) {
-        // upload data to the server
-        this.currentStatus = STATUS_SAVING; 
-        let app = this; 
+        this.currentStatus = STATUS_SAVING;  
         this.upload(formData)
           .then(x => { 
-            let urls = x.map((item) => item.url); 
-            app.uploadedFiles = app.uploadedFiles.concat(urls); 
-            this.$emit('file-upload', this.uploadedFiles); //Send uploaded files to parent
+            let urls = x.map((item) => item.url);  
+            this.addUploadedPics(urls); 
             this.currentStatus = STATUS_SUCCESS;
           })
           .catch(err => {
@@ -129,8 +132,8 @@ export default {
             this.currentStatus = STATUS_FAILED;
           });
       },
+      //Gets the pictures in the form 
       filesChange(fieldName, fileList) {
-        // handle file changes
         const formData = new FormData();
         //No files chosen or Pictures being uploaded is past 5 
         if (!fileList.length || (fileList.length + this.reviewPictures.length) > 5) {
@@ -160,16 +163,19 @@ export default {
       closeModal() {
           this.modalVisible = false; 
       },
+      //Changes the picture displayed in the modal 
       changePic(direction) {
         this.zoomedPic = (((parseInt(this.zoomedPic) + parseInt(direction)) % this.reviewPictures.length)  + parseInt(this.reviewPictures.length)) % this.reviewPictures.length; 
       },
-      removePicture() {
-        this.uploadedFiles.splice(this.zoomedPic,1); 
-        this.$emit('file-upload', this.uploadedFiles); 
+      //Removes the current picture in modal 
+      async removeSelected() { 
+        let pic = this.reviewPictures[this.zoomedPic]; 
+        this.removePicture([pic]);   
       }
     },
     mounted() {
-      this.uploadedFiles = this.existingPics;   
+      //Set the pictures shown to the existing pictures from the review 
+      this.setUploadedPics(this.existingPics);   
       this.reset(true); 
     }
 }

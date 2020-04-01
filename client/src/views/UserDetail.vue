@@ -11,7 +11,7 @@
                 <ProfilePage v-bind:class="{'editVisible': ProfileVisible}"
                 @updateNavbar="updateNavbar" />
                 <DiningHistoryPage  v-bind:class="{'editVisible': HistoryVisible}"/>
-                <ReviewPage  v-bind:class="{'editVisible': ReviewVisible}"/>
+                <ReviewPage v-bind:class="{'editVisible': ReviewVisible}"/>
             </div>
         </div>
         <Footer /> 
@@ -24,8 +24,8 @@ import Footer from '@/components/Footer.vue';
 import ProfilePage from '@/components/userdetail/ProfilePage.vue';
 import DiningHistoryPage from '@/components/userdetail/DiningHistoryPage.vue';
 import ReviewPage from '@/components/userdetail/ReviewPage.vue';
-import UserMenu from '@/components/userdetail/UserMenu.vue';
-
+import UserMenu from '@/components/userdetail/UserMenu.vue'; 
+import { mapActions } from 'vuex'; 
 export default {
     name: "UserDetail",
     components: {
@@ -53,8 +53,12 @@ export default {
         }
     },
     methods: {
+        ...mapActions(['removeUnusedPictures']), 
         mounted() {
             this.updateUserPage();
+        },
+        uploadFiles(files) {
+            this.$set(this, "uploadedFiles", files);  
         },
         updateNavbar() {
             this.$refs.updateNav.checkLogged();
@@ -86,7 +90,13 @@ export default {
                 this.ReviewVisible = false;
             }
         }
-    }
+    },
+    async beforeRouteLeave(to, from, next) {  
+        if(this.$store.getters.getUser != null){ 
+          await this.removeUnusedPictures(); 
+        }
+        next()
+    },
 }
 </script>
 

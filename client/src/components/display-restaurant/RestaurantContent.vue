@@ -31,7 +31,7 @@
         </transition> 
         <transition name="changeContent" enter-active-class="animated bounceInLeft">
           <div v-if="section === 'Review'">
-            <ReviewSection  @postedReview="postedReview"/> 
+            <ReviewSection @postedReview="postedReview"/> 
           </div>
         </transition> 
       </div>

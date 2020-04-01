@@ -118,15 +118,14 @@ const actions =  {
     },
 
     async editReview({commit}, group) {
-        let pictureIDs = await axios.post('http://localhost:9090/pictures/save-pictures', group.photos);
-        group = {...group, pictureIDs : pictureIDs};
 
         //Update Review Object 
         await axios.post(`http://localhost:9090/reviews/edit-review/${group.reviewID}`, group); 
-        let editedReview = {...group.oldReview};
-        editedReview.reviewPics = group.photos;  
+        let editedReview = {...group.oldReview};  
         editedReview.rating = group.rating; 
         editedReview.review = group.review;  
+        editedReview.reviewPics = group.newUrls; 
+        console.log("Review Edited"); 
         if(!group.inProfile){ 
             commit('updateReviewResto', editedReview); 
         }
