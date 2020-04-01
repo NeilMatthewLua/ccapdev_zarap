@@ -6,10 +6,10 @@
             <h3 class="center big-font onload">{{Title}}</h3>
             <div class="row pad-left">
                 <!-- User Menu -->
-                <UserMenu  @userProfile="updateUserPage"/>
+                <UserMenu  @userProfile="updateUserPage" @reset="reset"/>
                 <!-- Display info for large -->
                 <ProfilePage v-bind:class="{'editVisible': ProfileVisible}"
-                @updateNavbar="updateNavbar" />
+                @updateNavbar="updateNavbar" ref="resetEdit"/>
                 <DiningHistoryPage  v-bind:class="{'editVisible': HistoryVisible}"/>
                 <ReviewPage v-bind:class="{'editVisible': ReviewVisible}"/>
             </div>
@@ -68,12 +68,14 @@ export default {
             if(action == 'profile') {
                 this.Title = "Profile";
                 this.ProfileVisible = false;
+                this.$refs.resetEdit.reset();
                 this.HistoryVisible = true;
                 this.ReviewVisible = true;
             }
             if(action == 'myprofile') {
                 this.Title = "My Profile";
                 this.ProfileVisible = false;
+                this.$refs.resetEdit.reset();
                 this.HistoryVisible = true;
                 this.ReviewVisible = true;
             }
@@ -96,7 +98,7 @@ export default {
           await this.removeUnusedPictures(); 
         }
         next()
-    },
+    }
 }
 </script>
 
