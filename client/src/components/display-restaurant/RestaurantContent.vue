@@ -11,9 +11,13 @@
               <span class="post-rating #388e3c green white-text darken-2">{{this.restoDetails.overallRating}}</span>
               <h5 v-for="estTypes in this.restoDetails.establishmentType" :key="estTypes">{{estTypes}}</h5>
               <div v-show="!hasBeen">
-                <a class="waves-effect waves-light red btn bookmark-btn" @click="beenHere()" v-show="isLogged">
-                  I've Been Here
-                </a>
+                <div class="flex">
+                  <a class="waves-effect waves-light red btn bookmark-btn" @click="beenHere()" v-show="isLogged">
+                    I've Been Here
+                  </a>
+                  <div id="animated-example" class="animated bounce arrow-margin"> <i class="material-icons">arrow_back</i></div>
+                  <p class="notify">Been Here? Tell us!</p>
+                </div>
               </div>
               <div v-show="hasBeen">
                 <a class="waves-effect waves-light green btn bookmark-btn" @click="notBeenHere()" v-show="isLogged">
@@ -149,14 +153,16 @@ export default {
           })
       },
       notBeenHere() {
-        if(this.$store.getters.getUser.beenHere.includes(this.fetchCurrResto().restaurantID))
-        this.$store.dispatch('deleteRestaurantVisit', {
+        if(!(this.isLogged) ? this.$store.getters.hasReview(this.getUser().userID) : false) {
+            if(this.$store.getters.getUser.beenHere.includes(this.fetchCurrResto().restaurantID))
+          this.$store.dispatch('deleteRestaurantVisit', {
             resto: this.fetchCurrResto().restaurantID,
-            user: this.$store.getters.getUser
-        })
-        .then(async () => {
-          await this.$store.dispatch('updateGetUser')
-        })
+              user: this.$store.getters.getUser
+          })
+          .then(async () => {
+            await this.$store.dispatch('updateGetUser')
+          })
+        } 
       },
       postedReview(value) {
         if(value == true)
@@ -222,6 +228,62 @@ export default {
 
   .post-rating { 
       padding: 8px; 
+  }
+
+  .notify {
+    margin-top: 25px; 
+    font-size: 20px;
+    margin-left: 5px; 
+  }
+
+  .flex {
+    display: flex
+  }
+
+  .arrow-margin {
+    margin-top: 25px; 
+    margin-left: 25px; 
+  }
+
+  .animated {
+    -webkit-animation-duration: .5s;
+    animation-duration: .5s;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
+    -webkit-animation-timing-function: linear;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    -webkit-animation-iteration-count: infinite;
+  }
+
+  @-webkit-keyframes bounce {
+    0%, 100% {
+      -webkit-transform: translateY(0);
+    }
+    50% {
+      -webkit-transform: translateY(-5px);
+    }
+  }
+
+  @keyframes bounce {
+    0%, 100% {
+      transform: translatex(0);
+    }
+    50% {
+      transform: translatex(-10px);
+    }
+  }
+
+  .bounce {
+    -webkit-animation-name: bounce;
+    animation-name: bounce;
+  }
+
+  hr {
+    position: relative;
+    top: 92px;
+    left: -300px;
+    width: 200px;
   }
 
   .delay {

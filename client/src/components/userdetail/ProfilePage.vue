@@ -19,8 +19,8 @@
                 <div class="info-font white-text pad-right-text"><pre class="remove-margin">Points:     </pre></div>
                 <div class="info-font text menu-font white-text">{{user.points}}</div>
             </div>
-            <div  v-if="isLogged">
-                <a href="#" class="white-text hover-underline corner-bottom-right" id="edit-profile" @click="toggleView">Edit Profile</a>
+            <div  v-if="isLoggedIn">
+                <a class="white-text hover-underline corner-bottom-right" id="edit-profile" @click="toggleView">Edit Profile</a>
             </div>
             </div>
         </div>
@@ -96,7 +96,7 @@
                     @toggleSubmit="toggleSubmitButton"/> 
                 </div>
                 </div>
-                <div class="center" v-if="isLogged">
+                <div class="center" v-if="isLoggedIn">
                 <a class="waves-effect waves-light btn-large colored-button show-on-edit padd-bottom bring_back" @click="validateForm">Edit Profile!</a>
                     <alertModal 
                         :message="message"
@@ -216,7 +216,6 @@ export default {
             user_picture: ' ',
             confirm_password: '',
             message: "Your profile has been successfully updated!",
-            isLogged: false,
             uploadedFiles: [],
             errors: [],
             tempUser: {
@@ -224,16 +223,24 @@ export default {
                 first: ' ',
                 last: ' '
             },
-            profilePictures: "profilePictures"
+            profilePictures: "profilePictures",
+            isLogged: false
         }
+    },
+    computed: {
+      //Gets the logged user, if exists
+      isLoggedIn() {
+        return this.$store.getters.isLoggedIn;
+      },
     },
     methods: {
        async verifyOwn() {
            if(this.$store.getters.getUser != null) {
+               this.user = this.$store.getters.getUser;
                 if(this.$route.params.id == this.user.userID) {
                     this.user_picture = this.$store.getters.getPicture['url'];
-                this.isLogged = true;
-                this.tempUser.user = Object.assign({}, this.user);
+                    this.isLogged = true;
+                    this.tempUser.user = Object.assign({}, this.user);
                 }
                 else(
                     await axios.get(`http://localhost:9090/users/${this.$route.params.id}`)
@@ -353,6 +360,7 @@ export default {
     },
     mounted() {
         this.verifyOwn();
+        this.reset();
         window.addEventListener('resize', this.onResize)
     }
 }
