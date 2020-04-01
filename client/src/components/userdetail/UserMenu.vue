@@ -13,7 +13,7 @@ import M from 'materialize-css';
 import router from '@/router';
 
 export default {
-    name: "EditProfile",
+    name: "UserMenu",
     mounted() {
         M.AutoInit(); 
     },
@@ -24,14 +24,15 @@ export default {
     },
     methods: {
         goMyReviews() {
+            this.$emit('reset');
             router.push({path:`/userdetail/${this.userID}/review`}).catch(() => {}); 
         },
         goMyDining() {
-            this.$emit("reset");
+            this.$emit('reset');
             router.push({path: `/userdetail/${this.userID}/dining`}).catch(() => {}); 
         },
         goMyProfile() {
-            this.$emit("reset");
+            this.$emit('reset');
             router.push({path: `/userdetail/${this.userID}/myprofile`}).catch(() => {}); 
         }
     }
