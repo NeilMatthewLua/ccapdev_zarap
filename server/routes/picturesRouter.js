@@ -209,8 +209,12 @@ router.post('/delete-unused-pics', async (req, res) => {
         let relPath = url.split('/');
         let removePath = `images/${relPath[4]}/${relPath[5]}`;
         fs.unlink(removePath, (err) => {
-            if (err) throw err;
-            console.log(`${removePath} was deleted`);
+            if (err.code == 'ENOENT') 
+                console.log("File no longer Exists"); 
+            else if(err) 
+                throw err; 
+            else
+                console.log(`${removePath} was deleted`);
         });
     }
     res.status(200).send(urls);

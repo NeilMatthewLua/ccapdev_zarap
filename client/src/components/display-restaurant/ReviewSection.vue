@@ -44,7 +44,7 @@
                 <textarea v-model="reviewData" id="review-area" class="materialize-textarea" data-length = "300"></textarea>
                 <div class="input-field">
                 <!-- File Upload Portion -->
-                    <ImageUpload ref="uploadSection" @toggleSubmit="this.toggleSubmitButton" 
+                    <ImageUpload ref="uploadSectionAdd" @toggleSubmit="this.toggleSubmitButton" 
                     :dest="destination"  :existingPics="this.reviewPictures" /> 
                     <a class="submit-btn red btn right" @click="validateReview">SUBMIT</a>
                     <a class="submit-btn btn right" @click="cancelWrite">CANCEL</a>
@@ -99,7 +99,7 @@
                 <textarea v-model="editData" id="review-area" class="materialize-textarea" data-length = "300"></textarea>
                 <div class="input-field"> 
                     <!-- File Upload Portion -->
-                    <ImageUpload ref="uploadSection"  @toggleSubmit="this.toggleSubmitButton" 
+                    <ImageUpload ref="uploadSectionEdit"  @toggleSubmit="this.toggleSubmitButton" 
                     :dest="destination"  :existingPics="this.reviewPictures" /> 
                     <a class="submit-btn red btn right" @click="validateEdit">SUBMIT</a>
                     <a class="submit-btn btn right" @click="cancelEdit">CANCEL</a>
@@ -199,7 +199,7 @@ export default {
             this.update = true;  
             this.doThis(0); 
             this.setUploadedPics([]);
-            this.$refs.uploadSection.reset(false,[]);  
+            this.$refs.uploadSectionAdd.reset(false,[]);  
         },
         validateReview() {
             this.errors = [];
@@ -300,7 +300,7 @@ export default {
         },
         async cancelWrite() {
             await this.removeUnusedPictures();
-            this.$refs.uploadSection.reset(true, []);
+            this.$refs.uploadSectionAdd.reset(true, []);
             this.isWriting = false;
             this.isEditing = false;  
             this.rating = 0;
@@ -310,8 +310,8 @@ export default {
         },
         async cancelEdit() { 
             await this.removeUnusedPictures();
-            this.setUploadedPics(this.ownReview.reviewPics); 
-            this.$refs.uploadSection.reset(true, this.ownReview.reviewPics);
+            this.setUploadedPics(this.reviewPictures); 
+            this.$refs.uploadSectionEdit.reset(true, this.reviewPictures);
             this.doThis(this.ownReview.rating);  
             this.isWriting = false; 
             this.isEditing = false; 
@@ -363,12 +363,13 @@ export default {
         },
     },
     mounted() {
-         this.$refs.uploadSection.reset(true, this.ownReview.reviewPics);  
+         this.$refs.uploadSectionAdd.reset(true, this.reviewPictures);
+         this.$refs.uploadSectionEdit.reset(true, this.reviewPictures);  
     },
     created() {
         if(this.hasReview) {
             this.editData = this.ownReview.review; 
-            this.setUploadedPics(this.ownReview.reviewPics); 
+            this.setUploadedPics(this.reviewPictures); 
         }
         window.addEventListener('beforeunload', async () => {
             await this.removeUnusedPictures();
