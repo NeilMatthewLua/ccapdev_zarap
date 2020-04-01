@@ -17,7 +17,7 @@
                     </tbody>
                 </table>
                 <div class="modal-footer text-center">
-                    <button class="btn waves-effect waves-light green" @click="close()"> Close </button>
+                    <button class="btn waves-effect waves-light red" @click="close()"> Close </button>
                 </div>
             </div>
         </div>
