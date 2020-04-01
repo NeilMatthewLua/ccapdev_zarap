@@ -21,7 +21,7 @@
         </form>
         <!--SUCCESS-->
         <div v-if="isSuccess">
-            <h5>Uploaded {{ uploadedFiles.length }} file(s) successfully.</h5>
+            <h5 :class="{'white-text': !isBlack}">Uploaded {{ uploadedFiles.length }} file(s) successfully.</h5>
             <p>
             <a href="javascript:void(0)" @click="reset()">Upload again</a>
             </p>
