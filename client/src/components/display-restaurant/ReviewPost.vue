@@ -136,8 +136,7 @@ export default {
             this.$store.dispatch('deleteReview', {
                 restaurant: this.reviewData,
                 user: this.$store.getters.getUser,
-                route: this.$route, 
-                inProfile: this.inProfile 
+                route: this.$route
             })
             .then(async () =>{
                 await this.$store.dispatch('updateGetUser'),
