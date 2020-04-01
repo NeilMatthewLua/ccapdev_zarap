@@ -57,6 +57,9 @@ export default {
         mounted() {
             this.updateUserPage();
         },
+        reset() {
+            this.$refs.resetEdit.reset();
+        },
         uploadFiles(files) {
             this.$set(this, "uploadedFiles", files);  
         },
@@ -68,14 +71,12 @@ export default {
             if(action == 'profile') {
                 this.Title = "Profile";
                 this.ProfileVisible = false;
-                this.$refs.resetEdit.reset();
                 this.HistoryVisible = true;
                 this.ReviewVisible = true;
             }
             if(action == 'myprofile') {
                 this.Title = "My Profile";
                 this.ProfileVisible = false;
-                this.$refs.resetEdit.reset();
                 this.HistoryVisible = true;
                 this.ReviewVisible = true;
             }
