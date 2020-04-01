@@ -24,7 +24,7 @@ async function populateReviews(userCounter, limit) {
             restaurantID : chosenRes.restaurantID,
             rating : faker.random.number(4) + 1, 
             review: faker.lorem.words(10),
-            upvotes: (faker.random.number(7) + 1),
+            upvotes: 0,
             reviewPictures: [pics[(limit * 5) + (i*3)]['pictureID'], pics[(limit * 5) + (i*3) + 1]['pictureID']]
         }); 
         //Set reviewed and been here to the restaurant they reviewed 
@@ -39,29 +39,12 @@ async function populateReviews(userCounter, limit) {
             beenHere : newReviews, 
             reviewed : newReviews}, {new:true})
             .exec()
-            .then(doc => {
-                if(global.userID == chosenUser.userID) {
-                    // console.log("CURRENT POINTS: "  + chosenUser.points)
-                    // console.log("RESTO: " + item.restaurantID)
-                    console.log("UPVOTES: "  + item.upvotes)
-                    // console.log("NOW POINTS: "  + (chosenUser.points + item.upvotes))
-                    console.log(doc)
-                }
-            })
             .catch(err => console.log(err)); 
         await Restaurant.updateOne({restaurantID : chosenRes.restaurantID}, 
             {reviews : newReviewsResto})
             .exec()
             .catch(err => console.log(err));     
         await item.save()
-            .then(doc => {
-                if(global.userID == chosenUser.userID) {
-                    // console.log("CURRENT POINTS: "  + chosenUser.points)
-                    // console.log("RESTO: " + item.restaurantID)
-                    console.log("UPVOTES saved: "  + doc.upvotes)
-                    // console.log("NOW POINTS: "  + (chosenUser.points + item.upvotes))
-                //     console.log(doc)
-                }})
             .catch(err => console.log(err));
         
             chosenUser.points = chosenUser.points + item.upvotes;
@@ -74,7 +57,7 @@ async function populateReviews(userCounter, limit) {
             restaurantID : chosenRes.restaurantID,
             rating : faker.random.number(4) + 1, 
             review: faker.lorem.words(10),
-            upvotes: (faker.random.number(7) + 1),
+            upvotes: 0,
             reviewPictures: [pics[(limit * 5) + (i*3) + 2]['pictureID']]
         }); 
         //Set reviewed and been here to the restaurant they reviewed 
@@ -89,29 +72,12 @@ async function populateReviews(userCounter, limit) {
             beenHere : newReviews, 
             reviewed : newReviews}, {new:true})
             .exec()
-            .then(doc => {
-                if(global.userID == chosenUser.userID) {
-                    // console.log("CURRENT POINTS: "  + chosenUser.points)
-                    // console.log("RESTO: " + item.restaurantID)
-                    console.log("UPVOTES: "  + item.upvotes)
-                    // console.log("NOW POINTS: "  + (chosenUser.points + item.upvotes))
-                    console.log(doc)
-                }
-            })
             .catch(err => console.log(err)); 
         await Restaurant.updateOne({restaurantID : chosenRes.restaurantID}, 
             {reviews : newReviewsResto})
             .exec()
             .catch(err => console.log(err));     
         await item.save()
-            .then(doc => {
-                if(global.userID == chosenUser.userID) {
-                    // console.log("CURRENT POINTS: "  + chosenUser.points)
-                    // console.log("RESTO: " + item.restaurantID)
-                    console.log("UPVOTES saved: "  + doc.upvotes)
-                    // console.log("NOW POINTS: "  + (chosenUser.points + item.upvotes))
-                //     console.log(doc)
-                }})
             .catch(err => console.log(err)); 
 
             chosenUser.points = chosenUser.points + item.upvotes;
@@ -124,7 +90,7 @@ async function populateReviews(userCounter, limit) {
             restaurantID : chosenRes.restaurantID,
             rating : faker.random.number(4) + 1, 
             review: faker.lorem.words(10),
-            upvotes: (faker.random.number(7) + 1)
+            upvotes: 0
         }); 
         //Set reviewed and been here to the restaurant they reviewed 
         let newReviews = chosenUser.reviewed; 
@@ -138,29 +104,12 @@ async function populateReviews(userCounter, limit) {
             beenHere : newReviews, 
             reviewed : newReviews}, {new:true})
             .exec()
-            .then(doc => {
-                if(global.userID == chosenUser.userID) {
-                    // console.log("CURRENT POINTS: "  + chosenUser.points)
-                    // console.log("RESTO: " + item.restaurantID)
-                    console.log("UPVOTES: "  + item.upvotes)
-                    // console.log("NOW POINTS: "  + (chosenUser.points + item.upvotes))
-                    console.log(doc)
-                }
-            })
             .catch(err => console.log(err)); 
         await Restaurant.updateOne({restaurantID : chosenRes.restaurantID}, 
             {reviews : newReviewsResto})
             .exec()
             .catch(err => console.log(err));     
         await item.save()
-            .then(doc => {
-                if(global.userID == chosenUser.userID) {
-                    // console.log("CURRENT POINTS: "  + chosenUser.points)
-                    // console.log("RESTO: " + item.restaurantID)
-                    console.log("UPVOTES saved: "  + doc.upvotes)
-                    // console.log("NOW POINTS: "  + (chosenUser.points + item.upvotes))
-                //     console.log(doc)
-                }})
             .catch(err => console.log(err)); 
         
         chosenUser.points = chosenUser.points + item.upvotes;
@@ -169,13 +118,15 @@ async function populateReviews(userCounter, limit) {
     // Randomize the reviews people liked 
     for(let i = 0; i < users.length; i++) {
         for(let j = 0; j < allReviews.length; j+= faker.random.number(allReviews.length / 2)) {
-            if(users[i].userID != allReviews[j].ownerID) {
+            if(users[i].userID != allReviews[j].reviewerID) {
                 let newLiked = users[i].liked; 
                 newLiked.push(allReviews[j].reviewID); 
                 let newUpvotes = allReviews[j].upvotes + 1; 
                 //Update Users and Review to match 
-                await User.findOneAndUpdate({userID : users[i].userID}, {liked : newLiked}); 
-                await Review.updateOne({reviewID : allReviews[j].reviewID}, {upvotes : newUpvotes}); 
+                let user = await User.find({userID : users[i].userID}).exec();
+                await User.findOneAndUpdate({userID : users[i].userID}, {liked : newLiked, points : user[0].points + 1}, {new: true})
+                .then(doc => console.log(doc)) 
+                await Review.updateOne({reviewID : allReviews[j].reviewID}, {upvotes : newUpvotes});
             }
         }
     }
