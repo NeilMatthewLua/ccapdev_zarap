@@ -109,11 +109,9 @@ const actions =  {
         })
         .then(() => {
             if(details.route.name == "UserDetail"){
-                console.log("MEH")
                 commit('removeUserReview', index)
             }
             else {
-                console.log("HEREE")
                 commit('removeReview', index)
             }
         })
