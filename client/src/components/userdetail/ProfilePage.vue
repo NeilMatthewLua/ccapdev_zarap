@@ -19,7 +19,7 @@
                 <div class="info-font white-text pad-right-text"><pre class="remove-margin">Points:     </pre></div>
                 <div class="info-font text menu-font white-text">{{userData.points}}</div>
             </div>
-            <div  v-if="loggedIn">
+            <div  v-if="isLogged">
                 <a class="white-text hover-underline corner-bottom-right" id="edit-profile" @click="toggleView">Edit Profile</a>
             </div>
             </div>
@@ -94,7 +94,7 @@
                     :dest="profilePictures" :singleUpload="true" :existingPics="[this.profilePicture]" />
                 </div>
                 </div>
-                <div class="center" v-if="loggedIn">
+                <div class="center" v-if="isLogged">
                 <a class="waves-effect waves-light btn-large colored-button show-on-edit padd-bottom bring_back" @click="validateForm">Edit Profile!</a>
                     <alertModal 
                         :message="message"
@@ -188,7 +188,6 @@ import axios from 'axios';
 import {mapGetters, mapActions, mapMutations} from 'vuex'; 
 import ImageUpload from '@/components/ImageUpload'; 
 import alertModal from '@/components/alertModal';
-import { mapGetters } from 'vuex';
 
 export default {
     name: "ProfilePage",
@@ -234,21 +233,23 @@ export default {
         return (this.update || !this.update) ? this.user_picture: []; 
       },
       userData() {
-        return this.getUser();
+        return (this.getUser() != null) ? this.getUser() : this.user;
+      },
+      resetUploadSection() {
+        return (this.$refs.uploadSection != undefined) ? this.$refs.uploadSection.reset(true, [this.user_picture]) : undefined; 
       }
     },
     methods: {
        ...mapActions(['removeUnusedPictures']),
-       ...mapGetters(['fetchUploadedPics','getUser', 'isLoggedIn']),
+       ...mapGetters(['fetchUploadedPics','getUser']),
        ...mapMutations(['setUploadedPics']),
-    },
        async verifyOwn() {
            if(this.$store.getters.getUser != null) {
                this.user = this.$store.getters.getUser;
                 if(this.$route.params.id == this.user.userID) {
                     this.user_picture = this.$store.getters.getPicture['url'];
                     this.setUploadedPics([this.user_picture]);
-                    this.$refs.uploadSection.reset(true, [this.user_picture]); 
+                    this.resetUploadSection;  
                     this.isLogged = true;
                     this.tempUser.user = Object.assign({}, this.user);
                 }
@@ -276,7 +277,7 @@ export default {
             this.editProfileVisible = !this.editProfileVisible;
             await this.removeUnusedPictures();
             this.setUploadedPics([this.user_picture]); 
-            this.$refs.uploadSection.reset(true, [this.user_picture]);
+            this.resetUploadSection; 
             this.onResize();
         },
         showModal() { //confirmation of successful update
@@ -295,8 +296,8 @@ export default {
             this.confirm_password = '';
             this.errors = [];
             await this.removeUnusedPictures(); 
-            this.setUploadedPics([this.user_picture]);
-            this.$refs.uploadSection.reset(true, [this.user_picture]);
+            this.setUploadedPics([this.user_picture]); 
+            this.resetUploadSection; 
         },
         onResize() {
             if(window.innerWidth > 1300) {
@@ -334,7 +335,7 @@ export default {
                 });
             
             this.setUploadedPics([this.user_picture]);
-            this.$refs.uploadSection.reset(true, [this.user_picture]);
+            this.resetUploadSection; 
             this.update = true; 
         },
         validateForm: function () {
@@ -372,7 +373,7 @@ export default {
                 this.user_lastname = this.tempUser.last
                 this.confirm_password = '';
             }        
-        },
+        }
     },
     mounted() {
         this.verifyOwn();
