@@ -58,7 +58,7 @@ export default {
             this.updateUserPage();
         },
         reset() {
-            this.$refs.resetEdit.reset();
+            return (this.$refs.resetEdit != undefined) ? this.$refs.resetEdit.resetPage() : undefined;
         },
         uploadFiles(files) {
             this.$set(this, "uploadedFiles", files);  
@@ -71,16 +71,14 @@ export default {
             if(action == 'profile') {
                 this.Title = "Profile";
                 this.ProfileVisible = false;
-                if(this.$refs.resetEdit != undefined)
-                    this.$refs.resetEdit.resetPage();
+                this.reset(); 
                 this.HistoryVisible = true;
                 this.ReviewVisible = true;
             }
             if(action == 'myprofile') {
                 this.Title = "My Profile";
                 this.ProfileVisible = false;
-                if(this.$refs.resetEdit != undefined)
-                    this.$refs.resetEdit.resetPage();
+                this.reset(); 
                 this.HistoryVisible = true;
                 this.ReviewVisible = true;
             }
@@ -99,7 +97,7 @@ export default {
         }
     },
     async beforeRouteLeave(to, from, next) {  
-        this.$refs.resetEdit.reset();
+        this.reset(); 
         if(this.$store.getters.getUser != null){ 
           await this.removeUnusedPictures(); 
         }
