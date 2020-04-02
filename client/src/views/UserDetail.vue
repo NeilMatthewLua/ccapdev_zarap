@@ -89,7 +89,7 @@ export default {
                 this.ReviewVisible = true;
             }
             else if(action == 'review') {
-                this.Title = "My Reviews"; 
+                this.Title = "Reviews"; 
                 this.ProfileVisible = true;
                 this.HistoryVisible = true;
                 this.ReviewVisible = false;
