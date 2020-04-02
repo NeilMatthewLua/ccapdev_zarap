@@ -153,7 +153,7 @@ export default {
           })
       },
       notBeenHere() {
-        if(!(this.isLogged) ? this.$store.getters.hasReview(this.getUser().userID) : false) {
+        if(!((this.isLogged) ? this.$store.getters.hasReview(this.getUser().userID) : false)) {
             if(this.$store.getters.getUser.beenHere.includes(this.fetchCurrResto().restaurantID))
           this.$store.dispatch('deleteRestaurantVisit', {
             resto: this.fetchCurrResto().restaurantID,
@@ -170,7 +170,7 @@ export default {
         else
           this.notBeenHere();
       },
-      ...mapGetters(['fetchCurrResto','fetchMenuPics','fetchRestaurantPics', 'isLoggedIn']),
+      ...mapGetters(['fetchCurrResto','fetchMenuPics','fetchRestaurantPics', 'isLoggedIn', 'getUser']),
       ...mapActions(['getRestoById','getRestaurantPictures', 'getMenuPictures', 'getReviewPostUsers'])
     },
     async created() {
