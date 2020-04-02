@@ -5,21 +5,22 @@
             <div class="profile-container">
             <div class="grouped-info">
                 <div class="info-font white-text pad-right-text"><pre class="remove-margin">Name:       </pre></div>
-                <div class="info-font text menu-font white-text"> {{userData.name}}</div>
+                <div class="info-font text menu-font white-text"> {{this.user.name}}</div>
             </div>
             <div class="grouped-info ">
                 <div class="info-font white-text pad-right-text"><pre class="remove-margin">Address:    </pre></div>
-                <div class="info-font text menu-font white-text"> {{userData.address}}</div>
+                <div class="info-font text menu-font white-text"> {{this.user.address}}</div>
             </div>
             <div class="grouped-info ">
                 <div class="info-font white-text pad-right-text"><pre class="remove-margin">E-mail:     </pre></div>
-                <div class="info-font text menu-font white-text">{{userData.email}}</div>
+                <div class="info-font text menu-font white-text">{{this.user.email}}</div>
             </div>
             <div class="grouped-info ">
                 <div class="info-font white-text pad-right-text"><pre class="remove-margin">Points:     </pre></div>
-                <div class="info-font text menu-font white-text">{{userData.points}}</div>
+                <div class="info-font text menu-font white-text">{{this.user.points}}</div>
             </div>
-            <div  v-if="isLogged">
+            <div  v-if="isMine">
+
                 <a class="white-text hover-underline corner-bottom-right" id="edit-profile" @click="toggleView">Edit Profile</a>
             </div>
             </div>
@@ -221,7 +222,8 @@ export default {
                 last: ' '
             },
             profilePictures: "profilePictures",
-            isLogged: false
+            isLogged: false,
+            isMine: false
         }
     },
     computed: {
@@ -239,28 +241,34 @@ export default {
         return (this.$refs.uploadSection != undefined) ? this.$refs.uploadSection.reset(true, [this.user_picture]) : undefined; 
       }
     },
+    watch:{
+        $route (){
+            this.verifyOwn();
+        }
+    },
     methods: {
        ...mapActions(['removeUnusedPictures']),
        ...mapGetters(['fetchUploadedPics','getUser']),
        ...mapMutations(['setUploadedPics']),
        async verifyOwn() {
            if(this.$store.getters.getUser != null) {
-               this.user = this.$store.getters.getUser;
-                if(this.$route.params.id == this.user.userID) {
+                this.user = this.$store.getters.getUser;
+               if(this.$route.params.id == this.user.userID) {
                     this.user_picture = this.$store.getters.getPicture['url'];
                     this.setUploadedPics([this.user_picture]);
                     this.resetUploadSection;  
                     this.isLogged = true;
                     this.tempUser.user = Object.assign({}, this.user);
+                    this.isMine = true;
                 }
-                else(
+                else{
                     await axios.get(`http://localhost:9090/users/${this.$route.params.id}`)
                     .then(resp => {
                         this.user = resp.data.user[0]
                     })
-                )
+                }
            }
-           else {               
+           else {        
                await axios.get(`http://localhost:9090/users/${this.$route.params.id}`)
                .then(resp => {
                    this.user = resp.data.user[0]
@@ -298,6 +306,7 @@ export default {
             await this.removeUnusedPictures(); 
             this.setUploadedPics([this.user_picture]); 
             this.resetUploadSection; 
+            this.verifyOwn();
         },
         onResize() {
             if(window.innerWidth > 1300) {

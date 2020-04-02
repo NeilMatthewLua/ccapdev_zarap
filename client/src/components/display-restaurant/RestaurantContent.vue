@@ -15,8 +15,8 @@
                   <a class="waves-effect waves-light red btn bookmark-btn" @click="beenHere()" v-show="isLogged">
                     I've Been Here
                   </a>
-                  <div id="animated-example" class="animated bounce arrow-margin"> <i class="material-icons">arrow_back</i></div>
-                  <p class="notify">Been Here? Tell us!</p>
+                  <div id="animated-example" class="animated bounce arrow-margin" v-show="isLogged"> <i class="material-icons">arrow_back</i></div>
+                  <p class="notify" v-show="isLogged">Been Here? Tell us!</p>
                 </div>
               </div>
               <div v-show="hasBeen">
