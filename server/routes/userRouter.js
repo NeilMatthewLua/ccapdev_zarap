@@ -74,6 +74,7 @@ router.get('/', (req, res, next) => {
         })
 })
 
+// manages the login of a user
 router.post('/login', async (req, res) => {
     await User.findOne({email: req.body.user.email})
     .then( async user => {
