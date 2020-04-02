@@ -31,7 +31,7 @@ mongoose.connect(process.env.MONGO_URI, {useNewUrlParser: true, useUnifiedTopolo
 
 // Home route
 app.get('/', function(req, res) {
-    res.send("Cool Beans"); 
+    res.send("Head over to http://localhost:9090/populate to populate data"); 
 });
 
 const userRouter = require('./routes/userRouter');
