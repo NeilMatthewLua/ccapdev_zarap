@@ -6,7 +6,7 @@
             <h3 class="center big-font onload">{{Title}}</h3>
             <div class="row pad-left">
                 <!-- User Menu -->
-                <UserMenu  @userProfile="updateUserPage" @reset="reset"/>
+                <UserMenu  @userProfile="updateUserPage"/>
                 <!-- Display info for large -->
                 <ProfilePage v-bind:class="{'editVisible': ProfileVisible}"
                 @updateNavbar="updateNavbar" ref="resetEdit"/>
@@ -71,12 +71,16 @@ export default {
             if(action == 'profile') {
                 this.Title = "Profile";
                 this.ProfileVisible = false;
+                if(this.$refs.resetEdit != undefined)
+                    this.$refs.resetEdit.resetPage();
                 this.HistoryVisible = true;
                 this.ReviewVisible = true;
             }
             if(action == 'myprofile') {
                 this.Title = "My Profile";
                 this.ProfileVisible = false;
+                if(this.$refs.resetEdit != undefined)
+                    this.$refs.resetEdit.resetPage();
                 this.HistoryVisible = true;
                 this.ReviewVisible = true;
             }

@@ -36,7 +36,7 @@
                     </ul>
                 </p>
                 <div class="flex-center">
-                    <img class="circle navbar-image" :src= user_picture>
+                    <img class="circle navbar-image" :src= this.profilePicture>
                 </div>
                 <br>
                 <br>
@@ -89,11 +89,9 @@
                     </div>
                 </div>
                  <div class="row">
-                    <!-- File Upload Portion -->
-                    <FileUpload @file-upload="getFiles" :dest="profilePictures" :isMultiple="false"
-                    :isBlack="false"
-                    ref="resetPhoto"
-                    @toggleSubmit="toggleSubmitButton"/> 
+                     <!-- File upload  -->
+                    <ImageUpload ref="uploadSection" @toggleSubmit="this.toggleSubmitButton" 
+                    :dest="profilePictures" :singleUpload="true" :existingPics="[this.profilePicture]" />
                 </div>
                 </div>
                 <div class="center" v-if="loggedIn">
@@ -117,7 +115,7 @@
                     </ul>
                 </p>
                 <div class="flex-center">
-                    <img class="circle navbar-image" :src= user_picture>
+                    <img class="circle navbar-image" :src= this.profilePicture>
                 </div>
                 <div class="row">
                     <div class="col s12">
@@ -167,10 +165,8 @@
                 </div>
                  <div class="row">
                     <!-- File Upload Portion -->
-                    <FileUpload @file-upload="getFiles" :dest="profilePictures" :isMultiple="false"
-                    :isBlack="false"
-                    ref="resetPhoto"
-                    @toggleSubmit="toggleSubmitButton"/> 
+                    <ImageUpload ref="uploadSection" @toggleSubmit="this.toggleSubmitButton" 
+                    :dest="profilePictures" :singleUpload="true" :existingPics="[this.profilePicture]" />
                 </div>
                 </div>
                 <div class="center">
@@ -189,18 +185,20 @@
 
 <script>
 import axios from 'axios';
-import FileUpload from '@/components/fileUpload';
+import {mapGetters, mapActions, mapMutations} from 'vuex'; 
+import ImageUpload from '@/components/ImageUpload'; 
 import alertModal from '@/components/alertModal';
 import { mapGetters } from 'vuex';
 
 export default {
     name: "ProfilePage",
     components: {
-        FileUpload,
+        ImageUpload,
         alertModal
     },
     data() {
         return {
+            update: false, 
             isModalVisible: false,
             visible: false,
             editProfileVisible: true,
@@ -217,7 +215,6 @@ export default {
             user_picture: ' ',
             confirm_password: '',
             message: "Your profile has been successfully updated!",
-            uploadedFiles: [],
             errors: [],
             tempUser: {
                 user: ' ',
@@ -230,20 +227,28 @@ export default {
     },
     computed: {
       //Gets the logged user, if exists
-      loggedIn() {
-        return this.isLoggedIn();
+      isLoggedIn() {
+        return (this.update || !this.update) ? this.$store.getters.isLoggedIn : undefined;
+      },
+      profilePicture() {
+        return (this.update || !this.update) ? this.user_picture: []; 
       },
       userData() {
         return this.getUser();
       }
     },
     methods: {
-        ...mapGetters(['getUser', 'isLoggedIn']),
+       ...mapActions(['removeUnusedPictures']),
+       ...mapGetters(['fetchUploadedPics','getUser', 'isLoggedIn']),
+       ...mapMutations(['setUploadedPics']),
+    },
        async verifyOwn() {
            if(this.$store.getters.getUser != null) {
                this.user = this.$store.getters.getUser;
                 if(this.$route.params.id == this.user.userID) {
                     this.user_picture = this.$store.getters.getPicture['url'];
+                    this.setUploadedPics([this.user_picture]);
+                    this.$refs.uploadSection.reset(true, [this.user_picture]); 
                     this.isLogged = true;
                     this.tempUser.user = Object.assign({}, this.user);
                 }
@@ -265,9 +270,13 @@ export default {
             this.tempUser.first = this.user_firstname
             this.tempUser.last = this.user_lastname
         },
-        toggleView : function() {
+        async toggleView() {
+            this.update = true; 
             this.visible = !this.visible;
             this.editProfileVisible = !this.editProfileVisible;
+            await this.removeUnusedPictures();
+            this.setUploadedPics([this.user_picture]); 
+            this.$refs.uploadSection.reset(true, [this.user_picture]);
             this.onResize();
         },
         showModal() { //confirmation of successful update
@@ -276,19 +285,18 @@ export default {
         closeModal() {
             this.isModalVisible = false;
             this.user = this.$store.getters.getUser;
-            this.reset();
+            this.resetPage();
         },
-        reset() {
-            this.visible = false,
-            this.editProfileVisible = true,
-            this.bigEditProfileVisible = true,
-            this.smallEditProfileVisible = true,
-            this.confirm_password = '',
-            this.errors = [],
-            this.$refs.resetPhoto.reset();
-        },
-        getFiles(files) {
-            this.$set(this,'uploadedFiles', files);
+        async resetPage() {
+            this.visible = false;
+            this.editProfileVisible = true;
+            this.bigEditProfileVisible = true;
+            this.smallEditProfileVisible = true;
+            this.confirm_password = '';
+            this.errors = [];
+            await this.removeUnusedPictures(); 
+            this.setUploadedPics([this.user_picture]);
+            this.$refs.uploadSection.reset(true, [this.user_picture]);
         },
         onResize() {
             if(window.innerWidth > 1300) {
@@ -303,28 +311,31 @@ export default {
         toggleSubmitButton: function(value) {
             this.submitVisible = value
         },
-        updateUser() {
+        async updateUser() {
             let app = this;
-            this.$store
+            await this.$store
                 .dispatch('updateUser', {
                     "firstname": app.user_firstname,
                     "lastname": app.user_lastname,
                     "email": app.user.email,
                     "password": app.user.password,
                     "address": app.user.address,
-                    "uploadedFiles": app.user.uploadedFiles,
+                    "uploadedFiles": this.fetchUploadedPics()[0],
                     "beenHere": app.user.beenHere,
                     "reviewed": app.user.reviewed,
                     "liked": app.user.liked,
                     "points": app.user.points,
-                    "picture": app.user.picture,
-                    "uploadedFile": app.uploadedFiles
+                    "picture": app.user.picture
                     })
                 .then(() => {
                     this.$emit('updateNavbar');
-                    this.user_picture = this.uploadedFiles[0].url;
+                    this.user_picture = this.fetchUploadedPics()[0];
                     this.showModal();
-                })
+                });
+            
+            this.setUploadedPics([this.user_picture]);
+            this.$refs.uploadSection.reset(true, [this.user_picture]);
+            this.update = true; 
         },
         validateForm: function () {
             this.errors = [];
@@ -348,7 +359,7 @@ export default {
             if(!this.user.address) {
                 this.errors.push('Home Address required');
             }
-            if(this.uploadedFiles == undefined){
+            if(this.fetchUploadedPics().length == 0){
                 this.errors.push('Profile Picture required');
             }
             if(!this.errors.length) {
@@ -365,9 +376,15 @@ export default {
     },
     mounted() {
         this.verifyOwn();
-        this.reset();
+        this.resetPage();
         window.addEventListener('resize', this.onResize)
-    }
+    },
+    async created () {
+        //Removes unused pictures when window is closed 
+        window.addEventListener('beforeunload', async () => {
+            await this.removeUnusedPictures(); 
+        }, false)
+    }  
 }
 </script>
 
