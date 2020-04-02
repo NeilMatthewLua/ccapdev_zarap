@@ -11,10 +11,18 @@ const Review = require('../models/reviews.js');
 
 //adds a user
 router.post('/addUser',async (req, res, next) => { 
-    let pictureID
-    await Picture.find({}, {}, { sort: { '_id' : -1 } },  function(err, post) {
-        pictureID = post[0]['pictureID']
+    let pictureID;
+    let pic = new Picture({
+        url: req.body.uploadedFiles[0]
     })
+    pic.save()
+        .then(() => 
+            pictureID = pic.pictureID
+        )
+        .catch((err) => {
+            res.status(500).send("Error Saving Profile Picture"); 
+        })
+    
     await User.findOne({email:req.body.email})
     .then(res => {
         res.send({
@@ -106,7 +114,7 @@ router.post('/updateUser', async (req, res) => {
     };
     let oldPicture = {pictureID: req.body.user.picture};
     let updatePicture = {
-        url: req.body.user.uploadedFile[0].url
+        url: req.body.user.uploadedFiles
     }
     await User.findOneAndUpdate(filter, update, {
         new: true
@@ -115,14 +123,16 @@ router.post('/updateUser', async (req, res) => {
         update = {pictureID: user.picture};
         await Picture.find({pictureID: req.body.user.picture})
         .then(async (doc) => {
-            let relPath = doc[0].url.split('/');
-            let removePath = `images/${relPath[4]}/${relPath[5]}`;
+            if(updatePicture.url != doc.url) {
+                let relPath = doc[0].url.split('/');
+                let removePath = `images/${relPath[4]}/${relPath[5]}`;
+                
+                fs.unlink(removePath, (err) => {
+                    if (err) throw err;
+                    console.log(`${removePath} was deleted`);
+                });
+            }
             
-            fs.unlink(removePath, (err) => {
-                if (err) throw err;
-                console.log(`${removePath} was deleted`);
-            });
-
             await Picture.findOneAndUpdate(oldPicture, updatePicture, {
                 new: true
             })
