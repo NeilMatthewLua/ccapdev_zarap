@@ -95,6 +95,7 @@ export default {
         }
     },
     async beforeRouteLeave(to, from, next) {  
+        this.$refs.resetEdit.reset();
         if(this.$store.getters.getUser != null){ 
           await this.removeUnusedPictures(); 
         }

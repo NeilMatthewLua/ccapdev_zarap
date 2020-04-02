@@ -54,6 +54,18 @@ async function populateUsers(userCounter, limit) {
  
     let doc = await loadPictures();
 
+    //Sample User
+    let user = new User({
+        name: "Ben Dover",
+        password: "bensicles",
+        email: "ben@gmail.com",
+        address: faker.address.streetAddress(),
+        points: 0,
+        picture: doc[11].pictureID
+    });
+
+    await save(user);
+
     for(i = userCounter; i < limit; i++) {
         let user = new User({
             name: sampleNames[i] + " " + faker.name.lastName(),
