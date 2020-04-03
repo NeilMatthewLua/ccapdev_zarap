@@ -123,11 +123,10 @@ exports.update_user =  async (req, res) => {
         reviewed: req.body.user.reviewed,
         liked: req.body.user.liked,
     };
-
     //set up updated picture
     let oldPicture = {pictureID: req.body.user.picture};
     let updatePicture = {
-        url: req.body.user.uploadedFile[0].url
+        url: req.body.user.uploadedFiles[0].url
     }
 
     //update user in db
