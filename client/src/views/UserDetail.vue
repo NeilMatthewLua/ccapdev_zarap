@@ -6,7 +6,7 @@
             <h3 class="center big-font onload">{{Title}}</h3>
             <div class="row pad-left">
                 <!-- User Menu -->
-                <UserMenu  @userProfile="updateUserPage" @reset="reset"/>
+                <UserMenu  @userProfile="updateUserPage"/>
                 <!-- Display info for large -->
                 <ProfilePage v-bind:class="{'editVisible': ProfileVisible}"
                 @updateNavbar="updateNavbar" ref="resetEdit"/>
@@ -57,6 +57,9 @@ export default {
         mounted() {
             this.updateUserPage();
         },
+        reset() {
+            return (this.$refs.resetEdit != undefined) ? this.$refs.resetEdit.resetPage() : undefined;
+        },
         uploadFiles(files) {
             this.$set(this, "uploadedFiles", files);  
         },
@@ -68,14 +71,14 @@ export default {
             if(action == 'profile') {
                 this.Title = "Profile";
                 this.ProfileVisible = false;
-                this.$refs.resetEdit.reset();
+                this.reset(); 
                 this.HistoryVisible = true;
                 this.ReviewVisible = true;
             }
             if(action == 'myprofile') {
                 this.Title = "My Profile";
                 this.ProfileVisible = false;
-                this.$refs.resetEdit.reset();
+                this.reset(); 
                 this.HistoryVisible = true;
                 this.ReviewVisible = true;
             }
@@ -86,7 +89,7 @@ export default {
                 this.ReviewVisible = true;
             }
             else if(action == 'review') {
-                this.Title = "My Reviews"; 
+                this.Title = "Reviews"; 
                 this.ProfileVisible = true;
                 this.HistoryVisible = true;
                 this.ReviewVisible = false;
@@ -94,6 +97,7 @@ export default {
         }
     },
     async beforeRouteLeave(to, from, next) {  
+        this.reset(); 
         if(this.$store.getters.getUser != null){ 
           await this.removeUnusedPictures(); 
         }

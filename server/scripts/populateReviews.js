@@ -122,13 +122,25 @@ async function populateReviews(userCounter, limit) {
                 let newLiked = users[i].liked; 
                 newLiked.push(allReviews[j].reviewID); 
                 let newUpvotes = allReviews[j].upvotes + 1; 
+                allReviews[j].upvotes = newUpvotes;
                 //Update Users and Review to match 
-                let user = await User.find({userID : users[i].userID}).exec();
-                await User.findOneAndUpdate({userID : users[i].userID}, {liked : newLiked, points : user[0].points + 1}, {new: true})
-                .then(doc => console.log(doc)) 
+                await User.findOneAndUpdate({userID : users[i].userID}, {liked : newLiked}, {new: true})
+                // await User.findOneAndUpdate({userID :allReviews[j].reviewerID}, {points : newUpvotes}, {new: true})
+
                 await Review.updateOne({reviewID : allReviews[j].reviewID}, {upvotes : newUpvotes});
             }
         }
+    }
+    //award points to the users
+    for(let i = 0; i < users.length; i++) {
+        await Review.find({reviewerID: users[i].userID})
+        .then(async doc => {
+            let points = 0;
+            for(let j = 0; j < doc.length; j++) {
+                points += doc[j].upvotes;
+            }
+            await User.findOneAndUpdate({userID: users[i].userID}, {points: points})
+        })
     }
     let updatedRestaurants = await adjustRatings();
     updatedRestaurants.forEach(async (resto) => {
