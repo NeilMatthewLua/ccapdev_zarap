@@ -127,7 +127,7 @@ exports.update_user =  async (req, res) => {
     //set up updated picture
     let oldPicture = {pictureID: req.body.user.picture};
     let updatePicture = {
-        url: req.body.user.uploadedFile[0].url
+        url: req.body.user.uploadedFiles
     }
 
     //update user in db
