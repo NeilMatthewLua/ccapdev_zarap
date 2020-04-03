@@ -6,7 +6,7 @@
             <h3 class="center big-font onload">{{Title}}</h3>
             <div class="row pad-left">
                 <!-- User Menu -->
-                <UserMenu  @userProfile="updateUserPage" @reset="reset"/>
+                <UserMenu  @userProfile="updateUserPage"/>
                 <!-- Display info for large -->
                 <ProfilePage v-bind:class="{'editVisible': ProfileVisible}"
                 @updateNavbar="updateNavbar" ref="resetEdit"/>
@@ -58,7 +58,7 @@ export default {
             this.updateUserPage();
         },
         reset() {
-            this.$refs.resetEdit.reset();
+            return (this.$refs.resetEdit != undefined) ? this.$refs.resetEdit.resetPage() : undefined;
         },
         uploadFiles(files) {
             this.$set(this, "uploadedFiles", files);  
@@ -71,12 +71,14 @@ export default {
             if(action == 'profile') {
                 this.Title = "Profile";
                 this.ProfileVisible = false;
+                this.reset(); 
                 this.HistoryVisible = true;
                 this.ReviewVisible = true;
             }
             if(action == 'myprofile') {
                 this.Title = "My Profile";
                 this.ProfileVisible = false;
+                this.reset(); 
                 this.HistoryVisible = true;
                 this.ReviewVisible = true;
             }
@@ -95,7 +97,7 @@ export default {
         }
     },
     async beforeRouteLeave(to, from, next) {  
-        this.$refs.resetEdit.reset();
+        this.reset(); 
         if(this.$store.getters.getUser != null){ 
           await this.removeUnusedPictures(); 
         }

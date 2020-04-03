@@ -12,9 +12,15 @@
     <div class="container">
         <!--UPLOAD-->
         <form enctype="multipart/form-data" novalidate v-if="isInitial || isSaving">
-            <h5>Upload images</h5>
+            <h5 v-if="!singleUpload">Upload images</h5>
+            <h5 v-else :class="{'white-text': !isBlack}" >Upload profile picture</h5>
             <div class="dropbox">
-              <input type="file" multiple :name="uploadFieldName" :disabled="isSaving" @change="filesChange($event.target.name, $event.target.files); fileCount = $event.target.files.length" accept="image/*" class="input-file">
+              <div v-if="singleUpload">
+                <input type="file" :name="uploadFieldName" :disabled="isSaving" @change="filesChange($event.target.name, $event.target.files); fileCount = $event.target.files.length" accept="image/*" class="input-file">
+              </div>
+              <div v-else>
+                <input type="file" multiple :name="uploadFieldName" :disabled="isSaving" @change="filesChange($event.target.name, $event.target.files); fileCount = $event.target.files.length" accept="image/*" class="input-file">
+              </div>
                 <p v-if="isInitial">
                 Drag your file(s) here to begin<br> or click to browse
                 </p>
@@ -25,18 +31,18 @@
         </form>
         <!--SUCCESS-->
         <div v-if="isSuccess">
-            <h5>Uploaded successfully.</h5>
+            <h5 :class="{'white-text': !isBlack}" >Uploaded successfully.</h5>
             <p>
             <a @click="reset(false)">Upload again</a>
             </p>
         </div>
         <!--FAILED-->
         <div v-if="isFailed">
-            <h5>Upload failed.</h5>
+            <h5 :class="{'white-text': !isBlack}" >Upload failed.</h5>
             <p>
-            <a @click="reset(false)">Try again</a>
-            </p>
-            <pre>{{ uploadError }}</pre>
+            <a @click="reset(false)" :class="{'white-text': !isBlack}" >Try again</a>
+            </p> 
+            <pre :class="{'white-text': !isBlack}">{{ uploadError }}</pre>
         </div>
     </div>      
    </div>
@@ -64,6 +70,11 @@ export default {
         }
     },
     props: {
+        isBlack: {
+          type: Boolean,
+          default: false 
+        },
+        singleUpload: Boolean, 
         existingPics: Array, 
         dest: String, //Directory to save the image to 
     },
@@ -136,13 +147,18 @@ export default {
       filesChange(fieldName, fileList) {
         const formData = new FormData();
         //No files chosen or Pictures being uploaded is past 5 
-        if (!fileList.length || (fileList.length + this.reviewPictures.length) > 5) {
+        if (!fileList.length || (fileList.length + this.reviewPictures.length) > 5
+            || ((fileList.length + this.reviewPictures.length) > 1) && this.singleUpload) {
           if(!fileList.length) {
             this.uploadError = "No Files Selected";
             this.currentStatus = STATUS_FAILED;
           }
-          if((fileList.length + this.reviewPictures.length) > 5) {
+          else if((fileList.length + this.reviewPictures.length) > 5) {
             this.uploadError = "Error. Max limit of 5 pictures.";
+            this.currentStatus = STATUS_FAILED;
+          }
+          else if(((fileList.length + this.reviewPictures.length) > 1) && this.singleUpload) {
+            this.uploadError = "Error. Only 1 picture allowed.";
             this.currentStatus = STATUS_FAILED;
           }
           return; 

@@ -193,13 +193,13 @@ router.post('/delete-unused-pics', async (req, res) => {
     let urls = req.body.urls;   
     let found = false;
     let skip = 999;   
-    let i; 
+    let i;   
     //Pass by pictures that are part of the review
     for(i = 0; i < urls.length && !found; i++) {
         await Picture.findOne({'url' : urls[i]}, (err, result) => {
             if(result === null) {
-               found = true;
-               skip = i;      
+                found = true;
+                skip = i;      
             }
         }) 
     }
@@ -209,10 +209,12 @@ router.post('/delete-unused-pics', async (req, res) => {
         let relPath = url.split('/');
         let removePath = `images/${relPath[4]}/${relPath[5]}`;
         fs.unlink(removePath, (err) => {
-            if (err.code == 'ENOENT') 
-                console.log("File no longer Exists"); 
-            else if(err) 
-                throw err; 
+            if(err) {
+                if (err.code == 'ENOENT') 
+                    console.log("File no longer Exists");
+                else 
+                    throw err 
+            }
             else
                 console.log(`${removePath} was deleted`);
         });
