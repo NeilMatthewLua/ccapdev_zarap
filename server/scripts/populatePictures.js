@@ -127,7 +127,7 @@ var reviewPics = [
     "http://localhost:9090/static/reviewPictures/yabu1.jpg",
     "http://localhost:9090/static/reviewPictures/yabu2.jpg",
     "http://localhost:9090/static/reviewPictures/yabu3.jpg",
-    "http://localhost:9090/static/reviewPictures/choigarden.jpg",
+    "http://localhost:9090/static/reviewPictures/choigarden1.jpg",
     "http://localhost:9090/static/reviewPictures/choigarden2.jpg",
     "http://localhost:9090/static/reviewPictures/choigarden3.jpg",
     "http://localhost:9090/static/reviewPictures/frankies1.jpg",
