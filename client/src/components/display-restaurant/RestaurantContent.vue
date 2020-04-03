@@ -143,7 +143,7 @@ export default {
       async goToSearch() {
         await this.getSearchRestos(this.search);
         await this.getSearch(this.search);
-        router.push({path: `/searchresult/search=${this.search}`}).catch(() => {});
+        router.push({path: '/searchresult', query: {search : this.search}}).catch(() => {});
       },
       beenHere() {
         if(!this.$store.getters.getUser.beenHere.includes(this.fetchCurrResto().restaurantID))

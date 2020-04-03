@@ -359,7 +359,7 @@
     <div class="search-section search-mobile hide-on-large-only">
       <div class="container row">
         <div class="col s12">
-          <form class="search-bar-small" id="search-small"> 
+          <form class="search-bar-small" id="search-small" @submit.prevent="goSearchResult()"> 
             <div class="input-field">
               <input type="text" class="white search-box truncate" v-model="search" name="searchbar" placeholder="   Search your favorite restaurants here...">
             </div>
@@ -454,7 +454,7 @@ export default {
         router.push({path: '/searchresult', query: {search : this.search}}).catch(() => {});
       }
       else {
-        router.push({path: '/searchresult/', query: {search : this.search}}).catch(() => {});
+        router.push({path: '/searchresult', query: {search : this.search}}).catch(() => {});
       }
     }
     

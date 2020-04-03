@@ -52,7 +52,6 @@ export default {
     }, 
     mounted () {
         M.AutoInit();
-        
         // open the operating hour modal using its ID
         const elem = document.getElementById('operating-hour-modal');
         // initializes to the DOM
@@ -101,7 +100,6 @@ export default {
             let key = null;
             await this.getSearchRestos(key);
             await this.getSearch(key);
-            
         },
     }
 }

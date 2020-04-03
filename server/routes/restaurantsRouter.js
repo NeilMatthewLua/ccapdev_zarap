@@ -15,20 +15,14 @@ router.get('/owner/:id', RestaurantsController.get_restaurant_ownerid);
 //Updates Restaurant rating
 router.post('/update-rating/:id', RestaurantsController.update_restaurant_rating);
 
-router.get('/search-resto/:restoName', (req, res) => { 
-    let restoName = req.params.restoName
-    Restaurant.find({name: {$regex: restoName, $options: "i"}},(err, doc) => {
-        if(err) res.status(500)
-        res.status(200).send(doc)  
-    });
-});
+router.get('/search-resto/:restoName', RestaurantsController.get_search_restaurant_restoName);
 
-router.get('/search-cuisine/:cuisine', (req, res) => { 
-    let cuisine = req.params.cuisine
-    Restaurant.find({cuisines: {$regex: cuisine, $options: "i"}},(err, doc) => {
-        if(err) res.status(500)
-        res.status(200).send(doc)  
-    });
-});
+// router.get('/search-cuisine/:cuisine', (req, res) => { 
+//     let cuisine = req.params.cuisine
+//     Restaurant.find({cuisines: {$regex: cuisine, $options: "i"}},(err, doc) => {
+//         if(err) res.status(500)
+//         res.status(200).send(doc)  
+//     });
+// });
 
 module.exports = router; 
