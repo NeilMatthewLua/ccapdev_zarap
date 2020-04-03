@@ -95,7 +95,8 @@ export default {
           photosTitle: "Menu", //Default Photos Title
           section: "Photos", //Default Section
           isFetching : true, //If Data is Fetching 
-          noResult : false 
+          noResult : false,
+          search : null 
       }
     },
     computed: {
@@ -139,8 +140,10 @@ export default {
       changeReview() {
         this.section = "Review"
       },
-      goToSearch() {
-        router.push({name : "Search Result"}); 
+      async goToSearch() {
+        await this.getSearchRestos(this.search);
+        await this.getSearch(this.search);
+        router.push({path: `/searchresult/search=${this.search}`}).catch(() => {});
       },
       beenHere() {
         if(!this.$store.getters.getUser.beenHere.includes(this.fetchCurrResto().restaurantID))
@@ -171,7 +174,7 @@ export default {
           this.notBeenHere();
       },
       ...mapGetters(['fetchCurrResto','fetchMenuPics','fetchRestaurantPics', 'isLoggedIn']),
-      ...mapActions(['getRestoById','getRestaurantPictures', 'getMenuPictures', 'getReviewPostUsers'])
+      ...mapActions(['getRestoById','getRestaurantPictures', 'getMenuPictures', 'getReviewPostUsers', 'getSearchRestos', 'getSearch'])
     },
     async created() {
       //Get Restaurant details 

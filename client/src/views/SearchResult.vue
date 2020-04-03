@@ -10,6 +10,8 @@
 import Navbar from '@/components/Navbar.vue';
 import Footer from '@/components/Footer.vue';
 import SearchContent from '@/components/search-restaurant/SearchContent.vue';
+// import { mapActions} from 'vuex';
+// import router from '@/router'
 
 export default {
     name: "SearchResult",
@@ -17,7 +19,18 @@ export default {
         Navbar,
         SearchContent,
         Footer,
-    }
+    },
+    // methods: {
+    //   ...mapActions(['getSearchRestos', 'getSearch'])
+    // },
+    // async beforeRouteLeave(to, from, next) {
+    //   let key = this.$route.query.search
+    //   console.log(key);
+    //   await this.getSearchRestos(key);
+    //   await this.getSearch(key);
+    //   router.push({path: '/searchresult', query: {search : this.search}}).catch(() => {});
+    //   next();
+    // },
 }
 </script>
 
