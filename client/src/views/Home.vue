@@ -121,7 +121,7 @@ export default {
       //TODO Search Router
       await this.getSearchRestos(this.search);
       await this.getSearch(this.search);
-      router.push({name:"Search Result"})
+      router.push({path: `/searchresult/search=${this.search}`}).catch(() => {});
       //For Dev
       //router.push({name:"Display Restaurant", params : {id : "5e7f0b024e652b3734b7e7e2"}})
     },

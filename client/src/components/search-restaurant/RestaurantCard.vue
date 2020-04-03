@@ -13,7 +13,7 @@
                             <div class="card-content">
                                 <p class="restaurant-establishment-type">{{resto.establishmentType[0]}}</p>
                                 <br>
-                                <a :href="link" class="restaurant-name">{{resto.name}}</a>
+                                <a class="restaurant-name" @click="goResto()">{{resto.name}}</a>
                                 <br>
                                 <p class="restaurant-location">{{resto.city}}</p>
                                 <p class="restaurant-address">{{resto.fullAddress}}</p>
@@ -46,7 +46,7 @@
                         <button class="btn-small hoverable green right">{{resto.overallRating}}</button>
                     </div>
                     <div class="mobile-restaurant-info">
-                        <a :href="link" class="card-title">{{resto.name}}</a>
+                        <a class="card-title" @click="goResto()">{{resto.name}}</a>
                         <hr>
                         <p class="card-content">
                             {{resto.city}}
@@ -69,6 +69,7 @@
 
 <script>
 import { mapGetters } from 'vuex'; 
+import router from '../../router';
 import M from 'materialize-css';
 export default {
     name: "RestaurantCard",
@@ -77,8 +78,7 @@ export default {
     },
     data () {
         return {
-            currRestoId: null,
-            link: "/restaurant/" + this.resto.restaurantID
+            currRestoId: null
         }
     },
     methods: {
@@ -93,6 +93,9 @@ export default {
         openModal() {
             // Show the modal and delegate the responsibility to the parent class
             this.$emit("did_click_operating_info", this.resto.restaurantID);
+        },
+        goResto() {
+            router.push({path: `/restaurant/${this.resto.restaurantID}`});
         }
     },
     mounted() {

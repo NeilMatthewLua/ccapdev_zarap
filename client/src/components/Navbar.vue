@@ -445,10 +445,16 @@ export default {
     goRegister() {
       router.push({name: 'Register'}).catch(() => {});
     },
-    goSearchResult: async function() {
+    async goSearchResult() {
       await this.getSearchRestos(this.search);
       await this.getSearch(this.search);
-      router.push({name:"Search Result"})
+      if (this.$router.name == "Search Result") {
+        await this.getSearchRestos(this.search);
+        await this.getSearch(this.search);
+      }
+      else {
+        router.push({path: `/searchresult/search=${this.search}`}).catch(() => {});
+      }
     }
     
   },
