@@ -40,7 +40,7 @@
         <div v-if="isFailed">
             <h5 :class="{'white-text': !isBlack}" >Upload failed.</h5>
             <p>
-            <a @click="reset(false)" :class="{'white-text': !isBlack}" >Try again</a>
+            <a @click="reset(false)" >Try again</a>
             </p> 
             <pre :class="{'white-text': !isBlack}">{{ uploadError }}</pre>
         </div>

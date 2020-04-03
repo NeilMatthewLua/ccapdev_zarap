@@ -322,7 +322,7 @@ export default {
             this.submitVisible = value
         },
         async updateUser() {
-            let app = this;
+            let app = this; 
             await this.$store
                 .dispatch('updateUser', {
                     "firstname": app.user_firstname,
