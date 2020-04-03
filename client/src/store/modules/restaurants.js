@@ -86,10 +86,6 @@ const actions =  {
             let res = await axios.get("http://localhost:9090/restaurants"); 
             commit('setSearchRestos', res.data);
         }
-        else if (searchKey == ''){
-            let res = await axios.get("http://localhost:9090/restaurants"); 
-            commit('setSearchRestos', res.data);
-        }
         else {
             let res = await axios.get(`http://localhost:9090/restaurants/search-resto/${searchKey}`);
             commit('setSearchRestos', res.data);

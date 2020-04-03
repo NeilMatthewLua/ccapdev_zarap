@@ -21,7 +21,7 @@ const routes = [
     component: DisplayRestaurant
   },
   {
-    path: '/searchresult',
+    path: '/searchresult/search:search',
     name: 'Search Result',
     component: SearchResult
   },

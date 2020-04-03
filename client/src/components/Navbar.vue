@@ -13,7 +13,7 @@
 
       <!-- Searchbar -->
       <div class="search-section col s7 hide-on-med-and-down" v-show="hasSearch">
-        <form class="search-bar" id="search-big" @submit.prevent="goSearchResult()">
+        <form class="search-bar">
           <div class="input-field">
             <input type="text" class="white search-box" v-model="search" name="searchbar" placeholder="   Search your favorite restaurants here...">
           </div>
@@ -359,7 +359,7 @@
     <div class="search-section search-mobile hide-on-large-only">
       <div class="container row">
         <div class="col s12">
-          <form class="search-bar-small" id="search-small"> 
+          <form class="search-bar-small"> 
             <div class="input-field">
               <input type="text" class="white search-box truncate" v-model="search" name="searchbar" placeholder="   Search your favorite restaurants here...">
             </div>
@@ -451,10 +451,10 @@ export default {
       if (this.$router.name == "Search Result") {
         await this.getSearchRestos(this.search);
         await this.getSearch(this.search);
-        router.push({path: '/searchresult', query: {search : this.search}}).catch(() => {});
+        router.push({path: `/searchresult/search=${this.search}`}).catch(() => {});
       }
       else {
-        router.push({path: '/searchresult/', query: {search : this.search}}).catch(() => {});
+        router.push({path: `/searchresult/search=${this.search}`}).catch(() => {});
       }
     }
     

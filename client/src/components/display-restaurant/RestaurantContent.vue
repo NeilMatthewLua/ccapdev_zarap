@@ -15,8 +15,8 @@
                   <a class="waves-effect waves-light red btn bookmark-btn" @click="beenHere()" v-show="isLogged">
                     I've Been Here
                   </a>
-                  <div id="animated-example" class="animated bounce arrow-margin" v-show="isLogged"> <i class="material-icons">arrow_back</i></div>
-                  <p class="notify" v-show="isLogged">Been Here? Tell us!</p>
+                  <div id="animated-example" class="animated bounce arrow-margin"> <i class="material-icons">arrow_back</i></div>
+                  <p class="notify">Been Here? Tell us!</p>
                 </div>
               </div>
               <div v-show="hasBeen">
@@ -95,8 +95,7 @@ export default {
           photosTitle: "Menu", //Default Photos Title
           section: "Photos", //Default Section
           isFetching : true, //If Data is Fetching 
-          noResult : false,
-          search : null 
+          noResult : false 
       }
     },
     computed: {
@@ -140,10 +139,8 @@ export default {
       changeReview() {
         this.section = "Review"
       },
-      async goToSearch() {
-        await this.getSearchRestos(this.search);
-        await this.getSearch(this.search);
-        router.push({path: `/searchresult/search=${this.search}`}).catch(() => {});
+      goToSearch() {
+        router.push({name : "Search Result"}); 
       },
       beenHere() {
         if(!this.$store.getters.getUser.beenHere.includes(this.fetchCurrResto().restaurantID))
@@ -156,7 +153,7 @@ export default {
           })
       },
       notBeenHere() {
-        if(!((this.isLogged) ? this.$store.getters.hasReview(this.getUser().userID) : false)) {
+        if(!(this.isLogged) ? this.$store.getters.hasReview(this.getUser().userID) : false) {
             if(this.$store.getters.getUser.beenHere.includes(this.fetchCurrResto().restaurantID))
           this.$store.dispatch('deleteRestaurantVisit', {
             resto: this.fetchCurrResto().restaurantID,
@@ -173,8 +170,8 @@ export default {
         else
           this.notBeenHere();
       },
-      ...mapGetters(['fetchCurrResto','fetchMenuPics','fetchRestaurantPics', 'isLoggedIn', 'getUser']),
-      ...mapActions(['getRestoById','getRestaurantPictures', 'getMenuPictures', 'getReviewPostUsers', 'getSearchRestos', 'getSearch'])
+      ...mapGetters(['fetchCurrResto','fetchMenuPics','fetchRestaurantPics', 'isLoggedIn']),
+      ...mapActions(['getRestoById','getRestaurantPictures', 'getMenuPictures', 'getReviewPostUsers'])
     },
     async created() {
       //Get Restaurant details 
