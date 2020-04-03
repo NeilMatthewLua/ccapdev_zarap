@@ -51,18 +51,22 @@ export default {
         // initializes to the DOM
         operatingHourModalInstance = M.Modal.init(elem, {dismissible: false});
     },
+    computed: {
+        search() {
+            return this.fetchSearch();
+        }
+    },
     data () {
         return {
             loading : true,
-            currentRestaurantOperatingHours : null,
-            search: this.fetchSearch()
+            currentRestaurantOperatingHours : null
         }
     },
     async created() {
         // await this.getRestos();
         // await this.getPics(this.fetchAllRestos());
         // await this.getOperatingHours(this.fetchAllRestos());
-        await this.getPics(this.fetchAllSearchRestos());
+        await this.getPics(this.fetchAllRestos());
         await this.getOperatingHours(this.fetchAllSearchRestos());
         this.loading = false;
     },
