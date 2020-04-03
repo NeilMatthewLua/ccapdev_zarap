@@ -145,7 +145,7 @@ export default {
             }) 
         }, 
         goToProfile() {
-            if(JSON.stringify(this.reviewData.userID) == JSON.stringify(this.$store.getters.getUser.userID)) 
+            if((this.$store.getters.getUser != null) && JSON.stringify(this.reviewData.userID) == JSON.stringify(this.$store.getters.getUser.userID)) 
                 router.push({ name: 'UserDetail', params: { id : this.reviewData.reviewerID, menu : "myprofile" } });
             else
                 router.push({ name: 'UserDetail', params: { id : this.reviewData.reviewerID, menu : "profile" } });
