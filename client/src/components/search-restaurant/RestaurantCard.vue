@@ -13,7 +13,7 @@
                             <div class="card-content">
                                 <p class="restaurant-establishment-type">{{resto.establishmentType[0]}}</p>
                                 <br>
-                                <a :href="url" class="restaurant-name">{{resto.name}}</a>
+                                <a :href="link" class="restaurant-name">{{resto.name}}</a>
                                 <br>
                                 <p class="restaurant-location">{{resto.city}}</p>
                                 <p class="restaurant-address">{{resto.fullAddress}}</p>
@@ -46,7 +46,7 @@
                         <button class="btn-small hoverable green right">{{resto.overallRating}}</button>
                     </div>
                     <div class="mobile-restaurant-info">
-                        <a :href="url" class="card-title">{{resto.name}}</a>
+                        <a :href="link" class="card-title">{{resto.name}}</a>
                         <hr>
                         <p class="card-content">
                             {{resto.city}}
@@ -78,7 +78,7 @@ export default {
     data () {
         return {
             currRestoId: null,
-            url: "/restaurant/" + this.resto.restaurantID
+            link: "/restaurant/" + this.resto.restaurantID
         }
     },
     methods: {

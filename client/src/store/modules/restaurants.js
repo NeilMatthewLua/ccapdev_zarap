@@ -5,7 +5,10 @@ const state =  {
     currResto : null, //Store the resto the user clicked here 
     userReviewRestos : [], //Store the restos reviewed by the user 
     allPics: [], // Stores all the pictures of the restaurant
-    allOperatingHours: [] // Stores all the operating hours of the restaurant
+    allOperatingHours: [], // Stores all the operating hours of the restaurant
+    allSearchRestos : [], // Stores all the restos from the search result
+    search: null
+
     //Store the fields associated with the resto / resto object
 }
 
@@ -14,9 +17,11 @@ const getters =  {
     fetchCurrResto : state => state.currResto, 
     fetchUserReviewRestos : state => state.userReviewRestos,
     fetchAllPic : state => state.allPics,
-    fetchCoverPic: state => id => state.allPics.filter(pics => pics.pictureID === id),
-    fetchAllOperatingHours: state => state.allOperatingHours,
-    fetchOperatingHour: state => id => state.allOperatingHours.filter(resto => resto.restaurantID === id)
+    fetchCoverPic : state => id => state.allPics.filter(pics => pics.pictureID === id),
+    fetchAllOperatingHours : state => state.allOperatingHours,
+    fetchOperatingHour : state => id => state.allOperatingHours.filter(resto => resto.restaurantID === id),
+    fetchAllSearchRestos : state => state.allSearchRestos,
+    fetchSearch : state => state.search
 }
 
 const actions =  {
@@ -75,16 +80,31 @@ const actions =  {
         //TODO Add another update in profile depending on Been here implementation in userdetail 
         if(!group.inProfile)
             commit('updateRating', newRating);
+    },
+    async getSearchRestos({commit}, searchKey) {
+        if (searchKey == null){
+            let res = await axios.get("http://localhost:9090/restaurants"); 
+            commit('setSearchRestos', res.data);
+        }
+        else {
+            let res = await axios.get(`http://localhost:9090/restaurants/search-resto/${searchKey}`);
+            commit('setSearchRestos', res.data);
+        }
+    },
+    async getSearch ({commit}, searchKey) {
+        commit('setSearch', searchKey);
     }
 }
 
 const mutations = {
     setResto : (state, restos) => state.allRestos = restos,
     setCurrResto : (state, resto) => state.currResto = resto,
-    setPics: (state, pic) => state.allPics = pic,
+    setPics : (state, pic) => state.allPics = pic,
     setUserReviewRestos : (state, restos) => state.userReviewRestos = restos,
     setOperatingHours: (state, restos) => state.allOperatingHours = restos,
-    updateRating : (state, rating) => state.currResto.overallRating = rating
+    updateRating : (state, rating) => state.currResto.overallRating = rating,
+    setSearchRestos : (state, restos) => state.allSearchRestos = restos, 
+    setSearch : (state, search) => state.search = search
 }
 
 export default {

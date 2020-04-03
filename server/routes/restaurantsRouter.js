@@ -40,4 +40,20 @@ router.post('/update-rating/:id', (req, res) => {
     })
 });
 
+router.get('/search-resto/:restoName', (req, res) => { 
+    let restoName = req.params.restoName
+    Restaurant.find({name: {$regex: restoName, $options: "i"}},(err, doc) => {
+        if(err) res.status(500)
+        res.status(200).send(doc)  
+    });
+});
+
+router.get('/search-cuisine/:cuisine', (req, res) => { 
+    let cuisine = req.params.cuisine
+    Restaurant.find({cuisines: {$regex: cuisine, $options: "i"}},(err, doc) => {
+        if(err) res.status(500)
+        res.status(200).send(doc)  
+    });
+});
+
 module.exports = router; 

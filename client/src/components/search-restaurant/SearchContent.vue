@@ -1,13 +1,19 @@
 <template>
     <div>
         <div class="searched-text">
-            <h4 class="hide-on-med-and-down">Restaurants in Metro Manila</h4>
-            <h5 class="hide-on-large-only">Restaurants in Metro Manila</h5>
+            <div v-if="search">
+                <h4 class="hide-on-med-and-down">"{{search}}" in Metro Manila</h4>
+                <h5 class="hide-on-large-only">"{{search}}" in Metro Manila</h5>
+            </div>
+            <div v-else>
+                <h4 class="hide-on-med-and-down">Restaurants in Metro Manila</h4>
+                <h5 class="hide-on-large-only">Restaurants in Metro Manila</h5>
+            </div>
         </div>
         <div class="main-content">
-            <FilterBar/>
+            <FilterBar />
             <div v-if="!loading">
-                <RestaurantCard v-on:did_click_operating_info = "displayOperatingHoursModal" v-for="item in this.fetchAllRestos()" :key="item.restaurantID" :resto="item"/>
+                <RestaurantCard v-on:did_click_operating_info = "displayOperatingHoursModal" v-for="item in this.fetchAllSearchRestos()" :key="item.restaurantID" :resto="item"/>
             </div>
             <div v-if="loading">
                 <h1>LOADING...</h1>
@@ -48,18 +54,21 @@ export default {
     data () {
         return {
             loading : true,
-            currentRestaurantOperatingHours : null
+            currentRestaurantOperatingHours : null,
+            search: this.fetchSearch()
         }
     },
     async created() {
-        await this.getRestos();
-        await this.getPics(this.fetchAllRestos());
-        await this.getOperatingHours(this.fetchAllRestos());
+        // await this.getRestos();
+        // await this.getPics(this.fetchAllRestos());
+        // await this.getOperatingHours(this.fetchAllRestos());
+        await this.getPics(this.fetchAllSearchRestos());
+        await this.getOperatingHours(this.fetchAllSearchRestos());
         this.loading = false;
     },
     methods: {
         ...mapActions(["getRestos", "getRestoByQuery", "getPics", "getRestoById", "getOperatingHours"]),
-        ...mapGetters(["fetchAllRestos", "fetchAllPic", "fetchCurrResto", "fetchAllOperatingHours"]),
+        ...mapGetters(["fetchAllRestos", "fetchAllPic", "fetchCurrResto", "fetchAllOperatingHours", "fetchAllSearchRestos", "fetchSearch"]),
         displayOperatingHoursModal (restaurantID) {
             // fetch the currentRestaurant opened and fetch its operating hours
             this.currentRestaurantOperatingHours =  restaurantID ? this.$store.getters.fetchOperatingHour(restaurantID)[0].operatingHours : null

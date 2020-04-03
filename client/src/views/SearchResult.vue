@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Navbar :hasSearch="true" :isLogged="false" :hasFilter="true"/>
+    <Navbar :hasSearch="true" :isLogged="false" :hasFilter="true" />
     <SearchContent/>
     <Footer/> 
   </div>

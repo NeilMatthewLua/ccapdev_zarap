@@ -84,6 +84,7 @@
 import Footer from '@/components/Footer.vue';
 import NavbarHome from '@/components/NavbarHome.vue';
 import router from '@/router'
+import { mapActions } from 'vuex'; 
 
 export default {
   name: 'Home',
@@ -115,11 +116,14 @@ export default {
     }
   },
   methods: {
-    goSearchResult: function() {
+    ...mapActions(['removeUnusedPictures', 'getSearchRestos', 'getSearch']), 
+    goSearchResult: async function() {
       //TODO Search Router
+      await this.getSearchRestos(this.search);
+      await this.getSearch(this.search);
       router.push({name:"Search Result"})
       //For Dev
-      router.push({name:"Display Restaurant", params : {id : "5e7f0b024e652b3734b7e7e2"}})
+      //router.push({name:"Display Restaurant", params : {id : "5e7f0b024e652b3734b7e7e2"}})
     },
     loadCards: async function() {
       //loads the restaurant cards in home 
