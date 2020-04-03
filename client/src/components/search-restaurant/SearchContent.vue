@@ -10,14 +10,7 @@
                 <h5 class="hide-on-large-only">Restaurants in Metro Manila</h5>
             </div>
         </div>
-
-        <div class="loading" v-show="!result">
-            <h3>No Restaurant Found.</h3>
-            <br>
-            <a class="hyperlink" @click="goToSearch()">Search for another restaurant</a>
-        </div>
-
-        <div class="main-content" v-show="result">
+        <div class="main-content">
             <FilterBar />
             <div v-if="!loading">
                 <RestaurantCard v-on:did_click_operating_info = "displayOperatingHoursModal" v-for="item in this.fetchAllSearchRestos()" :key="item.restaurantID" :resto="item"/>
@@ -58,34 +51,23 @@ export default {
         // initializes to the DOM
         operatingHourModalInstance = M.Modal.init(elem, {dismissible: false});
     },
-    computed: {
-        search() {
-            return this.fetchSearch();
-        },
-        result() {
-            if(this.fetchAllSearchRestos().length == 0)
-                return false;
-            else
-                return true;
-        }
-    },
     data () {
         return {
             loading : true,
-            currentRestaurantOperatingHours : null
+            currentRestaurantOperatingHours : null,
+            search: this.fetchSearch()
         }
     },
     async created() {
         // await this.getRestos();
         // await this.getPics(this.fetchAllRestos());
         // await this.getOperatingHours(this.fetchAllRestos());
-        await this.getRestos();
-        await this.getPics(this.fetchAllRestos());
-        await this.getOperatingHours(this.fetchAllRestos());
+        await this.getPics(this.fetchAllSearchRestos());
+        await this.getOperatingHours(this.fetchAllSearchRestos());
         this.loading = false;
     },
     methods: {
-        ...mapActions(["getRestos", "getRestoByQuery", "getPics", "getRestoById", "getOperatingHours", "getSearchRestos", "getSearch"]),
+        ...mapActions(["getRestos", "getRestoByQuery", "getPics", "getRestoById", "getOperatingHours"]),
         ...mapGetters(["fetchAllRestos", "fetchAllPic", "fetchCurrResto", "fetchAllOperatingHours", "fetchAllSearchRestos", "fetchSearch"]),
         displayOperatingHoursModal (restaurantID) {
             // fetch the currentRestaurant opened and fetch its operating hours
@@ -96,13 +78,7 @@ export default {
         closeOperatingInfoModal () {
             // close the modal
             operatingHourModalInstance.close();
-        },
-        async goToSearch() {
-            let key = null;
-            await this.getSearchRestos(key);
-            await this.getSearch(key);
-            
-        },
+        }
     }
 }
 </script>
@@ -118,17 +94,4 @@ export default {
         padding-right: 3%;
         justify-content: center;
     }
-
-    .hyperlink {
-        text-decoration: underline; 
-        font-size: 2rem; 
-    }
-
-    .loading {
-      display: flex;
-      flex-direction: column; 
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
-  }
 </style>
