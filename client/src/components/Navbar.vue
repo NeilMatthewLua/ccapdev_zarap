@@ -18,7 +18,7 @@
             <input type="text" class="white search-box" v-model="search" name="searchbar" placeholder="   Search your favorite restaurants here...">
           </div>
         </form>
-        <a class="waves-effect waves-light btn #e53935 red darken-1" @click="goSearchResult">search</a>
+        <a class="waves-effect waves-light btn #e53935 red darken-1" @click="goSearchResult()">search</a>
       </div>    
       
       <!-- Unlogged Login Section -->
@@ -368,7 +368,7 @@
       </div>
       <div class="container row bring_back">
         <div class="col s12">
-          <a class="waves-effect waves-light btn #e53935 red darken-1" @click="goSearchResult">search</a>
+          <a class="waves-effect waves-light btn #e53935 red darken-1" @click="goSearchResult()">search</a>
         </div>
       </div>
     </div>
@@ -451,6 +451,7 @@ export default {
       if (this.$router.name == "Search Result") {
         await this.getSearchRestos(this.search);
         await this.getSearch(this.search);
+        router.push({path: `/searchresult/search=${this.search}`}).catch(() => {});
       }
       else {
         router.push({path: `/searchresult/search=${this.search}`}).catch(() => {});

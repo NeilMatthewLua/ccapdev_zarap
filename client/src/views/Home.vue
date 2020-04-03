@@ -19,7 +19,7 @@
             <div class ="input-field col s6 offset-s2 searchround">
               <input type="text" class ="white truncate padinput" name="searchbar" placeholder="Search your favorite restaurants here..." v-model="search">
             </div>
-            <a class ="waves-effect waves-light btn pushdown colored-button bring_back" @click="goSearchResult">search</a>
+            <a class ="waves-effect waves-light btn pushdown colored-button bring_back" @click="goSearchResult()">search</a>
           </div>
         </div>
         <br>
