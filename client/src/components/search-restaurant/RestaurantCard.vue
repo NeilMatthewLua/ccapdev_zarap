@@ -4,13 +4,13 @@
         <div class="hide-on-small-only">
             <div class="restaurant-list">
                 <!-- Restaurant Cards for Desktop View -->
-                <div class="card horizontal">
-                    <div class="card-image">
-                        <img :alt="resto.name" :src="this.$store.getters.fetchCoverPic(resto.defaultPicture)[0].url"  class="restaurant-image">
+                <div class="horizontal card"  :class="{'profile': !inSearch}">
+                    <div :class="{'card-image': inSearch, 'card-image-profile': !inSearch}">
+                        <img :alt="resto.name" :src="this.$store.getters.fetchCoverPic(resto.defaultPicture)[0].url"  :class="{'restaurant-image': inSearch, 'restaurant-image-profile': !inSearch}">
                     </div>
                     <div class="restaurant-info">
-                        <div class="card-stacked">
-                            <div class="card-content">
+                        <div :class="{'card-stacked': inSearch, 'card-stacked-profile': !inSearch}">
+                            <div :class="{'card-content': inSearch, 'card-content-profile': !inSearch}">
                                 <p class="restaurant-establishment-type">{{resto.establishmentType[0]}}</p>
                                 <br>
                                 <a class="restaurant-name" @click="goResto()">{{resto.name}}</a>
@@ -36,6 +36,8 @@
                 </div>
             </div>
         </div>
+        
+
         <!-- Restaurant List for Mobile and Tablet View -->
         <div class="hide-on-med-and-up">
             <div class="mobile-restaurant-list">
@@ -78,7 +80,8 @@ export default {
     },
     data () {
         return {
-            currRestoId: null
+            currRestoId: null,
+            inSearch: false
         }
     },
     methods: {
@@ -96,10 +99,14 @@ export default {
         },
         goResto() {
             router.push({path: `/restaurant/${this.resto.restaurantID}`});
+        },
+        isInSearch() {
+            this.$route.name == "Search Result" ? this.inSearch = true : this.inSearch = false;
         }
     },
     mounted() {
         M.AutoInit();
+        this.isInSearch();
     }
 }
 </script>
@@ -150,6 +157,46 @@ export default {
         margin-left: 2%;
         width: 30vw;
         height: 400px;
+    }
+
+    .restaurant-list > .profile {
+        width: 60vw;
+        height: 300px;
+        margin-left: 2%;
+    }
+
+    .restaurant-list > .card-image-profile {
+        /* width: 95%;
+        height: 440px; */
+        min-width: 20vw;
+        min-height: 300px;
+        max-width: 20vw;
+        max-height: 300px;
+        overflow: hidden;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        object-fit: fill;
+    }
+
+    .restaurant-image-profile {
+        padding: 2%;
+        min-width: 20vw;
+        min-height: 300px;
+        max-width: 20vw;
+        max-height: 300px;
+    }
+
+    .card-stacked-profile {
+        width: 25vw;
+        height: 300px;
+    }
+
+    .card-stacked-profile > .card-content-profile {
+        padding-left: 2%;
+        margin-left: 2%;
+        width: 25vw;
+        height: 300px;
     }
 
     .restaurant-info {
@@ -243,6 +290,14 @@ export default {
         min-height: 200px;
         max-width: 100%;
         max-height: 200px;
+    }
+
+    .mobile-restaurant-image-Search {
+        padding: 2%;
+        min-width: 35%;
+        min-height: 300px;
+        max-width: 35%;
+        max-height: 300px;
     }
 
     .mobile-restaurant-info > .card-title {

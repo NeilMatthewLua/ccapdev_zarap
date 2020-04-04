@@ -15,8 +15,8 @@
                   <a class="waves-effect waves-light red btn bookmark-btn" @click="beenHere()" v-show="isLogged">
                     I've Been Here
                   </a>
-                  <div id="animated-example" class="animated bounce arrow-margin"> <i class="material-icons">arrow_back</i></div>
-                  <p class="notify">Been Here? Tell us!</p>
+                  <div id="animated-example" class="animated bounce arrow-margin" v-show="isLogged"> <i class="material-icons">arrow_back</i></div>
+                  <p class="notify" v-show="isLogged">Been Here? Tell us!</p>
                 </div>
               </div>
               <div v-show="hasBeen">
@@ -156,7 +156,7 @@ export default {
           })
       },
       notBeenHere() {
-        if(!(this.isLogged) ? this.$store.getters.hasReview(this.getUser().userID) : false) {
+        if(!((this.isLogged) ? this.$store.getters.hasReview(this.getUser().userID) : false)) {
             if(this.$store.getters.getUser.beenHere.includes(this.fetchCurrResto().restaurantID))
           this.$store.dispatch('deleteRestaurantVisit', {
             resto: this.fetchCurrResto().restaurantID,
@@ -173,7 +173,7 @@ export default {
         else
           this.notBeenHere();
       },
-      ...mapGetters(['fetchCurrResto','fetchMenuPics','fetchRestaurantPics', 'isLoggedIn']),
+      ...mapGetters(['fetchCurrResto','fetchMenuPics','fetchRestaurantPics', 'isLoggedIn', 'getUser']),
       ...mapActions(['getRestoById','getRestaurantPictures', 'getMenuPictures', 'getReviewPostUsers', 'getSearchRestos', 'getSearch'])
     },
     async created() {
