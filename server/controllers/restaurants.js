@@ -39,5 +39,14 @@ exports.update_restaurant_rating = (req, res) => {
     Restaurant.findOneAndUpdate({restaurantID : id}, {'overallRating' : body.rating}, (err,result) => {
         if (err) throw err
         res.status(200).send("Updated"); 
-    })
+    });
+}
+
+//Get Restaurant based on search key
+exports.get_search_restaurant_restoName = (req, res) => {
+    let restoName = req.params.restoName
+    Restaurant.find({name: {$regex: restoName, $options: "i"}},(err, doc) => {
+        if(err) res.status(500)
+        res.status(200).send(doc)  
+    });
 }

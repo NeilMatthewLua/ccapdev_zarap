@@ -57,6 +57,9 @@ let restaurantSchema = new mongoose.Schema({
                 Saturday: {
                     type: String
                 },
+                Sunday: {
+                    type: String
+                }
             },
         required: true
     },
