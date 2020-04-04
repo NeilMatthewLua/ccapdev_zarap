@@ -19,6 +19,7 @@ app.use(function (request, response, next) {
   response.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
   next();
 })
+app.use('/static', express.static(path.join(__dirname,'/images'))); 
 
 
 mongoose.connect(process.env.MONGO_URI, {useNewUrlParser: true, useUnifiedTopology: true})

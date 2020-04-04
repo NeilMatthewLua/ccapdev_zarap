@@ -13,12 +13,12 @@
 
       <!-- Searchbar -->
       <div class="search-section col s7 hide-on-med-and-down" v-show="hasSearch">
-        <form class="search-bar">
+        <form class="search-bar" id="search-big" @submit.prevent="goSearchResult()">
           <div class="input-field">
-            <input type="text" class="white search-box" name="searchbar" placeholder="   Search your favorite restaurants here...">
+            <input type="text" class="white search-box" v-model="search" name="searchbar" placeholder="   Search your favorite restaurants here...">
           </div>
         </form>
-        <a class="waves-effect waves-light btn #e53935 red darken-1" href="/searchresult">search</a>
+        <a class="waves-effect waves-light btn #e53935 red darken-1" @click="goSearchResult()">search</a>
       </div>    
       
       <!-- Unlogged Login Section -->
@@ -359,16 +359,16 @@
     <div class="search-section search-mobile hide-on-large-only">
       <div class="container row">
         <div class="col s12">
-          <form class="search-bar-small"> 
+          <form class="search-bar-small" id="search-small" @submit.prevent="goSearchResult()"> 
             <div class="input-field">
-              <input type="text" class="white search-box truncate" name="searchbar" placeholder="   Search your favorite restaurants here...">
+              <input type="text" class="white search-box truncate" v-model="search" name="searchbar" placeholder="   Search your favorite restaurants here...">
             </div>
           </form>
         </div>
       </div>
       <div class="container row bring_back">
         <div class="col s12">
-          <a class="waves-effect waves-light btn #e53935 red darken-1" href="/searchresult">search</a>
+          <a class="waves-effect waves-light btn #e53935 red darken-1" @click="goSearchResult()">search</a>
         </div>
       </div>
     </div>
@@ -402,7 +402,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['removeUnusedPictures']),  
+    ...mapActions(['removeUnusedPictures', 'getSearchRestos', 'getSearch']),  
     showModal() { //confirmation of successful registration
         this.isModalVisible = true;
     },
@@ -444,7 +444,20 @@ export default {
     },
     goRegister() {
       router.push({name: 'Register'}).catch(() => {});
+    },
+    async goSearchResult() {
+      await this.getSearchRestos(this.search);
+      await this.getSearch(this.search);
+      if (this.$router.name == "Search Result") {
+        await this.getSearchRestos(this.search);
+        await this.getSearch(this.search);
+        router.push({path: '/searchresult', query: {search : this.search}}).catch(() => {});
+      }
+      else {
+        router.push({path: '/searchresult', query: {search : this.search}}).catch(() => {});
+      }
     }
+    
   },
   mounted() {
     this.checkLogged();
@@ -471,6 +484,7 @@ export default {
       isLogged: false,
       user_firstname: ' ',
       user_picture: ' ',
+      search: null,
       nav_sort_by: {
         nav_ratings:{
             label: "Rating",
@@ -507,9 +521,6 @@ export default {
           nav_taguig: {
               label: "Taguig City"
           }
-          // nav_others: {
-          //     label: "See all locations"
-          // }
       },
       nav_cuisines: {
           nav_filipino: {
@@ -542,9 +553,6 @@ export default {
           nav_japanese: {
               label: "Japanese"
           }
-          // nav_others: {
-          //     label: "See all cuisines"
-          // }
       },
       nav_establishment_types: {
           nav_quick: {
