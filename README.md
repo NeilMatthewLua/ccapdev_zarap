@@ -169,41 +169,41 @@ This project creates a database of restaurants wherein users can look up the res
 
 16. Once you’re done, submit it and your profile shall be updated accordingly.
 
-![alt text](https://github.com/NeilMatthewLua/ccapdev_zarap/tree/nlua-mongodb/server/images/Test_Cases_Pcitures/2.19.png)
+![alt text](server/images/Test_Cases_Pcitures/2.19.png)
 
 	
 
-[1.1]: https://github.com/NeilMatthewLua/ccapdev_zarap/tree/nlua-mongodb/server/images/Test_Cases_Pcitures/1.1.png 
-[1.2]: https://github.com/NeilMatthewLua/ccapdev_zarap/tree/nlua-mongodb/server/images/Test_Cases_Pcitures/1.2.png 
-[1.3]: https://github.com/NeilMatthewLua/ccapdev_zarap/tree/nlua-mongodb/server/images/Test_Cases_Pcitures/1.3.png 
-[1.4]: https://github.com/NeilMatthewLua/ccapdev_zarap/tree/nlua-mongodb/server/images/Test_Cases_Pcitures/1.4.png 
-[1.5]: https://github.com/NeilMatthewLua/ccapdev_zarap/tree/nlua-mongodb/server/images/Test_Cases_Pcitures/1.5.png 
-[1.6]: https://github.com/NeilMatthewLua/ccapdev_zarap/tree/nlua-mongodb/server/images/Test_Cases_Pcitures/1.6.png 
-[1.7]: https://github.com/NeilMatthewLua/ccapdev_zarap/tree/nlua-mongodb/server/images/Test_Cases_Pcitures/1.7.png 
-[1.8]: https://github.com/NeilMatthewLua/ccapdev_zarap/tree/nlua-mongodb/server/images/Test_Cases_Pcitures/1.8.png 
-[1.9]: https://github.com/NeilMatthewLua/ccapdev_zarap/tree/nlua-mongodb/server/images/Test_Cases_Pcitures/1.9.png 
-[1.10]: https://github.com/NeilMatthewLua/ccapdev_zarap/tree/nlua-mongodb/server/images/Test_Cases_Pcitures/1.10.png 
-[1.11]: https://github.com/NeilMatthewLua/ccapdev_zarap/tree/nlua-mongodb/server/images/Test_Cases_Pcitures/1.11.png 
-[1.12]: https://github.com/NeilMatthewLua/ccapdev_zarap/tree/nlua-mongodb/server/images/Test_Cases_Pcitures/1.12.png 
-[2.1]: https://github.com/NeilMatthewLua/ccapdev_zarap/tree/nlua-mongodb/server/images/Test_Cases_Pcitures/2.1.png 
-[2.2]: https://github.com/NeilMatthewLua/ccapdev_zarap/tree/nlua-mongodb/server/images/Test_Cases_Pcitures/2.2.png 
-[2.3]: https://github.com/NeilMatthewLua/ccapdev_zarap/tree/nlua-mongodb/server/images/Test_Cases_Pcitures/2.3.png 
-[2.4]: https://github.com/NeilMatthewLua/ccapdev_zarap/tree/nlua-mongodb/server/images/Test_Cases_Pcitures/2.4.png 
-[2.5]: https://github.com/NeilMatthewLua/ccapdev_zarap/tree/nlua-mongodb/server/images/Test_Cases_Pcitures/2.5.png 
-[2.6]: https://github.com/NeilMatthewLua/ccapdev_zarap/tree/nlua-mongodb/server/images/Test_Cases_Pcitures/2.6.png 
-[2.7]: https://github.com/NeilMatthewLua/ccapdev_zarap/tree/nlua-mongodb/server/images/Test_Cases_Pcitures/2.7.png 
-[2.8]: https://github.com/NeilMatthewLua/ccapdev_zarap/tree/nlua-mongodb/server/images/Test_Cases_Pcitures/2.8.png 
-[2.9]: https://github.com/NeilMatthewLua/ccapdev_zarap/tree/nlua-mongodb/server/images/Test_Cases_Pcitures/2.9.png 
-[2.10]: https://github.com/NeilMatthewLua/ccapdev_zarap/tree/nlua-mongodb/server/images/Test_Cases_Pcitures/2.10.png 
-[2.11]: https://github.com/NeilMatthewLua/ccapdev_zarap/tree/nlua-mongodb/server/images/Test_Cases_Pcitures/2.11.png 
-[2.12]: https://github.com/NeilMatthewLua/ccapdev_zarap/tree/nlua-mongodb/server/images/Test_Cases_Pcitures/2.12.png 
-[2.13]: https://github.com/NeilMatthewLua/ccapdev_zarap/tree/nlua-mongodb/server/images/Test_Cases_Pcitures/2.13.png 
-[2.14]: https://github.com/NeilMatthewLua/ccapdev_zarap/tree/nlua-mongodb/server/images/Test_Cases_Pcitures/2.14.png 
-[2.15]: https://github.com/NeilMatthewLua/ccapdev_zarap/tree/nlua-mongodb/server/images/Test_Cases_Pcitures/2.15.png 
-[2.16]: https://github.com/NeilMatthewLua/ccapdev_zarap/tree/nlua-mongodb/server/images/Test_Cases_Pcitures/2.16.png 
-[2.17]: https://github.com/NeilMatthewLua/ccapdev_zarap/tree/nlua-mongodb/server/images/Test_Cases_Pcitures/2.17.png 
+[1.1]: server/images/Test_Cases_Pcitures/1.1.png 
+[1.2]: server/images/Test_Cases_Pcitures/1.2.png 
+[1.3]: server/images/Test_Cases_Pcitures/1.3.png 
+[1.4]: server/images/Test_Cases_Pcitures/1.4.png 
+[1.5]: server/images/Test_Cases_Pcitures/1.5.png 
+[1.6]: server/images/Test_Cases_Pcitures/1.6.png 
+[1.7]: server/images/Test_Cases_Pcitures/1.7.png 
+[1.8]: server/images/Test_Cases_Pcitures/1.8.png 
+[1.9]: server/images/Test_Cases_Pcitures/1.9.png 
+[1.10]: server/images/Test_Cases_Pcitures/1.10.png 
+[1.11]: server/images/Test_Cases_Pcitures/1.11.png 
+[1.12]: server/images/Test_Cases_Pcitures/1.12.png 
+[2.1]: server/images/Test_Cases_Pcitures/2.1.png 
+[2.2]: server/images/Test_Cases_Pcitures/2.2.png 
+[2.3]: server/images/Test_Cases_Pcitures/2.3.png 
+[2.4]: server/images/Test_Cases_Pcitures/2.4.png 
+[2.5]: server/images/Test_Cases_Pcitures/2.5.png 
+[2.6]: server/images/Test_Cases_Pcitures/2.6.png 
+[2.7]: server/images/Test_Cases_Pcitures/2.7.png 
+[2.8]: server/images/Test_Cases_Pcitures/2.8.png 
+[2.9]: server/images/Test_Cases_Pcitures/2.9.png 
+[2.10]: server/images/Test_Cases_Pcitures/2.10.png 
+[2.11]: server/images/Test_Cases_Pcitures/2.11.png 
+[2.12]: server/images/Test_Cases_Pcitures/2.12.png 
+[2.13]: server/images/Test_Cases_Pcitures/2.13.png 
+[2.14]: server/images/Test_Cases_Pcitures/2.14.png 
+[2.15]: server/images/Test_Cases_Pcitures/2.15.png 
+[2.16]: server/images/Test_Cases_Pcitures/2.16.png 
+[2.17]: server/images/Test_Cases_Pcitures/2.17.png 
 [2.18]: server/images/Test_Cases_Pcitures/2.18.png
-[2.19]: https://github.com/NeilMatthewLua/ccapdev_zarap/tree/nlua-mongodb/server/images/Test_Cases_Pcitures/2.19.png
+[2.19]: server/images/Test_Cases_Pcitures/2.19.png
 
 
 
