@@ -6,22 +6,22 @@ This project creates a database of restaurants wherein users can look up the res
 
 1. Clone the repository
 2. Open two terminals inside the project
-    - One inside /client
-    - One inside /server
+    * One inside /client
+    * One inside /server
 
 ##### For Server side
 1. Install the packages (`npm i`)
 2. Type `npm run backend`
 3. Open http://localhost:9090/populate
 
---By this part, database should already been populated--
+**By this part, database should already been populated**
 
 ##### For Client side
 1. Install the packages (`npm i`)
 2. Type `npm run serve`
 3. Open http://localhost:3000 
 
---Remember to keep both terminals opened--
+**Remember to keep both terminals opened**
 
 ### Test Cases
 #### Test Case 1 (Unlogged User)
@@ -43,7 +43,7 @@ This project creates a database of restaurants wherein users can look up the res
 
 5. As an unlogged user, you do not have access to saving the restaurant to your dining history or writing reviews for any restaurant. 
 
-6. When you are at the Menu or Photos section of the restaurant page, the lower-left half of the screen will be a carousel of images. Each image can be clicked to be enlarged and shown in a modal. 
+6. When you are at the Menu or Photos section of the restaurant page, the lower*left half of the screen will be a carousel of images. Each image can be clicked to be enlarged and shown in a modal. 
 
 ![alt text][1.5]
 
@@ -85,9 +85,15 @@ This project creates a database of restaurants wherein users can look up the res
 ![alt text][2.1]
 
 2. Once at the register page, create a new account by filling up the details (Profile picture is required and only one can be uploaded). 
-  - Sidenote: If you wish to change the picture you uploaded, simply click on the image and click remove to remove the image. Afterwards, you can upload another picture. 
+  * Sidenote: If you wish to change the picture you uploaded, simply click on the image and click remove to remove the image. Afterwards, you can upload another picture. 
 
-![alt text][2.2]	
+![alt text][2.2]
+
+
+* Additional Notes
+    * Should you wish to log-in with a pre-made user:
+        * email: ben@gmail.com
+        * password: bensicles
 
 3. A successful registration will bring you back to the landing page. 
 
@@ -102,8 +108,8 @@ This project creates a database of restaurants wherein users can look up the res
 ![alt text][2.5]
 
 6. Arriving in the restaurant page, you can check the menu, photos, and reviews of that restaurant
-  - You can toggle the beenHere- button if you want it saved for your dining history (no need to make a review)
-        - This will be automatically toggled once the user has made a review-
+  * You can toggle the beenHere* button if you want it saved for your dining history (no need to make a review)
+        * This will be automatically toggled once the user has made a review
 
 ![alt text][2.6]
 
@@ -114,8 +120,8 @@ This project creates a database of restaurants wherein users can look up the res
 ![alt text][2.7]
 
 9. Writing / Editing / Deleting reviews
-    You don’t have a review in the restaurant 
-        Add a review 
+    * You don’t have a review in the restaurant 
+        * Add a review 
             1. Uploading of images (Optional)
             2. Adding a review (Required)
             3. Rating the restaurant (Required)
@@ -156,14 +162,14 @@ This project creates a database of restaurants wherein users can look up the res
 ![alt text][2.16]
 
 12. The user can edit his/her reviews there, as well as delete them
-    - User’s points and dining history will be adjusted accordingly
+    * User’s points and dining history will be adjusted accordingly
 
 13. Go to ‘My Profile’
 14. Edit your profile by clicking ‘Edit Profile’
 
 ![alt text][2.17]
 
-15. Update whichever details you need, except for your email. Once you are satisfied with your updated details, simply re-type in your password and hit submit. 
+15. Update whichever details you need, except for your email. Once you are satisfied with your updated details, simply re*type in your password and hit submit. 
 	
 ![alt text][2.18]
 
@@ -205,33 +211,25 @@ This project creates a database of restaurants wherein users can look up the res
 [2.18]: server/images/Test_Cases_Pcitures/2.18.png
 [2.19]: server/images/Test_Cases_Pcitures/2.19.png
 
-
-
-
-
 ## Built With
 
-- [Vue](https://vuejs.org/) - The web framework used
-- [NodeJS](https://nodejs.org/en/) - The backend framework used
+* [Vue](https://vuejs.org/) * The web framework used
+* [NodeJS](https://nodejs.org/en/) * The backend framework used
 
 ## Authors
 
-- --Neil Matthew Lua-- 
-- --Kurt Bradley Tanting-- 
-- --Richard Alvin Zapanta-- 
+* *Neil Matthew Lua* 
+* *Kurt Bradley Tanting* 
+* *Richard Alvin Zapanta* 
 
 See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
 
-## License
-
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
-
 ## Acknowledgments
 
-- Mr. Jonal Ticug for being our supportive and helpful mommy
-- Pres. Duterte for Quarantine Season
-- Our last two brain cells for being enough
-- Nintendo Switch for stress-relief
-- Father Tio for Pizza Hut
-- Little Tio for Mozarella Sticks
-- Mr. Zapanta for Vroom Vroom
+* Mr. Jonal Ticug for being our supportive and helpful mommy
+* Pres. Duterte for Quarantine Season (Stay Safe :<)
+* Our last two brain cells for being enough
+* Nintendo Switch for stress*relief
+* Father Tio for Pizza Hut
+* Little Tio for Mozarella Sticks
+* Mr. Richard Zapanta for Vroom Vroom
