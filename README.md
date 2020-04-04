@@ -213,8 +213,8 @@ This project creates a database of restaurants wherein users can look up the res
 
 ## Built With
 
-* [Vue](https://vuejs.org/) * The web framework used
-* [NodeJS](https://nodejs.org/en/) * The backend framework used
+* [Vue](https://vuejs.org/) - The web framework used
+* [NodeJS](https://nodejs.org/en/) - The backend framework used
 
 ## Authors
 
@@ -222,11 +222,9 @@ This project creates a database of restaurants wherein users can look up the res
 * *Kurt Bradley Tanting* 
 * *Richard Alvin Zapanta* 
 
-See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
-
 ## Acknowledgments
 
-* Mr. Jonal Ticug for being our supportive and helpful mommy
+* Mr. Jonal Ticug for being our supportive and helpful daddy/mommy
 * Pres. Duterte for Quarantine Season (Stay Safe :<)
 * Our last two brain cells for being enough
 * Nintendo Switch for stress*relief
