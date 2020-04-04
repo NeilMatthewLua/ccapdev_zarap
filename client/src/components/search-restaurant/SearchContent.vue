@@ -22,7 +22,7 @@
             <div v-if="!loading">
                 <RestaurantCard v-on:did_click_operating_info = "displayOperatingHoursModal" v-for="item in this.fetchAllSearchRestos()" :key="item.restaurantID" :resto="item"/>
             </div>
-            <div v-if="loading">
+            <div class="loadingRestos" v-if="loading">
                 <h1>LOADING...</h1>
             </div>
         </div>
@@ -128,5 +128,10 @@ export default {
       align-items: center;
       justify-content: center;
       height: 100vh;
-  }
+    }
+    .loadingRestos {
+        width: 75vw; 
+        text-align: center; 
+        padding: 20px; 
+    }
 </style>

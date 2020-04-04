@@ -43,10 +43,40 @@ exports.update_restaurant_rating = (req, res) => {
 }
 
 //Get Restaurant based on search key
-exports.get_search_restaurant_restoName = (req, res) => {
+exports.get_search_restaurant_restoName = async (req, res) => {
     let restoName = req.params.restoName
-    Restaurant.find({name: {$regex: restoName, $options: "i"}},(err, doc) => {
-        if(err) res.status(500)
-        res.status(200).send(doc)  
-    });
+    let search = req.params.restoName //Store the unmodified search query 
+    restoName = restoName.split(" ") //Split the search query 
+    let results = [] 
+    //Loop through each word of the search query, checking if it matches any words in the database 
+    for(let i = 0; i < restoName.length; i++) {
+        await Restaurant.find({name: {$regex: restoName[i], $options: "i"}},(err, doc) => {
+            if(err) res.status(500) 
+            results.push(...doc);   
+        });
+    } 
+    //Create a set containing all the results
+    let unique = new Set(results.map(resto => JSON.stringify(resto))) 
+    //Turn the set back into an array 
+    unique = Array.from(unique).map(resto => JSON.parse(resto))
+    //Loop through each item in the array
+    unique = unique.map((restaurant) => {
+        //Counts the number of chars that were same
+        let matchedChars = 0; 
+        restoName.forEach((keyword) => {
+            //If the item contains the name as a substring, add its length 
+            if(restaurant.name.toLowerCase().includes(keyword.toLowerCase())) 
+                matchedChars += keyword.length
+        }); 
+        return Object.assign({}, restaurant, {matchedChars : matchedChars})
+    }); 
+    //Remove restaurants that didn't match enough chars 
+    //Threshold value is 40% of the length of the reso name  
+    unique = unique.filter((restaurant) => {
+        let trimmedName = restaurant.name.replace(/\s+/g, '')
+        return (restaurant.matchedChars >= (trimmedName.length * 0.4)) ? true : false
+    })
+    //Sort the items based on matchedChars (descending) (i.e. more matched chars are at the front)
+    unique.sort((a,b) => (a.matchedChars >= b.matchedChars) ? -1 : 1) 
+    res.status(200).send(unique); 
 }
