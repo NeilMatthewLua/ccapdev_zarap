@@ -6,7 +6,7 @@ This project creates a database of restaurants wherein users can look up the res
 
 1. Clone the repository
 2. Open two terminals inside the project
-    * One inside /client
+    * One inside /view
     * One inside /server
 
 ##### For Server side
@@ -16,7 +16,7 @@ This project creates a database of restaurants wherein users can look up the res
 
 **By this part, database should already been populated**
 
-##### For Client side
+##### For View side
 1. Install the packages (`npm i`)
 2. Type `npm run serve`
 3. Open http://localhost:3000 
