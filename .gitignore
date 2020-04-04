@@ -1,5 +1,5 @@
 .DS_Store
-/client/node_modules
+/view/node_modules
 /server/node_modules
 /dist
 

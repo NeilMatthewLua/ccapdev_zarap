@@ -91,7 +91,6 @@ This project creates a database of restaurants wherein users can look up the res
 
 ![alt text][2.2]
 
-
 * Additional Notes
     * Should you wish to log-in with a pre-made user, refer to the pre-made data sub-chapter
 
@@ -103,7 +102,9 @@ This project creates a database of restaurants wherein users can look up the res
 
 ![alt text][2.4]
 
-5. From the landing page, search for a restaurant in the search bar, then select that restaurant
+5. From the landing page, search for a restaurant in the search bar, then select that restaurant (in this case, starbucks was looked up)
+
+** Filtering of results has yet to be implemented **
 
 ![alt text][2.5]
 
