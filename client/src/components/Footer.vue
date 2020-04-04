@@ -8,6 +8,7 @@
           <div class="col l5 s12">
             <h5 class="footer-text white-text">Contact Us</h5>
             <p class="footer-text white-text">zarap@gmail.com <br>+(8) 552 3877</p>
+            <a @click="goToAbout()">About Us</a>
           </div>
         </div>
         <div class="footer-copyright">
@@ -18,8 +19,14 @@
 </template>
 
 <script>
+import router from '../router'; 
 export default {
-    Name: "Footer"
+    Name: "Footer",
+    methods: {
+        goToAbout() {
+            router.push({path: '/about'}).catch(() => {}); 
+        }
+    }
 }
 </script>
 

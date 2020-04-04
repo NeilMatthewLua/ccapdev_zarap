@@ -54,6 +54,18 @@ async function populateUsers(userCounter, limit) {
  
     let doc = await loadPictures();
 
+    //Sample User
+    let user = new User({
+        name: "Ben Dover",
+        password: "bensicles",
+        email: "ben@gmail.com",
+        address: faker.address.streetAddress(),
+        points: 0,
+        picture: doc[11].pictureID
+    });
+
+    await save(user);
+
     for(i = userCounter; i < limit; i++) {
         let user = new User({
             name: sampleNames[i] + " " + faker.name.lastName(),
@@ -68,37 +80,5 @@ async function populateUsers(userCounter, limit) {
     }
     return;
 } 
-
-
-function connectUserReviews() {
-    User.find({}, (err, users) => {})
-    .then((res) => {
-        console.log(res.length)
-        res.forEach((user) => {
-            //Get all reviews associated with user 
-            Review.find({ownerID : user.userID}, "restaurantID")
-                .then(review => {
-                    let restoIDs = []; 
-                    //Get the resto IDs and place into an array
-                    review.forEach((resto, beenHere) => { 
-                        beenHere.push(resto.restaurantID); 
-                    });
-                    User.update({userID: user.userID}, {beenHere : restoIDs, reviewed : restoIDs}, () => {
-                        console.log("Updated"); 
-                    })
-                })
-            //Randomize the reviews liked by the user 
-            
-        })
-        //Get all the reviews then for each user
-        //Search the review with their objectID then assign resto to been here, reviewed, 
-        //then randomize a review to like increment the review's upvote counter 
-    })
-    
-}
-
-function updateUserPoints() {
-    //update the user's no. of points based on their reviews 
-}
 
 module.exports = populateUsers;
