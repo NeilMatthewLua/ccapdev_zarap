@@ -61,7 +61,6 @@ export default {
             router.push({name: "Register"});
         },
         loadUser: function() {
-            this.print()
             this.$store
                 .dispatch('login', {
                     "email": this.email,
