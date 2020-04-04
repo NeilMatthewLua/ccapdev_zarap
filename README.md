@@ -71,6 +71,8 @@ This project creates a database of restaurants wherein users can look up the res
 
 13. The Dining History section contains the list of restaurants they have made reviews for or have bookmarked using the “Been Here” button. 
 
+![alt text][1.11]
+
 14. The Reviews section contains the list of reviews they have made for different restaurants. 
 
 ![alt text][1.12]
@@ -91,9 +93,7 @@ This project creates a database of restaurants wherein users can look up the res
 
 
 * Additional Notes
-    * Should you wish to log-in with a pre-made user:
-        * email: ben@gmail.com
-        * password: bensicles
+    * Should you wish to log-in with a pre-made user, refer to the pre-made data sub-chapter
 
 3. A successful registration will bring you back to the landing page. 
 
@@ -210,6 +210,33 @@ This project creates a database of restaurants wherein users can look up the res
 [2.17]: server/images/Test_Cases_Pcitures/2.17.png 
 [2.18]: server/images/Test_Cases_Pcitures/2.18.png
 [2.19]: server/images/Test_Cases_Pcitures/2.19.png
+
+## Pre-Made Data
+* Should you wish to log-in with a pre-made user:
+    * email: ben@gmail.com
+    * password: bensicles
+* Restaurants Made: 
+    * Big Bowl Noodles
+    * Golden Fortune
+    * Tim Hortons
+    * Tasty Dumplings
+    * Yabu
+    * Choi Garden
+    * Frankies
+    * Italiannis
+    * KFC
+    * KFC
+    * Mad Marks Creamery
+    * Makchang
+    * Mutsarap
+    * Starbucks
+    * Sushi Yum
+    * Tajimaya
+    * Tendon Kohaku
+    * Texas Roadhouse
+    * Vikings
+    * Yellow Cab
+
 
 ## Built With
 
