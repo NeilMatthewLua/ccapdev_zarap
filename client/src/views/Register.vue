@@ -50,10 +50,9 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <!-- File Upload Portion -->
-                                <FileUpload @file-upload="getFiles" :dest="profilePictures" :isMultiple="false"
-                                :isBlack="true"
-                                @toggleSubmit="toggleSubmitButton"/> 
+                                 <!-- File Upload Portion -->
+                                <ImageUpload ref="uploadSection" @toggleSubmit="this.toggleSubmitButton" 
+                                :dest="profilePictures" :singleUpload="true" :existingPics="this.fetchUploadedPics()" />
                             </div>
                             <div v-show='submitVisible'>
                                 <div class="center margin-pushdown bring_back">
@@ -76,10 +75,11 @@
 </template>
 
 <script>
+import { mapGetters, mapActions, mapMutations } from 'vuex';
 import axios from 'axios';
 import Navbar from '@/components/Navbar.vue';
 import Footer from '@/components/Footer.vue';
-import FileUpload from '@/components/fileUpload';
+import ImageUpload from '@/components/ImageUpload'; 
 import alertModal from '@/components/alertModal';
 import router from '../router'
 
@@ -88,7 +88,7 @@ export default {
     components: {
         Navbar,
         Footer,
-        FileUpload,
+        ImageUpload,
         alertModal
     },
     data() {
@@ -110,6 +110,9 @@ export default {
         }
     },
     methods:{
+        ...mapActions(['removeUnusedPictures']),
+        ...mapGetters(['fetchUploadedPics']),
+        ...mapMutations(['setUploadedPics']),
         showModal() { //confirmation of successful registration
             this.isModalVisible = true;
         },
@@ -119,6 +122,7 @@ export default {
             router.push({name: "Home"});
         },
         reset() {
+            this.setUploadedPics([]),
             this.user.firstname =  null,
             this.user.lastname =  null,
             this.user.password =  null,
@@ -129,9 +133,6 @@ export default {
         },
         toggleSubmitButton: function(value) {
             this.submitVisible = value
-        },
-        getFiles (files) {
-            this.$set(this.user,'uploadedFiles', files); 
         },
         print: function () {
             console.log(this.user.firstname + " " + this.user.email + " " + this.user.lastname + " " + this.user.homeaddress + " " + this.user.password);
@@ -161,7 +162,7 @@ export default {
             if(!this.user.homeaddress) {
                 this.errors.push('Home Address required');
             }
-            if(this.user.uploadedFiles.length == 0){
+            if(this.fetchUploadedPics() == 0){
                 this.errors.push('Profile Picture required');
             }
             if(!this.errors.length) {
@@ -182,7 +183,7 @@ export default {
                 "email": app.user.email,
                 "password": app.user.password,
                 "homeaddress": app.user.homeaddress,
-                "uploadedFiles": app.user.uploadedFiles,
+                "uploadedFiles": this.fetchUploadedPics(),
             })
             .then(resp => {
                 console.log(resp.data.status)
@@ -194,7 +195,18 @@ export default {
             .catch(error => {
                 console.log(error)                
             })
+            this.setUploadedPics([]); 
         }
+    },
+    async created () {
+        //Removes unused pictures when window is closed 
+        window.addEventListener('beforeunload', async () => {
+            await this.removeUnusedPictures(); 
+        }, false)
+    },
+    async beforeRouteLeave(to, from, next) {  
+        await this.removeUnusedPictures();
+        next()
     }   
 }
 </script>

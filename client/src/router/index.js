@@ -22,7 +22,7 @@ const routes = [
     component: DisplayRestaurant
   },
   {
-    path: '/searchresult/search:search',
+    path: '/searchresult',
     name: 'Search Result',
     component: SearchResult
   },

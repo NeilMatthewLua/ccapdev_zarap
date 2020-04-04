@@ -1,9 +1,11 @@
 <template>
     <div class="col s12 l2 squared margin-around hide-on-med-and-down">
         <div class="profile-container">
-            <div class="text menu-font pad-menu"><a @click="goMyProfile()" class="white-text hover-underline profile">My Profile</a></div>
+            <div class="text menu-font pad-menu" v-show="!this.verifyOwn()"><a @click="goMyProfile()" class="white-text hover-underline profile">Profile</a></div>
+            <div class="text menu-font pad-menu" v-show="this.verifyOwn()"><a @click="goMyProfile()" class="white-text hover-underline profile">My Profile</a></div>
             <div class="text menu-font pad-menu"><a @click="goMyDining()" class="white-text hover-underline dining-history">Dining History</a></div>
-            <div class="text menu-font pad-menu"><a @click="goMyReviews()" class="white-text hover-underline my-reviews">My Reviews</a></div>
+            <div class="text menu-font pad-menu" v-show="!this.verifyOwn()"><a @click="goMyReviews()" class="white-text hover-underline my-reviews">Reviews</a></div>
+            <div class="text menu-font pad-menu" v-show="this.verifyOwn()"><a @click="goMyReviews()" class="white-text hover-underline my-reviews">My Reviews</a></div>
         </div>
     </div>
 </template>
@@ -13,7 +15,7 @@ import M from 'materialize-css';
 import router from '@/router';
 
 export default {
-    name: "EditProfile",
+    name: "UserMenu",
     mounted() {
         M.AutoInit(); 
     },
@@ -23,16 +25,28 @@ export default {
         }
     },
     methods: {
+        verifyOwn() {
+           if(this.$store.getters.getUser != null) {
+               if(this.$route.params.id == this.$store.getters.getUser.userID) {
+                    return true;
+                }
+           }
+           return false;
+        },
         goMyReviews() {
+            this.$emit('reset');
             router.push({path:`/userdetail/${this.userID}/review`}).catch(() => {}); 
         },
         goMyDining() {
-            this.$emit("reset");
+            this.$emit('reset');
             router.push({path: `/userdetail/${this.userID}/dining`}).catch(() => {}); 
         },
         goMyProfile() {
-            this.$emit("reset");
-            router.push({path: `/userdetail/${this.userID}/myprofile`}).catch(() => {}); 
+            this.$emit('reset');
+            if(this.verifyOwn())
+                router.push({path: `/userdetail/${this.userID}/myprofile`}).catch(() => {}); 
+            else
+                router.push({path: `/userdetail/${this.$route.params.id}/profile`}).catch(() => {}); 
         }
     }
 }

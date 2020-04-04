@@ -133,6 +133,11 @@ export default {
             return this.isCheckedVal; 
         }
     },
+    watch:{
+        $route (){
+            this.getReviews();
+        }
+    },
     methods : {
         ...mapActions(['getReviewsByReviewer','getUserReviews','removeUnusedPictures']),
         ...mapGetters(['fetchUserReviews', 'fetchUploadedReviews','fetchUploadedPics']),
@@ -233,6 +238,23 @@ export default {
         toggleSubmitButton: function(value) {
             this.submitVisible = value
         },
+        async getReviews() {
+            //Get User Reviews
+            await this.getReviewsByReviewer(this.$route.params.id); 
+            let arr = this.fetchUserReviews().map((val) => {
+                return val.reviewID; 
+            }); 
+
+            //Get Review Details of Each
+            if(arr.length > 0)
+                await this.getUserReviews(arr);
+            this.loading = false; 
+
+            //Removes unused pictures when window is closed 
+            window.addEventListener('beforeunload', async () => {
+                await this.removeUnusedPictures(); 
+            }, false)
+        }
     },
     mounted() {
         this.$refs.uploadSection.reset(true, this.chosenReviewPics);  
