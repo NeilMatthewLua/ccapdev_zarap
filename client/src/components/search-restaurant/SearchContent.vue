@@ -85,7 +85,7 @@ export default {
     },
     methods: {
         ...mapActions(["getRestos", "getRestoByQuery", "getPics", "getRestoById", "getOperatingHours", "getSearchRestos", "getSearch"]),
-        ...mapGetters(["fetchAllRestos", "fetchAllPic", "fetchCurrResto", "fetchAllOperatingHours", "fetchAllSearchRestos", "fetchSearch"]),
+        ...mapGetters(["fetchAllRestos", "fetchAllPic", "fetchCurrResto", "fetchAllOperatingHours", "fetchAllSearchRestos", "fetchSearch", "fetchOperatingHour"]),
         displayOperatingHoursModal (restaurantID) {
             // fetch the currentRestaurant opened and fetch its operating hours
             this.currentRestaurantOperatingHours =  restaurantID ? this.$store.getters.fetchOperatingHour(restaurantID)[0].operatingHours : null

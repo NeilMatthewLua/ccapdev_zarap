@@ -11,21 +11,21 @@
                     <div class="restaurant-info">
                         <div :class="{'card-stacked': inSearch, 'card-stacked-profile': !inSearch}">
                             <div :class="{'card-content': inSearch, 'card-content-profile': !inSearch}">
-                                <p class="restaurant-establishment-type">{{resto.establishmentType[0]}}</p>
-                                <br>
-                                <a class="restaurant-name" @click="goResto()">{{resto.name}}</a>
-                                <br>
-                                <p class="restaurant-location">{{resto.city}}</p>
-                                <p class="restaurant-address">{{resto.fullAddress}}</p>
-                                <br>
-                                <p class="restaurant-other-info">Cuisine:&nbsp;{{resto.cuisines[0]}}</p>
-                                <p class="restaurant-other-info">Cost for two:&nbsp;Php{{resto.costForTwo}}</p>
-                                <p class="restaurant-other-info">{{getToday()}}:&nbsp; {{resto.operatingHours[getToday()]}}
+                                <p :class="{'restaurant-establishment-type' : inSearch, 'restaurant-establishment-type-profile': !inSearch}">{{resto.establishmentType[0]}}</p>
+                                <br v-show="inSearch">
+                                <a :class="{'restaurant-name': inSearch, 'restaurant-name-profile': !inSearch}" @click="goResto()">{{resto.name}}</a>
+                                <br v-show="inSearch">
+                                <p :class="{'restaurant-location': inSearch, 'restaurant-location-profile': !inSearch}">{{resto.city}}</p>
+                                <p :class="{'restaurant-address': inSearch, 'restaurant-address-profile': !inSearch}">{{resto.fullAddress}}</p>
+                                <br v-show="inSearch">
+                                <p :class="{'restaurant-other-info': inSearch, 'restaurant-other-info-profile': !inSearch}">Cuisine:&nbsp;{{resto.cuisines[0]}}</p>
+                                <p :class="{'restaurant-other-info': inSearch, 'restaurant-other-info-profile': !inSearch}">Cost for two:&nbsp;Php{{resto.costForTwo}}</p>
+                                <p :class="{'restaurant-other-info': inSearch, 'restaurant-other-info-profile': !inSearch}">{{getToday()}}:&nbsp; {{resto.operatingHours[getToday()]}}
                                     <a>
                                         <i class="material-icons tiny"  @click="openModal()">info</i>
                                     </a>
                                 </p>
-                                <p class="restaurant-other-info">Tel no:&nbsp;{{resto.contactDetails}}</p>
+                                <p :class="{'restaurant-other-info': inSearch, 'restaurant-other-info-profile': !inSearch}">Tel no:&nbsp;{{resto.contactDetails}}</p>
                             </div>
                         </div>
                         <div class="card-content">
@@ -56,8 +56,8 @@
                             Cuisine:&nbsp;{{resto.cuisines[0]}}
                             <br>
                             Cost for two:&nbsp;{{resto.costForTwo}}
-                        </p>
-                        <p class="restaurant-other-info">{{getToday()}}:&nbsp; {{resto.operatingHours[getToday()]}}
+                            <br>
+                            {{getToday()}}:&nbsp; {{resto.operatingHours[getToday()]}}
                             <a>
                                 <i class="material-icons tiny"  @click="openModal()">info</i>
                             </a>
@@ -210,12 +210,25 @@ export default {
         font-size: 120%;
     }
 
+    .restaurant-establishment-type-profile {
+        font-size: 90%;
+    }
+
     .restaurant-name {
         font-size:180%;
         transition: color 0.3s ease-in-out;
     }
     
     .restaurant-name:hover {
+        color: red; 
+    }
+
+    .restaurant-name-profile {
+        font-size:150%;
+        transition: color 0.3s ease-in-out;
+    }
+    
+    .restaurant-name-profile:hover {
         color: red; 
     }
 
@@ -229,6 +242,19 @@ export default {
 
     .restaurant-other-info {
         font-size:90%;
+    }
+
+    .restaurant-location-profile {
+        font-size:80%;
+    }
+
+    .restaurant-address-profile {
+        font-size:70%;
+    }
+
+    .restaurant-other-info-profile {
+        font-size:70%;
+        margin:1%;
     }
 
     .restaurant-info > .card-content {
