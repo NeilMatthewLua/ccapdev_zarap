@@ -43,7 +43,7 @@ This project creates a database of restaurants wherein users can look up the res
 
 5. As an unlogged user, you do not have access to saving the restaurant to your dining history or writing reviews for any restaurant. 
 
-6. When you are at the Menu or Photos section of the restaurant page, the lower*left half of the screen will be a carousel of images. Each image can be clicked to be enlarged and shown in a modal. 
+6. When you are at the Menu or Photos section of the restaurant page, the lower-left half of the screen will be a carousel of images. Each image can be clicked to be enlarged and shown in a modal. 
 
 ![alt text][1.5]
 
