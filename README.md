@@ -169,7 +169,7 @@ This project creates a database of restaurants wherein users can look up the res
 
 16. Once you’re done, submit it and your profile shall be updated accordingly.
 
-![alt text][2.19]
+![alt text](https://github.com/NeilMatthewLua/ccapdev_zarap/tree/nlua-mongodb/server/images/Test_Cases_Pcitures/2.19.png)
 
 	
 
@@ -203,7 +203,7 @@ This project creates a database of restaurants wherein users can look up the res
 [2.16]: https://github.com/NeilMatthewLua/ccapdev_zarap/tree/nlua-mongodb/server/images/Test_Cases_Pcitures/2.16.png 
 [2.17]: https://github.com/NeilMatthewLua/ccapdev_zarap/tree/nlua-mongodb/server/images/Test_Cases_Pcitures/2.17.png 
 [2.18]: https://github.com/NeilMatthewLua/ccapdev_zarap/tree/nlua-mongodb/server/images/Test_Cases_Pcitures/2.18.png 
-[2.19]: https://github.com/NeilMatthewLua/ccapdev_zarap/tree/nlua-mongodb/server/images/Test_Cases_Pcitures/2.19.png "Test" 
+[2.19]: https://github.com/NeilMatthewLua/ccapdev_zarap/tree/nlua-mongodb/server/images/Test_Cases_Pcitures/2.19.png
 
 
 
