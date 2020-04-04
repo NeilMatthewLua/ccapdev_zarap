@@ -3,21 +3,61 @@
     <div id="content" class="containter-restaurant">
       <div class="row pad-left">
         <div class="col s12 m11 l9">
-          <div class="restaurant-list">
-            <RestaurantCard/>
-          </div>
+            <RestaurantCard v-on:did_click_operating_info = "displayOperatingHoursModal" v-for="item in this.fetchUserRestos()" :key="item.restaurantID" :resto="item"/>
         </div>
       </div>
     </div> 
+    <!-- Modal for Operating Hours-->
+    <OperatingHourModal v-on:did_click_close = "closeOperatingInfoModal" id="operating-hour-modal" :operatingHour = "this.currentRestaurantOperatingHours" /> 
   </div>
 </template>
 
 <script>
-import RestaurantCard from '../search-restaurant/RestaurantCard.vue'
+import M from 'materialize-css';
+import RestaurantCard from '../search-restaurant/RestaurantCard.vue';
+import OperatingHourModal from '../search-restaurant/OperatingHourModal.vue';
+import { mapActions , mapGetters } from 'vuex';
+
+/** DOM OBJECTS **/
+
+// Load the DOM modal here on mount
+let operatingHourModalInstance = null
+
 export default {
     name: "DiningHistoryPage",
+    data() {
+        return {
+            currentRestaurantOperatingHours : null
+        }
+    },
     components: {
-        RestaurantCard
+        RestaurantCard,
+        OperatingHourModal
+    },
+    mounted() {
+        M.AutoInit();
+        // open the operating hour modal using its ID
+        const elem = document.getElementById('operating-hour-modal');
+        // initializes to the DOM
+        operatingHourModalInstance = M.Modal.init(elem, {dismissible: false});
+    },
+    methods: {
+        ...mapGetters(["fetchUserRestos"]),
+        ...mapActions(["getRestByUser"]),
+        displayOperatingHoursModal (restaurantID) {
+            // fetch the currentRestaurant opened and fetch its operating hours
+            this.currentRestaurantOperatingHours =  restaurantID ? this.$store.getters.fetchOperatingHour(restaurantID)[0].operatingHours : null
+            // Open modal
+            operatingHourModalInstance.open();
+        },
+        closeOperatingInfoModal () {
+            // close the modal
+            operatingHourModalInstance.close();
+        },
+    },
+    async created() {
+        //Get user's visited restaurants
+        await this.getRestByUser(this.$route.params.id);
     }
 }
 </script>

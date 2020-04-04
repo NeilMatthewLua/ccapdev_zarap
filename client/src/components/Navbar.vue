@@ -15,7 +15,7 @@
       <div class="search-section col s7 hide-on-med-and-down" v-show="hasSearch">
         <form class="search-bar" id="search-big" @submit.prevent="goSearchResult()">
           <div class="input-field">
-            <input type="text" class="white search-box" v-model="search" name="searchbar" placeholder="   Search your favorite restaurants here...">
+            <input type="text" class="white search-box pad-left" v-model="search" name="searchbar" placeholder="   Search your favorite restaurants here...">
           </div>
         </form>
         <a class="waves-effect waves-light btn #e53935 red darken-1" @click="goSearchResult()">search</a>
@@ -711,5 +711,9 @@ export default {
 
   #filter-mobile {
     width: 100vw;
+  }
+
+  .pad-left {
+    padding-left: 15px !important;
   }
 </style>

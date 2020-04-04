@@ -103,7 +103,7 @@ This project creates a database of restaurants wherein users can look up the res
 
 ![alt text][2.4]
 
-5. From the landing page, search for a restaurant in the search bar
+5. From the landing page, search for a restaurant in the search bar, then select that restaurant
 
 ![alt text][2.5]
 

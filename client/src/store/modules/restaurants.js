@@ -7,7 +7,8 @@ const state =  {
     allPics: [], // Stores all the pictures of the restaurant
     allOperatingHours: [], // Stores all the operating hours of the restaurant
     allSearchRestos : [], // Stores all the restos from the search result
-    search: null
+    search: null,
+    userRestos : [] // Stores all the restos the user has been to
 
     //Store the fields associated with the resto / resto object
 }
@@ -21,7 +22,8 @@ const getters =  {
     fetchAllOperatingHours : state => state.allOperatingHours,
     fetchOperatingHour : state => id => state.allOperatingHours.filter(resto => resto.restaurantID === id),
     fetchAllSearchRestos : state => state.allSearchRestos,
-    fetchSearch : state => state.search
+    fetchSearch : state => state.search,
+    fetchUserRestos : state => state.userRestos
 }
 
 const actions =  {
@@ -97,6 +99,22 @@ const actions =  {
     },
     async getSearch ({commit}, searchKey) {
         commit('setSearch', searchKey);
+    },
+    async getRestByUser({commit}, userID) {
+        let user = await axios.get(`http://localhost:9090/users/${userID}`);
+        let allRestos = [];
+        let listPics = [];
+
+        for(let i = 0; i < user.data.user[0].beenHere.length; i++) {
+            let resto = await axios.get(`http://localhost:9090/restaurants/${user.data.user[0].beenHere[i]}`); 
+            allRestos.push(resto.data);
+
+            let res = await axios.get(`http://localhost:9090/pictures/${resto.data.defaultPicture}`);
+            listPics.push(res.data);
+        }
+
+        commit('setPics', listPics);
+        commit('setUserRestos', allRestos);
     }
 }
 
@@ -106,9 +124,13 @@ const mutations = {
     setPics : (state, pic) => state.allPics = pic,
     setUserReviewRestos : (state, restos) => state.userReviewRestos = restos,
     setOperatingHours: (state, restos) => state.allOperatingHours = restos,
-    updateRating : (state, rating) => state.currResto.overallRating = rating,
+    updateRating : (state, rating) => {
+        state.currResto.overallRating = rating
+        state.userRestos[state.userRestos.findIndex(x => x.restaurantID == state.currResto.restaurantID)].overallRating = rating
+    },
     setSearchRestos : (state, restos) => state.allSearchRestos = restos, 
-    setSearch : (state, search) => state.search = search
+    setSearch : (state, search) => state.search = search,
+    setUserRestos : (state, restos) => state.userRestos = restos
 }
 
 export default {
