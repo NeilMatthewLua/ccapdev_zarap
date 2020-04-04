@@ -40,12 +40,6 @@ const actions =  {
         else 
             commit('setCurrResto', null);
     },
-    //Gets Restos that fit the query 
-    async getRestoByQuery ({commit}, query) {
-        let res = await axios.get(`http://localhost:9090/restaurants?${query}`); 
-
-        commit('setResto', res.data);
-    }, 
     async getRestoByUser ({commit}, query) {
         //Access global state by using context root state 
         // let diningHis = context.rootState.beenHere; 
