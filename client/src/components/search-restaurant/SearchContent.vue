@@ -71,21 +71,19 @@ export default {
     data () {
         return {
             loading : true,
-            currentRestaurantOperatingHours : null
+            currentRestaurantOperatingHours : null,
+
         }
     },
     async created() {
-        // await this.getRestos();
-        // await this.getPics(this.fetchAllRestos());
-        // await this.getOperatingHours(this.fetchAllRestos());
         await this.getRestos();
         await this.getPics(this.fetchAllRestos());
         await this.getOperatingHours(this.fetchAllRestos());
         this.loading = false;
     },
     methods: {
-        ...mapActions(["getRestos", "getRestoByQuery", "getPics", "getRestoById", "getOperatingHours", "getSearchRestos", "getSearch"]),
-        ...mapGetters(["fetchAllRestos", "fetchAllPic", "fetchCurrResto", "fetchAllOperatingHours", "fetchAllSearchRestos", "fetchSearch"]),
+        ...mapActions(["getRestos", "getPics", "getOperatingHours", "getSearchRestos", "getSearch"]),
+        ...mapGetters(["fetchAllRestos", "fetchAllSearchRestos", "fetchSearch"]),
         displayOperatingHoursModal (restaurantID) {
             // fetch the currentRestaurant opened and fetch its operating hours
             this.currentRestaurantOperatingHours =  restaurantID ? this.$store.getters.fetchOperatingHour(restaurantID)[0].operatingHours : null
