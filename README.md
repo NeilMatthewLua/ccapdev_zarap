@@ -103,7 +103,7 @@ This project creates a database of restaurants wherein users can look up the res
 
 ![alt text][2.4]
 
-5. From the landing page, navigate to one of the three restaurants in the Collection section by pressing the “view restaurant” button of the desired restaurant. 
+5. From the landing page, search for a restaurant in the search bar
 
 ![alt text][2.5]
 
