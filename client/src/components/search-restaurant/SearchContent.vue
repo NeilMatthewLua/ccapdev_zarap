@@ -22,7 +22,7 @@
             <div v-if="!loading">
                 <RestaurantCard v-on:did_click_operating_info = "displayOperatingHoursModal" v-for="item in this.fetchAllSearchRestos()" :key="item.restaurantID" :resto="item"/>
             </div>
-            <div v-if="loading">
+            <div class="loadingRestos" v-if="loading">
                 <h1>LOADING...</h1>
             </div>
         </div>
@@ -75,18 +75,15 @@ export default {
         }
     },
     async created() {
-        // await this.getRestos();
-        // await this.getPics(this.fetchAllRestos());
-        // await this.getOperatingHours(this.fetchAllRestos());
         await this.getRestos();
         await this.getPics(this.fetchAllRestos());
         await this.getOperatingHours(this.fetchAllRestos());
         this.loading = false;
     },
     methods: {
-        ...mapActions(["getRestos", "getRestoByQuery", "getPics", "getRestoById", "getOperatingHours", "getSearchRestos", "getSearch"]),
-        ...mapGetters(["fetchAllRestos", "fetchAllPic", "fetchCurrResto", "fetchAllOperatingHours", "fetchAllSearchRestos", "fetchSearch", "fetchOperatingHour"]),
-        displayOperatingHoursModal (restaurantID) {
+       ...mapActions(["getRestos", "getPics", "getOperatingHours", "getSearchRestos", "getSearch"]),
+        ...mapGetters(["fetchAllRestos", "fetchAllSearchRestos", "fetchSearch", "fetchOperatingHour"]),
+       displayOperatingHoursModal (restaurantID) {
             // fetch the currentRestaurant opened and fetch its operating hours
             this.currentRestaurantOperatingHours =  restaurantID ? this.$store.getters.fetchOperatingHour(restaurantID)[0].operatingHours : null
             // Open modal
@@ -128,5 +125,11 @@ export default {
       align-items: center;
       justify-content: center;
       height: 100vh;
-  }
+    }
+
+    .loadingRestos {
+        width: 75vw; 
+        text-align: center; 
+        padding: 20px; 
+    }
 </style>
