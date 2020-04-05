@@ -100,7 +100,7 @@ export default {
     },
     methods: {
       ...mapGetters(['fetchUploadedPics']),
-      ...mapActions(['removePicture']),
+      ...mapActions(['removePicture','removeUnusedProfilePic']),
       ...mapMutations(['setUploadedPics', 'addUploadedPics']),
       //Hides submit button while uploading 
       toggleSubmit(value) {
@@ -185,14 +185,16 @@ export default {
       },
       //Removes the current picture in modal 
       async removeSelected() { 
+        //Remove for single uploads
+        let pic = this.reviewPictures[this.zoomedPic];
         if(this.singleUpload) {
-          this.setUploadedPics([]); 
+          await this.removeUnusedProfilePic(pic)
         }
-        else {
-          let pic = this.reviewPictures[this.zoomedPic]; 
-          this.removePicture([pic]); 
+        //Remove for multiple uploads
+        else { 
+          await this.removePicture([pic]); 
         }   
-      }
+      },
     },
     mounted() {
       //Set the pictures shown to the existing pictures from the review 

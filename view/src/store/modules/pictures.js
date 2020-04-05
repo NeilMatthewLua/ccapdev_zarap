@@ -47,6 +47,11 @@ const actions =  {
         await axios.post("http://localhost:9090/pictures/delete-unused-pics", { urls : pic });
          
         commit('removePic', pic) 
+    },
+    async removeUnusedProfilePic({commit}, pic) {
+        await axios.post("http://localhost:9090/pictures/delete-unused-profile-pics", { urls : pic });
+         
+        commit('removePic', pic)
     }
 }
 

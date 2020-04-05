@@ -138,7 +138,7 @@ export default {
         print: function () {
             console.log(this.user.firstname + " " + this.user.email + " " + this.user.lastname + " " + this.user.homeaddress + " " + this.user.password);
         },
-        validateForm: function () {
+        validateForm: async function () {
             this.errors = [];
             console.log("ERER")
             if(!this.user.firstname) {
@@ -174,13 +174,14 @@ export default {
                 return true;
             }
             else {
+                await this.removeUnusedPictures();
                 this.setUploadedPics([]);
                 this.confirm_password = '';
                 this.uploadSection();
             }
         },
         uploadSection() {
-            return (this.$refs.uploadSection != undefined) ? this.$refs.uploadSection.reset(true, [this.fetchUploadedPics()]) : undefined; 
+            return (this.$refs.uploadSection != undefined) ? this.$refs.uploadSection.reset(true, []) : undefined; 
         },
         validEmail: function(email) {
              var re = /\S+@\S+\.\S+/;

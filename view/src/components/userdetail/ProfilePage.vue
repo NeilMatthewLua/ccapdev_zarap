@@ -237,9 +237,9 @@ export default {
       userData() {
         return (this.getUser() != null) ? this.getUser() : this.user;
       },
-      resetUploadSection() {
-        return (this.$refs.uploadSection != undefined) ? this.$refs.uploadSection.reset(true, [this.user_picture]) : undefined; 
-      }
+    //   resetUploadSection() {
+    //     return ((this.update || !this.update) && this.$refs.uploadSection != undefined) ? this.$refs.uploadSection.reset(true, [this.user_picture]) : undefined; 
+    //   }
     },
     watch:{
         $route (){
@@ -256,7 +256,7 @@ export default {
                if(this.$route.params.id == this.user.userID) {
                     this.user_picture = this.$store.getters.getPicture['url'];
                     this.setUploadedPics([this.user_picture]);
-                    this.resetUploadSection;  
+                    this.$refs.uploadSection.reset(true, [this.user_picture]);  
                     this.isLogged = true;
                     this.tempUser.user = Object.assign({}, this.user);
                     this.isMine = true;
@@ -285,7 +285,7 @@ export default {
             this.editProfileVisible = !this.editProfileVisible;
             await this.removeUnusedPictures();
             this.setUploadedPics([this.user_picture]); 
-            this.resetUploadSection; 
+            this.$refs.uploadSection.reset(true, [this.user_picture]); 
             this.onResize();
         },
         showModal() { //confirmation of successful update
@@ -304,8 +304,9 @@ export default {
             this.confirm_password = '';
             this.errors = [];
             await this.removeUnusedPictures(); 
-            this.setUploadedPics([this.user_picture]); 
-            this.resetUploadSection; 
+            this.setUploadedPics([this.user_picture]);
+            if(this.$refs.uploadSection != undefined) 
+            this.$refs.uploadSection.reset(true, [this.user_picture]); 
             this.verifyOwn();
         },
         onResize() {
@@ -342,12 +343,13 @@ export default {
                     this.user_picture = this.fetchUploadedPics()[0];
                     this.showModal();
                     this.setUploadedPics([this.user_picture]);
-                    this.resetUploadSection; 
+                    this.$refs.uploadSection.reset(true, [this.user_picture]); 
                     this.update = true;
                 });
         },
-        validateForm: function () {
+        validateForm: async function () {
             this.errors = [];
+            this.update = false; 
             if(!this.user_firstname) {
                 this.errors.push('First name required');
             }
@@ -376,13 +378,15 @@ export default {
                 return true;
             }
             else{
+                await this.removeUnusedPictures();
                 this.setUploadedPics([this.user_picture]);
-                this.resetUploadSection;
+                this.$refs.uploadSection.reset(true, [this.user_picture]);
                 this.user = Object.assign({}, this.tempUser.user);
                 this.user_firstname = this.tempUser.first
                 this.user_lastname = this.tempUser.last
                 this.confirm_password = '';
-            }        
+            } 
+            this.update = false;       
         }
     },
     mounted() {

@@ -18,15 +18,14 @@ exports.add_user = async (req, res, next) => {
     let pictureID;
     let pic = new Picture({
         url: req.body.uploadedFiles[0]
-    })
-    pic.save()
+    }) 
+    await pic.save()
         .then(() => 
             pictureID = pic.pictureID
         )
         .catch((err) => {
             res.status(500).send("Error Saving Profile Picture"); 
         })
-    
     //Checks if the email already exists
     await User.findOne({email:req.body.email})
     .then(res => {
