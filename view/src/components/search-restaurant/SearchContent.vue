@@ -71,7 +71,8 @@ export default {
     data () {
         return {
             loading : true,
-            currentRestaurantOperatingHours : null
+            currentRestaurantOperatingHours : null,
+
         }
     },
     async created() {
@@ -81,9 +82,15 @@ export default {
         this.loading = false;
     },
     methods: {
+<<<<<<< HEAD:view/src/components/search-restaurant/SearchContent.vue
        ...mapActions(["getRestos", "getPics", "getOperatingHours", "getSearchRestos", "getSearch"]),
         ...mapGetters(["fetchAllRestos", "fetchAllSearchRestos", "fetchSearch", "fetchOperatingHour"]),
        displayOperatingHoursModal (restaurantID) {
+=======
+        ...mapActions(["getRestos", "getPics", "getOperatingHours", "getSearchRestos", "getSearch"]),
+        ...mapGetters(["fetchAllRestos", "fetchAllSearchRestos", "fetchSearch"]),
+        displayOperatingHoursModal (restaurantID) {
+>>>>>>> 7b47b4810cb743cf50b7f4b3531ba6d2a3106758:client/src/components/search-restaurant/SearchContent.vue
             // fetch the currentRestaurant opened and fetch its operating hours
             this.currentRestaurantOperatingHours =  restaurantID ? this.$store.getters.fetchOperatingHour(restaurantID)[0].operatingHours : null
             // Open modal
@@ -126,7 +133,10 @@ export default {
       justify-content: center;
       height: 100vh;
     }
+<<<<<<< HEAD:view/src/components/search-restaurant/SearchContent.vue
 
+=======
+>>>>>>> 7b47b4810cb743cf50b7f4b3531ba6d2a3106758:client/src/components/search-restaurant/SearchContent.vue
     .loadingRestos {
         width: 75vw; 
         text-align: center; 

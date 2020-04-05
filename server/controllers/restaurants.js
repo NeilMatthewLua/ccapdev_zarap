@@ -78,5 +78,9 @@ exports.get_search_restaurant_restoName = async (req, res) => {
     })
     //Sort the items based on matchedChars (descending) (i.e. more matched chars are at the front)
     unique.sort((a,b) => (a.matchedChars >= b.matchedChars) ? -1 : 1) 
+<<<<<<< HEAD
     res.status(200).send(unique);
+=======
+    res.status(200).send(unique); 
+>>>>>>> 7b47b4810cb743cf50b7f4b3531ba6d2a3106758
 }
