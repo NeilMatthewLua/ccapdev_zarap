@@ -253,9 +253,10 @@ This project creates a database of restaurants wherein users can look up the res
 ## Acknowledgments
 
 * Mr. Jonal Ticug for being our supportive and helpful daddy/mommy
+* Mr. Matthew Lua for enlightening us with his knowledge of Vue and Vuex
 * Pres. Duterte for Quarantine Season (Stay Safe :<)
 * Our last two brain cells for being enough
-* Nintendo Switch for stress*relief
+* Nintendo Switch for stress-relief
 * Father Tio for Pizza Hut
 * Little Tio for Mozarella Sticks
 * Mr. Richard Zapanta for Vroom Vroom
