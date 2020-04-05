@@ -52,7 +52,8 @@
                             <div class="row">
                                  <!-- File Upload Portion -->
                                 <ImageUpload ref="uploadSection" :isBlack="true" @toggleSubmit="this.toggleSubmitButton" 
-                                :dest="profilePictures" :singleUpload="true" :existingPics="this.fetchUploadedPics()" />
+                                :dest="profilePictures" :singleUpload="true" :existingPics="this.fetchUploadedPics()" 
+                                />
                             </div>
                             <div v-show='submitVisible'>
                                 <div class="center margin-pushdown bring_back">
@@ -139,6 +140,7 @@ export default {
         },
         validateForm: function () {
             this.errors = [];
+            console.log("ERER")
             if(!this.user.firstname) {
                 this.errors.push('First name required');
             }
@@ -152,6 +154,8 @@ export default {
             }
             if(!this.user.password) {
                 this.errors.push('Password required');
+            }
+            else {
                 if(!this.confirm_password) {
                     this.errors.push('Confirm Password required');
                 }
@@ -168,7 +172,15 @@ export default {
             if(!this.errors.length) {
                 this.saveUser();
                 return true;
-            }        
+            }
+            else {
+                this.setUploadedPics([]);
+                this.confirm_password = '';
+                this.uploadSection();
+            }
+        },
+        uploadSection() {
+            this.$refs.uploadSection.reset();
         },
         validEmail: function(email) {
              var re = /\S+@\S+\.\S+/;

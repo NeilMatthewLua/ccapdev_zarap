@@ -47,7 +47,7 @@ exports.add_user = async (req, res, next) => {
             liked: [],
             picture: pictureID
         });
-    
+    console.log(user)
         //Saves new user
         await user
             .save()
