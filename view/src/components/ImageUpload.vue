@@ -75,7 +75,7 @@ export default {
           default: false 
         },
         singleUpload: Boolean, 
-        existingPics: Array, 
+        existingPics: Array,
         dest: String, //Directory to save the image to 
     },
     computed: {
@@ -185,8 +185,13 @@ export default {
       },
       //Removes the current picture in modal 
       async removeSelected() { 
-        let pic = this.reviewPictures[this.zoomedPic]; 
-        this.removePicture([pic]);   
+        if(this.singleUpload) {
+          this.setUploadedPics([]); 
+        }
+        else {
+          let pic = this.reviewPictures[this.zoomedPic]; 
+          this.removePicture([pic]); 
+        }   
       }
     },
     mounted() {
