@@ -140,7 +140,6 @@ export default {
         },
         validateForm: async function () {
             this.errors = [];
-            console.log("ERER")
             if(!this.user.firstname) {
                 this.errors.push('First name required');
             }
@@ -199,14 +198,13 @@ export default {
                 "uploadedFiles": this.fetchUploadedPics(),
             })
             .then(resp => {
-                console.log(resp.data.status)
                 if(resp.data.status === "success")
                     this.showModal();
                 else
                     this.errors.push(resp.data.error.message)
             })
             .catch(error => {
-                console.log(error)                
+                console.log(error);        
             })
             this.setUploadedPics([]); 
         }
