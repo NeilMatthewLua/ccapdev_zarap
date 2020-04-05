@@ -100,7 +100,7 @@
                 <div class="input-field"> 
                     <!-- File Upload Portion -->
                     <ImageUpload ref="uploadSectionEdit"  @toggleSubmit="this.toggleSubmitButton" 
-                    :dest="destination"  :existingPics="this.reviewPictures" /> 
+                    :dest="destination" :isBlack="true" :existingPics="this.reviewPictures" /> 
                     <a class="submit-btn red btn right" @click="validateEdit">SUBMIT</a>
                     <a class="submit-btn btn right" @click="cancelEdit">CANCEL</a>
                 </div>
@@ -270,6 +270,7 @@ export default {
             this.editData = this.ownReview.review;   
         }, 
         async saveEdit() {
+            this.update = true; 
             let newIDs = await axios.post(`http://localhost:9090/pictures/delete-existing/${this.ownReview.reviewID}`, {
                     newPictures : this.fetchUploadedPics()
             })

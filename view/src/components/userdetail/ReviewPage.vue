@@ -56,7 +56,7 @@
                                                 <div>
                                                     <!-- File Upload Portion -->
                                                     <ImageUpload ref="uploadSection" @toggleSubmit="this.toggleSubmitButton" 
-                                                    :dest="destination"  :existingPics="this.chosenReviewPics" /> 
+                                                    :dest="destination" :isBlack="true" :existingPics="this.chosenReviewPics" /> 
                                                     <a class="submit-btn red btn right" @click="validateEdit">SUBMIT</a>
                                                     <a class="submit-btn btn right" @click="cancelEdit">CANCEL</a>
                                                 </div>

@@ -71,11 +71,8 @@ const actions =  {
         let oldRating = resto.data.overallRating; 
         let newRating = ((totalReviews * oldRating + increase) / totalReviews).toFixed(1); 
         await axios.post(`http://localhost:9090/restaurants/update-rating/${group.restaurantID}`, {rating : newRating}); 
-
-        console.log("Updated Resto Rating"); 
-        //TODO Add another update in profile depending on Been here implementation in userdetail 
-        if(!group.inProfile)
-            commit('updateRating', newRating);
+ 
+        commit('updateRating', newRating, group.inProfile);
     },
     async getSearchRestos({commit}, searchKey) {
         if (searchKey == null){
@@ -118,9 +115,11 @@ const mutations = {
     setPics : (state, pic) => state.allPics = pic,
     setUserReviewRestos : (state, restos) => state.userReviewRestos = restos,
     setOperatingHours: (state, restos) => state.allOperatingHours = restos,
-    updateRating : (state, rating) => {
-        state.currResto.overallRating = rating
-        state.userRestos[state.userRestos.findIndex(x => x.restaurantID == state.currResto.restaurantID)].overallRating = rating
+    updateRating : (state, rating, inProfile) => {
+        if(!inProfile)
+            state.currResto.overallRating = rating
+        else 
+            state.userRestos[state.userRestos.findIndex(x => x.restaurantID == state.currResto.restaurantID)].overallRating = rating
     },
     setSearchRestos : (state, restos) => state.allSearchRestos = restos, 
     setSearch : (state, search) => state.search = search,

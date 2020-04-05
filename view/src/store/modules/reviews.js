@@ -62,7 +62,6 @@ const actions =  {
     async addReview({commit}, group) {
         let pictureIDs = await axios.post('http://localhost:9090/pictures/save-pictures', group.photos);
         group.reviewPictures = pictureIDs.data; 
-        console.log(group.reviewPictures); 
         await axios.post(`http://localhost:9090/reviews/addReview/${group.userID}`, group)
         .then(async resp => {
             //Updates the reviews of the resstaurant
@@ -124,8 +123,7 @@ const actions =  {
         let editedReview = {...group.oldReview};  
         editedReview.rating = group.rating; 
         editedReview.review = group.review;  
-        editedReview.reviewPics = group.newUrls; 
-        console.log("Review Edited"); 
+        editedReview.reviewPics = group.newUrls;  
         if(!group.inProfile){ 
             commit('updateReviewResto', editedReview); 
         }
