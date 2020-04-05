@@ -341,11 +341,10 @@ export default {
                     this.$emit('updateNavbar');
                     this.user_picture = this.fetchUploadedPics()[0];
                     this.showModal();
+                    this.setUploadedPics([this.user_picture]);
+                    this.resetUploadSection; 
+                    this.update = true;
                 });
-            
-            this.setUploadedPics([this.user_picture]);
-            this.resetUploadSection; 
-            this.update = true; 
         },
         validateForm: function () {
             this.errors = [];
@@ -377,6 +376,8 @@ export default {
                 return true;
             }
             else{
+                this.setUploadedPics([this.user_picture]);
+                this.resetUploadSection;
                 this.user = Object.assign({}, this.tempUser.user);
                 this.user_firstname = this.tempUser.first
                 this.user_lastname = this.tempUser.last

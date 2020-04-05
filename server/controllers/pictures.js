@@ -193,7 +193,7 @@ exports.delete_unused_pictures = async (req, res) => {
                     throw err 
             }
             else
-                console.log(`${removePath} was deleted`);
+                console.log(`${removePath} was deleted because it was unused`);
         });
     }
     res.status(200).send(urls);

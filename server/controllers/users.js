@@ -143,7 +143,7 @@ exports.update_user =  async (req, res) => {
             //remove old photo 
             fs.unlink(removePath, (err) => {
                 if (err) throw err;
-                console.log(`${removePath} was deleted`);
+                console.log(`${removePath} was deleted due to update.`);
             });
 
             await Picture.findOneAndUpdate(oldPicture, updatePicture, {
