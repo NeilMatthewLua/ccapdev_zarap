@@ -5,6 +5,9 @@
         <div class="col s12 m11 l9">
             <RestaurantCard v-on:did_click_operating_info = "displayOperatingHoursModal" v-for="item in this.fetchUserRestos()" :key="item.restaurantID" :resto="item"/>
         </div>
+        <div class="col s12 m11 l9 square" v-show="this.fetchUserRestos().length == 0">
+            <h5 class="center padd-top"> Don't see anything? Look for restaurants now!</h5>
+        </div>
       </div>
     </div> 
     <!-- Modal for Operating Hours-->
@@ -33,6 +36,11 @@ export default {
     components: {
         RestaurantCard,
         OperatingHourModal
+    },
+    watch:{
+        $route (){
+            this.getRestByUser(this.$route.params.id);
+        }
     },
     mounted() {
         M.AutoInit();
@@ -67,12 +75,6 @@ export default {
         min-height: calc(100vh - 80px);
     }
 
-    .square {
-        border : 1px solid var(--default-container-color);
-        background-color: var(--default-container-color);
-        border-radius: 20px !important;
-    }
-
     .margin-around {
         margin-left: 2% !important;
         margin-right: 2% !important;
@@ -89,6 +91,14 @@ export default {
 
     .big-font {
         font-size: 3vw;
+    }
+    
+    .square {
+        padding: 10px; 
+        border-bottom: 1px solid #eeeeee;
+        border-radius: 0px !important;
+        height: 115px !important;
+        width: 83% !important;
     }
 
     .menu-font {

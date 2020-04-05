@@ -51,7 +51,7 @@
                             </div>
                             <div class="row">
                                  <!-- File Upload Portion -->
-                                <ImageUpload ref="uploadSection" @toggleSubmit="this.toggleSubmitButton" 
+                                <ImageUpload ref="uploadSection" :isBlack="true" @toggleSubmit="this.toggleSubmitButton" 
                                 :dest="profilePictures" :singleUpload="true" :existingPics="this.fetchUploadedPics()" />
                             </div>
                             <div v-show='submitVisible'>

@@ -7,6 +7,7 @@ This project creates a database of restaurants wherein users can look up the res
 1. Clone the repository
 2. Open two terminals inside the project
     * One inside /client
+    * One inside /view
     * One inside /server
 
 ##### For Server side
