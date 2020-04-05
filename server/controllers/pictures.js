@@ -164,7 +164,7 @@ exports.delete_existing_pictures = (req, res) => {
 
 /* 
     Deletes the pictures that were saved to storage but were unused 
-    (either in uploading profile pictures or uploading pictures while editing reviews) 
+    (uploading pictures while editing reviews) 
 */
 exports.delete_unused_pictures = async (req, res) => {
     let urls = req.body.urls;   
@@ -198,3 +198,34 @@ exports.delete_unused_pictures = async (req, res) => {
     }
     res.status(200).send(urls);
 }; 
+
+/* 
+    Deletes the picture that was saved to storage but were unused 
+    (uploading profile pic while editing profile) 
+*/
+exports.delete_unused_profile_picture = async (req, res) => {
+    let url = req.body.urls;   
+    let found = false;   
+    //Check if the picture is inside the db 
+    await Picture.findOne({'url' : url.toString()}, (err, result) => {
+        if(result != null) {
+            found = true;
+        }
+    }) 
+    //If not, then delete the image in storage 
+    if(!found) {  
+        let relPath = url.split('/');
+        let removePath = `images/${relPath[4]}/${relPath[5]}`;
+        fs.unlink(removePath, (err) => {
+            if(err) {
+                if (err.code == 'ENOENT') 
+                    console.log("File no longer Exists");
+                else 
+                    throw err 
+            }
+            else
+                console.log(`${removePath} was deleted because it was unused`);
+        });
+    }
+    res.status(200).send(url);
+};

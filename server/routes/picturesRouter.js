@@ -29,4 +29,11 @@ router.post('/delete-existing/:id', PicturesController.delete_existing_pictures)
 */
 router.post('/delete-unused-pics', PicturesController.delete_unused_pictures)
 
+/* 
+    Deletes the picture that was saved to storage but were unused 
+    (uploading profile pic while editing profile) 
+*/
+router.post('/delete-unused-profile-pics', PicturesController.delete_unused_profile_picture)
+
+
 module.exports = router; 
