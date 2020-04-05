@@ -266,6 +266,7 @@ export default {
         },
         editReview () { 
             this.isEditing = true;  
+            this.rating = this.ownReview.rating; 
             this.doThis(this.ownReview.rating);
             this.editData = this.ownReview.review;   
         }, 
@@ -313,25 +314,28 @@ export default {
             await this.removeUnusedPictures();
             this.setUploadedPics(this.reviewPictures); 
             this.$refs.uploadSectionEdit.reset(true, this.reviewPictures);
+            this.rating = this.ownReview.rating; 
             this.doThis(this.ownReview.rating);  
             this.isWriting = false; 
             this.isEditing = false; 
             this.update = true; 
         },
         resetReview() {
-            this.reviewData = "",
+            this.reviewData = "";
+            this.rating = 0; 
             this.isCheckedVal = {
                 '0': false,
                 '1': false,
                 '2': false,
                 '3': false,
                 '4': false
-            },
+            }
             this.isWriting = false
         },
         deleteReview () {
             this.cancelWrite(); 
-            this.$emit('postedReview', false)
+            this.$emit('postedReview', false); 
+            this.resetReview(); 
             this.update = true;
         },
         switchPopular() {
