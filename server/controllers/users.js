@@ -72,7 +72,7 @@ exports.get_user_id = (req, res, next) => {
             res.status(200).send({user : doc});
         })
         .catch(err => {
-            res.send(500).send({error: err});
+            res.status(500).send({error: err});
         })
 }
 
