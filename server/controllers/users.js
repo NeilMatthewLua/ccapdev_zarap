@@ -28,7 +28,7 @@ exports.add_user = async (req, res, next) => {
         })
     //Checks if the email already exists
     await User.findOne({email:req.body.email})
-    .then(res => {
+    .then(() => {
         res.send({
             "status": "failed",
             "error": { "code": 200, "message": "Account with that email already exists!" }
@@ -46,7 +46,7 @@ exports.add_user = async (req, res, next) => {
             liked: [],
             picture: pictureID
         });
-    console.log(user)
+
         //Saves new user
         await user
             .save()
