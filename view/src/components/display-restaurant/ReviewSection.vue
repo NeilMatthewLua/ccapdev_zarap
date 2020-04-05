@@ -206,6 +206,7 @@ export default {
             if(!(this.reviewData != '')) {
                 this.errors.push('Review data must be filled!')
             }
+            this.rating = 0; 
             for(let i = 4; i >=0; i--){
                 if(this.isCheckedVal[i] == true){
                     this.rating = i + 1;
@@ -225,6 +226,7 @@ export default {
             if(!(this.editData != '')) {
                 this.errors.push('Review data must be filled!')
             }
+            this.rating = 0; 
             for(let i = 4; i >=0; i--){
                 if(this.isCheckedVal[i] == true){
                     this.rating = i + 1;
@@ -354,6 +356,7 @@ export default {
             this.showSuccessModal = false;
         },
         doThis(number) {
+            this.rating = number; 
                 for(let i = 0; i < number; i++){
                     if(this.isCheckedVal[ number - 1] == true)
                         this.isCheckedVal[i] = !this.isCheckedVal[i];
