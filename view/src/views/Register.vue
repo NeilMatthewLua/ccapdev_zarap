@@ -180,7 +180,7 @@ export default {
             }
         },
         uploadSection() {
-            this.$refs.uploadSection.reset();
+            return (this.$refs.uploadSection != undefined) ? this.$refs.uploadSection.reset(true, [this.fetchUploadedPics()]) : undefined; 
         },
         validEmail: function(email) {
              var re = /\S+@\S+\.\S+/;
