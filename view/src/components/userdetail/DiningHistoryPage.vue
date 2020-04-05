@@ -50,8 +50,8 @@ export default {
         operatingHourModalInstance = M.Modal.init(elem, {dismissible: false});
     },
     methods: {
-        ...mapGetters(["fetchUserRestos", "getOperatingHours"]),
-        ...mapActions(["getRestByUser", "fetchAllOperatingHours", "fetchOperatingHour"]),
+        ...mapGetters(["fetchUserRestos", "fetchOperatingHour"]),
+        ...mapActions(["getRestByUser", "getOperatingHours"]),
         displayOperatingHoursModal (restaurantID) {
             // fetch the currentRestaurant opened and fetch its operating hours
             this.currentRestaurantOperatingHours =  restaurantID ? this.$store.getters.fetchOperatingHour(restaurantID)[0].operatingHours : null
@@ -66,6 +66,7 @@ export default {
     async created() {
         //Get user's visited restaurants
         await this.getRestByUser(this.$route.params.id);
+        await this.getOperatingHours(this.fetchUserRestos());
     }
 }
 </script>
