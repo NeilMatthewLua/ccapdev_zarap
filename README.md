@@ -133,11 +133,11 @@ This project creates a database of restaurants wherein users can look up the res
 
 ![alt text][2.10]
 	
-    You have a review in the restaurant
+    * You have a review in the restaurant
 
 ![alt text][2.11]
 
-        You can edit your review
+        * You can edit your review
             1. Change images of your review
             2. Remove images from a review 
             3. Change rating 
@@ -147,7 +147,7 @@ This project creates a database of restaurants wherein users can look up the res
 
 ![alt text][2.13]
 
-        You can delete review
+        * You can delete review
             1. Confirm your decision on the pop up modal
             
 ![alt text][2.14]
