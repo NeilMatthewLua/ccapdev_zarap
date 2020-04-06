@@ -132,6 +132,7 @@ This project creates a database of restaurants wherein users can look up the res
             ![alt text][2.9]
 
             ![alt text][2.10]
+            
     * You have a review in the restaurant
             ![alt text][2.11]
         * You can edit your review
