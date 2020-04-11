@@ -7,10 +7,14 @@
                 <div class="container center">
                     <div class="column">
                         <div class="col s12" id="login">
-                            <!-- if wrong credentials, display error message -->
-                            <p v-if="errors.length > 0">
-                                <b class="errorColor">Invalid Credentials!</b>
+                            <!-- if wrong details, display error message -->
+                            <p v-if="errors.length">
+                                <b class="errormsg">Please correct the following error(s):</b>
+                                <ul>
+                                    <li v-for="error in errors" :key="error">{{ error }}</li>
+                                </ul>
                             </p>
+
                             <!-- login text area -->
                             <div class="column">
                                 <div class="input-field col s6">
@@ -24,7 +28,7 @@
                                     <input id="icon_telephone"  type="password"  class="validate pad-input" v-model="password">
                                     <label for="icon_telephone"  class="black-text">Password</label>
                                 </div>
-                                <div class="waves-effect waves-light btn-large margin-bottom-small send-back-button colored-button white-text" @click="loadUser"> Sign me in!
+                                <div class="waves-effect waves-light btn-large margin-bottom-small send-back-button colored-button white-text" @click="validateForm"> Sign me in!
                                 </div>
                             </div>
                         </div>
@@ -60,18 +64,32 @@ export default {
         goRegister: function() {
             router.push({name: "Register"});
         },
+        validateForm: function() {
+            this.errors = [];
+            if(!this.email) {
+                this.errors.push('Email required');
+            }
+            if(!this.password) {
+                this.errors.push('Password required');
+            }
+
+            if(!this.errors.length) {
+                this.loadUser();
+                return true;
+            }
+        },
         loadUser: function() {
+            this.errors = [];
             this.$store
                 .dispatch('login', {
                     "email": this.email,
                     "password": this.password
                     })
                 .then(() => {
-                    
                     router.push({name: "Home"});
                 })
                 .catch(() => {
-                    this.errors.push('Error');
+                    this.errors.push('Invalid Credentials!');
                 })
         },
         print: function () {
