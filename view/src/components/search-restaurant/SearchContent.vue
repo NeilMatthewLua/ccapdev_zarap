@@ -71,7 +71,8 @@ export default {
     data () {
         return {
             loading : true,
-            currentRestaurantOperatingHours : null
+            currentRestaurantOperatingHours : null,
+
         }
     },
     async created() {
@@ -81,9 +82,9 @@ export default {
         this.loading = false;
     },
     methods: {
-       ...mapActions(["getRestos", "getPics", "getOperatingHours", "getSearchRestos", "getSearch"]),
-        ...mapGetters(["fetchAllRestos", "fetchAllSearchRestos", "fetchSearch", "fetchOperatingHour"]),
-       displayOperatingHoursModal (restaurantID) {
+        ...mapActions(["getRestos", "getPics", "getOperatingHours", "getSearchRestos", "getSearch"]),
+        ...mapGetters(["fetchAllRestos", "fetchAllSearchRestos", "fetchSearch"]),
+        displayOperatingHoursModal (restaurantID) {
             // fetch the currentRestaurant opened and fetch its operating hours
             this.currentRestaurantOperatingHours =  restaurantID ? this.$store.getters.fetchOperatingHour(restaurantID)[0].operatingHours : null
             // Open modal
@@ -126,7 +127,7 @@ export default {
       justify-content: center;
       height: 100vh;
     }
-
+    
     .loadingRestos {
         width: 75vw; 
         text-align: center; 

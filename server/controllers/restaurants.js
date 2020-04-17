@@ -42,10 +42,20 @@ exports.update_restaurant_rating = (req, res) => {
     });
 }
 
+// Removes % / and \ from the string
+function removeSpecialChar (string) {
+    string.replace(/[/\%]/g, ""); 
+}
+
+// Escapes a string and returns the value
+function escapeStringForRegex(string) {
+    return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); // $& means the whole matched string
+}
+
 //Get Restaurant based on search key
 exports.get_search_restaurant_restoName = async (req, res) => {
-    let restoName = req.params.restoName
-    let search = req.params.restoName //Store the unmodified search query 
+    let restoName = escapeStringForRegex(req.params.restoName);
+    let search = escapeStringForRegex(req.params.restoName); //Store the unmodified search query 
     restoName = restoName.split(" ") //Split the search query 
     let results = [] 
     //Loop through each word of the search query, checking if it matches any words in the database 
@@ -78,5 +88,5 @@ exports.get_search_restaurant_restoName = async (req, res) => {
     })
     //Sort the items based on matchedChars (descending) (i.e. more matched chars are at the front)
     unique.sort((a,b) => (a.matchedChars >= b.matchedChars) ? -1 : 1) 
-    res.status(200).send(unique);
+    res.status(200).send(unique); 
 }

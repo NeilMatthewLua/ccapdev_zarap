@@ -80,5 +80,4 @@ async function populateUsers(userCounter, limit) {
     }
     return;
 } 
-
 module.exports = populateUsers
