@@ -452,9 +452,11 @@ export default {
         await this.getSearchRestos(this.search);
         await this.getSearch(this.search);
         router.push({path: '/searchresult', query: {search : this.search}}).catch(() => {});
+        this.search = "";
       }
       else {
         router.push({path: '/searchresult', query: {search : this.search}}).catch(() => {});
+        this.search = "";
       }
     }
     
