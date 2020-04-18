@@ -103,7 +103,7 @@ This project creates a database of restaurants wherein users can look up the res
 ![alt text][2.4]
 
 5. From the landing page, search for a restaurant in the search bar, then select that restaurant (in this case, starbucks was looked up)
-
+As per implementation, search results are based on matching AT LEAST 40% of the WHOLE RESTURANT NAME
 ** Filtering of results has yet to be implemented **
 
 ![alt text][2.5]
