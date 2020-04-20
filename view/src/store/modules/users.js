@@ -28,13 +28,13 @@ const actions =  {
             user
           })
           .then(resp => {
-            commit('auth_success', resp.data.user)
-            commit('setPhoto', resp.data.picture)
-            resolve(resp)
+            commit('auth_success', resp.data.user);
+            commit('setPhoto', resp.data.picture);
+            resolve(resp);
           })
           .catch(err => {
-            commit('auth_error')
-            reject(err)
+            commit('auth_error');
+            reject(err);
           })
         })
     },
@@ -44,20 +44,20 @@ const actions =  {
             user
           })
           .then(resp => {
-            commit('auth_success', resp.data.user)
-            commit('setPhoto', resp.data.picture)
-            resolve(resp)
+            commit('auth_success', resp.data.user);
+            commit('setPhoto', resp.data.picture);
+            resolve(resp);
           })
           .catch(err => {
-            commit('auth_error')
-            reject(err)
+            commit('auth_error');
+            reject(err);
           })
         })
     },
     logout({ commit }) {
       return new Promise((resolve) => {
-        commit('logout')
-        resolve()
+        commit('logout');
+        resolve();
       })
     },
     addRestaurantVisit({commit}, group) {
@@ -65,7 +65,7 @@ const actions =  {
         group
       })
       .then(resp => {
-        commit('auth_success', resp.data.user)
+        commit('auth_success', resp.data.user);
       })
     },
     deleteRestaurantVisit({commit}, group) {
@@ -73,12 +73,18 @@ const actions =  {
         group
       })
       .then(resp => {
-        commit('auth_success', resp.data.user)
+        commit('auth_success', resp.data.user);
       })
     },
     async updateGetUser({commit}) {
       let user = await axios.get(`http://localhost:9090/users/${state.user.userID}`);
-      commit('auth_success', user.data.user[0])
+      commit('auth_success', user.data.user[0]);
+    },
+    async login_check({commit}) {
+      console.log("login_check")
+      let resp = await axios.post(`http://localhost:9090/users/login_check`);
+      if(resp.data.flag)
+        commit('auth_success', resp.data.user[0]);
     }
   }
 

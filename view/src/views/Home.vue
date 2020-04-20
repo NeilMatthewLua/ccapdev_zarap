@@ -173,9 +173,12 @@ export default {
       return ans;
     }
   },
-  mounted() {
+  async mounted() {
     this.featuredRestaurants = [ ];
     this.fetchFeatured();
+    await this.$store.dispatch('login_check')
+     .then(() => console.log("DIK"))
+     .catch(()=> console.log("DEK"));
   }
 }
 </script>

@@ -105,6 +105,9 @@ exports.login_user = async (req, res) => {
             if(equal) {
                 await Picture.findOne({pictureID: user.picture})
                 .then(picture => { //loads picture of the user
+                    // req.sessions.flag = true;
+                    // req.sessions.email = req.body.user.email;
+                    // req.sessions.password = req.body.user.password;
                     res.status(200).send({auth: true, user: user, picture: picture})
                 })
                 .catch(err => {
@@ -112,12 +115,40 @@ exports.login_user = async (req, res) => {
                 })
             }   
             else
-                res.status(401).send({ auth: false});
+            res.status(401).send({ auth: false});
         })
     })
     .catch(err => {
         return res.status(500).send('Error on the server.');
     })
+}
+
+exports.login_check = async (req, res) => {
+    console.log("MADE IT");
+    if(res.sessions.flag != true) {    
+        await User.findOne({email: req.sessions.email})
+        .then(user => { //finds the user via userID
+            bcrypt.compare(req.sessions.password, user.password, async function(err, equal) {
+                if(equal) {
+                    await Picture.findOne({pictureID: user.picture})
+                    .then(picture => { //loads picture of the user
+                        res.status(200).send({auth: true, user: user, picture: picture, flag: true})
+                    })
+                    .catch(err => {
+                        res.send(500).json({error: err});
+                    })
+                }   
+                else
+                res.status(401).send({ auth: false});
+            })
+        })
+        .catch(err => {
+            return res.status(500).send('Error on the server.');
+        })
+    }
+    else {
+        res.status(200).send({ auth: false});
+    }
 }
 
 async function hashPassword (password) {

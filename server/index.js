@@ -3,11 +3,14 @@ const express = require('express')
 const mongoose = require('mongoose')
 const bodyParser = require('body-parser')
 const path = require('path'); 
+const session = require('express-session');
 require('dotenv').config()
 
 // Creates the express application
 const app = express();
 const port = process.env.PORT;
+// import module `connect-mongo`
+const MongoStore = require('connect-mongo')(session);
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -19,16 +22,24 @@ app.use(function (request, response, next) {
   response.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
   next();
 })
-app.use('/static', express.static(path.join(__dirname,'/images'))); 
 
 
 mongoose.connect(process.env.MONGO_URI, {useNewUrlParser: true, useUnifiedTopology: true})
-  .then(() => {
-    console.log("Connected to MongoDB"); 
-  })
-  .catch(function(err) {
-    console.log(err);
-  })
+.then(() => {
+  console.log("Connected to MongoDB"); 
+})
+.catch(function(err) {
+  console.log(err);
+})
+
+// use `express-session`` middleware and set its options
+// use `MongoStore` as server-side session storage
+app.use(session({
+  'secret': 'zarap',
+  'resave': false,
+  'saveUninitialized': false,
+  store: new MongoStore({mongooseConnection: mongoose.connection})
+}));
 
 // Home route
 app.get('/', function(req, res) {
