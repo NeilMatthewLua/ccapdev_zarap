@@ -27,6 +27,7 @@ export default {
                 "material-design-icons 3.0.1",
                 "materialize-css 1.0.0",
                 "body-parser 1.19.0",
+                "bcrypt 4.0.1",
                 "dotenv 8.2.0",
                 "express 4.17.1",
                 "faker 4.1.0",

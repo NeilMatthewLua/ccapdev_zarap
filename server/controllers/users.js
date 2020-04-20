@@ -9,6 +9,10 @@ const mongoose = require('mongoose');
 const path = require('path');
 const url = process.env.MONGO_URI; 
 
+// import module `bcrypt`
+const bcrypt = require('bcrypt');
+const saltRounds = 10;
+
 //File Manipulation
 const fs = require('fs');
 
@@ -37,30 +41,32 @@ exports.add_user = async (req, res, next) => {
             })
         }
         else { //Adds the user
-            const user = new User({
-                name: req.body.firstname + " " + req.body.lastname,
-                password: req.body.password,
-                email: req.body.email,
-                address: req.body.homeaddress,
-                points: 0,
-                beenHere: [],
-                reviewed: [],
-                liked: [],
-                picture: pictureID
-            });
-    
-            //Saves new user
-            await user
-                .save()
-                .then(result => {
-                    res.send({
-                        "status": "success",
-                        auth: true
-                    })
-                })
-                .catch(err => {
-                    res.status(500).send("There was a problem with registering the user")
+            bcrypt.hash(req.body.password, saltRounds, async function(err, hash) {
+                const user = new User({
+                    name: req.body.firstname + " " + req.body.lastname,
+                    password: hash,
+                    email: req.body.email,
+                    address: req.body.homeaddress,
+                    points: 0,
+                    beenHere: [],
+                    reviewed: [],
+                    liked: [],
+                    picture: pictureID
                 });
+        
+                //Saves new user
+                await user
+                    .save()
+                    .then(result => {
+                        res.send({
+                            "status": "success",
+                            auth: true
+                        })
+                    })
+                    .catch(err => {
+                        res.status(500).send("There was a problem with registering the user")
+                    });
+            });
         }
     })
     .catch(err => console.log(err));
@@ -94,22 +100,35 @@ exports.get_all_users = (req, res, next) => {
 //Manages login of a user
 exports.login_user = async (req, res) => {
     await User.findOne({email: req.body.user.email})
-    .then( async user => { //finds the user via userID
-        if(req.body.user.password == user.password) {
-            await Picture.findOne({pictureID: user.picture})
-            .then(picture => { //loads picture of the user
-                res.status(200).send({auth: true, user: user, picture: picture})
-            })
-            .catch(err => {
-                res.send(500).json({error: err});
-            })
-        }   
-        else
-            res.status(401).send({ auth: false});
+    .then(user => { //finds the user via userID
+        bcrypt.compare(req.body.user.password, user.password, async function(err, equal) {
+            if(equal) {
+                await Picture.findOne({pictureID: user.picture})
+                .then(picture => { //loads picture of the user
+                    res.status(200).send({auth: true, user: user, picture: picture})
+                })
+                .catch(err => {
+                    res.send(500).json({error: err});
+                })
+            }   
+            else
+                res.status(401).send({ auth: false});
+        })
     })
     .catch(err => {
         return res.status(500).send('Error on the server.');
     })
+}
+
+async function hashPassword (password) {
+    const hashedPassword = await new Promise((resolve, reject) => {
+      bcrypt.hash(password, saltRounds, function(err, hash) {
+        if (err) reject(err)
+        resolve(hash);
+      });
+    })
+  
+    return hashedPassword;
 }
 
 //Updates a user's profile
@@ -118,7 +137,7 @@ exports.update_user =  async (req, res) => {
     let filter = {email: req.body.user.email};
     let update = {
         name: req.body.user.firstname + " " + req.body.user.lastname,
-        password: req.body.user.password,
+        password: await hashPassword(req.body.user.password),
         email: req.body.user.email,
         address: req.body.user.address,
         points: req.body.user.points,

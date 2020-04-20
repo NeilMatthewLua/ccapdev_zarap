@@ -207,6 +207,7 @@ export default {
             user: {
                 name : ' ',
                 address: ' ',
+                password: ' ',
                 email: ' ',
                 points: ' '
             },
@@ -301,6 +302,7 @@ export default {
             this.editProfileVisible = true;
             this.bigEditProfileVisible = true;
             this.smallEditProfileVisible = true;
+            this.user.password = '';
             this.confirm_password = '';
             this.errors = [];
             await this.removeUnusedPictures(); 
@@ -384,6 +386,7 @@ export default {
                 this.user = Object.assign({}, this.tempUser.user);
                 this.user_firstname = this.tempUser.first
                 this.user_lastname = this.tempUser.last
+                this.user.password = '';
                 this.confirm_password = '';
             } 
             this.update = false;       
