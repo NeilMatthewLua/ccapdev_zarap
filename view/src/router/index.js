@@ -6,6 +6,7 @@ import SearchResult from '../views/SearchResult.vue'
 import Login from '../views/Login.vue'
 import Register from '../views/Register.vue'
 import UserDetail from '../views/UserDetail.vue'
+import About from '../views/About.vue'
 
 Vue.use(VueRouter)
 
@@ -39,6 +40,11 @@ const routes = [
     path: '/userdetail/:id/:menu', 
     name: 'UserDetail', 
     component: UserDetail
+  },
+  {
+    path: '/about', 
+    name: 'About', 
+    component: About 
   }
 ]
 

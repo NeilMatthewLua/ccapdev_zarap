@@ -26,40 +26,44 @@ exports.add_user = async (req, res, next) => {
         .catch((err) => {
             res.status(500).send("Error Saving Profile Picture"); 
         })
+
     //Checks if the email already exists
     await User.findOne({email:req.body.email})
-    .then(() => {
-        res.send({
-            "status": "failed",
-            "error": { "code": 200, "message": "Account with that email already exists!" }
-        })
-    })
-    .catch(async () => { //Adds the user
-        const user = new User({
-            name: req.body.firstname + " " + req.body.lastname,
-            password: req.body.password,
-            email: req.body.email,
-            address: req.body.homeaddress,
-            points: 0,
-            beenHere: [],
-            reviewed: [],
-            liked: [],
-            picture: pictureID
-        });
-
-        //Saves new user
-        await user
-            .save()
-            .then(result => {
-                res.send({
-                    "status": "success",
-                    auth: true
-                })
+    .then(async doc => {
+        if(doc != null) {
+            res.send({
+                "status": "failed",
+                "error": { "code": 200, "message": "Account with that email already exists!" }
             })
-            .catch(err => {
-                res.status(500).send("There was a problem with registering the user")
+        }
+        else { //Adds the user
+            const user = new User({
+                name: req.body.firstname + " " + req.body.lastname,
+                password: req.body.password,
+                email: req.body.email,
+                address: req.body.homeaddress,
+                points: 0,
+                beenHere: [],
+                reviewed: [],
+                liked: [],
+                picture: pictureID
             });
+    
+            //Saves new user
+            await user
+                .save()
+                .then(result => {
+                    res.send({
+                        "status": "success",
+                        auth: true
+                    })
+                })
+                .catch(err => {
+                    res.status(500).send("There was a problem with registering the user")
+                });
+        }
     })
+    .catch(err => console.log(err));
 }
 
 //Finds a user by userID

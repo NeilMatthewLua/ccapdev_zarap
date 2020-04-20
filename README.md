@@ -103,7 +103,7 @@ This project creates a database of restaurants wherein users can look up the res
 ![alt text][2.4]
 
 5. From the landing page, search for a restaurant in the search bar, then select that restaurant (in this case, starbucks was looked up)
-
+As per implementation, search results are based on matching AT LEAST 40% of the WHOLE RESTURANT NAME
 ** Filtering of results has yet to be implemented **
 
 ![alt text][2.5]
@@ -127,30 +127,29 @@ This project creates a database of restaurants wherein users can look up the res
             2. Adding a review (Required)
             3. Rating the restaurant (Required)
 
-![alt text][2.8]
+            ![alt text][2.8]
 
-![alt text][2.9]
+            ![alt text][2.9]
 
-![alt text][2.10]
-	
-    You have a review in the restaurant
+            ![alt text][2.10]
 
-![alt text][2.11]
+    * You have a review in the restaurant
 
-        You can edit your review
+        ![alt text][2.11]
+
+        * You can edit your review
             1. Change images of your review
             2. Remove images from a review 
             3. Change rating 
             4. Change review text 
 
-![alt text][2.12]
+            ![alt text][2.12]
 
-![alt text][2.13]
-
-        You can delete review
+            ![alt text][2.13]
+        * You can delete review
             1. Confirm your decision on the pop up modal
             
-![alt text][2.14]
+            ![alt text][2.14]
 
             2. Your points will be adjusted depending on how many upvotes that review had
 

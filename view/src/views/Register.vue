@@ -197,11 +197,16 @@ export default {
                 "homeaddress": app.user.homeaddress,
                 "uploadedFiles": this.fetchUploadedPics(),
             })
-            .then(resp => {
+            .then(async resp => {
                 if(resp.data.status === "success")
                     this.showModal();
-                else
-                    this.errors.push(resp.data.error.message)
+                else {
+                    this.errors.push(resp.data.error.message);
+                    await this.removeUnusedPictures();
+                    this.setUploadedPics([]);
+                    this.confirm_password = '';
+                    this.uploadSection();
+                }
             })
             .catch(error => {
                 console.log(error);        
