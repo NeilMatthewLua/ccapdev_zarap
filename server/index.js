@@ -4,6 +4,7 @@ const mongoose = require('mongoose')
 const bodyParser = require('body-parser')
 const path = require('path'); 
 const session = require('express-session');
+const cors = require('cors'); 
 require('dotenv').config()
 
 // Creates the express application
@@ -16,13 +17,10 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use('/static', express.static(path.join(__dirname,'/images'))); 
 
-//To allow sending of data between frontend and backend
-app.use(function (request, response, next) {
-  response.header("Access-Control-Allow-Origin", "*");
-  response.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-  next();
-})
-
+app.use(cors({
+  origin: "http://localhost:3000",
+  credentials: true
+})); 
 
 mongoose.connect(process.env.MONGO_URI, {useNewUrlParser: true, useUnifiedTopology: true})
 .then(() => {
@@ -36,6 +34,10 @@ mongoose.connect(process.env.MONGO_URI, {useNewUrlParser: true, useUnifiedTopolo
 // use `MongoStore` as server-side session storage
 app.use(session({
   'secret': 'zarap',
+  'cookie': {
+    maxAge : 60000,
+    secure: false
+  },
   'resave': false,
   'saveUninitialized': false,
   store: new MongoStore({mongooseConnection: mongoose.connection})
