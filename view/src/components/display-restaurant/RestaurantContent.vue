@@ -1,7 +1,7 @@
 <template>
   <!--Restaurant Content-->
   <div>
-    <transition name="changeContent" enter-active-class="animated fadeInUp">
+    <!-- <transition name="changeContent" enter-active-class="animated fadeInUp"> -->
     <div class="main-content row" v-if="!isFetching && !noResult">
       <div class="left-section col s12 xl8">
         <!-- Title Card -->
@@ -65,7 +65,7 @@
         </div>
       </div>
     </div>
-    </transition> 
+    <!-- </transition>  -->
     <div v-if="isFetching" class="loading">
         <breeding-rhombus-spinner
           :animation-duration="2000"
