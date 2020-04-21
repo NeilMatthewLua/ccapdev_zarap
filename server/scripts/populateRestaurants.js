@@ -246,7 +246,7 @@ async function populateRestaurants(userCount, limit) {
     var i;
     let doc = await loadUsers();
     let doc_2 = await loadPictures();
-
+    
     for(i = userCount; i < limit; i++) {
         let resto = new Restaurant ({
             restaurantID: mongoose.Types.ObjectId(),
