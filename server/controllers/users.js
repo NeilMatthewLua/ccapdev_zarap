@@ -105,9 +105,9 @@ exports.login_user = async (req, res) => {
             if(equal) {
                 await Picture.findOne({pictureID: user.picture})
                 .then(picture => { //loads picture of the user
-                    // req.sessions.flag = true;
-                    // req.sessions.email = req.body.user.email;
-                    // req.sessions.password = req.body.user.password;
+                    req.session.flag = true;
+                    req.session.email = req.body.user.email;
+                    req.session.password = req.body.user.password;
                     res.status(200).send({auth: true, user: user, picture: picture})
                 })
                 .catch(err => {
@@ -125,10 +125,11 @@ exports.login_user = async (req, res) => {
 
 exports.login_check = async (req, res) => {
     console.log("MADE IT");
-    if(res.sessions.flag != true) {    
-        await User.findOne({email: req.sessions.email})
+    console.log(req.session.flag); 
+    if(req.session.flag != true) {    
+        await User.findOne({email: req.session.email})
         .then(user => { //finds the user via userID
-            bcrypt.compare(req.sessions.password, user.password, async function(err, equal) {
+            bcrypt.compare(req.session.password, user.password, async function(err, equal) {
                 if(equal) {
                     await Picture.findOne({pictureID: user.picture})
                     .then(picture => { //loads picture of the user

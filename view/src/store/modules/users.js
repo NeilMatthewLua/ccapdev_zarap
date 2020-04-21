@@ -1,7 +1,7 @@
 // import axios from 'axios'
 
 import axios from "axios"
-
+ 
 const state =  {
     user : null,
     picture : null,
@@ -25,8 +25,8 @@ const actions =  {
         return new Promise((resolve, reject) => {
           commit('auth_request')
           axios.post('http://localhost:9090/users/login', {
-            user
-          })
+            user,
+          }, {withCredentials: true})
           .then(resp => {
             commit('auth_success', resp.data.user);
             commit('setPhoto', resp.data.picture);
@@ -82,7 +82,7 @@ const actions =  {
     },
     async login_check({commit}) {
       console.log("login_check")
-      let resp = await axios.post(`http://localhost:9090/users/login_check`);
+      let resp = await axios.post(`http://localhost:9090/users/login_check`,{}, {withCredentials: true});
       if(resp.data.flag)
         commit('auth_success', resp.data.user[0]);
     }
