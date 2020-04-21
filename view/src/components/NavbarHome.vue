@@ -153,7 +153,8 @@ export default {
       router.push({name: 'Register'}).catch(() => {});
     }
   },
-  mounted() {
+  async mounted() {
+    await this.$store.dispatch('login_check');
     this.checkLogged();
     M.AutoInit();
     document.addEventListener('DOMContentLoaded', function() {
