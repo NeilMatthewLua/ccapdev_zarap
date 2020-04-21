@@ -146,6 +146,10 @@ export default {
             if(!this.user.lastname) {
                 this.errors.push('Last name required');
             }
+            if(this.user.firstname && this.user.lastname) {
+                if(this.user.firstname.length + this.user.lastname.length > 30)
+                    this.errors.push('Full name must be less than 30 characters');
+            }
             if(!this.user.email) {
                 this.errors.push('Email required');
             } else if (!this.validEmail(this.user.email)) {

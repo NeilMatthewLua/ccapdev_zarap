@@ -19,13 +19,13 @@
                             <div class="column">
                                 <div class="input-field col s6">
                                     <i class="material-icons prefix">account_circle</i>
-                                    <input id="icon_prefix" type="text" class="validate pad-input" v-model="email">
+                                    <input v-on:keyup.enter="validateForm" id="icon_prefix" type="text" class="validate pad-input" v-model="email">
                                     <label for="icon_prefix" class="black-text">Email</label>
                                 </div>
                                 <br>
                                 <div class="input-field col s6">
                                     <i class="material-icons prefix">lock</i>
-                                    <input id="icon_telephone"  type="password"  class="validate pad-input" v-model="password">
+                                    <input v-on:keyup.enter="validateForm" id="icon_telephone"  type="password"  class="validate pad-input" v-model="password">
                                     <label for="icon_telephone"  class="black-text">Password</label>
                                 </div>
                                 <div class="waves-effect waves-light btn-large margin-bottom-small send-back-button colored-button white-text" @click="validateForm"> Sign me in!
