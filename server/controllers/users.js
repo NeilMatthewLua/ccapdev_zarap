@@ -123,10 +123,10 @@ exports.login_user = async (req, res) => {
     })
 }
 
+//Manages login session of a user
 exports.login_check = async (req, res) => {
-    console.log("MADE IT");
-    console.log(req.session.flag); 
-    if(req.session.flag != true) {    
+    //Loads the session if exists
+    if(req.session != undefined && req.session.flag == true) {    
         await User.findOne({email: req.session.email})
         .then(user => { //finds the user via userID
             bcrypt.compare(req.session.password, user.password, async function(err, equal) {
@@ -147,11 +147,14 @@ exports.login_check = async (req, res) => {
             return res.status(500).send('Error on the server.');
         })
     }
-    else {
-        res.status(200).send({ auth: false});
-    }
 }
 
+//Logout a user
+exports.logout = (req, res) => {
+    req.session.destroy();
+}
+
+//Password Hasher
 async function hashPassword (password) {
     const hashedPassword = await new Promise((resolve, reject) => {
       bcrypt.hash(password, saltRounds, function(err, hash) {

@@ -35,11 +35,11 @@ mongoose.connect(process.env.MONGO_URI, {useNewUrlParser: true, useUnifiedTopolo
 app.use(session({
   'secret': 'zarap',
   'cookie': {
-    maxAge : 60000,
+    maxAge : 1000 * 60 * 60 * 24,
     secure: false
   },
-  'resave': false,
-  'saveUninitialized': false,
+  'resave': true,
+  'saveUninitialized': true,
   store: new MongoStore({mongooseConnection: mongoose.connection})
 }));
 

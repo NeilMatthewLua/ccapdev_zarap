@@ -56,6 +56,7 @@ const actions =  {
     },
     logout({ commit }) {
       return new Promise((resolve) => {
+        axios.post(`http://localhost:9090/users/logout`,{}, {withCredentials: true});
         commit('logout');
         resolve();
       })
@@ -81,10 +82,11 @@ const actions =  {
       commit('auth_success', user.data.user[0]);
     },
     async login_check({commit}) {
-      console.log("login_check")
       let resp = await axios.post(`http://localhost:9090/users/login_check`,{}, {withCredentials: true});
-      if(resp.data.flag)
-        commit('auth_success', resp.data.user[0]);
+      if(resp.data.flag){
+        commit('setPhoto', resp.data.picture);
+        commit('auth_success', resp.data.user);
+      }
     }
   }
 
@@ -103,7 +105,7 @@ const mutations = {
     state.status = '',
     state.user = null
   },
-  setPhoto : (state, picture) => state.picture = picture ,
+  setPhoto : (state, picture) => state.picture = picture,
   setLikedReview : (state, review) => state.user.liked = state.user.liked.concat(review),
   removeLikedReview : (state, review) => state.user.liked = state.user.liked.filter((likes) => likes != review)
 }
