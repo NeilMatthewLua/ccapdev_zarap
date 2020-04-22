@@ -1,0 +1,2 @@
+node: cd view && npm install && node vue-cli-service serve --port 3000
+node: cd server && npm install && node index.js
