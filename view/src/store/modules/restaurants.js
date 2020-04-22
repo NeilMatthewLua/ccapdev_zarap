@@ -8,8 +8,36 @@ const state =  {
     allOperatingHours: [], // Stores all the operating hours of the restaurant
     allSearchRestos : [], // Stores all the restos from the search result
     search: null,
-    userRestos : [] // Stores all the restos the user has been to
-
+    userRestos : [], // Stores all the restos the user has been to
+    //Following Arrays store the values if any of the filters is active 
+    sortList: [ 
+        false, false, false
+    ],
+    cityList: [
+        false, false, false, false, false, false, false, false, false, 
+        false, false, false, false, false, false, false, false
+    ],
+    cuisineList: [
+        false, false, false, false, false, false, false, false, false, 
+        false, false, false, false, false, false, false, false, false, 
+        false, false, false, false, false, false, false, false
+    ],
+    estList: [
+        false, false, false, false, false, false, false, false, false
+    ],
+    costList:[
+        false, false, false, false
+    ],
+    filters: { //Stores filter options selected
+        cities : [],
+        cuisines : [],
+        estTypes: [],
+        costLower: 0, //lower bound for cost
+        costUpper: -1, //upper bound for cost (no limit)
+        sortByRating: false, 
+        sortByCost: false,
+        sortCostOrder: 1, //default ascending
+    }
     //Store the fields associated with the resto / resto object
 }
 
@@ -23,7 +51,13 @@ const getters =  {
     fetchOperatingHour : state => id => state.allOperatingHours.filter(resto => resto.restaurantID === id),
     fetchAllSearchRestos : state => state.allSearchRestos,
     fetchSearch : state => state.search,
-    fetchUserRestos : state => state.userRestos
+    fetchUserRestos : state => state.userRestos,
+    fetchSortToggles: state => state.sortList,
+    fetchCityToggles: state => state.cityList,
+    fetchCuisineToggles: state => state.cuisineList, 
+    fetchEstToggles: state => state.estList, 
+    fetchCostToggles: state => state.costList,
+    fetchFilters: state => state.filters
 }
 
 const actions =  {
@@ -123,7 +157,76 @@ const mutations = {
     },
     setSearchRestos : (state, restos) => state.allSearchRestos = restos, 
     setSearch : (state, search) => state.search = search,
-    setUserRestos : (state, restos) => state.userRestos = restos
+    setUserRestos : (state, restos) => state.userRestos = restos,
+    toggleFilterCity: (state, index, city) => {
+        state.cityList[index] = !state.cityList[index]
+        //Add city to filter if not yet there, otherwise remove it
+        if(state.cityList[index])
+            state.filters.cities.push(city)
+        else 
+            state.filters.cities = state.filters.cities.filter(item => item != city)
+    },
+    toggleFilterSort: (state, index, label, order) => {
+        state.sortList[index] = !state.sortList[index]; 
+        if(state.sortList[index]) {
+            if(label == "Rating") {
+                state.filters.sortbyRating = true;  
+            }
+            else {
+                state.filters.sortByCost = true; 
+                state.filters.orderCost = order; 
+                //Cost can only have one toggled at a time, untoggle the other one 
+                if(index == 1) {
+                    state.sortList[2] = false; 
+                }
+                else if(index == 2) {
+                    state.sortList[1] = false;
+                }
+            }
+        }
+        else {
+            if(label == "Rating") {
+                state.sortByRating = false; 
+            }
+            else {
+                state.sortByCost = false; 
+            }
+        }
+    },
+    toggleFilterCuisine: (state, index, cuisine) => {
+        state.cuisineList[index] = !state.cuisineList[index]
+        if(state.cuisineList[index]) {
+            state.filters.cuisines.push(cuisine); 
+        }
+        else {
+            state.filters.cuisines = state.filters.cuisines.filter(item => item != cuisine); 
+        }
+    },
+    toggleFilterCost: (state, index, lower, upper) => {
+        state.costList[index] = !state.costList[index]
+        if(state.costList[index]) {
+            state.filters.costLower = lower; 
+            state.filters.costUpper = upper; 
+            for(let i = 0; i < state.costList.length; i++)
+                if(i != index) {
+                    state.costList[i] = false; 
+                }
+        }
+        else {
+            //Set cost back to default 
+            state.filters.costLower = 0; 
+            state.filters.costUpper = -1; 
+        }
+    },
+    toggleFilterEst: (state, index, establishment) => {
+        state.estList[index] = !state.estList[index]
+        if(state.estList[index]) {
+            state.filters.estTypes.push(establishment); 
+        }
+        else {
+            state.filters.estTypes = state.filters.estTypes.filter(item => item != establishment); 
+        }
+    }
 }
 
 export default {
