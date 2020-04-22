@@ -131,19 +131,25 @@
         <i class="material-icons right"> arrow_drop_down </i>
       </a>
     </li>
+    <li class="divider"></li>
+    <li>
+      <a @click="clearFilter()"> CLEAR FILTER
+      </a>
+    </li>
   </ul>
 
   <!-- Dropdown for Rating and Cost-->
   <ul id="sort-by" class="dropdown-content">
-    <li v-for="navbar_sort in nav_sort_by" v-bind:key="navbar_sort.id">
-      <a href="#"> {{navbar_sort.label}}{{navbar_sort.option}} </a>
+    <li v-for="n in sortList.length" :key="sortList[n-1].label+n" class="collection-item clickable" :class="{ 'isSelected' : sortToggles[n-1]}" @click="selectSort(n-1)">
+        <a class="left" :class="{ 'textSelected' : sortToggles[n-1]}"> {{sortList[n-1].label}} </a>
+        <div class="grey-text" :class="{ 'textSelected' : sortToggles[n-1]}"> &nbsp; {{sortList[n-1].option}} </div>
     </li>
   </ul>
 
   <!--Dropdown for Filter Location-->
   <ul id="location" class="dropdown-content">
-    <li v-for="navbar_location in nav_locations" v-bind:key="navbar_location.id">
-      <a href="#"> {{navbar_location.label}} </a>
+    <li v-for="n in 6" :key="cityList[n-1].label" class="clickable" :class="{ 'isSelected' : cityToggles[n-1]}" @click="selectCity(n-1)">
+        <a :class="{ 'textSelected' : cityToggles[n-1]}"> {{cityList[n-1].label}} City </a>
     </li>
     <li class="collection-item">
       <a class="modal-trigger" href="#navbar_modalloc"> See all location</a>
@@ -155,69 +161,16 @@
       <h4>Please choose your location</h4>
         <table>
           <tbody>
+              <tr v-for="row in 5" :key="row">
+                  <td v-for="index in 3" :key="index" class="clickable" :class="{ 'isSelected' : cityToggles[index - 1 + (3 * (row - 1))]}" @click="selectCity(index - 1 + (3 * (row - 1)))">
+                      <a :class="{ 'textSelected' : cityToggles[index - 1 + (3 * (row - 1))]}"> {{cityList[index - 1 + (3 * (row - 1))].label}} City </a>
+                  </td>
+              </tr> 
               <tr>
-                  <td>
-                      <a href="#"> Quezon City </a>
+                  <td v-for="index in 2" :key="index" class="clickable" :class="{ 'isSelected' : cityToggles[index - 1 + (3 * 5)]}" @click="selectCity(index - 1 + (3 * 5))">
+                      <a :class="{ 'textSelected' : cityToggles[index - 1 + (3 * 5)]}"> {{cityList[index - 1 + (3 * 5)].label}} City </a>
                   </td>
-                  <td>
-                      <a href="#"> Manila </a>
-                  </td>
-                  <td>
-                      <a href="#"> Makati City </a>
-                  </td>                                    
-              </tr>
-              <tr>
-                  <td>
-                      <a href="#"> Pasig City </a>
-                  </td>
-                  <td>
-                      <a href="#"> Taguig City </a>
-                  </td>
-                  <td>
-                      <a href="#"> Mandaluyong City </a>
-                  </td> 
-              </tr>
-              <tr>
-                  <td>
-                      <a href="#"> Parañaque City </a>
-                  </td>
-                  <td>
-                      <a href="#"> Pasay City </a>
-                  </td>
-                  <td>
-                      <a href="#"> Muntinlupa City </a>
-                  </td> 
-              </tr>
-              <tr>
-                  <td>
-                      <a href="#"> Las Piñas City </a>
-                  </td>
-                  <td>
-                      <a href="#"> Marikina City </a>
-                  </td>
-                  <td>
-                      <a href="#"> San Juan City </a>
-                  </td> 
-              </tr>
-              <tr>
-                  <td>
-                      <a href="#"> Caloocan City </a>
-                  </td>
-                  <td>
-                      <a href="#"> Valenzuela City </a>
-                  </td>
-                  <td>
-                      <a href="#"> Malabon City </a>
-                  </td> 
-              </tr>
-              <tr>
-                  <td>
-                      <a href="#"> Navotas </a>
-                  </td>
-                  <td>
-                      <a href="#"> Pateros City </a>
-                  </td>
-              </tr>
+              </tr> 
           </tbody>
         </table>
     </div>
@@ -225,8 +178,8 @@
 
   <!-- Dropdown for Filter Cuisine -->
   <ul id="cuisine" class="dropdown-content">
-    <li v-for="navbar_cuisine in nav_cuisines" v-bind:key="navbar_cuisine.id">
-      <a href="#"> {{navbar_cuisine.label}} </a>
+    <li v-for="n in 6" :key="n" class="clickable" :class="{ 'isSelected' : cuisineToggles[n-1]}" @click="selectCuisine(n-1)">
+        <a :class="{ 'textSelected' : cuisineToggles[n-1]}">{{cuisineList[n-1].label}} </a>
     </li>
     <li class="collection-item">
       <a class="modal-trigger" href="#navbar_modalcuisines"> See all cuisines</a>
@@ -237,103 +190,17 @@
     <div class="modal-content">
       <h4>Please choose your cuisine</h4>
         <table>
-          <tbody>
+          <tbody> 
+              <tr v-for="row in 8" :key="row">
+                  <td v-for="index in 3" :key="index" class="clickable" :class="{ 'isSelected' : cuisineToggles[index - 1 + (3 * (row - 1))]}" @click="selectCuisine(index - 1 + (3 * (row - 1)))">
+                      <a :class="{ 'textSelected' : cuisineToggles[index - 1 + (3 * (row - 1))]}"> {{cuisineList[index - 1 + (3 * (row - 1))].label}}</a>
+                  </td>
+              </tr> 
               <tr>
-                  <td>
-                      <a href="#"> American </a>
-                  </td>
-                  <td>
-                      <a href="#"> Asian </a>
-                  </td>
-                  <td>
-                      <a href="#"> BBQ </a>
-                  </td>                                    
-              </tr>
-              <tr>
-                  <td>
-                      <a href="#"> Bakery </a>
-                  </td>
-                  <td>
-                      <a href="#"> Bar Food </a>
-                  </td>
-                  <td>
-                      <a href="#"> Beverages </a>
-                  </td> 
-              </tr>
-              <tr>
-                  <td>
-                      <a href="#"> Bubble Tea </a>
-                  </td>
-                  <td>
-                      <a href="#"> Burger </a>
-                  </td>
-                  <td>
-                      <a href="#"> Chinese </a>
-                  </td> 
-              </tr>
-              <tr>
-                  <td>
-                      <a href="#"> Coffee </a>
-                  </td>
-                  <td>
-                      <a href="#"> Desserts </a>
-                  </td>
-                  <td>
-                      <a href="#"> Fast Food </a>
-                  </td> 
-              </tr>
-              <tr>
-                  <td>
-                      <a href="#"> Filipino </a>
-                  </td> 
-                  <td>
-                      <a href="#"> Healthy Food </a>
-                  </td>
-                  <td>
-                      <a href="#"> Hotpot </a>
+                  <td v-for="index in 2" class="clickable" :key="index" :class="{ 'isSelected' : cuisineToggles[index - 1 + (3 * 8)]}" @click="selectCuisine(index - 1 + (3 * 8))">
+                      <a :class="{ 'textSelected' : cuisineToggles[index - 1 + (3 * 8)]}"> {{cuisineList[index - 1 + (3 * 8)].label}}</a>
                   </td>
               </tr>
-              <tr>
-                  <td>
-                      <a href="#"> International </a>
-                  </td> 
-                  <td>
-                      <a href="#"> Italian </a>
-                  </td>
-                  <td>
-                      <a href="#"> Japanese </a>
-                  </td>
-              </tr>
-              <tr>
-                  <td>
-                      <a href="#"> Korean </a>
-                  </td>
-                  <td>
-                      <a href="#"> Korean BBQ </a>
-                  </td>
-                  <td>
-                      <a href="#"> Pizza </a>
-                  </td>
-              </tr>
-              <tr>
-                  <td>
-                      <a href="#"> Ramen </a>
-                  </td>
-                  <td>
-                      <a href="#"> Salad </a>
-                  </td>
-                  <td>
-                      <a href="#"> Seafood </a>
-                  </td>
-              </tr>
-            <tr>
-                <td>
-                    <a href="#"> Street Food </a>
-                </td>
-                <td>
-                    <a href="#"> Tea </a>
-                </td>
-            </tr>
           </tbody>
         </table>
     </div>
@@ -341,15 +208,17 @@
 
   <!-- Dropdown for Filter Establishment Type -->
   <ul id="establishment-type" class="dropdown-content">
-    <li v-for="navbar_establishment in nav_establishment_types" v-bind:key="navbar_establishment.id">
-      <a href="#"> {{navbar_establishment.label}} </a>
+    <li v-for="n in estList.length" :key="estList[n-1].label"
+        class="clickable" :class="{ 'isSelected' : estToggles[n-1]}" @click="selectEstType(n-1)">
+        <a :class="{ 'textSelected' : estToggles[n-1]}" > {{estList[n-1].label}} </a>
     </li>
   </ul>
 
   <!-- Dropdown for Filter Cost for two -->
   <ul id="cost-for-two" class="dropdown-content">
-    <li v-for="navbar_cost in nav_cost_two" v-bind:key="navbar_cost.id">
-      <a href="#"> {{navbar_cost.label}} </a>
+    <li v-for="n in costList.length" :key="costList[n-1].label"
+        class="clickable" :class="{ 'isSelected' : costToggles[n-1]}" @click="selectCostFilter(n-1)"  >
+        <a :class="{ 'textSelected' : costToggles[n-1]}"> {{costList[n-1].label}} </a>
     </li>
 
   </ul>
@@ -386,7 +255,7 @@
 import M from 'materialize-css';
 import router from '../router';
 import alertModal from '@/components/alertModal';
-import { mapActions } from 'vuex'; 
+import { mapActions, mapMutations, mapGetters } from 'vuex'; 
 export default {
   Name: "Navbar",
   components: {
@@ -399,10 +268,27 @@ export default {
   computed: {
     isLoggedIn: function() {
         return this.$store.getters.isLoggedIn;
+    },
+    cityToggles() {
+        return (this.update || !this.update) ? this.fetchCityToggles() : this.fetchCityToggles();
+    }, 
+    cuisineToggles() {
+        return (this.update || !this.update) ? this.fetchCuisineToggles() : this.fetchCuisineToggles();
+    },
+    estToggles() {
+        return (this.update || !this.update) ? this.fetchEstToggles() : this.fetchEstToggles(); 
+    },
+    costToggles() {
+        return (this.update || !this.update) ? this.fetchCostToggles() : this.fetchCostToggles(); 
+    },
+    sortToggles() {
+        return (this.update || !this.update) ? this.fetchSortToggles() : this.fetchSortToggles(); 
     }
   },
   methods: {
-    ...mapActions(['removeUnusedPictures', 'getSearchRestos', 'getSearch']),  
+    ...mapGetters(["fetchFilters", "fetchSortToggles", "fetchCityToggles", "fetchCuisineToggles", "fetchEstToggles", "fetchCostToggles"]), 
+    ...mapMutations(["toggleFilterSort","toggleFilterCity","toggleFilterCuisine","toggleFilterCost","toggleFilterEst", "updateFilteredRestaurants","clearFilter"]),
+    ...mapActions(['removeUnusedPictures', 'getSearchRestos', 'getSearch',"updateFilter"]),  
     showModal() { //confirmation of successful registration
         this.isModalVisible = true;
     },
@@ -446,11 +332,12 @@ export default {
       router.push({name: 'Register'}).catch(() => {});
     },
     async goSearchResult() {
+      this.clearFilter(); 
       await this.getSearchRestos(this.search);
       await this.getSearch(this.search);
       if (this.$router.name == "Search Result") {
-        await this.getSearchRestos(this.search);
         await this.getSearch(this.search);
+        await this.getSearchRestos(this.search);
         router.push({path: '/searchresult', query: {search : this.search}}).catch(() => {});
         this.search = "";
       }
@@ -458,8 +345,57 @@ export default {
         router.push({path: '/searchresult', query: {search : this.search}}).catch(() => {});
         this.search = "";
       }
-    }
-    
+    },
+    selectCity(index) {
+        this.update = !this.update;
+        let payload = [
+            index, 
+            this.cityList[index].label
+        ]
+        this.toggleFilterCity(payload); 
+        this.updateFilters(); 
+    },
+    selectCuisine(index) {
+        this.update = !this.update;
+        let payload = [
+            index, 
+            this.cuisineList[index].label
+        ]
+        this.toggleFilterCuisine(payload); 
+        this.updateFilteredRestaurants();
+    },
+    selectCostFilter(index) {
+        this.update = !this.update;
+        let payload = [
+            index,
+            this.costList[index].low, 
+            this.costList[index].upper
+        ]
+        this.toggleFilterCost(payload); 
+        this.updateFilteredRestaurants();
+    },
+    selectSort(index) {
+        this.update = !this.update; 
+        let payload = [
+            index,
+            this.sortList[index].label, 
+            this.sortList[index].order
+        ]
+        this.toggleFilterSort(payload); 
+        this.updateFilteredRestaurants(); 
+    },
+    selectEstType(index) {
+        this.update = !this.update;
+        let payload = [
+            index,
+            this.estList[index].label
+        ]
+        this.toggleFilterEst(payload); 
+        this.updateFilteredRestaurants();
+    },
+    async updateFilters() {
+      this.updateFilteredRestaurants(); 
+    },
   },
   async mounted() {
     await this.$store.dispatch('login_check');
@@ -488,121 +424,76 @@ export default {
       user_firstname: ' ',
       user_picture: ' ',
       search: null,
-      nav_sort_by: {
-        nav_ratings:{
-            label: "Rating",
-            option: " - high to low"
-        },
-        nav_costasc:{
-            label: "Cost",
-            option: " - high to low"
-        },
-        nav_costdes:{
-            label: "Cost",
-            option: " - low to high"
-        }
-      },
-      nav_locations: {
-          nav_manila: {
-              label: "Manila"
-          },
-          nav_quezon: {
-              label: "Quezon City"
-          },
-          nav_makati: {
-              label: "Makati City"
-          },
-          nav_pasig: {
-              label: "Pasig City"
-          },
-          nav_pasay: {
-              label: "Pasay City"
-          },
-          nav_paranaque: {
-              label: "Parañaque City"
-          },
-          nav_taguig: {
-              label: "Taguig City"
-          }
-      },
-      nav_cuisines: {
-          nav_filipino: {
-              label: "Filipino"
-          },
-          nav_beverages: {
-              label: "Beverages"
-          },
-          nav_american: {
-              label: "American"
-          },
-          nav_fastfood: {
-              label: "Fastfood"
-          },
-          nav_chinese: {
-              label: "Chinese"
-          },
-          nav_coffee: {
-              label: "Coffee"
-          },
-          nav_bakery: {
-              label: "Bakery"
-          },
-          nav_tea: {
-              label: "Tea"
-          },
-          nav_street: {
-              label: "Street Food"
-          },
-          nav_japanese: {
-              label: "Japanese"
-          }
-      },
-      nav_establishment_types: {
-          nav_quick: {
-              label: "Quick Bites"
-          },
-          nav_casual: {
-              label: "Casual Dining"
-          },
-          nav_beverage: {
-              label: "Beverage Shops"
-          },
-          nav_kiosks: {
-              label: "Kiosks"
-          },
-          nav_cafes: {
-              label: "Cafés"
-          },
-          nav_court: {
-              label: "Food Courts"
-          },
-          nav_bakeries: {
-              label: "Bakeries"
-          },
-          nav_dessert: {
-              label: "Dessert Parlor"
-          },
-          nav_bars: {
-              label: "Bars"
-          },
-          nav_fine: {
-              label: "Fine Dining"
-          }
-      },
-      nav_cost_two: {
-          nav_three: {
-              label: "Less than PHP350"
-          },
-          nav_seven: {
-              label: "PHP350 to PHP700"
-          },
-          nav_fourteen: {
-              label: "PHP700 to PHP1400"
-          },
-          mav_up: {
-              label: "PHP1400 +"
-          }
-      }
+      update : false, 
+      sortList: [
+          {label:"Rating", option : " - high to low", order: -1},
+          {label:"Cost", option : " - high to low", order: -1},
+          {label:"Cost", option : " - low to high", order: 1}
+      ],
+      cityList: [
+          {label: "Quezon"},
+          {label: "Manila"},
+          {label: "Makati"},
+          {label: "Pasig"},
+          {label: "Taguig"},
+          {label: "Mandaluyong"},
+          {label: "Parañaque"},
+          {label: "Pasay"},
+          {label: "Muntinlupa"},
+          {label: "Las Piñas"},
+          {label: "Marikina"},
+          {label: "San Juan"},
+          {label: "Caloocan"},
+          {label: "Valenzuela"},
+          {label: "Malabon"},
+          {label: "Navotas"},
+          {label: "Pateros"}
+      ],
+      cuisineList: [
+          {label: "American"},
+          {label: "Asian"},
+          {label: "BBQ"},
+          {label: "Bakery"},
+          {label: "Bar Food"},
+          {label: "Beverages"},
+          {label: "Bubble Tea"},
+          {label: "Burger"},
+          {label: "Chinese"},
+          {label: "Coffee"},
+          {label: "Desserts"},
+          {label: "Fast Food"},
+          {label: "Filipino"},
+          {label: "Healthy Food"},
+          {label: "Hotpot"},
+          {label: "International"},
+          {label: "Italian"},
+          {label: "Japanese"},
+          {label: "Korean"},
+          {label: "Korean BBQ"},
+          {label: "Pizza"},
+          {label: "Ramen"},
+          {label: "Salad"},
+          {label: "Seafood"},
+          {label: "Street Food"},
+          {label: "Tea"},
+      ],
+      estList: [
+          {label: "Quick Bites",isSelected: false},
+          {label: "Casual Dining"},
+          {label: "Kiosks"},
+          {label: "Cafés"},
+          {label: "Food Courts"},
+          {label: "Bakeries",isSelected: false},
+          {label: "Dessert Parlor"},
+          {label: "Bars"},
+          {label: "Fine Dining"},
+      ],
+      costList:[
+          {label: "Less than PHP350", low : 0, upper : 349},
+          {label: "PHP350 to PHP700", low : 350, upper : 699},
+          {label: "PHP700 to PHP1400", low : 700, upper : 1399},
+          {label: "PHP1400 +", low : 1400, upper : -1},
+      ]
     }
   }
 }
@@ -718,5 +609,21 @@ export default {
 
   .pad-left {
     padding-left: 15px !important;
+  }
+
+  .clickable {
+        cursor: pointer; 
+    }
+
+  .isSelected {
+      background-color: #4caf50 !important;   
+  }
+
+  .textSelected {
+      color: var(--default-background-color) !important; 
+  }
+
+  td {
+      text-align: center; 
   }
 </style>
