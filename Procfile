@@ -1,1 +1,1 @@
-web:honcho -f ProcfileHoncho start
+web: cd server && node index.js
