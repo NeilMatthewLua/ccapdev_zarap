@@ -8,7 +8,11 @@ const state =  {
     allOperatingHours: [], // Stores all the operating hours of the restaurant
     allSearchRestos : [], // Stores all the restos from the search result
     search: null,
-    userRestos : [] // Stores all the restos the user has been to
+    userRestos : [], // Stores all the restos the user has been to
+    allSearchRestosFiltered: [], // Stores all the restos from search result and filtered/sorted using filter bar
+    filterCategory: null,
+    filterKey: null,
+
 
     //Store the fields associated with the resto / resto object
 }
@@ -23,7 +27,10 @@ const getters =  {
     fetchOperatingHour : state => id => state.allOperatingHours.filter(resto => resto.restaurantID === id),
     fetchAllSearchRestos : state => state.allSearchRestos,
     fetchSearch : state => state.search,
-    fetchUserRestos : state => state.userRestos
+    fetchUserRestos : state => state.userRestos,
+    fetchAllSearchRestosFiltered : state => state.allSearchRestosFiltered,
+    fetchFilterCategory : state => state.filterCategory,
+    fetchFilterKey : state => state.filterKey,
 }
 
 const actions =  {
@@ -106,7 +113,34 @@ const actions =  {
 
         commit('setPics', listPics);
         commit('setUserRestos', allRestos);
-    }
+    },
+    async getFilterCategory ({commit}, category) {
+        commit('setFilterCategory', category);
+    },
+    async getFilterKey ({commit}, filterKey) {
+        commit('setFilterKey', filterKey);
+    },
+    async getSearchRestosFiltered ({commit}, searchKey, category, filterKey) {
+        if (searchKey == null) {
+            if (category == 'Sort by') {
+                let res = await axios.get(`http://localhost:9090/restaurants/sortby/${filterKey}`); 
+                commit('setSearchRestosFiltered', res.data);
+            }
+        }
+        else if (searchKey == '') {
+            if (category == 'Sort by') {
+                let res = await axios.get(`http://localhost:9090/restaurants/sortby/${filterKey}`); 
+                commit('setSearchRestosFiltered', res.data);
+            }
+        }
+        else {
+            if (category == 'Sort by') {
+                let res = await axios.get(`http://localhost:9090/restaurants/search-resto/${searchKey}/${filterKey}`);
+                commit('setSearchRestosFiltered', res.data);
+            }
+            
+        }
+    },
 }
 
 const mutations = {
@@ -123,7 +157,10 @@ const mutations = {
     },
     setSearchRestos : (state, restos) => state.allSearchRestos = restos, 
     setSearch : (state, search) => state.search = search,
-    setUserRestos : (state, restos) => state.userRestos = restos
+    setUserRestos : (state, restos) => state.userRestos = restos,
+    setSearchRestosFiltered : (state, restos) => state.allSearchRestosFiltered = restos,
+    setFilterCategory : (state, category) => state.filterCategory = category,
+    setFilterKey : (state, key) => state.filterKey = category,
 }
 
 export default {

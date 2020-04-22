@@ -18,7 +18,7 @@
         </div>
 
         <div class="main-content" v-show="result">
-            <FilterBar />
+            <FilterBar v-on:is_filtered = "filterSearch" v-on:not_filtered = "closeFilter"/>
             <div v-if="!loading">
                 <RestaurantCard v-on:did_click_operating_info = "displayOperatingHoursModal" v-for="item in this.fetchAllSearchRestos()" :key="item.restaurantID" :resto="item"/>
             </div>
@@ -72,7 +72,7 @@ export default {
         return {
             loading : true,
             currentRestaurantOperatingHours : null,
-
+            filter: false,
         }
     },
     async created() {
