@@ -190,7 +190,7 @@ export default {
         saveUser: async function() { 
             let app = this;
             this.errors = [];
-            await axios.post("http://localhost:9090/users/addUser", {
+            await axios.post("users/addUser", {
                 "firstname": app.user.firstname,
                 "lastname": app.user.lastname,
                 "email": app.user.email,

@@ -275,7 +275,7 @@ export default {
         }, 
         async saveEdit() {
             this.update = true; 
-            let newIDs = await axios.post(`http://localhost:9090/pictures/delete-existing/${this.ownReview.reviewID}`, {
+            let newIDs = await axios.post(`pictures/delete-existing/${this.ownReview.reviewID}`, {
                     newPictures : this.fetchUploadedPics()
             })
             await this.$store.dispatch('updateRestoRating', {

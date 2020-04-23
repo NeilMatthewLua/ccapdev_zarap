@@ -43,11 +43,6 @@ app.use(session({
   store: new MongoStore({mongooseConnection: mongoose.connection})
 }));
 
-// Home route
-app.get('/', function(req, res) {
-    res.send("Head over to http://localhost:9090/populate to populate data"); 
-});
-
 const userRouter = require('./routes/userRouter');
 const reviewRouter = require('./routes/reviewsRouter');
 const populateRouter = require('./routes/populateRouter');
@@ -61,6 +56,16 @@ app.use('/restaurants', restaurantRouter);
 // Populates the database tables
 app.use('/populate', populateRouter);
 
+
+//Handle production 
+if(process.env.NODE_ENV === 'production') {
+  //Static folder
+  app.use(express.static(__dirname + '/public'));
+  //Handle single-page application 
+  app.get(/.*/, (req, res) => {
+    res.sendFile(__dirname + '/public/index.html'); 
+  }); 
+}
 
 // Listening to the port provided
 app.listen(port, function() {
