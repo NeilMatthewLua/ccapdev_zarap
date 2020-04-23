@@ -122,7 +122,7 @@ export default {
             //set the data 
             .then(res => res.data)
             .then(res => res.map(img => Object.assign({}, 
-                img, { url: `http://localhost:9090/static/${this.dest}/${img.filename}` })))
+                img, { url: `https://razap.herokuapp.com/${this.dest}/${img.filename}` })))
             .catch(err => {
               this.uploadError = err;
               this.currentStatus = STATUS_FAILED;

@@ -57,15 +57,11 @@ app.use('/restaurants', restaurantRouter);
 app.use('/populate', populateRouter);
 
 
-//Handle production 
-if(process.env.NODE_ENV === 'production') {
-  //Static folder
-  app.use(express.static(__dirname + '/public'));
-  //Handle single-page application 
-  app.get(/.*/, (req, res) => {
-    res.sendFile(__dirname + '/public/index.html'); 
-  }); 
-}
+app.use(express.static(__dirname + '/public'));
+//Handle single-page application 
+app.get(/.*/, (req, res) => {
+  res.sendFile(__dirname + '/public/index.html'); 
+}); 
 
 // Listening to the port provided
 app.listen(port, function() {
