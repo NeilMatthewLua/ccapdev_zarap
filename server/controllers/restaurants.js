@@ -83,11 +83,7 @@ exports.get_search_restaurant_restoName = async (req, res) => {
     //Remove restaurants that didn't match enough chars 
     unique = unique.filter((restaurant) => {
         let trimmedName = restaurant.name.replace(/\s+/g, '')
-<<<<<<< HEAD
         return (restaurant.matchedChars >= 2) ? true : false
-=======
-        return (restaurant.matchedChars >= 3) ? true : false
->>>>>>> 142496e5d3f2d2cd1ba0d73b448939e2a2cf1655
     })
     //Sort the items based on matchedChars (descending) (i.e. more matched chars are at the front)
     unique.sort((a,b) => (a.matchedChars >= b.matchedChars) ? -1 : 1) 
