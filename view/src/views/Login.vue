@@ -91,9 +91,6 @@ export default {
                 .catch(() => {
                     this.errors.push('Invalid Credentials!');
                 })
-        },
-        print: function () {
-            console.log(this.email + " " + this.password);
         }
     }
 }
