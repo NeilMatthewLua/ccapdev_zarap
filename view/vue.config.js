@@ -5,16 +5,20 @@ module.exports = {
     devServer: {
         proxy: {
             '/users': {
-                target: 'http://localhost:9090'
+                target: 'http://localhost:9090',
+                changeOrigin: true
             },
             '/pictures': {
-                target: 'http://localhost:9090'
+                target: 'http://localhost:9090',
+                changeOrigin: true
             },
             '/reviews': {
-                target: 'http://localhost:9090'
+                target: 'http://localhost:9090',
+                changeOrigin: true
             },
             '/restaurants': {
-                target: 'http://localhost:9090'
+                target: 'http://localhost:9090',
+                changeOrigin: true
             }
         }
     }
