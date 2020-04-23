@@ -63,7 +63,7 @@ if(process.env.NODE_ENV === 'production') {
   app.use(express.static(__dirname + '/public/'));
   //Handle single-page application 
   app.get(/.*/, (req, res) => {
-    res.sendFile(__dirname + '/public/index.html'); 
+    res.sendFile(path.join(__dirname + '/public/index.html')); 
   }); 
 }
 
