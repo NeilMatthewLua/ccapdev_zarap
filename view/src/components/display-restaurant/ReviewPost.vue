@@ -120,11 +120,11 @@ export default {
             let reviewID = this.reviewData.reviewID; 
             let ownerID = this.reviewData.reviewerID; 
             if(value > 0)
-                await axios.post(`users/addLiked/${userID}`, {reviewID}); 
+                await axios.post(`http://localhost:9090/users/addLiked/${userID}`, {reviewID}); 
             else    
-                await axios.post(`users/deleteLiked/${userID}`, {reviewID});
-            await axios.post(`reviews/increment/${reviewID}`, {value});
-            await axios.post(`users/increment/${ownerID}`, {value});
+                await axios.post(`http://localhost:9090/users/deleteLiked/${userID}`, {reviewID});
+            await axios.post(`http://localhost:9090/reviews/increment/${reviewID}`, {value});
+            await axios.post(`http://localhost:9090/users/increment/${ownerID}`, {value});
         },
         editReview() {
             if(this.inProfile)

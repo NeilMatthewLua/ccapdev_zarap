@@ -205,6 +205,7 @@ export default {
         ...mapMutations(["toggleFilterSort","toggleFilterCity","toggleFilterCuisine","toggleFilterCost","toggleFilterEst", "updateFilteredRestaurants","clearFilter"]),
         ...mapActions(["updateFilter"]),
         selectCity(index) {
+            this.update = !this.update;
             let payload = [
                 index, 
                 this.cityList[index].label
@@ -213,46 +214,49 @@ export default {
             this.updateFilters(); 
         },
         selectCuisine(index) {
+            this.update = !this.update;
             let payload = [
                 index, 
                 this.cuisineList[index].label
             ]
             this.toggleFilterCuisine(payload); 
-            this.updateFilters();
+            this.updateFilteredRestaurants();
         },
         selectCostFilter(index) {
+            this.update = !this.update;
             let payload = [
                 index,
                 this.costList[index].low, 
                 this.costList[index].upper
             ]
             this.toggleFilterCost(payload); 
-            this.updateFilters();
+            this.updateFilteredRestaurants();
         },
         selectSort(index) {
+            this.update = !this.update; 
             let payload = [
                 index,
                 this.sortList[index].label, 
                 this.sortList[index].order
             ]
             this.toggleFilterSort(payload); 
-            this.updateFilters(); 
+            this.updateFilteredRestaurants(); 
         },
         selectEstType(index) {
+            this.update = !this.update;
             let payload = [
                 index,
                 this.estList[index].label
             ]
             this.toggleFilterEst(payload); 
-            this.updateFilters();
+            this.updateFilteredRestaurants();
         },
         async updateFilters() {
-            this.updateFilteredRestaurants();
-            this.update = !this.update; 
+            this.updateFilteredRestaurants(); 
         },
         clearFilters() {
-            this.clearFilter(); 
             this.update = !this.update; 
+            this.clearFilter(); 
         }
     },
     mounted() {

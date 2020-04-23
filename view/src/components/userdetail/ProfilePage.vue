@@ -263,14 +263,14 @@ export default {
                     this.isMine = true;
                 }
                 else{
-                    await axios.get(`users/${this.$route.params.id}`)
+                    await axios.get(`http://localhost:9090/users/${this.$route.params.id}`)
                     .then(resp => {
                         this.user = resp.data.user[0]
                     })
                 }
            }
            else {        
-               await axios.get(`users/${this.$route.params.id}`)
+               await axios.get(`http://localhost:9090/users/${this.$route.params.id}`)
                .then(resp => {
                    this.user = resp.data.user[0]
                })

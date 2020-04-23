@@ -17,7 +17,7 @@ const actions =  {
     async getRestaurantPictures({commit}, arr) {
         let listRes = []; 
         for(let i = 0; i < arr.length; i++) {
-            let res = await axios.get(`pictures/${arr[i]}`);  
+            let res = await axios.get(`http://localhost:9090/pictures/${arr[i]}`);  
             listRes.push(res.data); 
         }
         commit('setRestaurant', listRes); 
@@ -26,7 +26,7 @@ const actions =  {
     async getMenuPictures({commit}, arr) {
         let listRes = []; 
         for(let i = 0; i < arr.length; i++) {
-            let res = await axios.get(`pictures/${arr[i]}`);  
+            let res = await axios.get(`http://localhost:9090/pictures/${arr[i]}`);  
             listRes.push(res.data); 
         }
         commit('setMenu', listRes); 
@@ -36,7 +36,7 @@ const actions =  {
         Used for the upload image section 
     */
     async removeUnusedPictures({commit}) {
-       let remainingPics = await axios.post("pictures/delete-unused-pics", { urls : state.uploadedFiles });
+       let remainingPics = await axios.post("http://localhost:9090/pictures/delete-unused-pics", { urls : state.uploadedFiles });
        commit('setUploadedPics', remainingPics.data); 
     },
     /*
@@ -44,12 +44,12 @@ const actions =  {
         Used for the remove button in the picture modal  
     */
     async removePicture({commit}, pic) {
-        await axios.post("pictures/delete-unused-pics", { urls : pic });
+        await axios.post("http://localhost:9090/pictures/delete-unused-pics", { urls : pic });
          
         commit('removePic', pic) 
     },
     async removeUnusedProfilePic({commit}, pic) {
-        await axios.post("pictures/delete-unused-profile-pics", { urls : pic });
+        await axios.post("http://localhost:9090/pictures/delete-unused-profile-pics", { urls : pic });
          
         commit('removePic', pic)
     }
