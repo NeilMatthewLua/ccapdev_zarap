@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div id="content" class="containter-restaurant">
+    <div id="content" class="containter-restaurant" v-show="!loading">
       <div class="row pad-left">
         <div class="col s12 m11 l9">
             <RestaurantCard v-on:did_click_operating_info = "displayOperatingHoursModal" v-for="item in this.fetchUserRestos()" :key="item.restaurantID" :resto="item"/>
@@ -9,7 +9,8 @@
             <h5 class="center padd-top"> Don't see anything? Look for restaurants now!</h5>
         </div>
       </div>
-    </div> 
+    </div>
+    <loadModal v-show="loading"/> 
     <!-- Modal for Operating Hours-->
     <OperatingHourModal v-on:did_click_close = "closeOperatingInfoModal" id="operating-hour-modal" :operatingHour = "this.currentRestaurantOperatingHours" /> 
   </div>
@@ -20,6 +21,7 @@ import M from 'materialize-css';
 import RestaurantCard from '../search-restaurant/RestaurantCard.vue';
 import OperatingHourModal from '../search-restaurant/OperatingHourModal.vue';
 import { mapActions , mapGetters } from 'vuex';
+import loadModal from '@/components/loadModal'; 
 
 /** DOM OBJECTS **/
 
@@ -30,11 +32,13 @@ export default {
     name: "DiningHistoryPage",
     data() {
         return {
-            currentRestaurantOperatingHours : null
+            currentRestaurantOperatingHours : null,
+            loading : true, //When fetching review posts
         }
     },
     components: {
         RestaurantCard,
+        loadModal,
         OperatingHourModal
     },
     watch:{
@@ -48,6 +52,7 @@ export default {
         const elem = document.getElementById('operating-hour-modal');
         // initializes to the DOM
         operatingHourModalInstance = M.Modal.init(elem, {dismissible: false});
+        this.loading = false; 
     },
     methods: {
         ...mapGetters(["fetchUserRestos", "fetchOperatingHour"]),
@@ -166,6 +171,13 @@ export default {
         bottom: 10px;
     }
 
+    .loading {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+    }
+    
     .padinput {
         padding-left: 10px !important;
         box-sizing: border-box;
