@@ -166,7 +166,7 @@ export default {
         //Save the edit in the db 
         async saveEdit() {
             //Delete existing pictures from reviews
-            let newIDs = await axios.post(`pictures/delete-existing/${this.chosenReview.reviewID}`, {
+            let newIDs = await axios.post(`/pictures/delete-existing/${this.chosenReview.reviewID}`, {
                     newPictures : this.fetchUploadedPics()
             })
             //Update the restaurants rating in the db 

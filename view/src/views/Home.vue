@@ -137,13 +137,13 @@ export default {
       this.restaurantCards.restaurant_3 = this.$store.getters.fetchCurrResto;
     },
     goCard1: function() {
-      router.push({path: `restaurant/${this.restaurantCards.restaurant_1.restaurantID}`});
+      router.push({path: `/restaurant/${this.restaurantCards.restaurant_1.restaurantID}`});
     },
     goCard2: function() {
-      router.push({path: `restaurant/${this.restaurantCards.restaurant_2.restaurantID}`});
+      router.push({path: `/restaurant/${this.restaurantCards.restaurant_2.restaurantID}`});
     },
     goCard3: function() {
-      router.push({path: `restaurant/${this.restaurantCards.restaurant_3.restaurantID}`});
+      router.push({path: `/restaurant/${this.restaurantCards.restaurant_3.restaurantID}`});
     },
     fetchFeatured: async function() {
       await this.$store.dispatch('getRestos')
