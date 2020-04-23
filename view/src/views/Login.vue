@@ -5,7 +5,7 @@
             <h1 class="black-text title-size">Log-in</h1>
             <div class="container center margin-top">
                 <div class="container center">
-                    <div class="column">
+                    <div class="column" v-show="!isLoading">
                         <div class="col s12" id="login">
                             <!-- if wrong details, display error message -->
                             <p v-if="errors.length">
@@ -36,8 +36,9 @@
                 </div>
             </div>
             <br>
-            <a @click="goRegister" class="href black-text hovered-link">Register me!</a>
+            <a @click="goRegister" class="href black-text hovered-link" v-show="!isLoading">Register me!</a>
         </div>
+        <loadModal v-show="isLoading"/>
         <Footer /> 
     </div>
 </template>
@@ -45,19 +46,22 @@
 <script>
 import Navbar from '@/components/Navbar.vue';
 import Footer from '@/components/Footer.vue';
+import loadModal from '@/components/loadModal.vue';
 import router from '../router';
 
 export default {
     name: 'Login',
     components: {
         Navbar,
-        Footer
+        Footer,
+        loadModal
     },
     data() {
         return {
             errors: [],
             "email": null,
-            "password": null
+            "password": null,
+            isLoading: false
         }
     },
     methods:{
@@ -79,6 +83,7 @@ export default {
             }
         },
         loadUser: function() {
+            this.isLoading = true;
             this.errors = [];
             this.$store
                 .dispatch('login', {
@@ -86,9 +91,11 @@ export default {
                     "password": this.password
                     })
                 .then(() => {
+                    this.isLoading = false;
                     router.push({name: "Home"});
                 })
                 .catch(() => {
+                    this.isLoading = false;
                     this.errors.push('Invalid Credentials!');
                 })
         }

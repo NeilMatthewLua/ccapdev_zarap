@@ -152,6 +152,7 @@ exports.login_check = async (req, res) => {
 //Logout a user
 exports.logout = (req, res) => {
     req.session.destroy();
+    res.status(200).send();
 }
 
 //Password Hasher
