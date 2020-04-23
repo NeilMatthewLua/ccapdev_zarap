@@ -74,28 +74,22 @@
                 <modal @close="hideSuccessModal" :message="modalMessage" v-show="showSuccessModal"/>
             </div>
         </div>
-        <div v-if="loading" class="loading">
-        <breeding-rhombus-spinner
-          :animation-duration="2000"
-          :size="150"
-          color="#CB202D"
-            />
-        </div>
+        <loadModal v-show="loading"/>
     </div>
 </template>
 
 <script>
-import { BreedingRhombusSpinner } from 'epic-spinners';
 import { mapGetters, mapActions, mapMutations } from 'vuex'; 
 import ReviewPost from '@/components/display-restaurant/ReviewPost.vue';
 import ImageUpload from '@/components/ImageUpload'; 
 import modal from '@/components/alertModal'; 
+import loadModal from '@/components/loadModal'; 
 import axios from 'axios';  
 export default {
     name: "DiningHistory",
     components: {
         ReviewPost,
-        BreedingRhombusSpinner,
+        loadModal,
         ImageUpload,
         modal 
     },
@@ -136,6 +130,7 @@ export default {
     watch:{
         $route (){
             this.getReviews();
+            this.loading = true;
         }
     },
     methods : {
@@ -166,7 +161,7 @@ export default {
         //Save the edit in the db 
         async saveEdit() {
             //Delete existing pictures from reviews
-            let newIDs = await axios.post(`http://localhost:9090/pictures/delete-existing/${this.chosenReview.reviewID}`, {
+            let newIDs = await axios.post(`/pictures/delete-existing/${this.chosenReview.reviewID}`, {
                     newPictures : this.fetchUploadedPics()
             })
             //Update the restaurants rating in the db 

@@ -124,6 +124,9 @@
             </div>           
         </div>
     </div>
+    <div v-show="loading">
+        <loadModal v-show="loading"/>
+    </div>
 </div>
 </template>
 
@@ -133,16 +136,18 @@ import ReviewPost from './ReviewPost';
 import ImageUpload from '@/components/ImageUpload'; 
 import modal from '@/components/alertModal'; 
 import axios from 'axios'; 
-
+import loadModal from '@/components/loadModal'; 
 export default {
     name: "ReviewSection",
     components: {
         ReviewPost,
         ImageUpload, 
-        modal 
+        modal,
+        loadModal 
     }, 
     data () {
         return {
+            loading: false, 
             checked: false,
             isWriting : false, //If user is writing a review
             reviewData : "", //Content to store data in user review
@@ -243,6 +248,7 @@ export default {
         },
          //saves and posts the review of the user
         saveReview() {
+            this.loading = true; 
             this.$store.dispatch('addReview', {
                 review: this.reviewData,
                 rating: this.rating,
@@ -264,7 +270,7 @@ export default {
                             this.displaySuccessModal("Error in updating review.")
                             throw err; 
                             }) 
-            
+            this.loading = false; 
             this.update = false;
         },
         editReview () { 
@@ -275,7 +281,8 @@ export default {
         }, 
         async saveEdit() {
             this.update = true; 
-            let newIDs = await axios.post(`http://localhost:9090/pictures/delete-existing/${this.ownReview.reviewID}`, {
+            this.loading = true; 
+            let newIDs = await axios.post(`/pictures/delete-existing/${this.ownReview.reviewID}`, {
                     newPictures : this.fetchUploadedPics()
             })
             await this.$store.dispatch('updateRestoRating', {
@@ -302,6 +309,7 @@ export default {
                             this.displaySuccessModal("Error in updating review.")
                             throw err; 
                             })  
+            this.loading = false; 
             this.update = false;   
         },
         async cancelWrite() {

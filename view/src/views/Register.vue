@@ -71,6 +71,7 @@
                     </div>
                 </div>
             </div>
+        <loadModal v-show="loading"/>
         <Footer /> 
     </div>
 </template>
@@ -81,6 +82,7 @@ import axios from 'axios';
 import Navbar from '@/components/Navbar.vue';
 import Footer from '@/components/Footer.vue';
 import ImageUpload from '@/components/ImageUpload'; 
+import loadModal from '@/components/loadModal'; 
 import alertModal from '@/components/alertModal';
 import router from '../router'
 
@@ -90,6 +92,7 @@ export default {
         Navbar,
         Footer,
         ImageUpload,
+        loadModal,
         alertModal
     },
     data() {
@@ -107,7 +110,8 @@ export default {
             },
             confirm_password: null,
             profilePictures: "profilePictures",
-            message: "Thanks for registering! We'll bring you back to the home page now!"
+            message: "Thanks for registering! We'll bring you back to the home page now!",
+            loading: false
         }
     },
     methods:{
@@ -170,6 +174,7 @@ export default {
                 this.errors.push('Profile Picture required');
             }
             if(!this.errors.length) {
+                this.loading = true;
                 this.saveUser();
                 return true;
             }
@@ -190,7 +195,7 @@ export default {
         saveUser: async function() { 
             let app = this;
             this.errors = [];
-            await axios.post("http://localhost:9090/users/addUser", {
+            await axios.post("/users/addUser", {
                 "firstname": app.user.firstname,
                 "lastname": app.user.lastname,
                 "email": app.user.email,
@@ -208,8 +213,10 @@ export default {
                     this.confirm_password = '';
                     this.uploadSection();
                 }
+                this.loading = false;
             })
             .catch(error => {
+                this.loading = false;
                 throw error;         
             })
             this.setUploadedPics([]); 

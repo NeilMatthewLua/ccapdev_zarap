@@ -14,37 +14,44 @@ const routes = [
   {
     path: '/',
     name: 'Home',
-    component: Home
+    component: Home,
+    meta: { title: 'Home' }
   },
   {
     path: '/restaurant/:id', 
     name: 'Display Restaurant', 
-    component: DisplayRestaurant
+    component: DisplayRestaurant,
+    meta: { title: 'Restaurant Page' }
   },
   {
     path: '/searchresult',
     name: 'Search Result',
-    component: SearchResult
+    component: SearchResult,
+    meta: { title: 'Search Result' }
   },
   {
     path: '/login', 
     name: 'Login', 
-    component: Login
+    component: Login,
+    meta: { title: 'Login' }
   },
   {
     path: '/register', 
     name: 'Register', 
-    component: Register
+    component: Register,
+    meta: { title: 'Register' }
   },
   {
     path: '/userdetail/:id/:menu', 
     name: 'UserDetail', 
-    component: UserDetail
+    component: UserDetail,
+    meta: { title: 'User Detail' }
   },
   {
     path: '/about', 
     name: 'About', 
-    component: About 
+    component: About,
+    meta: { title: 'About' } 
   }
 ]
 

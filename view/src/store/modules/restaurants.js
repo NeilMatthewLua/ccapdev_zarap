@@ -66,13 +66,13 @@ const getters =  {
 const actions =  {
     //Gets All Restos from db
     async getRestos ({commit}) {
-        let res = await axios.get("restaurants"); 
+        let res = await axios.get("/restaurants"); 
          
         commit('setResto', res.data); 
     },
     //Gets Resto by restaurantID 
     async getRestoById ({commit}, id) {
-        let res = await axios.get(`restaurants/${id}`); 
+        let res = await axios.get(`/restaurants/`+ id); 
         
         if(res.data)
             commit('setCurrResto', res.data); 
@@ -82,20 +82,20 @@ const actions =  {
     async getRestoByUser ({commit}, query) {
         //Access global state by using context root state 
         // let diningHis = context.rootState.beenHere; 
-        let res = await axios.get(`restaurants?${query}`); 
+        let res = await axios.get(`/restaurants?${query}`); 
          
         commit('setResto', res.data);
     },
     async getPics ({commit}, arr) {
         let listPics = [];
         for (let i = 0; i < arr.length; i++) {
-            let res = await axios.get(`pictures/${arr[i].defaultPicture}`);
+            let res = await axios.get(`/pictures/${arr[i].defaultPicture}`);
             listPics.push(res.data);
         }
         commit('setPics', listPics);
     },
     async getOperatingHours ({commit}) {
-        let res = await axios.get("restaurants"); 
+        let res = await axios.get("/restaurants"); 
 
         commit('setOperatingHours', res.data); 
     },
@@ -103,24 +103,24 @@ const actions =  {
         //Update Restaurant Rating 
         let oldReview = group.oldRating;  
         let increase = group.rating - oldReview; 
-        let resto = await axios.get(`restaurants/${group.restaurantID}`); 
+        let resto = await axios.get(`/restaurants/${group.restaurantID}`); 
         let totalReviews =  resto.data.reviews.length; 
         let oldRating = resto.data.overallRating; 
         let newRating = ((totalReviews * oldRating + increase) / totalReviews).toFixed(1); 
-        await axios.post(`restaurants/update-rating/${group.restaurantID}`, {rating : newRating}); 
+        await axios.post(`/restaurants/update-rating/${group.restaurantID}`, {rating : newRating}); 
  
         commit('updateRating', newRating, group.inProfile);
     },
     async getSearchRestos({commit}, searchKey) {
         let res; 
         if (searchKey == null){
-            res = await axios.get("restaurants"); 
+            res = await axios.get("/restaurants"); 
         }
         else if (searchKey == ''){
-            res = await axios.get("restaurants"); 
+            res = await axios.get("/restaurants"); 
         }
         else {
-            res = await axios.get(`restaurants/search-resto/${searchKey}`);
+            res = await axios.get(`/restaurants/search-resto/${searchKey}`);
         }
         commit('setSearchRestos', res.data);
         commit('setUnmodifiedSearchRestos', res.data);
@@ -129,15 +129,15 @@ const actions =  {
         commit('setSearch', searchKey);
     },
     async getRestByUser({commit}, userID) {
-        let user = await axios.get(`users/${userID}`);
+        let user = await axios.get(`/users/${userID}`);
         let allRestos = [];
         let listPics = [];
 
         for(let i = 0; i < user.data.user[0].beenHere.length; i++) {
-            let resto = await axios.get(`restaurants/${user.data.user[0].beenHere[i]}`); 
+            let resto = await axios.get(`/restaurants/${user.data.user[0].beenHere[i]}`); 
             allRestos.push(resto.data);
 
-            let res = await axios.get(`pictures/${resto.data.defaultPicture}`);
+            let res = await axios.get(`/pictures/${resto.data.defaultPicture}`);
             listPics.push(res.data);
         }
 
@@ -194,12 +194,8 @@ const mutations = {
             }
         }
         else {
-            if(label == "Rating") {
-                state.sortByRating = false; 
-            }
-            else {
-                state.sortByCost = false; 
-            }
+            state.filters.sortByRating = false; 
+            state.filters.sortByCost = false; 
             state.allSearchRestos = [].concat(state.unmodifiedSearchRestos);
         }
     },

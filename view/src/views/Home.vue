@@ -42,7 +42,7 @@
       <div class ="card-row row">
         <div class ="col s11 offset-s1 card_small">
           <div class ="col s12 m3 margin_right_5">
-            <div class ="card BG-black-color mobile-height">
+            <div v-if="!loadingFeatured" class ="card BG-black-color mobile-height">
               <div class ="card-content white-text">
                 <span class ="card-title">{{restaurantCards.restaurant_1.name}}</span>
                 <p>{{this.restaurantCards.restaurant_1.establishmentType[0]}} | {{this.restaurantCards.restaurant_1.cuisines[0]}}</p>
@@ -51,9 +51,18 @@
                 <a @click="goCard1()">View Restaurant</a>
               </div>
             </div>
+            <div class="spinner-container" v-else>
+              <div class="spinner">
+                <half-circle-spinner
+                  :animation-duration="1000"
+                  :size="60"
+                  color="#ff1d5e"
+                />
+              </div>
+            </div>
           </div>
           <div class ="col s12 m3 margin_right_5" >
-            <div class ="card BG-black-color mobile-height">
+            <div v-if="!loadingFeatured" class ="card BG-black-color mobile-height">
               <div class ="card-content white-text">
                   <span class ="card-title">{{restaurantCards.restaurant_2.name}}</span>
                   <p>{{this.restaurantCards.restaurant_2.establishmentType[0]}} | {{this.restaurantCards.restaurant_2.cuisines[0]}}</p>
@@ -62,15 +71,33 @@
                 <a @click="goCard2()">View Restaurant</a>
               </div>
             </div>
+            <div class="spinner-container" v-else>
+              <div class="spinner">
+                <half-circle-spinner
+                  :animation-duration="1000"
+                  :size="60"
+                  color="#ff1d5e"
+                />
+              </div>
+            </div>
           </div>
           <div class ="col s12 m3 margin_right_5 mobile-height" >
-            <div class ="card BG-black-color mobile-height">
+            <div v-if="!loadingFeatured" class ="card BG-black-color mobile-height">
               <div class ="card-content white-text">
                   <span class ="card-title">{{restaurantCards.restaurant_3.name}}</span>
                   <p>{{this.restaurantCards.restaurant_3.establishmentType[0]}} | {{this.restaurantCards.restaurant_3.cuisines[0]}}</p>
               </div>
               <div class ="card-action">
                 <a @click="goCard3()">View Restaurant</a>
+              </div>
+            </div>
+            <div class="spinner-container" v-else>
+              <div class="spinner">
+                <half-circle-spinner
+                  :animation-duration="1000"
+                  :size="60"
+                  color="#ff1d5e"
+                />
               </div>
             </div>
           </div>
@@ -87,16 +114,18 @@ import Footer from '@/components/Footer.vue';
 import NavbarHome from '@/components/NavbarHome.vue';
 import router from '@/router'
 import { mapActions } from 'vuex'; 
-
+import { HalfCircleSpinner } from 'epic-spinners'
 export default {
   name: 'Home',
   components: {
     Footer,
-    NavbarHome
+    NavbarHome,
+    HalfCircleSpinner
   },
   data() {
     return {
       search : null,
+      loadingFeatured: true, 
       restaurantCards : {
         restaurant_1 : {
           name: ' ',
@@ -137,13 +166,13 @@ export default {
       this.restaurantCards.restaurant_3 = this.$store.getters.fetchCurrResto;
     },
     goCard1: function() {
-      router.push({path: `restaurant/${this.restaurantCards.restaurant_1.restaurantID}`});
+      router.push({path: `/restaurant/${this.restaurantCards.restaurant_1.restaurantID}`});
     },
     goCard2: function() {
-      router.push({path: `restaurant/${this.restaurantCards.restaurant_2.restaurantID}`});
+      router.push({path: `/restaurant/${this.restaurantCards.restaurant_2.restaurantID}`});
     },
     goCard3: function() {
-      router.push({path: `restaurant/${this.restaurantCards.restaurant_3.restaurantID}`});
+      router.push({path: `/restaurant/${this.restaurantCards.restaurant_3.restaurantID}`});
     },
     fetchFeatured: async function() {
       await this.$store.dispatch('getRestos')
@@ -155,7 +184,7 @@ export default {
         this.featuredRestaurants[i] = restos[number].restaurantID;
         set.push(number);
       }
-      this.loadCards();
+      await this.loadCards();
     },
     between: function (min, max, set) {
       let ans;
@@ -173,9 +202,10 @@ export default {
       return ans;
     }
   },
-  mounted() {
+  async mounted() {
     this.featuredRestaurants = [ ];
-    this.fetchFeatured();
+    await this.fetchFeatured();
+    this.loadingFeatured = false; 
   }
 }
 </script>
@@ -338,6 +368,17 @@ export default {
             margin-left: auto !important;
             margin-right: auto !important;
         }
+    }
+
+    .spinner-container {
+        height: 200px; 
+        display: flex;
+        align-items: center; 
+        justify-content: center;
+    }
+
+    .spinner {
+        vertical-align: middle;
     }
 
     @media(max-width:1300px) {     
