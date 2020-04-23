@@ -135,9 +135,6 @@ export default {
         toggleSubmitButton: function(value) {
             this.submitVisible = value
         },
-        print: function () {
-            console.log(this.user.firstname + " " + this.user.email + " " + this.user.lastname + " " + this.user.homeaddress + " " + this.user.password);
-        },
         validateForm: async function () {
             this.errors = [];
             if(!this.user.firstname) {
@@ -213,7 +210,7 @@ export default {
                 }
             })
             .catch(error => {
-                console.log(error);        
+                throw error;         
             })
             this.setUploadedPics([]); 
         }

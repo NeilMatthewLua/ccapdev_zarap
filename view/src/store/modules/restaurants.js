@@ -200,6 +200,7 @@ const mutations = {
             else {
                 state.sortByCost = false; 
             }
+            state.allSearchRestos = [].concat(state.unmodifiedSearchRestos);
         }
     },
     toggleFilterCuisine: (state, payload) => {

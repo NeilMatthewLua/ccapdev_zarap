@@ -137,10 +137,10 @@ export default {
             this.addUploadedPics(urls); 
             this.currentStatus = STATUS_SUCCESS;
           })
-          .catch(err => {
-            console.log(err); 
+          .catch(err => { 
             this.uploadError = "Server error in saving picture.";
             this.currentStatus = STATUS_FAILED;
+            throw err; 
           });
       },
       //Gets the pictures in the form 

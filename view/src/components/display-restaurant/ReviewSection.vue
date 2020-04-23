@@ -260,8 +260,9 @@ export default {
                       })      
                 this.$emit('postedReview',true)
             }) 
-            .catch((err) => {console.log(err)
-                          this.displaySuccessModal("Error in updating review.")
+            .catch((err) => {
+                            this.displaySuccessModal("Error in updating review.")
+                            throw err; 
                             }) 
             
             this.update = false;
@@ -297,8 +298,9 @@ export default {
                 })
                 .then(() => this.displaySuccessModal("Successfully edited review"))      
                 )  
-            .catch((err) => {console.log(err)
+            .catch((err) => {
                             this.displaySuccessModal("Error in updating review.")
+                            throw err; 
                             })  
             this.update = false;   
         },
