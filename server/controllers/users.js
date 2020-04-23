@@ -189,7 +189,6 @@ exports.update_user =  async (req, res) => {
     let updatePicture = {
         url: req.body.user.uploadedFiles
     }
-
     //update user in db
     await User.findOneAndUpdate(filter, update, {
         new: true
@@ -200,27 +199,30 @@ exports.update_user =  async (req, res) => {
         .then(async (doc) => {
             let relPath = doc[0].url.split('/');
             let removePath = `images/${relPath[4]}/${relPath[5]}`;
-            
-            //remove old photo 
-            fs.unlink(removePath, (err) => {
-                if (err) throw err;
-                console.log(`${removePath} was deleted due to update.`);
-            });
-
-            await Picture.findOneAndUpdate(oldPicture, updatePicture, {
-                new: true
-            })
-                .then(picture => {
-                    return res.status(200).send({
-                        user: user,
-                        picture: picture
-                    });
+            let newPathSplit = updatePicture.url.split('/')
+            let newPath = `images/${newPathSplit[4]}/${newPathSplit[5]}`; 
+            if(newPath != removePath) {
+                //remove old photo 
+                fs.unlink(removePath, (err) => {
+                    if (err) throw err;
+                    console.log(`${removePath} was deleted due to update.`);
+                });
+            }
+                await Picture.findOneAndUpdate(oldPicture, updatePicture, {
+                    new: true
                 })
-                .catch(err => {
-                    res.send(500).json({error: err});
+                    .then(picture => {
+                        console.log(picture)
+                        return res.status(200).send({
+                            user: user,
+                            picture: picture
+                        });
+                    })
+                    .catch(err => {
+                        res.send(500).json({error: err});
+                    })
                 })
             })
-        })
         .catch(err => {
             res.send(500).json({error: err});
         })

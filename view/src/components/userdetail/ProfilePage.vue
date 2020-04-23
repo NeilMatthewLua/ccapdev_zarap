@@ -252,7 +252,7 @@ export default {
         }
     },
     methods: {
-       ...mapActions(['removeUnusedPictures']),
+       ...mapActions(['removeUnusedProfilePic']),
        ...mapGetters(['fetchUploadedPics','getUser']),
        ...mapMutations(['setUploadedPics']),
        async verifyOwn() {
@@ -289,7 +289,7 @@ export default {
             this.update = true; 
             this.visible = !this.visible;
             this.editProfileVisible = !this.editProfileVisible;
-            await this.removeUnusedPictures();
+            await this.removeUnusedProfilePic(this.fetchUploadedPics()[0]);
             this.setUploadedPics([this.user_picture]); 
             this.$refs.uploadSection.reset(true, [this.user_picture]); 
             this.isLoading = false;
@@ -311,7 +311,8 @@ export default {
             this.user.password = '';
             this.confirm_password = '';
             this.errors = [];
-            await this.removeUnusedPictures(); 
+            await this.removeUnusedProfilePic(this.fetchUploadedPics()[0]); 
+            console.log("reset")
             this.setUploadedPics([this.user_picture]);
             if(this.$refs.uploadSection != undefined) 
             this.$refs.uploadSection.reset(true, [this.user_picture]); 
@@ -388,7 +389,7 @@ export default {
                 return true;
             }
             else{
-                await this.removeUnusedPictures();
+                await this.removeUnusedProfilePic(this.fetchUploadedPics()[0]);
                 this.setUploadedPics([this.user_picture]);
                 this.$refs.uploadSection.reset(true, [this.user_picture]);
                 this.user = Object.assign({}, this.tempUser.user);
@@ -408,7 +409,7 @@ export default {
     async created () {
         //Removes unused pictures when window is closed 
         window.addEventListener('beforeunload', async () => {
-            await this.removeUnusedPictures(); 
+            await this.removeUnusedProfilePic(this.fetchUploadedPics()[0]); 
         }, false)
     }  
 }
