@@ -312,7 +312,6 @@ export default {
             this.confirm_password = '';
             this.errors = [];
             await this.removeUnusedProfilePic(this.fetchUploadedPics()[0]); 
-            console.log("reset")
             this.setUploadedPics([this.user_picture]);
             if(this.$refs.uploadSection != undefined) 
             this.$refs.uploadSection.reset(true, [this.user_picture]); 

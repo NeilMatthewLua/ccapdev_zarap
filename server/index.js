@@ -3,6 +3,7 @@ const express = require('express')
 const mongoose = require('mongoose')
 const bodyParser = require('body-parser')
 const path = require('path'); 
+const serveStatic = require('serve-static')
 const session = require('express-session');
 const cors = require('cors'); 
 require('dotenv').config()
@@ -15,7 +16,7 @@ const MongoStore = require('connect-mongo')(session);
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use('/static', express.static(path.join(__dirname,'/images'))); 
+
 
 app.use(cors({
   origin: "http://localhost:3000",
@@ -56,16 +57,13 @@ app.use('/restaurants', restaurantRouter);
 // Populates the database tables
 app.use('/populate', populateRouter);
 
+app.use('/static', express.static(path.join(__dirname,'/images'))); 
 
-//Handle production 
-if(process.env.NODE_ENV === 'production') {
-  //Static folder
-  app.use(express.static(__dirname + '/public'));
-  //Handle single-page application 
-  app.get(/.*/, (req, res) => {
-    res.sendFile(__dirname + '/public/index.html'); 
-  }); 
-}
+app.use('/', express.static(path.join(__dirname, '/public')))
+//Handle single-page application 
+app.get(/.*/, function (req, res) {
+  res.sendFile(path.join(__dirname, '/public/index.html'))
+}) 
 
 // Listening to the port provided
 app.listen(port, function() {
