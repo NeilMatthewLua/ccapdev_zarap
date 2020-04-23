@@ -147,6 +147,9 @@ exports.login_check = async (req, res) => {
             return res.status(500).send('Error on the server.');
         })
     }
+    else {
+        res.status(200).json('success');
+    }
 }
 
 //Logout a user
