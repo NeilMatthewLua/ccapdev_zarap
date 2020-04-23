@@ -7,6 +7,7 @@ const state =  {
     allPics: [], // Stores all the pictures of the restaurant
     allOperatingHours: [], // Stores all the operating hours of the restaurant
     allSearchRestos : [], // Stores all the restos from the search result
+    unmodifiedSearchRestos: [],
     search: null,
     userRestos : [], // Stores all the restos the user has been to
     //Following Arrays store the values if any of the filters is active 
@@ -32,17 +33,19 @@ const state =  {
         cities : [],
         cuisines : [],
         estTypes: [],
+        costFilter: false, 
         costLower: 0, //lower bound for cost
         costUpper: -1, //upper bound for cost (no limit)
         sortByRating: false, 
         sortByCost: false,
-        sortCostOrder: 1, //default ascending
+        sortCostOrder: 1, //default sort cost by ascending
     }
     //Store the fields associated with the resto / resto object
 }
 
 const getters =  {
     fetchAllRestos : state => state.allRestos,
+    fetchUnmodifiedRestos: state => state.unmodifiedSearchRestos, 
     fetchCurrResto : state => state.currResto, 
     fetchUserReviewRestos : state => state.userReviewRestos,
     fetchAllPic : state => state.allPics,
@@ -109,18 +112,18 @@ const actions =  {
         commit('updateRating', newRating, group.inProfile);
     },
     async getSearchRestos({commit}, searchKey) {
+        let res; 
         if (searchKey == null){
-            let res = await axios.get("http://localhost:9090/restaurants"); 
-            commit('setSearchRestos', res.data);
+            res = await axios.get("http://localhost:9090/restaurants"); 
         }
         else if (searchKey == ''){
-            let res = await axios.get("http://localhost:9090/restaurants"); 
-            commit('setSearchRestos', res.data);
+            res = await axios.get("http://localhost:9090/restaurants"); 
         }
         else {
-            let res = await axios.get(`http://localhost:9090/restaurants/search-resto/${searchKey}`);
-            commit('setSearchRestos', res.data);
+            res = await axios.get(`http://localhost:9090/restaurants/search-resto/${searchKey}`);
         }
+        commit('setSearchRestos', res.data);
+        commit('setUnmodifiedSearchRestos', res.data);
     },
     async getSearch ({commit}, searchKey) {
         commit('setSearch', searchKey);
@@ -156,9 +159,12 @@ const mutations = {
             state.userRestos[state.userRestos.findIndex(x => x.restaurantID == state.currResto.restaurantID)].overallRating = rating
     },
     setSearchRestos : (state, restos) => state.allSearchRestos = restos, 
+    setUnmodifiedSearchRestos: (state, restos) => state.unmodifiedSearchRestos = restos, 
     setSearch : (state, search) => state.search = search,
     setUserRestos : (state, restos) => state.userRestos = restos,
-    toggleFilterCity: (state, index, city) => {
+    toggleFilterCity: (state, payload) => {
+        let index = payload[0]; 
+        let city = payload[1];   
         state.cityList[index] = !state.cityList[index]
         //Add city to filter if not yet there, otherwise remove it
         if(state.cityList[index])
@@ -166,22 +172,25 @@ const mutations = {
         else 
             state.filters.cities = state.filters.cities.filter(item => item != city)
     },
-    toggleFilterSort: (state, index, label, order) => {
+    toggleFilterSort: (state, payload) => {
+        let index = payload[0];
+        let label = payload[1]; 
+        let order = payload[2]; 
         state.sortList[index] = !state.sortList[index]; 
         if(state.sortList[index]) {
+            //Set all other toggles to false 
+            for(let i = 0; i < state.sortList.length; i++)
+                if(i != index) {
+                    state.sortList[i] = false; 
+                }
             if(label == "Rating") {
-                state.filters.sortbyRating = true;  
+                state.filters.sortByRating = true; 
+                state.filters.sortByCost = false;   
             }
             else {
                 state.filters.sortByCost = true; 
-                state.filters.orderCost = order; 
-                //Cost can only have one toggled at a time, untoggle the other one 
-                if(index == 1) {
-                    state.sortList[2] = false; 
-                }
-                else if(index == 2) {
-                    state.sortList[1] = false;
-                }
+                state.filters.sortByRating = false; 
+                state.filters.sortCostOrder = order; 
             }
         }
         else {
@@ -193,7 +202,9 @@ const mutations = {
             }
         }
     },
-    toggleFilterCuisine: (state, index, cuisine) => {
+    toggleFilterCuisine: (state, payload) => {
+        let index = payload[0];
+        let cuisine = payload[1];
         state.cuisineList[index] = !state.cuisineList[index]
         if(state.cuisineList[index]) {
             state.filters.cuisines.push(cuisine); 
@@ -202,9 +213,13 @@ const mutations = {
             state.filters.cuisines = state.filters.cuisines.filter(item => item != cuisine); 
         }
     },
-    toggleFilterCost: (state, index, lower, upper) => {
+    toggleFilterCost: (state, payload) => {
+        let index = payload[0];
+        let lower = payload[1];
+        let upper = payload[2]; 
         state.costList[index] = !state.costList[index]
         if(state.costList[index]) {
+            state.filters.costFilter = true; 
             state.filters.costLower = lower; 
             state.filters.costUpper = upper; 
             for(let i = 0; i < state.costList.length; i++)
@@ -213,19 +228,127 @@ const mutations = {
                 }
         }
         else {
+            state.filters.costFilter = false; 
             //Set cost back to default 
             state.filters.costLower = 0; 
             state.filters.costUpper = -1; 
         }
     },
-    toggleFilterEst: (state, index, establishment) => {
+    toggleFilterEst: (state, payload) => {
+        let index = payload[0];
+        let establishment = payload[1]; 
         state.estList[index] = !state.estList[index]
         if(state.estList[index]) {
+            state.filters.estTypes = []; 
             state.filters.estTypes.push(establishment); 
+            for(let i = 0; i < state.estList.length; i++) {
+                if(i == index) 
+                    state.estList[i] = true; 
+                else 
+                    state.estList[i] = false;
+            }
         }
         else {
-            state.filters.estTypes = state.filters.estTypes.filter(item => item != establishment); 
+            state.filters.estTypes = []; 
         }
+    }, 
+    updateFilteredRestaurants: (state) => {
+        let filtered = [].concat(state.unmodifiedSearchRestos); 
+        //Filter by cities 
+        if(state.filters.cities.length != 0)
+            filtered = filtered.filter(restaurant => {
+                return state.filters.cities.includes(restaurant.city); 
+            });  
+        //Filter by cuisine 
+        if(state.filters.cuisines.length != 0)
+            filtered = filtered.filter(restaurant => {
+                return state.filters.cuisines.every(cuisine => restaurant.cuisines.includes(cuisine))
+            })
+        //Filter by cost 
+        if(state.filters.costFilter) { //If there was a filter set
+            filtered = filtered.filter(restaurant => {
+                //Upper and lower limit set
+                if(state.filters.costUpper != -1) {
+                    if(restaurant.costForTwo >= state.filters.costLower && restaurant.costForTwo <= state.filters.costUpper)
+                        return restaurant;
+                }
+                //No upper Limit
+                else {
+                    if(restaurant.costForTwo >= state.filters.costLower)
+                        return restaurant;
+                }
+            })
+        }
+        //Filter by establishment type 
+        if(state.filters.estTypes.length != 0)
+            filtered = filtered.filter(restaurant => {
+                return state.filters.estTypes.every(establishment => restaurant.establishmentType.includes(establishment))
+            })
+        
+        //Sort By rating 
+        if(state.filters.sortByRating) {
+            filtered.sort((a, b) => {
+                if (a.overallRating > b.overallRating)
+                    return -1;
+                if (a.overallRating < b.overallRating)
+                    return 1;
+                return 0;
+            })
+        }
+
+        //Sort by cost 
+        if(state.filters.sortByCost) {
+            if(state.filters.sortCostOrder == -1) {
+                filtered.sort((a, b) => {
+                    if (a.costForTwo > b.costForTwo)
+                        return -1;
+                    if (a.costForTwo < b.costForTwo)
+                        return 1;
+                    return 0;
+                })
+            }
+            else {
+                filtered.sort((a, b) => {
+                    if (a.costForTwo < b.costForTwo)
+                        return -1;
+                    if (a.costForTwo > b.costForTwo)
+                        return 1;
+                    return 0;
+                }) 
+            }
+        }
+
+        state.allSearchRestos = filtered
+    }, 
+    clearFilter: (state) => {
+        state.allSearchRestos = [].concat(state.unmodifiedSearchRestos); 
+        state.filters.cities = [];
+        state.filters.cuisines = [];
+        state.filters.estTypes = [];
+        state.filters.costFilter = false; 
+        state.filters.costLower = 0;
+        state.filters.costUpper = -1;
+        state.filters.sortByRating = false;
+        state.filters.sortByCost = false;
+        state.filters.sortCostOrder = 1;
+        state.sortList = [ 
+            false, false, false
+        ]
+        state.cityList = [
+            false, false, false, false, false, false, false, false, false, 
+            false, false, false, false, false, false, false, false
+        ]
+        state.cuisineList = [
+            false, false, false, false, false, false, false, false, false, 
+            false, false, false, false, false, false, false, false, false, 
+            false, false, false, false, false, false, false, false
+        ]
+        state.estList = [
+            false, false, false, false, false, false, false, false, false
+        ]
+        state.costList = [
+            false, false, false, false
+        ]
     }
 }
 
