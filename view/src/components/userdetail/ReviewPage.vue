@@ -194,8 +194,9 @@ export default {
                     this.displaySuccessModal("Successfully edited review") 
                     })      
                 )  
-            .catch((err) => {console.log(err)
+            .catch((err) => {
                             this.displaySuccessModal("Error in updating review.")
+                            throw err; 
                             })  
             this.update = false; 
             this.doThis(0); 
