@@ -60,7 +60,7 @@ app.use('/populate', populateRouter);
 //Handle production 
 if(process.env.NODE_ENV === 'production') {
   //Static folder
-  app.use(express.static(__dirname + '/public'));
+  app.use(express.static(__dirname + '/public/'));
   //Handle single-page application 
   app.get(/.*/, (req, res) => {
     res.sendFile(__dirname + '/public/index.html'); 
