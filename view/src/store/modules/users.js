@@ -24,7 +24,7 @@ const actions =  {
     login({commit}, user){
         return new Promise((resolve, reject) => {
           commit('auth_request')
-          axios.post('http://localhost:9090/users/login', {
+          axios.post('users/login', {
             user,
           }, {withCredentials: true})
           .then(resp => {
@@ -40,7 +40,7 @@ const actions =  {
     },
     updateUser({commit}, user){
         return new Promise((resolve, reject) => {
-          axios.post('http://localhost:9090/users/updateUser', {
+          axios.post('users/updateUser', {
             user
           })
           .then(resp => {
@@ -56,13 +56,13 @@ const actions =  {
     },
     logout({ commit }) {
       return new Promise((resolve) => {
-        axios.post(`http://localhost:9090/users/logout`,{}, {withCredentials: true});
+        axios.post(`users/logout`,{}, {withCredentials: true});
         commit('logout');
         resolve();
       })
     },
     addRestaurantVisit({commit}, group) {
-      axios.post('http://localhost:9090/users/addUserVisited', {
+      axios.post('users/addUserVisited', {
         group
       })
       .then(resp => {
@@ -70,7 +70,7 @@ const actions =  {
       })
     },
     deleteRestaurantVisit({commit}, group) {
-      axios.post('http://localhost:9090/users/deleteUserVisited', {
+      axios.post('users/deleteUserVisited', {
         group
       })
       .then(resp => {
@@ -78,11 +78,11 @@ const actions =  {
       })
     },
     async updateGetUser({commit}) {
-      let user = await axios.get(`http://localhost:9090/users/${state.user.userID}`);
+      let user = await axios.get(`users/${state.user.userID}`);
       commit('auth_success', user.data.user[0]);
     },
     async login_check({commit}) {
-      let resp = await axios.post(`http://localhost:9090/users/login_check`,{}, {withCredentials: true});
+      let resp = await axios.post(`users/login_check`,{}, {withCredentials: true});
       if(resp.data.flag){
         commit('setPhoto', resp.data.picture);
         commit('auth_success', resp.data.user);

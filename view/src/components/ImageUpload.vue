@@ -54,7 +54,7 @@ import { mapGetters, mapActions, mapMutations} from 'vuex';
 import axios from 'axios';
 import PictureModal from '@/components/PictureModal'; 
 const STATUS_INITIAL = 0, STATUS_SAVING = 1, STATUS_SUCCESS = 2, STATUS_FAILED = 3;
-const UPLOAD_ROUTE="http://localhost:9090/pictures/edit-review-pics"; 
+const UPLOAD_ROUTE="pictures/edit-review-pics"; 
 export default {
     name: "ImageUpload",
     components: {
