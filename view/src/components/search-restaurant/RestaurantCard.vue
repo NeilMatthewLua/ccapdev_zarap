@@ -120,7 +120,6 @@ export default {
     }
 
     .restaurant-list > .card {
-        width: 70vw;
         height: 400px;
         margin-left: 2%;
     }

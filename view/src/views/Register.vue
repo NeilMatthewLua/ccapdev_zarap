@@ -135,9 +135,6 @@ export default {
         toggleSubmitButton: function(value) {
             this.submitVisible = value
         },
-        print: function () {
-            console.log(this.user.firstname + " " + this.user.email + " " + this.user.lastname + " " + this.user.homeaddress + " " + this.user.password);
-        },
         validateForm: async function () {
             this.errors = [];
             if(!this.user.firstname) {
@@ -193,7 +190,7 @@ export default {
         saveUser: async function() { 
             let app = this;
             this.errors = [];
-            await axios.post("http://localhost:9090/users/addUser", {
+            await axios.post("users/addUser", {
                 "firstname": app.user.firstname,
                 "lastname": app.user.lastname,
                 "email": app.user.email,
@@ -213,7 +210,7 @@ export default {
                 }
             })
             .catch(error => {
-                console.log(error);        
+                throw error;         
             })
             this.setUploadedPics([]); 
         }

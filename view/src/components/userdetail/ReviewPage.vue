@@ -166,7 +166,7 @@ export default {
         //Save the edit in the db 
         async saveEdit() {
             //Delete existing pictures from reviews
-            let newIDs = await axios.post(`http://localhost:9090/pictures/delete-existing/${this.chosenReview.reviewID}`, {
+            let newIDs = await axios.post(`pictures/delete-existing/${this.chosenReview.reviewID}`, {
                     newPictures : this.fetchUploadedPics()
             })
             //Update the restaurants rating in the db 
@@ -194,8 +194,9 @@ export default {
                     this.displaySuccessModal("Successfully edited review") 
                     })      
                 )  
-            .catch((err) => {console.log(err)
+            .catch((err) => {
                             this.displaySuccessModal("Error in updating review.")
+                            throw err; 
                             })  
             this.update = false; 
             this.doThis(0); 

@@ -120,11 +120,11 @@ export default {
             let reviewID = this.reviewData.reviewID; 
             let ownerID = this.reviewData.reviewerID; 
             if(value > 0)
-                await axios.post(`http://localhost:9090/users/addLiked/${userID}`, {reviewID}); 
+                await axios.post(`users/addLiked/${userID}`, {reviewID}); 
             else    
-                await axios.post(`http://localhost:9090/users/deleteLiked/${userID}`, {reviewID});
-            await axios.post(`http://localhost:9090/reviews/increment/${reviewID}`, {value});
-            await axios.post(`http://localhost:9090/users/increment/${ownerID}`, {value});
+                await axios.post(`users/deleteLiked/${userID}`, {reviewID});
+            await axios.post(`reviews/increment/${reviewID}`, {value});
+            await axios.post(`users/increment/${ownerID}`, {value});
         },
         editReview() {
             if(this.inProfile)
@@ -141,7 +141,6 @@ export default {
             .then(async () =>{
                 await this.$store.dispatch('updateGetUser'),
                 await this.$store.dispatch('getRestoById',this.$store.getters.fetchCurrResto.restaurantID)
-                console.log(this.$store.getters.fetchCurrResto.restaurantID)
             }) 
         }, 
         goToProfile() {

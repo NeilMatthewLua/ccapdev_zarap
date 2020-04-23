@@ -52,26 +52,26 @@ var restaurantEst = [
 ]
 
 var restaurantCity = [ 
-    "Binondo, Manila",
-    "Ermita",
-    "Malate, Manila",
-    "Binondo, Manila",
-    "Glorietta, Glorietta Complex",
-    "Greenhills, San Juan City",
-    "Crossroads Building, Bonifacio Global City",
-    "Robinsons Place Manila, Ermita",
-    "Quiapo, Manila",
-    "Sampaloc, Manila",
-    "Glorietta, Glorietta Complex",
-    "Malate, Manila",
-    "Tondo, Manila",
-    "Bonifacio Global City",
-    "Binondo, Manila",
-    "Entertainment Mall, SM Mall of Asia, Mall of Asia Complex (MOA)",
-    "Bagong Pag-Asa, Manila",
-    "Ermita, Manila",
-    "SM by the Bay, SM Mall of Asia, Mall of Asia Complex (MOA)",
-    "Sampaloc, Manila"
+    "Manila",
+    "Manila",
+    "Manila",
+    "Manila",
+    "Makati",
+    "San Juan",
+    "Taguig",
+    "Manila",
+    "Manila",
+    "Manila",
+    "Makati",
+    "Manila",
+    "Manila",
+    "Taguig",
+    "Manila",
+    "Pasay",
+    "Manila",
+    "Manila",
+    "Pasay",
+    "Manila"
 ]
 
 var restaurantAddress = [ 

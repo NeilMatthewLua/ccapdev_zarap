@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="filter-container">
         <!-- Filter Bar in Desktop and Tablet View -->
         <div class="hide-on-med-and-down">
             <div>
@@ -7,7 +7,9 @@
                     <li class="collection-item">
                         <h5> Filters </h5>
                     </li>
-
+                    <li class="collection-item clickable" @click="clearFilters()">
+                        <h6 class="red-text"> Clear Filter </h6>
+                    </li>
                     <!-- Filtered by Rating, Cost -->
                     <li class="collection-item">
                         <h6> Sort by </h6>
@@ -104,7 +106,7 @@
 
 <script>
 import M from 'materialize-css';
-import { mapMutations, mapGetters } from 'vuex'; 
+import { mapMutations, mapGetters, mapActions } from 'vuex'; 
 export default {
     Name: "Filterbar",
     data() {
@@ -174,9 +176,9 @@ export default {
                 {label: "Fine Dining"},
             ],
             costList:[
-                {label: "Less than PHP350", low : 0, upper : 350},
-                {label: "PHP350 to PHP700", low : 350, upper : 700},
-                {label: "PHP700 to PHP1400", low : 700, upper : 1400},
+                {label: "Less than PHP350", low : 0, upper : 349},
+                {label: "PHP350 to PHP700", low : 350, upper : 699},
+                {label: "PHP700 to PHP1400", low : 700, upper : 1399},
                 {label: "PHP1400 +", low : 1400, upper : -1},
             ]
         }
@@ -200,30 +202,57 @@ export default {
     },
     methods: {
         ...mapGetters(["fetchFilters", "fetchSortToggles", "fetchCityToggles", "fetchCuisineToggles", "fetchEstToggles", "fetchCostToggles"]), 
-        ...mapMutations(["toggleFilterSort","toggleFilterCity","toggleFilterCuisine","toggleFilterCost","toggleFilterEst"]),
+        ...mapMutations(["toggleFilterSort","toggleFilterCity","toggleFilterCuisine","toggleFilterCost","toggleFilterEst", "updateFilteredRestaurants","clearFilter"]),
+        ...mapActions(["updateFilter"]),
         selectCity(index) {
-            this.update = !this.update;
-            this.toggleFilterCity(index, this.cityList[index].label); 
+            let payload = [
+                index, 
+                this.cityList[index].label
+            ]
+            this.toggleFilterCity(payload); 
+            this.updateFilters(); 
         },
         selectCuisine(index) {
-            this.update = !this.update;
-            this.toggleFilterCuisine(index, this.cuisineList[index].label); 
+            let payload = [
+                index, 
+                this.cuisineList[index].label
+            ]
+            this.toggleFilterCuisine(payload); 
+            this.updateFilters();
         },
         selectCostFilter(index) {
-            this.update = !this.update;
-            this.toggleFilterCost(index, this.costList[index].low, this.costList[index].upper); 
+            let payload = [
+                index,
+                this.costList[index].low, 
+                this.costList[index].upper
+            ]
+            this.toggleFilterCost(payload); 
+            this.updateFilters();
         },
         selectSort(index) {
-            this.update = !this.update; 
-            this.toggleFilterSort(index, this.sortList[index].label, this.sortList[index].order); 
-            console.log(this.fetchSortToggles()) 
+            let payload = [
+                index,
+                this.sortList[index].label, 
+                this.sortList[index].order
+            ]
+            this.toggleFilterSort(payload); 
+            this.updateFilters(); 
         },
         selectEstType(index) {
-            this.update = !this.update;
-            this.toggleFilterEst(index, this.estList[index].label); 
+            let payload = [
+                index,
+                this.estList[index].label
+            ]
+            this.toggleFilterEst(payload); 
+            this.updateFilters();
         },
-        updateFilters() {
-            
+        async updateFilters() {
+            this.updateFilteredRestaurants();
+            this.update = !this.update; 
+        },
+        clearFilters() {
+            this.clearFilter(); 
+            this.update = !this.update; 
         }
     },
     mounted() {
@@ -237,6 +266,10 @@ export default {
 </script>
 
 <style scoped>
+    .filter-container {
+        width: 25vw; 
+        padding-left: 2rem; 
+    }
     .clickable {
         cursor: pointer; 
     }
@@ -248,5 +281,10 @@ export default {
     }
     td {
         text-align: center; 
+    }
+    @media screen and (max-width: 990px) {
+        .filter-container {
+            width: 0vw;  
+        }
     }
 </style>
