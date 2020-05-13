@@ -1,0 +1,42 @@
+body {
+    background-color: #F4F4F2;
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+}
+:root {
+    --default-button-color: #CB202D;
+    --default-navbar-color: #CB202D;
+}
+
+.margin-pushdown {
+    margin-bottom: 2vw;
+}
+
+.padnav {
+    padding-left: 15px;
+    background-color: var(--default-navbar-color);
+}
+
+.padinput {
+    padding-left: 10px !important;
+    box-sizing: border-box;
+    border-radius: 4px !important;
+}
+
+.btncolor {
+    background-color: var(--default-button-color) !important;
+}
+
+.hover:hover {
+    color: var(--default-navbar-color) !important;
+    text-decoration: underline;
+}
+
+.title-size {
+    font-size:5vw;
+}
+
+.errormsg {
+    color: var(--default-button-color);
+}

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" />
+  <link rel="stylesheet" href="../../public/css/navbar.css">
+  <link rel="stylesheet" href="../../public/css/font.css">
+  <title>Navbar testing</title>
+</head>
+<body>
+  <div class="navbar-fixed">
+    <nav>
+      <div class="nav-wrapper row">
+        <a href="../landing.html" id="zarap" class ="hide-on-med-and-down col s2">zarap</a>
+        <!--Navbar for Smaller Screens-->
+      <div class = "hide-on-large-only">
+        <a href="../landing.html" id = "zarap" class="brand-logo center">zarap</a>
+        <a href="#" data-target="slide-out" class="right sidenav-trigger"><i class="material-icons">menu</i></a>
+      </div>
+      <!--Searchbar-->
+      <div class="search-section col s7 hide-on-med-and-down">
+          <form class="search-bar">
+            <div class="input-field">
+              <input type="text" class="white search-box" name="searchbar" placeholder="   Search your favorite restaurants here...">
+            </div>
+          </form>
+          <a class="waves-effect waves-light btn #e53935 red darken-1" href="../SearchResult.html">search</a>
+      </div>
+      <ul class="right hide-on-med-and-down col s3">
+        <div class="right navbar-right valign-wrapper">
+          <img class="circle navbar-image" src="../../public/assets/jonal.jpg">
+          <li><a class="dropdown-trigger" href="../userdetail.html" data-target="dropdown1"><span class="white-text username">Welcome, Jonal</span><i class="material-icons right">arrow_drop_down</i></a></li>
+        </div>
+      </ul>
+      </div>
+    </nav>
+    <ul id="dropdown1" class="dropdown-content">
+      <li><a href="../userdetail.html#profile" class="black-text">My Profile</a></li>
+      <li class="divider"></li>
+      <li><a href="../userdetail.html#dining-history" class="black-text">Dining History</a></li>
+      <li class="divider"></li>
+      <li><a href="../userdetail.html#my-reviews" class="black-text">My Reviews</a></li>
+    </ul>
+  </div>
+  <!--Sidebar Content-->
+  <ul id="slide-out" class="sidenav">
+    <li><div class="user-view">
+      <div class="background">
+      </div>
+      <a href="#user"><img class="circle" src="../../public/assets/neil.jpg"></a>
+      <a href="#name"><span class="username-sidenav">Neil</span></a>
+    </div></li>
+    <li><div class="divider"></div></li>
+    <li><a href="../userdetail.html#profile" class="waves-effect">Profile</a></li>
+    <li><div class="divider"></div></li>
+    <li><a href="../userdetail.html#dining-history" class="waves-effect">Dining History</a></li>
+    <li><div class="divider"></div></li>
+    <li><a href="../userdetail.html#my-reviews" class="waves-effect">My Reviews</a></li>
+  </ul>
+  <!--Search Bar for Smaller Screens-->
+  <div class="search-section search-mobile hide-on-large-only">
+    <div class="container row">
+      <div class="col s12">
+        <form class="search-bar-small"> 
+          <div class="input-field">
+            <input type="text" class="white search-box truncate" name="searchbar" placeholder="   Search your favorite restaurants here...">
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="container row">
+      <div class="col s12">
+        <a class="waves-effect waves-light btn #e53935 red darken-1" href="../SearchResult.html">search</a>
+      </div>
+    </div>
+  </div>
+</body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+      var elem = document.querySelectorAll('.sidenav');
+      var instance = M.Sidenav.init(elem, {});
+      var elem_dropdown = document.querySelectorAll('.dropdown-trigger');
+      var instances_dropdown = M.Dropdown.init(elem_dropdown, {
+        coverTrigger: true
+      });
+  });
+</script>
+</html>

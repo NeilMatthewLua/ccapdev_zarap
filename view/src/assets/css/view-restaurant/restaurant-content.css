@@ -1,0 +1,147 @@
+html,body {
+    width: 100vw; 
+}
+
+body {
+    background-color: var(--default-background-color);
+}
+
+.main-content {
+    margin-top: 40px; 
+    padding: 20px; 
+    display: flex; 
+    flex-direction: row; 
+    width: 100%; 
+}
+
+.left-section {
+    display: flex;
+    flex-direction: column;
+    margin-right: 20px; 
+}
+
+.title-card {
+    width: 100%; 
+    margin-top:10px; 
+    margin-bottom: 20px; 
+    margin-left: 5px !important;   
+    padding: 15px;   
+    background-color: var(--default-card-color);
+}
+
+.title-card > .title-picture {
+    padding-top: 10px; 
+    padding-bottom: 10px; 
+    height: 80%; 
+    width: auto; 
+}
+
+.title-card > .col > .btn {
+    z-index: 0 !important
+}
+
+.review-btn-text { 
+    position: relative; 
+    top: -5px; 
+}
+
+.review-icons {
+    color: white; 
+}
+
+.bookmark-btn {
+    margin: 20px 0px; 
+    z-index: 0 !important;
+}
+
+.photos {
+    text-align: center;
+    width: 100%; 
+}
+
+.carousel-container {
+    padding: 20px; 
+    background-color: var(--default-card-color);
+    margin-bottom: 40px; 
+    height: auto; 
+}
+
+.carousel {
+    height: 100%; 
+    overflow-x:hidden;
+    overflow-y: scroll;
+}
+
+.carousel-item {
+    height: 100%; 
+    width: 100%; 
+}
+
+.right-section {
+    display: flex; 
+    flex-direction: column;
+    padding: 0px !important;  
+}
+
+.content-selection {
+    display: flex; 
+    align-items: center; 
+    margin-top: 10px; 
+    margin-left: 0px !important;
+    margin-bottom: 60px; 
+    height: 100px; 
+    width: 100%; 
+    background-color: var(--default-card-color);   
+    vertical-align: middle;
+}
+
+.content-selection > a {
+    font-size: 1.8rem; 
+    color: var(--default-text-color); 
+    text-align: center; 
+}
+
+.content-details {
+    padding: 20px; 
+    background-color: var(--default-card-color);
+}
+
+.content-details > h4 + h5 {
+    color: var(--default-text-color); 
+}
+
+.content-details > h4 {
+    font-size: 1.8rem !important; 
+}
+
+.content-details > h5 {
+    font-size: 1.2rem !important; 
+}
+
+@media screen and (min-width: 1201px) {
+    .title-card {
+        display: -webkit-flex;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-align-items: center;
+            -ms-flex-align: center;
+                align-items: center;
+    }
+}
+
+@media screen and (max-width: 1200px) {
+    .main-content {
+        flex-direction: column;
+        margin-top: 40px; 
+    }
+    .title-card {
+        margin-bottom: 40px; 
+    }
+    .left-section {
+        margin: 0px; 
+        padding: 0px !important; 
+    }
+    .content-selection {
+        margin-bottom: 40px !important;
+    }
+}

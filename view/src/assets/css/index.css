@@ -1,0 +1,26 @@
+:root {
+    --default-nav-background: #CB202D;
+    --default-font-color: #2D2D2D; 
+    --default-button-color: #CB202D; 
+    --default-error-color: #CB202D; 
+    --default-card-color: #2D2D2D; 
+    --default-restaurantcard-color: #FFFFFF; 
+    --default-reviewcard-color: #FFFFFF; 
+    --default-footer-color: #2D2D2D; 
+    --default-copyright-color: #F4F4F2; 
+    --default-background-color: #F4F4F2; 
+    --default-white-color: #FFFFFF; 
+    --default-review-color: #F4F4F2; 
+    --default-container-color: #2D2D2D; 
+    --default-mobile-restaurant-info-color: #808080;
+    --default-liked-color: #7FFF00;
+}
+
+body {
+    background-color: var(--default-background-color);
+}
+
+/* Makes all a tags have a pointer curser */
+a {
+    cursor: pointer;
+}

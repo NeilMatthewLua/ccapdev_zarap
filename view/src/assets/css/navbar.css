@@ -1,0 +1,94 @@
+:root {
+    --default-nav-background: #CB202D;
+    --default-font-color: #2D2D2D; 
+}
+
+#zarap {
+    padding-left:20px;  
+    font-size: 30px; 
+} 
+  
+nav {
+    height: 80px;
+}
+  
+.nav-wrapper {
+    background-color: var(--default-nav-background); 
+    padding: 10px; 
+}
+
+.navbar-fixed {
+    height: 80px;  
+    z-index: 1 !important; 
+}
+
+.search-section {
+    display: inline-block; 
+    text-align: center;
+}
+
+.search-mobile {
+    width: 100%;
+}
+
+.search-section.valign-wrapper {
+    width: 100%; 
+    line-height: 80px; 
+}
+
+.search-bar { 
+    width: 30vw !important; 
+    margin-right: 2vw !important; 
+    display: inline-block; 
+}
+
+.search-bar-small {
+    width: 80vw !important; 
+    vertical-align: middle;
+}
+
+.search-bar-small + a {
+    width: 20vw !important;
+    vertical-align: middle; 
+}
+
+.search-bar-small > .input-field > .truncate {
+    padding-right: 10px; 
+}
+
+.search-mobile > .container > .col > .btn {
+    width: 100%; 
+}
+
+.search-box {
+    border:5px; 
+    border-color: #2D2D2D; 
+    border-radius: 10px !important; 
+    z-index: 5px; 
+}
+
+.sidenav-overlay {
+    z-index: 9 !important;  
+}
+
+.search-section > .container > .col > .btn {
+    z-index: 0 !important; 
+}
+
+.navbar-right {
+    display: flex; 
+    flex-direction: row;
+}
+
+.navbar-image {
+    height: 50px; 
+    width: 50px; 
+}
+
+.username {
+    display: inline-block; 
+}
+
+.username-sidenav {
+    color: var(--default-font-color); 
+}
